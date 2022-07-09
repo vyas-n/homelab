@@ -1,0 +1,9 @@
+# Environment Variables
+.env
+
+# Terraform
+.terraform/
+*.tfstate*
+
+# Generated K8s files
+k8s/generated
