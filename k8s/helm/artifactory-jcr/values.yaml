@@ -1,0 +1,30 @@
+---
+artifactory:
+  artifactory:
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "4Gi"
+        cpu: "1"
+    javaOpts:
+      xms: "1g"
+      xmx: "3g"
+      # other: ""
+  nginx:
+    enabled: false
+  ingress:
+    enabled: true
+    hosts:
+      - artifactory-jcr.vyas-n.com
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      cert-manager.io/cluster-issuer: zerossl-prod
+    ## Artifactory Ingress TLS configuration
+    ## Secrets must be manually created in the namespace
+    ##
+    tls:
+      - secretName: artifactory-jcr-tls
+        hosts:
+          - artifactory-jcr.vyas-n.com

@@ -1,0 +1,27 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: zerossl-prod
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: vyasnellutla@gmail.com
+    server: https://acme.zerossl.com/v2/DV90
+    externalAccountBinding:
+      keyID: 1-xWu8azFL5ByqAjePngzQ
+      keySecretRef:
+        name: eab-secret
+        key: secret
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      name: zerossl-issuer-account-key
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token

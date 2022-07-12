@@ -1,0 +1,25 @@
+---
+provider: cloudflare
+env:
+  - name: CF_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-token-secret
+        key: api-token
+        optional: false
+# sources:
+#   - ingress
+# domainFilters:
+#   - vyas-n.com
+# extraArgs:
+# - --cloudflare-proxied
+# - --zone-id-filter=b866f90547250ab1c1d209bfd22f614c
+
+resources:
+  limits:
+    cpu: 50m
+    memory: 50Mi
+
+  requests:
+    cpu: 10m
+    memory: 50Mi
