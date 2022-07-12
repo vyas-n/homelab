@@ -1,0 +1,19 @@
+---
+name: PR
+on:
+  # https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#pull_request
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+jobs:
+  conventional:
+    name: PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.0.2
+      - name: PR action
+        uses: beemojs/conventional-pr-action@v2.4.0
+        with:
+          config-preset: angular
+          require-multiple-commits: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

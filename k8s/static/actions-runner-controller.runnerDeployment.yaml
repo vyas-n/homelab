@@ -1,0 +1,26 @@
+---
+# runnerdeployment.yaml
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: k8s-runner-deployment
+  namespace: actions-runner-controller
+spec:
+  replicas: 2
+  template:
+    spec:
+      organization: vyas-proj
+      labels:
+        - k8s-runner
+      image: ghcr.io/actions-runner-controller/actions-runner-controller/actions-runner-dind:v2.294.0-ubuntu-20.04-e3deb0d
+      # image: gitpod/workspace-full:2022-06-20-19-54-55
+      dockerdWithinRunnerContainer: true
+      containers:
+        - name: runner
+          resources:
+            limits:
+              cpu: 4
+              memory: "8Gi"
+            requests:
+              cpu: 2
+              memory: "4Gi"
