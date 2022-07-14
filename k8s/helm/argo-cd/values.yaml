@@ -94,6 +94,8 @@ dex:
       memory: 32Mi
 
 redis:
+  image:
+    repository: docker.io/library/redis
   resources:
     limits:
       cpu: 200m

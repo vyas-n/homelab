@@ -1,4 +1,6 @@
 ---
+image:
+  name: docker.io/library/traefik
 service:
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-name: "traefik-loadbalancer"

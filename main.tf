@@ -176,6 +176,10 @@ locals {
       repository = "https://charts.jetstack.io"
       version    = "1.8.2"
     }
+    consul = { # https://artifacthub.io/packages/helm/hashicorp/consul
+      repository = "https://helm.releases.hashicorp.com"
+      version    = "0.45.0"
+    }
     # elasticsearch = { # https://artifacthub.io/packages/helm/elastic/elasticsearch
     #   repository = "https://helm.elastic.co"
     #   version    = "7.17.3"
@@ -209,13 +213,18 @@ locals {
       repository = "https://kubernetes-sigs.github.io/metrics-server/"
       version    = "3.8.2"
     }
-    prometheus = { # https://artifacthub.io/packages/helm/prometheus-community/prometheus
-      repository = "https://prometheus-community.github.io/helm-charts"
-      version    = "15.10.3"
-    }
+    # prometheus = { # https://artifacthub.io/packages/helm/prometheus-community/prometheus
+    #   repository = "https://prometheus-community.github.io/helm-charts"
+    #   version    = "15.10.3"
+    #   timeout    = 600
+    # }
     traefik = { # https://artifacthub.io/packages/helm/traefik/traefik
       repository = "https://helm.traefik.io/traefik"
       version    = "10.22.0"
+    }
+    vault = { # https://artifacthub.io/packages/helm/hashicorp/vault
+      repository = "https://helm.releases.hashicorp.com"
+      version    = "0.20.1"
     }
   }
   kube-files = { for f in fileset(path.module, "k8s/static/*") : f => yamldecode(file("${path.module}/${f}")) }

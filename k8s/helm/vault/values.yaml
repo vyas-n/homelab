@@ -1,0 +1,33 @@
+---
+injector:
+  image:
+    repository: docker.io/hashicorp/vault-k8s
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 256Mi
+      cpu: 250m
+  agentImage:
+    repository: docker.io/hashicorp/vault
+server:
+  image:
+    repository: docker.io/hashicorp/vault
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 256Mi
+      cpu: 250m
+csi:
+  image:
+    repository: docker.io/hashicorp/vault-csi-provider
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 50m
+      memory: 128Mi

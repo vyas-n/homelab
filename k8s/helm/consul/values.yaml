@@ -1,0 +1,3 @@
+---
+global:
+  image: docker.io/hashicorp/consul:1.12.2
