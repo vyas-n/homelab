@@ -22,13 +22,15 @@ render-gitpod:
     SAVE ARTIFACT gitpod.yaml AS LOCAL k8s/generated/gitpod.yaml
 
 deps-tf:
+    ARG --required TFCLOUD_TOKEN
+
     FROM docker.io/hashicorp/terraform:latest
     COPY --dir k8s main.tf .terraform.lock.hcl .
-    COPY .terraformrc /root/.terraformrc
+    RUN echo "
+credentials \"app.terraform.io\" {
+    token = \"$TFCLOUD_TOKEN\"
+}" > /root/.terraformrc
     RUN terraform init -input=false
-
-k8s-config:
-    FROM +deps-tf
     RUN terraform output kubeconfig | tail -n +2 | head -n -1 > sample.yaml
     SAVE ARTIFACT sample.yaml sample.yaml
 
@@ -41,6 +43,6 @@ lint-clusterlint:
     RUN install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
     RUN go install github.com/digitalocean/clusterlint/cmd/clusterlint@v0.2.14
 
-    COPY +k8s-config/sample.yaml /root/.kube/config
+    COPY +deps-tf/sample.yaml /root/.kube/config
 
     RUN --no-cache clusterlint run --ignore-checks unused-secret --ignore-checks unused-config-map
