@@ -57,3 +57,12 @@ configmapReload:
       requests:
         cpu: 10m
         memory: 32Mi
+
+kubeStateMetrics:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 64Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi

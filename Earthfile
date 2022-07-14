@@ -33,5 +33,5 @@ lint-clusterlint:
     RUN go install github.com/digitalocean/clusterlint/cmd/clusterlint@v0.2.14
 
     COPY sample.yaml /root/.kube/config
-    
-    RUN clusterlint run --ignore-checks unused-secret --ignore-checks unused-config-map
+
+    RUN --no-cache clusterlint run --ignore-checks unused-secret --ignore-checks unused-config-map
