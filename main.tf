@@ -164,10 +164,10 @@ locals {
       repository = "https://actions-runner-controller.github.io/actions-runner-controller"
       version    = "0.19.1"
     }
-    # argo-cd = { # https://artifacthub.io/packages/helm/argo/argo-cd
-    #   repository = "https://argoproj.github.io/argo-helm"
-    #   version    = "4.9.7"
-    # }
+    argo-cd = { # https://artifacthub.io/packages/helm/argo/argo-cd
+      repository = "https://argoproj.github.io/argo-helm"
+      version    = "4.9.7"
+    }
     artifactory-jcr = { # https://artifacthub.io/packages/helm/jfrog/artifactory-jcr
       repository = "https://charts.jfrog.io"
       version    = "107.41.4"
@@ -176,6 +176,11 @@ locals {
       repository = "https://charts.jetstack.io"
       version    = "1.8.2"
     }
+    # elasticsearch = { # https://artifacthub.io/packages/helm/elastic/elasticsearch
+    #   repository = "https://helm.elastic.co"
+    #   version    = "7.17.3"
+    #   timeout    = 600
+    # }
     external-dns = { # https://artifacthub.io/packages/helm/external-dns/external-dns
       repository = "https://kubernetes-sigs.github.io/external-dns/"
       version    = "1.9.0"
@@ -184,6 +189,15 @@ locals {
       repository = "https://grafana.github.io/helm-charts"
       version    = "6.32.1"
     }
+    jaeger = { # https://artifacthub.io/packages/helm/jaegertracing/jaeger
+      repository = "https://jaegertracing.github.io/helm-charts"
+      version    = "0.57.0"
+    }
+    # kibana = { # https://artifacthub.io/packages/helm/elastic/kibana
+    #   repository = "https://helm.elastic.co"
+    #   version    = "7.17.3"
+    #   timeout    = 600
+    # }
     kube-state-metrics = { # https://artifacthub.io/packages/helm/prometheus-community/kube-state-metrics
       # Used to give metrics to the DigitalOcean Insights tab
       repository = "https://prometheus-community.github.io/helm-charts"
@@ -231,6 +245,7 @@ resource "helm_release" "chart" {
   namespace        = lookup(each.value, "namespace", each.key)
   create_namespace = false
   lint             = true
+  timeout          = lookup(each.value, "timeout", 300)
 
   values = [
     file("${path.module}/k8s/helm/${each.key}/values.yaml")

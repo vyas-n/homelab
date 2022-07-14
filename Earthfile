@@ -22,10 +22,16 @@ render-gitpod:
     SAVE ARTIFACT gitpod.yaml AS LOCAL k8s/generated/gitpod.yaml
 
 lint-clusterlint:
-    FROM golang:1.18.3-alpine3.16
-    RUN apk add gcc libc-dev
-    RUN go install github.com/digitalocean/clusterlint/cmd/clusterlint@v0.2.14
-    
-    # TODO Fix
     LOCALLY
+    RUN terraform output kubeconfig | tail -n +2 | ghead -n -1 > sample.yaml
+    FROM golang:1.18.3-alpine3.16
+    RUN apk add gcc libc-dev curl
+    RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    RUN curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+    RUN echo "$(cat kubectl.sha256)  kubectl" | sha256sum -c
+    RUN install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    RUN go install github.com/digitalocean/clusterlint/cmd/clusterlint@v0.2.14
+
+    COPY sample.yaml /root/.kube/config
+    
     RUN clusterlint run --ignore-checks unused-secret --ignore-checks unused-config-map

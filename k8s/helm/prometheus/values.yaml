@@ -27,6 +27,8 @@ server:
       memory: 512Mi
 
 pushgateway:
+  image:
+    repository: docker.io/prom/pushgateway
   resources:
     limits:
       cpu: 10m
@@ -34,3 +36,24 @@ pushgateway:
     requests:
       cpu: 10m
       memory: 32Mi
+configmapReload:
+  prometheus:
+    image:
+      repository: docker.io/jimmidyson/configmap-reload
+    resources:
+      limits:
+        cpu: 10m
+        memory: 32Mi
+      requests:
+        cpu: 10m
+        memory: 32Mi
+  alertmanager:
+    image:
+      repository: docker.io/jimmidyson/configmap-reload
+    resources:
+      limits:
+        cpu: 10m
+        memory: 32Mi
+      requests:
+        cpu: 10m
+        memory: 32Mi

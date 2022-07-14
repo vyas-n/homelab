@@ -1,0 +1,101 @@
+---
+schema:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 128Mi
+ingester:
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+agent:
+  enabled: false
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 128Mi
+collector:
+  enabled: false
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+query:
+  enabled: false
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 128Mi
+spark:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 128Mi
+esIndexCleaner:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 128Mi
+esRollover:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 128Mi
+esLookback:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 128Mi
+hotrod:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+provisionDataStore:
+  cassandra: false
+allInOne:
+  image: docker.io/jaegertracing/all-in-one
+  enabled: true
+  extraEnv:
+    - name: QUERY_BASE_PATH
+      value: /jaeger
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 128Mi
+storage:
+  type: none
