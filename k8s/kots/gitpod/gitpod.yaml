@@ -185,7 +185,7 @@ data:
     Docker image: `eu.gcr.io/gitpod-core-dev/build/installer:release-2022.07.2.2`
 
     - [#11878](https://github.com/gitpod-io/gitpod/pull/11878)
-  sequence: "9"
+  sequence: "11"
   version: 2022.7.2
 kind: ConfigMap
 metadata:
@@ -247,6 +247,25 @@ metadata:
     kots.io/app-slug: gitpod
     kots.io/backup: velero
   name: container-registry-s3-backend
+---
+apiVersion: v1
+data:
+  encryptionKeys: W3sibmFtZSI6ImdlbmVyYWwiLCJ2ZXJzaW9uIjoxLCJwcmltYXJ5Ijp0cnVlLCJtYXRlcmlhbCI6IjR1R2gxcTh5MkRZcnlKd3JWTUhzMGtXWEpscXZIV1d0L0tKdU5pMDRlZEk9In1d
+  host: cHJpdmF0ZS1teXNxbC1kby11c2VyLTk0NDUxMTMtMC5iLmRiLm9uZGlnaXRhbG9jZWFuLmNvbQ==
+  password: QVZOU19KNmI1UkV4ZkxicjJ0SDF4WHFy
+  port: MjUwNjA=
+  username: Z2l0cG9k
+kind: Secret
+metadata:
+  annotations:
+    kots.io/app-slug: gitpod
+    kots.io/when: "true"
+  labels:
+    app: gitpod
+    component: gitpod-installer
+    kots.io/app-slug: gitpod
+    kots.io/backup: velero
+  name: database
 ---
 apiVersion: v1
 data:
@@ -595,7 +614,7 @@ spec:
             yq e -i ".database.cloudSQL.serviceAccount.name = \"cloudsql\"" "${CONFIG_FILE}"
           fi
 
-          if [ 'false' = "true" ];
+          if [ 'true' = "true" ];
           then
             echo "Gitpod: configuring external database"
 
