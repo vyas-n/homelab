@@ -13,7 +13,6 @@ spec:
       labels:
         - k8s-runner
       image: ghcr.io/actions-runner-controller/actions-runner-controller/actions-runner-dind:v2.294.0-ubuntu-20.04-e3deb0d
-      # image: gitpod/workspace-full:2022-06-20-19-54-55
       dockerdWithinRunnerContainer: true
       containers:
         - name: runner

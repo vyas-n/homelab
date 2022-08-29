@@ -1,0 +1,72 @@
+---
+authSecret:
+  create: true
+  github_app_id: "216239"
+  github_app_installation_id: "26999469"
+  github_app_private_key: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpQIBAAKCAQEAwKZbjjkTWh3rZRwaZDRlGYtVkjLZhFxlePLYaHCN0msnhzCU
+    Wzl9W0Z5EmOag/R5hertYNJgA5G9uuhOb3SyLzgMsrKZCe4e5Uxi3Pg5ElOmcMMW
+    +GggD72TAu7zmdHBU+9qR9ovtCLlaApr9tIYAOoBPsl/hJi+T1ERBghVNzcpPaF/
+    71D2d7lWff8B4fkGccLSx4gcbY1faCevW7UypReGL7J+B3/eD7Uvm2C6/y4rPGOj
+    3HidmXs5eBbNT/blL5lhmoUlK4vJKa7rcht59x135z1nC6PtDJ42SR0G1WyVuskN
+    mzniUvU3cU48yUWieKzn+N8sHZWX5R9kX1vrQQIDAQABAoIBAE/6ABJIAY+s0hdU
+    lmQ5GCuFm42pDIIVdY7DijG5YDcVgwBtm3lPoYnt9L88mF3ldTmyML+8Nl3k+BYK
+    8Nz2Xi6aHzNkT4I+15aronNHnTHNhlBTvUp8t6qxMcHK/1hBKvg0cTPJEXq/7erG
+    QNHjoFFo1AGD1ytt2bvF1MJjXTUhOQv7TvqkCqhSmH2SAMIQG2b66V3RneOFlhtu
+    mEntuLqm8WtcfZem8/VWU4dIxn7QClMYUrDE+hIiskm9MsiNGaF7qXq/CVgYJ/W5
+    LtgGWHaIFzxVQF5MRmVZdEtNzk0wbZligrpviMP3C+CVRtKDne+hIUmTJkm+JU2z
+    sxxjxdECgYEA8+GIci2ASWU6No2Mbd3NukeW1Bb/XFVxwwR9qVj0oa3IWmv6v11W
+    wJLi6exGVT7YlMC0aJp/n0+QBOIkaA2AnpOSHT9+VWK7nBCcRvLDhDcKkZmQBYeg
+    kHzPf/CANk3+uc+w3TsBdbS/u3jSXT1zVjNlf6nXzE8zNTBdpB7d2tUCgYEAyjkZ
+    5qSW6zB2hFhD/7SiGtvkf9qrXFXDR4uLM3suqxBlzLyYgZZZS3CpbXEv0LE/AQ1V
+    xPs8f1ijHc+fHjF13pfWpjfjI9Y8UTZOai+PW4quFKjGIVuMAcZHkbotVh0PHk2S
+    VwoTTXMWcb8FArX7CUFFGlrmN43VB1CHSuEB7L0CgYEAhT9hTHjd0bwUDUBTTKfW
+    QoPgvap/BRTOHi4y9jbbGgcYI4dBrhKyVm8quYJVfzfiH4wWRdy8A+/1kSV5nLxb
+    3MhmGcLaJI7YUFGnAQCcoH1uMdUEInFS4f6/ZHijpIgCt8TpLkaR6pzB8Qz3augr
+    Pxq/xvumI0PWh6YQU55luq0CgYEAhr5Nd9UrikKcdcqqZHNjoCnssxRtIfUzTTS5
+    5++oROuEKUtxAse/b/j9q6LDjXbM2FKeV8ZfpSrWZUK2b1Pdihf6On76piJVxnc9
+    AJv4FbLuE23xtsBdJcGMZpl7I+nw7OwbGkvoWK7awafaGthPEPegp9Lxmwqya1FJ
+    FKegtLECgYEAyAz4wIQUt9tVp+ZCTD7Cn+wd90btf9dTyJv/dCkn2yB/VCz3aNmT
+    NnbLQ0IgK5hUKmNms8hbZ547ZxvXvOTXZObfV5EnRwRLZ1whWrkVE+IDw2QIKK/4
+    Ho0vJUeOiSk1B90BmhBPkJQ0H3PMspg4NHRkF7hF9SjTQFyNFDl4jqA=
+    -----END RSA PRIVATE KEY-----
+
+githubWebhookServer:
+  enabled: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+    tls:
+      - hosts:
+          - actions-runner-controller.vyas-n.com
+        secretName: actions-runner-controller-tls
+    hosts:
+      - host: actions-runner-controller.vyas-n.com
+        paths:
+          - path: /actions-runner-controller-github-webhook-server
+            pathType: Prefix
+            backend:
+              service:
+                name: actions-runner-controller-github-webhook-server
+                port:
+                  number: 80
+
+image:
+  repository: docker.io/summerwind/actions-runner-controller
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

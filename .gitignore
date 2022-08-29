@@ -1,9 +1,9 @@
 # Environment Variables
 .env
 
-# Terraform
+# Generated files
 .terraform/
 *.tfstate*
 
-# Generated K8s files
-k8s/generated
+# Secrets
+gitpod-license.yaml

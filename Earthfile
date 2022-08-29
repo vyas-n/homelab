@@ -1,41 +1,31 @@
 VERSION 0.6
 
 fmt:
-    FROM hashicorp/terraform:1.2.4
+    FROM docker.io/hashicorp/terraform:1.2.4
     COPY main.tf .
     RUN terraform fmt --recursive
     SAVE ARTIFACT main.tf AS LOCAL main.tf
 
-validate:
-    BUILD +validate-gitpod
-
-validate-gitpod:
-    FROM eu.gcr.io/gitpod-core-dev/build/installer:release-2022.06.0.10
-    COPY k8s/kots/gitpod/gitpod.config.yaml .
-    RUN ["/app/installer", "validate", "config", "--config", "gitpod.config.yaml"]
-    SAVE ARTIFACT k8s/kots/gitpod/gitpod.config.yaml gitpod.config.yaml
-
-render-gitpod:
-    FROM eu.gcr.io/gitpod-core-dev/build/installer:release-2022.06.0.10
-    COPY +validate-gitpod/gitpod.config.yaml .
-    RUN ["/app/installer", "render", "--config", "gitpod.config.yaml", "--namespace", "gitpod", ">", "gitpod.yaml" ]
-    SAVE ARTIFACT gitpod.yaml AS LOCAL k8s/generated/gitpod.yaml
-
 deps-tf:
-    ARG --required TFCLOUD_TOKEN
+    ARG --required TFE_TOKEN
 
     FROM docker.io/hashicorp/terraform:latest
     COPY --dir k8s main.tf .terraform.lock.hcl .
     RUN echo "
 credentials \"app.terraform.io\" {
-    token = \"$TFCLOUD_TOKEN\"
+    token = \"$TFE_TOKEN\"
 }" > /root/.terraformrc
     RUN terraform init -input=false
     RUN terraform output kubeconfig | tail -n +2 | head -n -1 > sample.yaml
     SAVE ARTIFACT sample.yaml sample.yaml
 
+lint-megalinter:
+    FROM docker.io/oxsecurity/megalinter:v6
+    COPY . .
+    RUN --no-cache ls -alh && echo $PATH
+
 lint-clusterlint:
-    FROM golang:1.18.3-alpine3.16
+    FROM docker.io/library/golang:1.18.3-alpine3.16
     RUN apk add gcc libc-dev curl
     RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     RUN curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
