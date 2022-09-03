@@ -7,13 +7,8 @@ env:
         name: cloudflare-api-token-secret
         key: api-token
         optional: false
-# sources:
-#   - ingress
-# domainFilters:
-#   - vyas-n.com
 extraArgs:
   - --cloudflare-proxied
-# - --zone-id-filter=b866f90547250ab1c1d209bfd22f614c
 
 resources:
   limits:

@@ -12,14 +12,9 @@ spec:
       organization: vyas-proj
       labels:
         - k8s-runner
-      image: ghcr.io/actions-runner-controller/actions-runner-controller/actions-runner-dind:v2.294.0-ubuntu-20.04-e3deb0d
-      dockerdWithinRunnerContainer: true
+        - k8s-runner-1
       containers:
         - name: runner
-          resources:
-            limits:
-              cpu: 4
-              memory: "8Gi"
-            requests:
-              cpu: 2
-              memory: "4Gi"
+          securityContext:
+            privileged: true
+        - name: docker

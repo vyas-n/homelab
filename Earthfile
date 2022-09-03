@@ -1,3 +1,5 @@
+# Earthfile Ref: https://docs.earthly.dev/docs/earthfile
+
 VERSION 0.6
 
 fmt:

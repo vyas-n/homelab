@@ -2,8 +2,11 @@
 .env
 
 # Generated files
+.DS_Store
 .terraform/
 *.tfstate*
+
+generated/
 
 # Secrets
 gitpod-license.yaml

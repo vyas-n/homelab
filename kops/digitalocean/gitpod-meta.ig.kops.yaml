@@ -1,0 +1,20 @@
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: k8s.vyas-n.dev
+  name: nodes-gitpod-meta-sfo3
+spec:
+  image: ubuntu-20-04-x64
+  machineType: s-8vcpu-16gb
+  manager: CloudGroup
+  maxSize: 1
+  minSize: 1
+  nodeLabels:
+    kops.k8s.io/instancegroup: nodes-gitpod-meta-sfo3
+    gitpod.io/workload_meta: "true"
+  role: Node
+  subnets:
+    - sfo3

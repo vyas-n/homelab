@@ -1,0 +1,53 @@
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: Cluster
+metadata:
+  creationTimestamp: null
+  name: k8s.vyas-n.dev
+spec:
+  api:
+    dns: {}
+  authorization:
+    rbac: {}
+  channel: stable
+  cloudProvider: digitalocean
+  configBase: do://kops-state-store.vyas-n.dev/k8s.vyas-n.dev
+  etcdClusters:
+    - cpuRequest: 200m
+      etcdMembers:
+        - instanceGroup: master-sfo3-1
+          name: etcd-1
+      memoryRequest: 100Mi
+      name: main
+    - cpuRequest: 100m
+      etcdMembers:
+        - instanceGroup: master-sfo3-1
+          name: etcd-1
+      memoryRequest: 100Mi
+      name: events
+  iam:
+    allowContainerRegistry: true
+    legacy: false
+  kubelet:
+    anonymousAuth: false
+  kubernetesApiAccess:
+    - 0.0.0.0/0
+    - ::/0
+  kubernetesVersion: 1.24.4
+  masterPublicName: api.k8s.vyas-n.dev
+  networking:
+    calico: {}
+  nonMasqueradeCIDR: 100.64.0.0/10
+  sshAccess:
+    - 0.0.0.0/0
+    - ::/0
+  subnets:
+    - name: sfo3
+      region: sfo3
+      type: Public
+      zone: sfo3
+  topology:
+    dns:
+      type: Public
+    masters: public
+    nodes: public

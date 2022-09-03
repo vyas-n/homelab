@@ -54,7 +54,7 @@ locals {
   helm-charts = {
     actions-runner-controller = { # https://github.com/actions-runner-controller/actions-runner-controller/tree/master/charts/actions-runner-controller
       repository = "https://actions-runner-controller.github.io/actions-runner-controller"
-      version    = "0.19.1"
+      version    = "0.20.2"
     }
     argo-cd = { # https://artifacthub.io/packages/helm/argo/argo-cd
       repository = "https://argoproj.github.io/argo-helm"
@@ -66,12 +66,16 @@ locals {
     }
     external-dns = { # https://artifacthub.io/packages/helm/external-dns/external-dns
       repository = "https://kubernetes-sigs.github.io/external-dns/"
-      version    = "1.9.0"
+      version    = "1.11.0"
+    }
+    keycloak = { # https://artifacthub.io/packages/helm/bitnami/keycloak
+      repository = "https://charts.bitnami.com/bitnami"
+      version    = "9.7.2"
     }
     kube-state-metrics = { # https://artifacthub.io/packages/helm/prometheus-community/kube-state-metrics
       # Used to give metrics to the DigitalOcean Insights tab
       repository = "https://prometheus-community.github.io/helm-charts"
-      version    = "4.10.0"
+      version    = "4.16.0"
       namespace  = "kube-system"
     }
     metrics-server = { # https://artifacthub.io/packages/helm/metrics-server/metrics-server
@@ -81,7 +85,11 @@ locals {
     }
     traefik = { # https://artifacthub.io/packages/helm/traefik/traefik
       repository = "https://helm.traefik.io/traefik"
-      version    = "10.22.0"
+      version    = "10.24.1"
+    }
+    vault = { # https://artifacthub.io/packages/helm/hashicorp/vault
+      repository = "https://helm.releases.hashicorp.com"
+      version    = "0.21.0"
     }
   }
   kube-files = { for f in fileset(path.module, "static/*") : f => yamldecode(file("${path.module}/${f}")) }
@@ -114,7 +122,8 @@ resource "helm_release" "chart" {
   timeout          = lookup(each.value, "timeout", 300)
 
   values = [
-    file("${path.module}/helm/${each.key}/values.yaml")
+    file("${path.module}/helm/${each.key}/values.yaml"),
+    yamlencode(lookup(each.value, "values", {}))
   ]
 
   depends_on = [
@@ -167,23 +176,6 @@ resource "kubernetes_secret" "cloudflare-external-dns" {
 
   data = {
     api-token = var.cloudflare_api_token
-  }
-
-  type = "Opaque"
-
-  depends_on = [
-    kubernetes_namespace.ns
-  ]
-}
-
-resource "kubernetes_secret" "zerossl-eab-secret" {
-  metadata {
-    name      = "eab-secret"
-    namespace = "cert-manager"
-  }
-
-  data = {
-    secret = base64encode(var.zerossl_eab_hmac_key)
   }
 
   type = "Opaque"

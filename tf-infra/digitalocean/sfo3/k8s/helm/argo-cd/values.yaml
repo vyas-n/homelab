@@ -32,10 +32,13 @@ notifications:
         memory: 128Mi
 
 server:
+  extraArgs:
+    - --insecure
   ingress:
     enabled: true
     hosts:
       - argo-cd.vyas-n.com
+    https: false
   certificate:
     enabled: true
     domain: argo-cd.vyas-n.com

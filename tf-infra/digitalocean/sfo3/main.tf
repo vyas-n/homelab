@@ -78,7 +78,7 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
   node_pool {
     name       = "default-pool-1"
     size       = "s-1vcpu-2gb"
-    node_count = 4
+    node_count = 2
   }
 }
 
@@ -91,41 +91,49 @@ resource "digitalocean_database_cluster" "pg" {
   node_count = 1
 }
 
-resource "digitalocean_database_cluster" "mysql" {
-  name       = "mysql"
-  engine     = "mysql"
-  version    = "8"
-  size       = "db-s-1vcpu-1gb"
-  region     = "sfo3"
+# resource "digitalocean_database_cluster" "mysql" {
+#   name       = "mysql"
+#   engine     = "mysql"
+#   version    = "8"
+#   size       = "db-s-1vcpu-1gb"
+#   region     = "sfo3"
+#   node_count = 1
+# }
+
+resource "digitalocean_kubernetes_node_pool" "default-pool-1" {
+  cluster_id = digitalocean_kubernetes_cluster.k8s.id
+
+  name       = "default-pool-2"
+  size       = "s-2vcpu-4gb"
   node_count = 1
 }
 
-resource "digitalocean_kubernetes_node_pool" "gitpod-meta-2" {
-  cluster_id = digitalocean_kubernetes_cluster.k8s.id
+# resource "digitalocean_kubernetes_node_pool" "gitpod-meta-2" {
+#   cluster_id = digitalocean_kubernetes_cluster.k8s.id
 
-  name       = "gitpod-meta-2"
-  size       = "s-4vcpu-8gb"
-  node_count = 2
+#   name       = "gitpod-meta-2"
+#   size       = "s-4vcpu-8gb"
+#   node_count = 2
 
-  labels = {
-    "gitpod.io/workload_meta" = true
-    "gitpod.io/workload_ide"  = true
-  }
-}
+#   labels = {
+#     "gitpod.io/workload_meta" = true
+#     "gitpod.io/workload_ide"  = true
+#   }
+# }
 
-resource "digitalocean_kubernetes_node_pool" "gitpod-workspace-2" {
-  cluster_id = digitalocean_kubernetes_cluster.k8s.id
+# resource "digitalocean_kubernetes_node_pool" "gitpod-workspace-3" {
+#   cluster_id = digitalocean_kubernetes_cluster.k8s.id
 
-  name       = "gitpod-workspace-2"
-  size       = "s-4vcpu-8gb"
-  node_count = 2
+#   name       = "gitpod-workspace-3"
+#   size       = "s-8vcpu-16gb"
+#   node_count = 2
 
-  labels = {
-    "gitpod.io/workload_workspace_services" = true
-    "gitpod.io/workload_workspace_regular"  = true
-    "gitpod.io/workload_workspace_headless" = true
-  }
-}
+#   labels = {
+#     "gitpod.io/workload_workspace_services" = true
+#     "gitpod.io/workload_workspace_regular"  = true
+#     "gitpod.io/workload_workspace_headless" = true
+#   }
+# }
 
 output "k8s" {
   sensitive = true

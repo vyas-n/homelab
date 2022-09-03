@@ -5,7 +5,15 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-  - package-ecosystem: gomod
-    directory: "/"
+  - package-ecosystem: terraform
+    directory: "/tf-infra/digitalocean/sfo3"
+    schedule:
+      interval: daily
+  - package-ecosystem: terraform
+    directory: "/tf-infra/digitalocean/sfo3/k8s"
+    schedule:
+      interval: daily
+  - package-ecosystem: terraform
+    directory: "/tf-infra/vault"
     schedule:
       interval: daily

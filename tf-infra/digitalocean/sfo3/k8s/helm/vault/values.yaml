@@ -1,0 +1,15 @@
+---
+injector.enabled: false
+server:
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 256Mi
+      cpu: 250m
+  ingress:
+    enabled: true
+    hosts:
+      - host: vault.vyas-n.com
+        paths: []
