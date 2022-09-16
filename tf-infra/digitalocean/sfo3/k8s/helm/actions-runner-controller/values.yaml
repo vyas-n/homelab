@@ -63,6 +63,8 @@ githubWebhookServer:
 
 image:
   repository: docker.io/summerwind/actions-runner-controller
+  actionsRunnerImagePullSecrets:
+    - name: regcred
 resources:
   limits:
     cpu: 100m

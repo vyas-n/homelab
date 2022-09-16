@@ -10,3 +10,4 @@ generated/
 
 # Secrets
 gitpod-license.yaml
+*.snap

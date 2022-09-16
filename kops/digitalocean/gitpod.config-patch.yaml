@@ -1,5 +1,0 @@
----
-containerRegistry:
-  privateBaseImageAllowList:
-    - docker.io
-    - ghcr.io

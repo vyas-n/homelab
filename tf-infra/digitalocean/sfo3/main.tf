@@ -105,7 +105,7 @@ resource "digitalocean_kubernetes_node_pool" "default-pool-1" {
 
   name       = "default-pool-2"
   size       = "s-2vcpu-4gb"
-  node_count = 1
+  node_count = 4
 }
 
 # resource "digitalocean_kubernetes_node_pool" "gitpod-meta-2" {

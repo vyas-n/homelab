@@ -17,6 +17,12 @@ terraform {
 }
 
 provider "vault" {
+  address = "https://vault.vyas-n.com"
   # Configuration options
 }
 
+resource "vault_mount" "kv" {
+  path = "kv"
+  type = "kv-v2"
+  # description = "This is an example mount"
+}

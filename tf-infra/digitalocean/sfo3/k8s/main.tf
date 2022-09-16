@@ -171,7 +171,7 @@ resource "kubernetes_secret" "cloudflare" {
 resource "kubernetes_secret" "cloudflare-external-dns" {
   metadata {
     name      = "cloudflare-api-token-secret"
-    namespace = "external-dns"
+    namespace = kubernetes_namespace.ns["external-dns"].metadata[0].name
   }
 
   data = {
@@ -179,8 +179,17 @@ resource "kubernetes_secret" "cloudflare-external-dns" {
   }
 
   type = "Opaque"
+}
 
-  depends_on = [
-    kubernetes_namespace.ns
-  ]
+resource "kubernetes_secret" "ghactionrunner-regcred" {
+  metadata {
+    name      = "regcred"
+    namespace = kubernetes_namespace.ns["actions-runner-controller"].metadata[0].name
+  }
+
+  type = "kubernetes.io/dockerconfigjson"
+
+  data = {
+    ".dockerconfigjson" = "${file("${path.module}/generated/config.json")}"
+  }
 }
