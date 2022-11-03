@@ -50,6 +50,15 @@ resource "vultr_instance" "k8s-node" {
   ssh_key_ids = [vultr_ssh_key.vyas-workbook-8.id]
 }
 
+resource "vultr_block_storage" "vol1" {
+  for_each             = local.nodes
+  size_gb              = 50
+  block_type           = "storage_opt"
+  region               = "dfw"
+  live                 = true
+  attached_to_instance = vultr_instance.k8s-node[each.key].id
+}
+
 resource "cloudflare_record" "k8s-node-a" {
   for_each = local.nodes
   zone_id  = data.cloudflare_zone.vyas-n.zone_id
