@@ -1,3 +1,4 @@
+# https://artifacthub.io/packages/helm/actions-runner-controller/actions-runner-controller
 ---
 authSecret:
   create: true

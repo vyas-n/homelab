@@ -1,7 +1,0 @@
-
-VERSION 0.6
-
-generate:
-    LOCALLY
-
-    RUN cue eval -f templates/docker-creds.cue --outfile generated/config.json

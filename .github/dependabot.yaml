@@ -1,8 +1,17 @@
+# Dependabot Config: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 ---
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: "/"
+    schedule:
+      interval: daily
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: daily
+  - package-ecosystem: terraform
+    directory: "/tf-infra/digitalocean/nyc3"
     schedule:
       interval: daily
   - package-ecosystem: terraform

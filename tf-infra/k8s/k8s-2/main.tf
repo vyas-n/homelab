@@ -52,30 +52,30 @@ provider "helm" {
 
 locals {
   helm-charts = {
-    actions-runner-controller = { # https://github.com/actions-runner-controller/actions-runner-controller/tree/master/charts/actions-runner-controller
+    actions-runner-controller = { # https://artifacthub.io/packages/helm/actions-runner-controller/actions-runner-controller
       repository = "https://actions-runner-controller.github.io/actions-runner-controller"
-      version    = "0.20.2"
+      version    = "0.21.1"
     }
     argo-cd = { # https://artifacthub.io/packages/helm/argo/argo-cd
       repository = "https://argoproj.github.io/argo-helm"
-      version    = "5.3.6"
+      version    = "5.13.1"
     }
     cert-manager = { # https://artifacthub.io/packages/helm/cert-manager/cert-manager
       repository = "https://charts.jetstack.io"
-      version    = "1.8.2"
+      version    = "1.10.0"
     }
     external-dns = { # https://artifacthub.io/packages/helm/external-dns/external-dns
       repository = "https://kubernetes-sigs.github.io/external-dns/"
       version    = "1.11.0"
     }
-    keycloak = { # https://artifacthub.io/packages/helm/bitnami/keycloak
-      repository = "https://charts.bitnami.com/bitnami"
-      version    = "9.7.2"
-    }
+    # keycloak = { # https://artifacthub.io/packages/helm/bitnami/keycloak
+    #   repository = "https://charts.bitnami.com/bitnami"
+    #   version    = "9.7.2"
+    # }
     kube-state-metrics = { # https://artifacthub.io/packages/helm/prometheus-community/kube-state-metrics
       # Used to give metrics to the DigitalOcean Insights tab
       repository = "https://prometheus-community.github.io/helm-charts"
-      version    = "4.16.0"
+      version    = "4.22.1"
       namespace  = "kube-system"
     }
     metrics-server = { # https://artifacthub.io/packages/helm/metrics-server/metrics-server
@@ -85,11 +85,11 @@ locals {
     }
     traefik = { # https://artifacthub.io/packages/helm/traefik/traefik
       repository = "https://helm.traefik.io/traefik"
-      version    = "10.24.1"
+      version    = "19.0.0"
     }
     vault = { # https://artifacthub.io/packages/helm/hashicorp/vault
       repository = "https://helm.releases.hashicorp.com"
-      version    = "0.21.0"
+      version    = "0.22.1"
     }
   }
   kube-files = { for f in fileset(path.module, "static/*") : f => yamldecode(file("${path.module}/${f}")) }

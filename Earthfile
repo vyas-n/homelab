@@ -2,11 +2,49 @@
 
 VERSION 0.6
 
+FROM ghcr.io/vyas-proj/dev:latest
+
+deploy:
+    BUILD +deploy-k8s-controllers
+
+deploy-k8s-controllers:
+    FROM +base
+    RUN mkdir -p /home/dev/src
+    WORKDIR /home/dev/src
+
+    RUN brew install poetry
+    COPY pyproject.toml poetry.lock .
+    RUN poetry install
+
+    COPY ansible/digitalocean/nyc3/requirements.yml .
+    RUN poetry run ansible-galaxy collection install -r requirements.yml
+
+    ARG SSH_AUTH_SOCK
+    COPY ansible/digitalocean/nyc3/hosts.yaml ansible/digitalocean/nyc3/k8s-controllers.playbook.yaml .
+    # TODO: Fix
+    RUN --ssh --interactive poetry run ansible-playbook -i hosts.yaml k8s-controllers.playbook.yaml
+
+docs:
+    FROM +base
+
+    COPY . .
+    FOR dir IN $(find "modules" -name "*.tf" | xargs dirname | uniq)
+        RUN terraform-docs $dir
+    END
+    RUN npx prettier --write .
+
+    FOR dir IN $(find "modules" -name "*.tf" | xargs dirname | uniq)
+        SAVE ARTIFACT $dir/README.md AS LOCAL $dir/README.md
+    END
+
 fmt:
-    FROM docker.io/hashicorp/terraform:1.2.4
-    COPY main.tf .
-    RUN terraform fmt --recursive
-    SAVE ARTIFACT main.tf AS LOCAL main.tf
+    FROM +base
+
+    COPY . .
+    RUN terraform fmt --recursive .
+    FOR file IN $(git diff --name-only | egrep '\.tf$')
+        SAVE ARTIFACT $file AS LOCAL $file
+    END
 
 deps-tf:
     ARG --required TFE_TOKEN
@@ -20,6 +58,11 @@ credentials \"app.terraform.io\" {
     RUN terraform init -input=false
     RUN terraform output kubeconfig | tail -n +2 | head -n -1 > sample.yaml
     SAVE ARTIFACT sample.yaml sample.yaml
+
+generate:
+    LOCALLY
+
+    RUN cue eval -f tf-infra/digitalocean/sfo3/k8s/templates/docker-creds.cue --outfile tf-infra/digitalocean/sfo3/k8s/generated/config.json
 
 lint-megalinter:
     FROM docker.io/oxsecurity/megalinter:v6
