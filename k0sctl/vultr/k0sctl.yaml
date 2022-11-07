@@ -7,18 +7,24 @@ metadata:
 spec:
   hosts:
     - role: controller+worker
+      installFlags:
+        - --no-taints
       ssh:
         address: 45.32.195.235
         user: vyas
         port: 22
         keyPath: /Users/vnellutla/.ssh/vyas-workbook-8.pem
     - role: controller+worker
+      installFlags:
+        - --no-taints
       ssh:
         address: 216.128.139.33
         user: vyas
         port: 22
         keyPath: /Users/vnellutla/.ssh/vyas-workbook-8.pem
     - role: controller+worker
+      installFlags:
+        - --no-taints
       ssh:
         address: 207.148.3.245
         user: vyas
@@ -37,9 +43,26 @@ spec:
         api:
           k0sApiPort: 9443
           port: 6443
-        # extensions:
-        #   storage:
-        #     type: openebs_local_storage
+        extensions:
+          storage:
+            type: openebs_local_storage
+          #   helm:
+          #     repositories:
+          #       - name: rook-release
+          #         url: https://charts.rook.io/release
+          #     charts:
+          #       # Rook-Ceph Operator Ref: https://rook.github.io/docs/rook/v1.10/Helm-Charts/operator-chart/#configuration
+          #       - name: rook-ceph-operator
+          #         chartname: rook-release/rook-ceph
+          #         version: "v1.10.1"
+          #         timeout: 10m
+          #         namespace: rook-ceph-operator
+          #         values: |
+          #           image:
+          #             repository: "docker.io/rook/ceph"
+          #           csi:
+          #             kubeletDirPath: /var/lib/k0s/kubelet
+
         installConfig:
           users:
             etcdUser: etcd

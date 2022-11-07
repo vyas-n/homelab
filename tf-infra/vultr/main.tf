@@ -50,6 +50,22 @@ resource "vultr_instance" "k8s-node" {
   ssh_key_ids = [vultr_ssh_key.vyas-workbook-8.id]
 }
 
+# resource "vultr_reserved_ip" "k8s-node-ipv6" {
+#   for_each    = local.nodes
+#   label       = "${each.key}-ipv6"
+#   region      = "dfw"
+#   ip_type     = "v6"
+#   instance_id = vultr_instance.k8s-node[each.key].id
+# }
+
+# resource "vultr_reserved_ip" "k8s-node-ipv4" {
+#   for_each    = local.nodes
+#   label       = "${each.key}-ipv4"
+#   region      = "dfw"
+#   ip_type     = "v4"
+#   instance_id = vultr_instance.k8s-node[each.key].id
+# }
+
 resource "vultr_block_storage" "vol1" {
   for_each             = local.nodes
   size_gb              = 50
