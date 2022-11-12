@@ -16,18 +16,19 @@ package_upgrade: true
 package_reboot_if_required: true
 
 runcmd:
-  - [ufw, allow, 6443]
-  - [ufw, allow, 179]
-  - [ufw, allow, 2379]
-  - [ufw, allow, 2380]
-  - [ufw, allow, 4789]
-  - [ufw, allow, 10250]
-  - [ufw, allow, 10251]
-  - [ufw, allow, 10252]
-  - [ufw, allow, 8132]
-  - [ufw, allow, 8133]
-  - [ufw, allow, 9443]
-  - [ufw, reload]
+  # - [ufw, allow, 179]
+  # - [ufw, allow, 2379]
+  # - [ufw, allow, 2380]
+  # - [ufw, allow, 4789]
+  # - [ufw, allow, 6443]
+  # - [ufw, allow, 8132]
+  # - [ufw, allow, 8133]
+  # - [ufw, allow, 9443]
+  # - [ufw, allow, 10250]
+  # - [ufw, allow, 10251]
+  # - [ufw, allow, 10252]
+  - [ufw, disable]
+  # - [ufw, reload]
 
 users:
   - name: vyas

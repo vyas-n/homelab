@@ -41,7 +41,7 @@ resource "vultr_ssh_key" "vyas-workbook-8" {
 
 resource "vultr_instance" "k8s-node" {
   for_each    = local.nodes
-  plan        = "vhp-4c-8gb-amd" # curl "https://api.vultr.com/v2/plans" -X GET -H "Authorization: Bearer $VULTR_API_KEY" | dasel -p json -m --color '.plans.(ram=8192)' | less -r
+  plan        = "vhp-2c-4gb-amd" # curl "https://api.vultr.com/v2/plans" -X GET -H "Authorization: Bearer $VULTR_API_KEY" | dasel -p json -m --color '.plans.(ram=8192)' | less -r
   os_id       = 1743             # curl "https://api.vultr.com/v2/os" -X GET -H "Authorization: Bearer $VULTR_API_KEY" | dasel -p json -m --color '.os.(family=ubuntu)' | less -r
   hostname    = each.key
   region      = "dfw"
@@ -68,6 +68,17 @@ resource "vultr_instance" "k8s-node" {
 
 resource "vultr_block_storage" "vol1" {
   for_each             = local.nodes
+  label                = "${each.key}-vol1"
+  size_gb              = 50
+  block_type           = "storage_opt"
+  region               = "dfw"
+  live                 = true
+  attached_to_instance = vultr_instance.k8s-node[each.key].id
+}
+
+resource "vultr_block_storage" "vol2" {
+  for_each             = local.nodes
+  label                = "${each.key}-vol2"
   size_gb              = 50
   block_type           = "storage_opt"
   region               = "dfw"

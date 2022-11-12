@@ -1,0 +1,29 @@
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: vultr
+spec:
+  peerIP: 169.254.169.254
+  asNumber: 64515
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPConfiguration
+metadata:
+  name: default
+spec:
+  serviceLoadBalancerIPs:
+    - cidr: 45.32.195.235/32
+    - cidr: 216.128.139.33/32
+    - cidr: 207.148.3.245/32
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: bofit
+  namespace: metallb
+spec:
+  addresses:
+    - 45.32.195.235/32
+    - 216.128.139.33/32
+    - 207.148.3.245/32

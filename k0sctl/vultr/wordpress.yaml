@@ -55,17 +55,26 @@ spec:
         tier: mysql
     spec:
       containers:
-        - image: mysql:5.6
+        - image: docker.io/library/mysql:5.7
           name: mysql
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: changeme
+          args:
+            - "--ignore-db-dir=lost+found"
           ports:
             - containerPort: 3306
               name: mysql
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
+          resources:
+            limits:
+              cpu: 1000m
+              memory: "1Gi"
+            requests:
+              cpu: 10m
+              memory: "16Mi"
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
@@ -122,7 +131,7 @@ spec:
         tier: frontend
     spec:
       containers:
-        - image: wordpress:4.6.1-apache
+        - image: docker.io/library/wordpress:6.1.0-apache
           name: wordpress
           env:
             - name: WORDPRESS_DB_HOST
@@ -135,6 +144,13 @@ spec:
           volumeMounts:
             - name: wordpress-persistent-storage
               mountPath: /var/www/html
+          resources:
+            limits:
+              cpu: 1000m
+              memory: "1Gi"
+            requests:
+              cpu: 10m
+              memory: "16Mi"
       volumes:
         - name: wordpress-persistent-storage
           persistentVolumeClaim:
