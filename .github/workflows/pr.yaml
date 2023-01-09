@@ -1,0 +1,40 @@
+# GitHub Actions Workflows Ref: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+---
+name: PR
+"on":
+  pull_request:
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+jobs:
+  pr:
+    name: PR
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v3.0.2
+      - name: Check if PR Title is Conventional Commit
+        uses: amannn/action-semantic-pull-request@v4.5.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  automerge:
+    name: Automerge
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    container:
+      image: docker.io/library/alpine:latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - run: |
+          apk --no-cache add github-cli git
+      - name: Enable auto-merge for PRs
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ github.token }}

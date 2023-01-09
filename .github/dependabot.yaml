@@ -1,0 +1,20 @@
+# Dependabot Config: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+---
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: daily
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: daily
+  - package-ecosystem: terraform
+    directory: "/terraform/k8s/k0s-cluster"
+    schedule:
+      interval: daily
+  - package-ecosystem: terraform
+    directory: "/terraform/digitalocean"
+    schedule:
+      interval: daily

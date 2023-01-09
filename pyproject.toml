@@ -1,0 +1,20 @@
+# Poetry Config Ref: https://python-poetry.org/docs/pyproject
+[tool.poetry]
+name = "deploy"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+ansible = "^6.3.0"
+paramiko = "^2.11.0"
+
+[tool.poetry.group.dev.dependencies]
+ansible-lint = "^6.5.2"
+anchorecli = "^0.9.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
