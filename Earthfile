@@ -3,6 +3,7 @@
 VERSION 0.6
 
 all:
+    LOCALLY
     RUN echo sup
 
 deploy-k0sctl:

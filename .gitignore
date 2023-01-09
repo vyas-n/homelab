@@ -1,17 +1,17 @@
+# gitignore Format Ref: https://git-scm.com/docs/gitignore
+
 # Secrets
 .env
 license.yaml
-kubeconfig.yaml
 *.snap
 
 # Packages
 .terraform/
 
-# Generated Files
+# Generated / Temp Files
 .DS_Store
-.terraform/
 *.tfstate*
-generated/
 
 # Outputs
-*.tfstate*
+generated/
+kubeconfig.yaml
