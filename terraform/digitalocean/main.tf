@@ -2,7 +2,7 @@ terraform {
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "deploy_digitalocean_sfo3"
+      name = "deploy_digitalocean"
     }
   }
   required_providers {
