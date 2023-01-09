@@ -1,4 +1,9 @@
 #cloud-config
+# Cloud config Refs:
+# - Base Config: https://cloudinit.readthedocs.io/en/latest/topics/base_config_reference.html
+# - Module Config: https://cloudinit.readthedocs.io/en/latest/topics/modules.html
+# - Examples: https://cloudinit.readthedocs.io/en/latest/topics/examples.html
+
 apt:
   sources:
     # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl

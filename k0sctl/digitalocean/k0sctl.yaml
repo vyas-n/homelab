@@ -1,4 +1,4 @@
-# Config: https://github.com/k0sproject/k0sctl#configuration-file
+# k0sctl Config: https://github.com/k0sproject/k0sctl#configuration-file
 ---
 apiVersion: k0sctl.k0sproject.io/v1beta1
 kind: Cluster
