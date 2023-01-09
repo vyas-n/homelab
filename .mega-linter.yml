@@ -1,4 +1,4 @@
-# MegaLinter Config: https://oxsecurity.github.io/megalinter/configuration
+# MegaLinter Config Ref: https://oxsecurity.github.io/megalinter/configuration
 ---
 APPLY_FIXES: none
 DISABLE:

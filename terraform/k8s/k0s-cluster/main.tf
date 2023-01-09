@@ -93,7 +93,7 @@ resource "kubernetes_secret" "secrets" {
   ]
 }
 
-resource "helm_release" "cilium" {
+resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium/cilium
   name       = "cilium"
   chart      = "cilium"
   repository = "https://helm.cilium.io"
@@ -109,7 +109,7 @@ resource "helm_release" "cilium" {
   ]
 }
 
-resource "helm_release" "argo-cd" {
+resource "helm_release" "argo-cd" { # https://artifacthub.io/packages/helm/argo/argo-cd
   name       = "argo-cd"
   chart      = "argo-cd"
   repository = "https://argoproj.github.io/argo-helm"

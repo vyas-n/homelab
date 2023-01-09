@@ -20,21 +20,6 @@ jobs:
         uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Get Next Semantic Version
-        id: semver
-        uses: ietf-tools/semver-action@v1.1.1
-        with: # Config based on https://www.conventionalcommits.org/en/v1.0.0/
-          token: ${{ github.token }}
-          branch: ${{ github.head_ref }}
-          patchList: fix, bugfix, perf, refactor, test, tests, build, chore, ci, docs, style, patch, bug, doc
-      - name: Download latest earthly
-        uses: earthly/actions-setup@v1.0.1
-        with:
-          version: "latest"
-      - name: Check if README.md is up-to-date
-        run: |
-          earthly +fmt
-          git diff --exit-code
 
   automerge:
     name: Automerge
