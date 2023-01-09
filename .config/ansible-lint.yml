@@ -1,4 +1,0 @@
-# Ansible Lint Config Ref: https://ansible-lint.readthedocs.io/configuring/#configuration-file
----
-skip_list:
-  - yaml[line-length]

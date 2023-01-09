@@ -6,10 +6,6 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-  - package-ecosystem: pip
-    directory: "/"
-    schedule:
-      interval: daily
   - package-ecosystem: terraform
     directory: "/terraform/k8s/k0s-cluster"
     schedule:
