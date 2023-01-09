@@ -2,6 +2,9 @@
 
 VERSION 0.6
 
+all:
+    RUN echo sup
+
 deploy-k0sctl:
     LOCALLY
     RUN k0sctl apply --config=k0sctl/digitalocean/k0sctl.yaml --kubeconfig-out=k0sctl/digitalocean/kubeconfig.yaml
