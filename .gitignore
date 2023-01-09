@@ -1,6 +1,7 @@
 # Secrets
 .env
 license.yaml
+kubeconfig.yaml
 *.snap
 
 # Packages

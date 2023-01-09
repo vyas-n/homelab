@@ -2,30 +2,24 @@
 
 VERSION 0.6
 
-FROM ghcr.io/vyas-proj/dev:latest
+deploy-k0sctl:
+    LOCALLY
+    RUN k0sctl apply --config=k0sctl/digitalocean/k0sctl.yaml --kubeconfig-out=k0sctl/digitalocean/kubeconfig.yaml
+
+refresh-kubeconfig:
+    LOCALLY
+    RUN kubectl config delete-context k0s-cluster || true
+    RUN kubectl config delete-cluster k0s-cluster || true
+    RUN kubectl config delete-user admin || true
+    RUN KUBECONFIG=~/.kube/config:./k0sctl/digitalocean/kubeconfig.yaml kubectl config view --flatten > /tmp/config
+    RUN mv /tmp/config ~/.kube/config
+    RUN kubectx k0s-cluster
 
 deploy:
     BUILD +deploy-k8s-controllers
 
-deploy-k8s-controllers:
-    FROM +base
-    RUN mkdir -p /home/dev/src
-    WORKDIR /home/dev/src
-
-    RUN brew install poetry
-    COPY pyproject.toml poetry.lock .
-    RUN poetry install
-
-    COPY ansible/digitalocean/nyc3/requirements.yml .
-    RUN poetry run ansible-galaxy collection install -r requirements.yml
-
-    ARG SSH_AUTH_SOCK
-    COPY ansible/digitalocean/nyc3/hosts.yaml ansible/digitalocean/nyc3/k8s-controllers.playbook.yaml .
-    # TODO: Fix
-    RUN --ssh --interactive poetry run ansible-playbook -i hosts.yaml k8s-controllers.playbook.yaml
-
 docs:
-    FROM +base
+    FROM ghcr.io/vyas-proj/dev:latest
 
     COPY . .
     FOR dir IN $(find "modules" -name "*.tf" | xargs dirname | uniq)
@@ -38,7 +32,7 @@ docs:
     END
 
 fmt:
-    FROM +base
+    FROM ghcr.io/vyas-proj/dev:latest
 
     COPY . .
     RUN terraform fmt --recursive .

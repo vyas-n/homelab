@@ -21,7 +21,6 @@ provider "cloudflare" {
   # Configuration options
 }
 
-
 provider "digitalocean" {
   # Configuration options
 }
@@ -63,4 +62,14 @@ resource "digitalocean_database_cluster" "pg" {
   size       = "db-s-1vcpu-1gb"
   region     = "sfo3"
   node_count = 1
+}
+
+resource "digitalocean_database_db" "netbox" {
+  cluster_id = digitalocean_database_cluster.pg.id
+  name       = "netbox"
+}
+
+resource "digitalocean_database_user" "netbox" {
+  cluster_id = digitalocean_database_cluster.pg.id
+  name       = "netbox"
 }

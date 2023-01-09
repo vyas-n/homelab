@@ -11,18 +11,6 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: terraform
-    directory: "/tf-infra/digitalocean/nyc3"
-    schedule:
-      interval: daily
-  - package-ecosystem: terraform
-    directory: "/tf-infra/digitalocean/sfo3"
-    schedule:
-      interval: daily
-  - package-ecosystem: terraform
-    directory: "/tf-infra/digitalocean/sfo3/k8s"
-    schedule:
-      interval: daily
-  - package-ecosystem: terraform
-    directory: "/tf-infra/vault"
+    directory: "/tf-infra/digitalocean"
     schedule:
       interval: daily
