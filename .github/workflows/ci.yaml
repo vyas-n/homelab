@@ -1,0 +1,55 @@
+# GitHub Actions Workflows Ref: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+---
+name: CI
+"on":
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3.0.2
+        with:
+          token: ${{ github.token }}
+          fetch-depth: 0
+      - name: MegaLinter
+        uses: oxsecurity/megalinter@v6.18.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Upload MegaLinter artifacts
+        if: ${{ success() }} || ${{ failure() }}
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: MegaLinter reports
+          path: |
+            megalinter-reports
+          retention-days: 1
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.0.2
+      - name: Download latest earthly
+        uses: earthly/actions-setup@v1.0.1
+        with:
+          version: "latest"
+      - name: Run build
+        run: |
+          earthly --allow-privileged +all

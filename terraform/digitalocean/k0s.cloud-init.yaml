@@ -1,0 +1,49 @@
+#cloud-config
+# Cloud config Refs:
+# - Base Config: https://cloudinit.readthedocs.io/en/latest/topics/base_config_reference.html
+# - Module Config: https://cloudinit.readthedocs.io/en/latest/topics/modules.html
+# - Examples: https://cloudinit.readthedocs.io/en/latest/topics/examples.html
+
+apt:
+  sources:
+    # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+    source1:
+      keyid: "7F92E05B31093BEF5A3C2D38FEEA9169307EA071" # curl -sSf https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --show-keys
+      source: "deb [signed-by=$KEY_FILE] https://apt.kubernetes.io/ kubernetes-xenial main"
+packages:
+  - fish
+  - curl
+  - ca-certificates
+  - apt-transport-https
+  - kubectl
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+runcmd:
+  # - [ufw, allow, 22]
+  # - [ufw, allow, 80]
+  # - [ufw, allow, 179]
+  # - [ufw, allow, 443]
+  # - [ufw, allow, 2379]
+  # - [ufw, allow, 2380]
+  # - [ufw, allow, 4789]
+  # - [ufw, allow, 6443]
+  # - [ufw, allow, 8132]
+  # - [ufw, allow, 8133]
+  # - [ufw, allow, 9443]
+  # - [ufw, allow, 10250]
+  # - [ufw, allow, 10251]
+  # - [ufw, allow, 10252]
+  - [ufw, disable]
+  # - [ufw, enable]
+
+users:
+  - name: vyas
+    gecos: Vyas
+    groups: users, admin
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: true
+    ssh_import_id:
+      - gh:vyas-n

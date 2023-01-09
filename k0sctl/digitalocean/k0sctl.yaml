@@ -1,0 +1,81 @@
+# k0sctl Config: https://github.com/k0sproject/k0sctl#configuration-file
+---
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: k0s-cluster
+spec:
+  hosts:
+    - hostname: k8s-ctr-1
+      role: controller+worker
+      privateAddress: 10.124.0.4
+      noTaints: true
+      ssh:
+        address: 24.199.107.45
+        user: vyas
+        port: 22
+        keyPath: /Users/vnellutla/.ssh/vyas-workbook-8.pem
+    - hostname: k8s-worker-1
+      role: worker
+      privateAddress: 10.124.0.5
+      ssh:
+        address: 146.190.59.87
+        user: vyas
+        port: 22
+        keyPath: /Users/vnellutla/.ssh/vyas-workbook-8.pem
+    - hostname: k8s-worker-2
+      role: worker
+      privateAddress: 10.124.0.2
+      ssh:
+        address: 164.92.102.244
+        user: vyas
+        port: 22
+        keyPath: /Users/vnellutla/.ssh/vyas-workbook-8.pem
+    - hostname: k8s-worker-3
+      role: worker
+      privateAddress: 10.124.0.7
+      ssh:
+        address: 24.199.107.47
+        user: vyas
+        port: 22
+        keyPath: /Users/vnellutla/.ssh/vyas-workbook-8.pem
+  k0s:
+    version: 1.25.4+k0s.0
+    dynamicConfig: true
+    config:
+      # Config: https://docs.k0sproject.io/stable/configuration/#configuration-file-reference
+      apiVersion: k0s.k0sproject.io/v1beta1
+      kind: Cluster
+      metadata:
+        name: k0s
+      spec:
+        api:
+          k0sApiPort: 9443
+          port: 6443
+        konnectivity:
+          adminPort: 8133
+          agentPort: 8132
+        network:
+          podCIDR: 10.244.0.0/16
+          serviceCIDR: 10.96.0.0/12
+          dualStack:
+            enabled: true
+            IPv6podCIDR: fd00::/108
+            IPv6serviceCIDR: fd01::/108
+          provider: custom
+          kubeProxy:
+            disabled: false
+            mode: iptables
+        podSecurityPolicy:
+          defaultPolicy: 00-k0s-privileged
+        storage:
+          type: etcd
+        telemetry:
+          enabled: true
+        installConfig:
+          users:
+            etcdUser: etcd
+            kineUser: kube-apiserver
+            konnectivityUser: konnectivity-server
+            kubeAPIserverUser: kube-apiserver
+            kubeSchedulerUser: kube-scheduler
