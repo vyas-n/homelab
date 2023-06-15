@@ -16,6 +16,6 @@ jobs:
       contents: read
     steps:
       - name: Check if PR Title is Conventional Commit
-        uses: amannn/action-semantic-pull-request@v4.5.0
+        uses: amannn/action-semantic-pull-request@v5.2.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
