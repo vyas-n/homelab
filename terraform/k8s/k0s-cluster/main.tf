@@ -97,7 +97,7 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
   name       = "cilium"
   chart      = "cilium"
   repository = "https://helm.cilium.io"
-  version    = "1.14.1"
+  version    = "1.14.2"
 
   namespace        = "kube-system"
   create_namespace = false
