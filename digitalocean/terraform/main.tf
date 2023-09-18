@@ -1,30 +1,12 @@
-terraform {
-  cloud {
-    organization = "vyas-n"
-    workspaces {
-      name = "deploy_digitalocean"
-    }
+
+resource "digitalocean_kubernetes_cluster" "do-k8s" {
+  name    = "do-k8s"
+  region  = "nyc3"
+  version = "1.27.6-do.0"
+
+  node_pool {
+    name       = "default"
+    size       = "s-1vcpu-2gb"
+    node_count = 3
   }
-  required_providers {
-    digitalocean = {
-      source  = "digitalocean/digitalocean"
-      version = "~> 2"
-    }
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 4"
-    }
-  }
-}
-
-provider "cloudflare" {
-  # Configuration options
-}
-
-provider "digitalocean" {
-  # Configuration options
-}
-
-data "cloudflare_zone" "vyas-n" {
-  name = "vyas-n.com"
 }

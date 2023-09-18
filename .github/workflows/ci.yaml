@@ -7,7 +7,7 @@ name: CI
       - develop
   pull_request:
     branches:
-      - develop
+      - "**"
   workflow_dispatch:
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -21,18 +21,14 @@ jobs:
       checks: write
       pull-requests: write
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4.0.0
+      - uses: actions/checkout@v4.0.0
         with:
           token: ${{ github.token }}
-          fetch-depth: 0
-      - name: MegaLinter
-        uses: oxsecurity/megalinter@v7.3.0
+      - uses: oxsecurity/megalinter@v7.3.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Upload MegaLinter artifacts
+      - uses: actions/upload-artifact@v3.1.3
         if: ${{ success() }} || ${{ failure() }}
-        uses: actions/upload-artifact@v3.1.3
         with:
           name: MegaLinter reports
           path: |
@@ -44,10 +40,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4.0.0
-      - name: Download latest earthly
-        uses: earthly/actions-setup@v1.0.8
+      - uses: actions/checkout@v4.0.0
+      - uses: earthly/actions-setup@v1.0.8
         with:
           version: "latest"
       - name: Run build
