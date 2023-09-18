@@ -3,17 +3,17 @@ terraform {
     organization = "vyas-n"
 
     workspaces {
-      name = "deploy_k8s_k0s-cluster"
+      name = "deploy_k8s_k0s-cluster_terraform"
     }
   }
   required_providers {
     helm = {
       source  = "hashicorp/helm"
-      version = "~> 2.0.0"
+      version = "~> 2"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.0.0"
+      version = "~> 2"
     }
   }
 }
