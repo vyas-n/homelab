@@ -1,5 +1,5 @@
 
-resource "digitalocean_kubernetes_cluster" "do-k8s" {
+resource "digitalocean_kubernetes_cluster" "do_k8s" {
   name    = "do-k8s"
   region  = "nyc3"
   version = "1.27.6-do.0"

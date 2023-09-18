@@ -9,11 +9,11 @@ terraform {
   required_providers {
     helm = {
       source  = "hashicorp/helm"
-      version = ">= 2"
+      version = "~> 2.0.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = ">= 2"
+      version = "~> 2.0.0"
     }
   }
 }
@@ -72,7 +72,7 @@ locals {
   }
 }
 
-resource "kubernetes_namespace" "argo-cd" {
+resource "kubernetes_namespace" "argo_cd" {
   metadata {
     name = "argo-cd"
   }
@@ -88,7 +88,7 @@ resource "kubernetes_secret" "secrets" {
   data = each.value["data"]
 
   depends_on = [
-    kubernetes_namespace.argo-cd
+    kubernetes_namespace.argo_cd
   ]
 }
 
@@ -108,13 +108,13 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
   ]
 }
 
-resource "helm_release" "argo-cd" { # https://artifacthub.io/packages/helm/argo/argo-cd
+resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/argo-cd
   name       = "argo-cd"
   chart      = "argo-cd"
   repository = "https://argoproj.github.io/argo-helm"
   version    = "5.46.5"
 
-  namespace        = kubernetes_namespace.argo-cd.metadata[0].name
+  namespace        = kubernetes_namespace.argo_cd.metadata[0].name
   create_namespace = false
   lint             = true
   timeout          = 300
