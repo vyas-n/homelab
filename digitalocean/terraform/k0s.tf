@@ -2,6 +2,8 @@ locals {
   region = "sfo3"
   ctr-nodes = {
     # "k8s-ctr-1" : {}
+  }
+  wkr-nodes = {
     # "k8s-worker-1" : {}
     # "k8s-worker-2" : {}
     # "k8s-worker-3" : {}
