@@ -23,8 +23,7 @@ deploy:
     BUILD +deploy-k0sctl
 
 docs:
-    FROM ghcr.io/vyas-proj/dev:latest\
-
+    FROM ghcr.io/vyas-proj/dev:latest
 
     COPY . .
     FOR dir IN $(find "modules" -name "*.tf" | xargs dirname | uniq)
