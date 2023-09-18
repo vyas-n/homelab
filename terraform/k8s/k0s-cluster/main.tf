@@ -37,7 +37,6 @@ locals {
       namespace = [] # "coder"]
       type      = "Opaque"
       data = {
-        url = "postgres://coder:coder@coder-db-postgresql.coder.svc.cluster.local:5432/coder?sslmode=disable"
       }
     }
     dockerhub-pull-creds = {
