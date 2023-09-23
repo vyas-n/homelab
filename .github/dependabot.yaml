@@ -3,14 +3,18 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: /
     schedule:
       interval: daily
   - package-ecosystem: terraform
-    directory: "/terraform/k8s/k0s-cluster"
+    directory: digitalocean/terraform
     schedule:
       interval: daily
   - package-ecosystem: terraform
-    directory: "/terraform/digitalocean"
+    directory: k8s/do-k8s/terraform
+    schedule:
+      interval: daily
+  - package-ecosystem: terraform
+    directory: k8s/k0s-cluster/terraform
     schedule:
       interval: daily
