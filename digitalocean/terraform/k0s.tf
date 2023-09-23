@@ -10,18 +10,6 @@ locals {
   }
 }
 
-resource "digitalocean_project" "k8s" {
-  name        = "K8s Sandbox"
-  description = "A project to represent development resources."
-  purpose     = "Web Application"
-  environment = "Development"
-
-  resources = flatten([
-    [for droplet in digitalocean_droplet.k8s_ctr : droplet.urn],
-    [for vol in digitalocean_volume.k8s_ctr_vol1 : vol.urn],
-  ])
-}
-
 data "digitalocean_ssh_key" "vyas_workbook_8" {
   name = "Vyas-Workbook-8"
 }
