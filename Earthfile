@@ -38,6 +38,8 @@ docs:
 fmt:
     FROM ghcr.io/vyas-proj/dev:latest
 
+    USER dev
+
     COPY . .
     RUN terraform fmt --recursive .
     FOR file IN $(git diff --name-only | egrep '\.tf$')
