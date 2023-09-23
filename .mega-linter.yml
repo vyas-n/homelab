@@ -1,9 +1,11 @@
-# MegaLinter Config Ref: https://oxsecurity.github.io/megalinter/configuration
 ---
-APPLY_FIXES: none
+# MegaLinter Config: https://oxsecurity.github.io/megalinter/configuration
+# General Settings
+SHOW_ELAPSED_TIME: true
+
+# Linter Enable/Disable
 DISABLE:
   - COPYPASTE
-  - REPOSITORY
   - SPELL
 DISABLE_LINTERS:
   - TERRAFORM_KICS
@@ -11,5 +13,6 @@ DISABLE_ERRORS_LINTERS:
   - TERRAFORM_CHECKOV
   - TERRAFORM_TERRASCAN
   - TERRAFORM_TFLINT
-SHOW_ELAPSED_TIME: true
-FILEIO_REPORTER: false
+  - REPOSITORY_TRIVY
+  - REPOSITORY_KICS
+# Tool Specific Config

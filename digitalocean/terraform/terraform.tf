@@ -1,4 +1,5 @@
 terraform {
+  required_version = "1.5.7"
   cloud {
     organization = "vyas-n"
     workspaces {
@@ -23,8 +24,4 @@ provider "cloudflare" {
 
 provider "digitalocean" {
   # Configuration options
-}
-
-data "cloudflare_zone" "vyas-n" {
-  name = "vyas-n.com"
 }
