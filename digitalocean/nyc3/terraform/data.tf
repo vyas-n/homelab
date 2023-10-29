@@ -1,4 +1,5 @@
 
-data "digitalocean_ssh_key" "vyas_workbook_8" {
-  name = "Vyas-Workbook-8"
+data "digitalocean_kubernetes_versions" "do_k8s" {
+  # Grab the latest k8s version slug with `doctl kubernetes options versions`
+  version_prefix = "1.27."
 }
