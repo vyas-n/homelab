@@ -43,7 +43,7 @@ provider "helm" {
 }
 
 provider "hcp" {
-  # Configuration options
+  project_id = "vyasnellutla-project"
 }
 
 provider "tfe" {
