@@ -81,7 +81,7 @@ resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/
   name       = "argo-cd"
   chart      = "argo-cd"
   repository = "https://argoproj.github.io/argo-helm"
-  version    = "5.47.0"
+  version    = "5.48.0"
 
   namespace        = kubernetes_namespace.argo_cd.metadata[0].name
   create_namespace = false
