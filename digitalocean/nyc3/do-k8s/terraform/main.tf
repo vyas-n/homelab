@@ -23,7 +23,6 @@ resource "helm_release" "authentik" { # https://artifacthub.io/packages/helm/goa
     yamlencode({
       authentik = {
         secret_key = data.hcp_vault_secrets_app.digitalocean_nyc3_do_k8s_terraform.secrets.authentik_secret_key
-
         postgresql = {
           password = data.hcp_vault_secrets_app.digitalocean_nyc3_do_k8s_terraform.secrets.authentik_postgresql_password
         }
