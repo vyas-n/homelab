@@ -1,0 +1,20 @@
+---
+# https://artifacthub.io/packages/helm/goauthentik/authentik
+authentik:
+  # This sends anonymous usage-data, stack traces on errors and
+  # performance data to sentry.beryju.org, and is fully opt-in
+  error_reporting:
+    enabled: true
+
+ingress:
+  enabled: false
+  # hosts:
+  #   - host: authentik.domain.tld
+  #     paths:
+  #       - path: "/"
+  #         pathType: Prefix
+
+postgresql:
+  enabled: true
+redis:
+  enabled: true
