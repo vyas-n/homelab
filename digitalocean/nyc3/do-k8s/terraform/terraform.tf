@@ -18,6 +18,9 @@ terraform {
   }
 }
 
+# K8s Cluster Creds:
+# - https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_cluster#kubernetes-terraform-provider-example
+
 provider "kubernetes" {
   config_path    = "~/.kube/config"
   config_context = "k0s-cluster"
