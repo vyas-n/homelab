@@ -15,6 +15,13 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2"
     }
+    hcp = {
+      source  = "hashicorp/hcp"
+      version = "~> 0"
+    }
+    tfe = {
+      version = "~> 0"
+    }
   }
 }
 
@@ -33,4 +40,12 @@ provider "helm" {
     token                  = data.tfe_outputs.digitalocean_nyc3_terraform.values.token
     cluster_ca_certificate = data.tfe_outputs.digitalocean_nyc3_terraform.values.cluster_ca_certificate
   }
+}
+
+provider "hcp" {
+  # Configuration options
+}
+
+provider "tfe" {
+  # Configuration options
 }
