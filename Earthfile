@@ -10,6 +10,12 @@ deploy-k0sctl:
     LOCALLY
     RUN k0sctl apply --config=k0sctl/digitalocean/k0sctl.yaml --kubeconfig-out=k0sctl/digitalocean/kubeconfig.yaml
 
+rebuild-droplets:
+    LOCALLY
+    FOR droplet IN $(doctl compute droplet list | grep k8s- | awk '{ print $1 }')
+        RUN doctl compute droplet-action rebuild $droplet --image ubuntu-20-04-x64
+    END
+
 refresh-kubeconfig:
     LOCALLY
     RUN kubectl config delete-context k0s-cluster || true
