@@ -43,7 +43,7 @@ provider "helm" {
 }
 
 provider "hcp" {
-  project_id = "vyasnellutla-project"
+  project_id = "dc8b19f6-5748-4906-a1a3-b23307440a80"
 }
 
 provider "tfe" {
