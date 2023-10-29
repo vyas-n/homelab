@@ -1,9 +1,9 @@
 terraform {
-  required_version = "1.5.7"
+  required_version = "1.6.2"
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "deploy_digitalocean"
+      name = "digitalocean_nyc3_terraform"
     }
   }
   required_providers {
@@ -11,15 +11,7 @@ terraform {
       source  = "digitalocean/digitalocean"
       version = "~> 2"
     }
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 4"
-    }
   }
-}
-
-provider "cloudflare" {
-  # Configuration options
 }
 
 provider "digitalocean" {

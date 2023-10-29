@@ -10,10 +10,6 @@ locals {
   }
 }
 
-data "digitalocean_ssh_key" "vyas_workbook_8" {
-  name = "Vyas-Workbook-8"
-}
-
 resource "digitalocean_droplet" "k8s_ctr" {
   for_each    = local.ctr_nodes
   name        = each.key
