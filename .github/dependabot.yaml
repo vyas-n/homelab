@@ -7,14 +7,10 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: terraform
-    directory: digitalocean/terraform
+    directory: digitalocean/nyc3/do-k8s/terraform
     schedule:
       interval: daily
   - package-ecosystem: terraform
-    directory: k8s/do-k8s/terraform
-    schedule:
-      interval: daily
-  - package-ecosystem: terraform
-    directory: k8s/k0s-cluster/terraform
+    directory: digitalocean/nyc3/terraform
     schedule:
       interval: daily

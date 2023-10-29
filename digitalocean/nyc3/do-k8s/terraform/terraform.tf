@@ -1,9 +1,9 @@
 terraform {
+  required_version = "1.6.2"
   cloud {
     organization = "vyas-n"
-
     workspaces {
-      name = "deploy_k8s_k0s-cluster_terraform"
+      name = "digitalocean_nyc3_do-k8s_terraform"
     }
   }
   required_providers {
