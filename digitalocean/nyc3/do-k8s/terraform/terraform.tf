@@ -17,7 +17,7 @@ terraform {
     }
     hcp = {
       source  = "hashicorp/hcp"
-      version = "~> 0"
+      version = ">= 0"
     }
     tfe = {
       version = "~> 0"
