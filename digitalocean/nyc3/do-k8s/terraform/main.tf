@@ -9,7 +9,7 @@ resource "helm_release" "authentik" { # https://artifacthub.io/packages/helm/goa
   name       = "authentik"
   chart      = "authentik"
   repository = "https://charts.goauthentik.io"
-  version    = "2023.10.2"
+  version    = "2023.10.5"
 
   namespace        = kubernetes_namespace.authentik.metadata[0].name
   create_namespace = false
