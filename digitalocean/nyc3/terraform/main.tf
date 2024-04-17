@@ -9,7 +9,7 @@ resource "digitalocean_kubernetes_cluster" "do_k8s" {
   node_pool {
     name = "default"
     # Grab available droplet sizes with `doctl compute size list`
-    size       = "s-1vcpu-2gb"
-    node_count = 3
+    size       = "s-1vcpu-512mb-10gb"
+    node_count = 1
   }
 }
