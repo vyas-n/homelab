@@ -33,16 +33,3 @@ jobs:
           path: |
             megalinter-reports
           retention-days: 1
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4.1.2
-      - uses: earthly/actions-setup@v1.0.12
-        with:
-          version: "latest"
-      - name: Run build
-        run: |
-          earthly --allow-privileged +all
