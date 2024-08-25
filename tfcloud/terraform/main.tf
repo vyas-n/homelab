@@ -44,8 +44,8 @@ resource "tfe_workspace" "digitalocean_nyc3_terraform" {
   }
 }
 
-resource "tfe_workspace" "digitalocean_nyc3_do-k8s_terraform" {
-  name              = "digitalocean_nyc3_do-k8s_terraform"
+resource "tfe_workspace" "digitalocean_nyc3_do_k8s_terraform" {
+  name              = "digitalocean_nyc3_do_k8s_terraform"
   working_directory = "digitalocean/nyc3/do-k8s/terraform"
   project_id        = data.tfe_project.default.id
 
