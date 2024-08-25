@@ -12,11 +12,21 @@ updates:
           - "*"
   - package-ecosystem: terraform
     directories:
+      - digitalocean/terraform
       - digitalocean/nyc3/terraform
       - digitalocean/nyc3/do-k8s/terraform
     schedule:
       interval: daily
     groups:
       terraform-digitalocean:
+        patterns:
+          - "*"
+  - package-ecosystem: terraform
+    directories:
+      - tfcloud/terraform
+    schedule:
+      interval: daily
+    groups:
+      terraform-tfcloud:
         patterns:
           - "*"
