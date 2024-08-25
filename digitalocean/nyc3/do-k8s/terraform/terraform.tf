@@ -8,18 +8,15 @@ terraform {
   required_providers {
     helm = {
       source  = "hashicorp/helm"
-      version = ">= 2"
+      version = "2.14.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = ">= 2"
-    }
-    hcp = {
-      source  = "hashicorp/hcp"
-      version = ">= 0"
+      version = "2.31.0"
     }
     tfe = {
-      version = ">= 0"
+      source  = "hashicorp/tfe"
+      version = "0.58.1"
     }
   }
 }
@@ -41,10 +38,4 @@ provider "helm" {
   }
 }
 
-provider "hcp" {
-  project_id = "dc8b19f6-5748-4906-a1a3-b23307440a80"
-}
-
-provider "tfe" {
-  # Configuration options
-}
+provider "tfe" {}
