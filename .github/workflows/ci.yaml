@@ -22,7 +22,7 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      - uses: oxsecurity/megalinter/flavors/terraform@9561d027e23bb3ebb6bafe03595db9f1af25b6bfd699f978c959635fbeccc041 # v8.0.0
+      - uses: oxsecurity/megalinter/flavors/terraform@v8.0.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
