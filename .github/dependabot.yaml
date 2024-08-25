@@ -6,11 +6,17 @@ updates:
     directory: /
     schedule:
       interval: daily
+    groups:
+      github-actions:
+        patterns:
+          - "*"
   - package-ecosystem: terraform
-    directory: digitalocean/nyc3/do-k8s/terraform
+    directories:
+      - digitalocean/nyc3/terraform
+      - digitalocean/nyc3/do-k8s/terraform
     schedule:
       interval: daily
-  - package-ecosystem: terraform
-    directory: digitalocean/nyc3/terraform
-    schedule:
-      interval: daily
+    groups:
+      terraform-digitalocean:
+        patterns:
+          - "*"
