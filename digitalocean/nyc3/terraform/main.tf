@@ -10,7 +10,7 @@ resource "digitalocean_project" "bedrock" {
 resource "digitalocean_project_resources" "bedrock" {
   project = digitalocean_project.bedrock.id
   resources = [
-    digitalocean_kubernetes_cluster.do_k8s.id
+    digitalocean_kubernetes_cluster.do_k8s.urn
   ]
 }
 
