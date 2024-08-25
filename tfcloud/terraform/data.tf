@@ -1,5 +1,9 @@
 # This file shows all the resources in Terraform Cloud that aren't managed by the Terraform config
 
+data "tfe_project" "default" {
+  name = "Default"
+}
+
 # ref: https://app.terraform.io/app/vyas-n/settings/varsets/varset-Yr7D8koHTJfJiGZh
 data "tfe_variable_set" "cloudflare" {
   name = "Cloudflare"

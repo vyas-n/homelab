@@ -5,22 +5,7 @@ provider "registry.terraform.io/digitalocean/digitalocean" {
   version     = "2.39.2"
   constraints = "2.39.2"
   hashes = [
-    "h1:3ThPMSN7Ui9AsaVPfqO6IvMbXb62M+lB9aYLaCkm8T4=",
     "h1:8qu+Bu1eOKXx9eNta1v0uC01RKekmeFusWF/ONZ2aHI=",
-    "h1:95amcM3WqpzSJV+Y909SpVkCGNJXeYciIHBrkVmkloA=",
-    "h1:NjiBNe1PM/0v46YUrl8pJtO1u6B1NpffkfClX9p0NlU=",
-    "h1:QuMLEuW4rF4Ruyg0+vmc7+DsGs5FsKMk9o8/KvXsDPk=",
-    "h1:TDYO9wb1G04DyEVDpvkON6iTrIBqSoSmGwaQOr2Gb3I=",
-    "h1:WB6EeiByonpcQp5yQUHYNijXzO+LTCGWDYk1L2Ck/6k=",
-    "h1:Wy2JHOTC4m0lUCafKN+oxwmpvTmXafKN1qVYmQEqAcM=",
-    "h1:ci1lDN5Jz3QTvNjuKxdGngXs1xxPba0eDv/2rTVqw60=",
-    "h1:gYuR1yAusDYr+ID3E43xsLaYrb4h5yTTzAOQ4Z9abrc=",
-    "h1:hgTOf30OwS0LIWcuk2WJO7piue46Nx/YiD/09vPySwo=",
-    "h1:ojDhFhOI7lFZfmG2vMyDfVr2cQoqxN3q+hwM+R9frzM=",
-    "h1:qT4Vpo9IIRcQWW6nHc6OjUN4ZRWhrRPS16AqwYSkCmQ=",
-    "h1:qsKPe21kR1Bb/uqWSwO+ONAOHSJ0jOn4KhyplRaCfr4=",
-    "h1:uXZ3YjosXu63rkqldMJ5MvnCBGiWZkYSWoM0L3PCJ6E=",
-    "h1:xkKrDaPs+aGn2PUu/f5UV3KCIM1Sd9KTl84RpRP6RR4=",
     "zh:00380bd275cdb15645d03880a5c219a6826a9edba43099f5c09475465f87eb5f",
     "zh:1e40f4aa51ba898cf64b1f296450b2ae85e77af6e2706536242093550aa605b0",
     "zh:3f5f0c9f8c0cad64a757e38c1098633904786db998ab772e44f5f981b1acc06f",
