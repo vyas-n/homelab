@@ -1,7 +1,11 @@
 
+locals {
+  region = "nyc3"
+}
+
 resource "digitalocean_kubernetes_cluster" "do_k8s" {
   name          = "do-k8s"
-  region        = var.region
+  region        = "nyc3"
   version       = data.digitalocean_kubernetes_versions.do_k8s.latest_version
   surge_upgrade = true
   auto_upgrade  = true

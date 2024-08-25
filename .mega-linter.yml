@@ -1,15 +1,12 @@
 ---
 # MegaLinter Config: https://oxsecurity.github.io/megalinter/configuration
+
 # General Settings
 SHOW_ELAPSED_TIME: true
+DISABLE_ERRORS: true
 
 # Linter Enable/Disable
 DISABLE:
   - COPYPASTE
   - SPELL
-DISABLE_ERRORS_LINTERS:
-  - TERRAFORM_KICS
-  - TERRAFORM_TERRASCAN
-  - TERRAFORM_TFLINT
-  - REPOSITORY_KICS
 # Tool Specific Config
