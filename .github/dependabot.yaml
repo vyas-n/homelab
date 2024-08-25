@@ -14,11 +14,19 @@ updates:
     directories:
       - digitalocean/terraform
       - digitalocean/nyc3/terraform
-      - digitalocean/nyc3/do-k8s/terraform
     schedule:
       interval: daily
     groups:
       terraform-digitalocean:
+        patterns:
+          - "*"
+  - package-ecosystem: terraform
+    directories:
+      - digitalocean/nyc3/do-k8s/terraform
+    schedule:
+      interval: daily
+    groups:
+      terraform-k8s:
         patterns:
           - "*"
   - package-ecosystem: terraform
