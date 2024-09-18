@@ -30,3 +30,13 @@ resource "digitalocean_kubernetes_cluster" "do_k8s" {
     node_count = 1
   }
 }
+
+resource "digitalocean_kubernetes_node_pool" "pool1" {
+  name       = "pool1"
+  cluster_id = digitalocean_kubernetes_cluster.do_k8s.id
+
+  # Grab available droplet sizes with `doctl kubernetes options sizes`
+  # Grab their prices with: `doctl compute size list`
+  size = "s-1vcpu-2gb"
+  node_count = 2
+}

@@ -1,10 +1,10 @@
 ---
-# https://artifacthub.io/packages/helm/goauthentik/authentik
+# ref: https://artifacthub.io/packages/helm/goauthentik/authentik
 authentik:
   # This sends anonymous usage-data, stack traces on errors and
   # performance data to sentry.beryju.org, and is fully opt-in
   error_reporting:
-    enabled: true
+    enabled: false
 
 ingress:
   enabled: false
