@@ -5,16 +5,19 @@ authentik:
   # performance data to sentry.beryju.org, and is fully opt-in
   error_reporting:
     enabled: false
+  secret_key: JqJsEP+VN+Zuduxm9LzBOVLPeFhGfTWIswJSLEp6ywaw7G29WHYbwKcbybDrLiHZhCvafcWlwQ==
+  postgresql:
+    password: &pg_password ThisIsNotASecurePassword
 
-ingress:
-  enabled: false
-  # hosts:
-  #   - host: authentik.domain.tld
-  #     paths:
-  #       - path: "/"
-  #         pathType: Prefix
+server:
+  ingress:
+    enabled: false
+    # hosts:
+    #   - authentik.domain.tld
 
 postgresql:
   enabled: true
+  auth:
+    password: *pg_password
 redis:
   enabled: true
