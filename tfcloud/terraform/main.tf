@@ -45,6 +45,10 @@ resource "tfe_workspace" "digitalocean_nyc3_terraform" {
   queue_all_runs        = false
   file_triggers_enabled = false
 
+  remote_state_consumer_ids = [
+    tfe_workspace.digitalocean_nyc3_do_k8s_terraform.id
+  ]
+
   vcs_repo {
     identifier                 = "vyas-n/deploy"
     github_app_installation_id = local.tfc_github_app_install_id
