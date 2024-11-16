@@ -4,10 +4,8 @@ version: "3"
 
 services:
   reverse-proxy:
-    networks:
-      - traefik_net
     # The official v3 Traefik docker image
-    image: traefik:v3.2
+    image: traefik:v3.2.0
     # Enables the web UI and tells Traefik to listen to docker
     command: --api.insecure=true --providers.docker
     ports:
@@ -18,11 +16,3 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-
-networks:
-  traefik_net:
-    name: traefik_net
-    external: false
-    driver: bridge
-    # driver_opts:
-    #   com.docker.network.bridge.host_binding_ipv4: 192.168.1.204
