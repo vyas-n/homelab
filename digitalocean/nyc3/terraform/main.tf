@@ -37,6 +37,6 @@ resource "digitalocean_kubernetes_node_pool" "pool1" {
 
   # Grab available droplet sizes with `doctl kubernetes options sizes`
   # Grab their prices with: `doctl compute size list`
-  size = "s-1vcpu-2gb"
+  size       = "s-1vcpu-2gb"
   node_count = 2
 }
