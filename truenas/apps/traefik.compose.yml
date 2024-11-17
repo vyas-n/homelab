@@ -1,18 +1,58 @@
 ---
 # ref: https://doc.traefik.io/traefik/getting-started/quick-start/#launch-traefik-with-the-docker-provider
-version: "3"
-
 services:
-  reverse-proxy:
+  traefik:
     # The official v3 Traefik docker image
-    image: traefik:v3.2.0
+    image: docker.io/library/traefik:v3.2.0
+    container_name: traefik
     # Enables the web UI and tells Traefik to listen to docker
-    command: --api.insecure=true --providers.docker
+    command: traefik --configFile=/etc/traefik/traefik.yml
     ports:
       # The HTTP port
-      - "8080:80"
+      - 80:80
       # The Web UI (enabled by --api.insecure=true)
-      - "8088:8080"
+      - 18080:8080
     volumes:
       # So that Traefik can listen to the Docker events
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    configs:
+      - source: traefik.yml
+        target: /etc/traefik/traefik.yml
+      - source: routes.yml
+        target: /etc/traefik/routes.yml
+
+  whoami:
+    image: docker.io/traefik/whoami:v1.10.3
+    container_name: simple-service
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.whoami.rule=Host(`whoami.homelab.vyas-n.dev`)
+      - traefik.http.routers.whoami.entrypoints=web
+
+configs:
+  traefik.yml:
+    content: |
+      api:
+        dashboard: true
+        insecure: true
+
+      entryPoints:
+        web:
+          address: :80
+
+      providers:
+        docker:
+          exposedbydefault: false
+
+        file:
+          filename: /etc/traefik/routes.yml
+          watch: true
+  routes.yml:
+    content: |
+      http:
+        routers:
+          hello:
+            rule: PathPrefix(`/hello`)
+            service: hello@docker
+            rule: PathPrefix(`/world`)"
+            service: world@docker
