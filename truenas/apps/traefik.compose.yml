@@ -15,11 +15,15 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik.rule=Host(`traefik.homelab.vyas-n.dev`)
+      - traefik.http.routers.traefik.service=traefik@docker
+      - traefik.http.services.traefik.loadbalancer.server.port=8080
+      - traefik.http.routers.whoami.entrypoints=web
     configs:
       - source: traefik.yml
         target: /etc/traefik/traefik.yml
-      - source: routes.yml
-        target: /etc/traefik/routes.yml
 
   whoami:
     image: docker.io/traefik/whoami:v1.10.3
@@ -43,16 +47,3 @@ configs:
       providers:
         docker:
           exposedbydefault: false
-
-        file:
-          filename: /etc/traefik/routes.yml
-          watch: true
-  routes.yml:
-    content: |
-      http:
-        routers:
-          hello:
-            rule: PathPrefix(`/hello`)
-            service: hello@docker
-            rule: PathPrefix(`/world`)"
-            service: world@docker
