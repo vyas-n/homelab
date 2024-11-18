@@ -7,7 +7,7 @@ resource "tfe_variable_set" "tfc" {
 
 resource "tfe_variable" "tfe_token" {
   key             = "TFE_TOKEN"
-  value           = var.tfc_org_token
+  value           = data.onepassword_item.tfcloud_org_token_vyasn.credential
   category        = "env"
   sensitive       = true
   description     = <<EOF
@@ -26,7 +26,7 @@ resource "tfe_variable_set" "cloudflare" {
 
 resource "tfe_variable" "cloudflare_api_token" {
   key             = "CLOUDFLARE_API_TOKEN"
-  value           = var.cloudflare_api_token
+  value           = data.onepassword_item.cloudflare_pat.credential
   category        = "env"
   sensitive       = true
   description     = <<EOF

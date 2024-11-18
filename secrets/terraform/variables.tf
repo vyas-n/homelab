@@ -1,16 +1,4 @@
 
-## TFC
-variable "tfc_org_token" {
-  sensitive = true
-  type      = string
-}
-
-## Cloudflare
-variable "cloudflare_api_token" {
-  sensitive = true
-  type      = string
-}
-
 ## DigitalOcean
 variable "digitalocean_token" {
   sensitive = true
