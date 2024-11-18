@@ -45,7 +45,7 @@ resource "tfe_variable_set" "digitalocean" {
 
 resource "tfe_variable" "digitalocean_token" {
   key             = "DIGITALOCEAN_TOKEN"
-  value           = var.digitalocean_token
+  value           = data.onepassword_item.digitalocean_pat_for_tfcloud_vyasn.credential
   category        = "env"
   sensitive       = true
   description     = <<EOF
@@ -58,7 +58,7 @@ resource "tfe_variable" "digitalocean_token" {
 
 resource "tfe_variable" "digitalocean_spaces_access_key_id" {
   key             = "SPACES_ACCESS_KEY_ID"
-  value           = var.digitalocean_spaces_access_key_id
+  value           = data.onepassword_item.digitalocean_s3access_for_tfcloud_vyasn.username
   category        = "env"
   sensitive       = true
   description     = <<EOF
@@ -71,7 +71,7 @@ resource "tfe_variable" "digitalocean_spaces_access_key_id" {
 
 resource "tfe_variable" "digitalocean_spaces_secret_access_key" {
   key             = "SPACES_SECRET_ACCESS_KEY"
-  value           = var.digitalocean_spaces_secret_access_key
+  value           = data.onepassword_item.digitalocean_s3access_for_tfcloud_vyasn.credential
   category        = "env"
   sensitive       = true
   description     = <<EOF
