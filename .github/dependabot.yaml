@@ -38,3 +38,12 @@ updates:
       terraform-tfcloud:
         patterns:
           - "*"
+  - package-ecosystem: terraform
+    directories:
+      - secrets/terraform
+    schedule:
+      interval: daily
+    groups:
+      terraform-secrets:
+        patterns:
+          - "*"

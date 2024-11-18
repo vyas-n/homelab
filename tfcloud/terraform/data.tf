@@ -19,11 +19,6 @@ data "tfe_variable_set" "terraform_cloud" {
   name = "Terraform Cloud"
 }
 
-# ref: https://app.terraform.io/app/vyas-n/settings/varsets/varset-jCpd1BtgjRzih2hP
-data "tfe_variable_set" "hashicorp_cloud_provider" {
-  name = "HashiCorp Cloud Provider"
-}
-
 # ref: https://github.com/settings/installations/20575258
 locals {
   tfc_github_app_install_id = "ghain-XfWNdXrCExNPnYD6"
