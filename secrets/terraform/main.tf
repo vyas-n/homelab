@@ -89,7 +89,7 @@ resource "tfe_variable_set" "onepass_connect_server_bedrock" {
 }
 
 resource "tfe_variable" "onepass_connect_credentials_json" {
-  key             = "1password-credentials.json"
+  key             = "1password_credentials_json"
   value           = data.onepassword_item.onepass_connect_credentials_json.file.0.content
   category        = "terraform"
   sensitive       = true
@@ -102,7 +102,7 @@ resource "tfe_variable" "onepass_connect_credentials_json" {
 }
 
 resource "tfe_variable" "onepass_connect_access_token" {
-  key             = "1password-access-token"
+  key             = "1password_access_token"
   value           = data.onepassword_item.onepass_connect_access_token.credential
   category        = "terraform"
   sensitive       = true
