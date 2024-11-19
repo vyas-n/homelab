@@ -3,6 +3,19 @@ locals {
   terraform_version = "~> 1.9.0"
 }
 
+# This workspace only executes locally
+resource "tfe_workspace" "secrets_terraform" {
+  name           = "secrets_terraform"
+  project_id     = data.tfe_project.default.id
+  queue_all_runs = false
+
+  terraform_version = local.terraform_version
+}
+resource "tfe_workspace_settings" "secrets_terraform" {
+  workspace_id   = tfe_workspace.secrets_terraform.id
+  execution_mode = "local"
+}
+
 resource "tfe_workspace" "tfcloud_terraform" {
   name              = "tfcloud_terraform"
   working_directory = "tfcloud/terraform"
