@@ -1,7 +1,7 @@
-variable "1password_access_token" {
+variable "onepassword_access_token" {
   sensitive = true
 }
 
-variable "1password_credentials_json" {
+variable "onepassword_credentials_json" {
   sensitive = true
 }
