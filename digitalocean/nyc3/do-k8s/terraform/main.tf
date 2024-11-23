@@ -24,3 +24,15 @@ resource "helm_release" "authentik" { # ref: https://artifacthub.io/packages/hel
     yamlencode({})
   ]
 }
+
+resource "kubernetes_namespace" "onepassconnect" {
+  metadata {
+    name = "onepassconnect"
+  }
+}
+
+resource "kubernetes_namespace" "external_secrets" {
+  metadata {
+    name = "external-secrets"
+  }
+}
