@@ -1,27 +1,25 @@
 # This file shows all the resources in Terraform Cloud that aren't managed by the Terraform config
 
+# Default TFC Project
 data "tfe_project" "default" {
   name = "Default"
 }
 
-# ref: https://app.terraform.io/app/vyas-n/settings/varsets/varset-Yr7D8koHTJfJiGZh
+# TFC Variable Sets (Managed in the <repo root>/secrets/terraform workspace)
 data "tfe_variable_set" "cloudflare" {
   name = "Cloudflare"
 }
 
-# ref: https://app.terraform.io/app/vyas-n/settings/varsets/varset-FyFvfYvR4p3cbUfX
 data "tfe_variable_set" "digitalocean" {
   name = "DigitalOcean"
 }
 
-# ref: https://app.terraform.io/app/vyas-n/settings/varsets/varset-EZNQLXLLn8JB1tXG
 data "tfe_variable_set" "terraform_cloud" {
   name = "Terraform Cloud"
 }
 
-# ref: https://app.terraform.io/app/vyas-n/settings/varsets/varset-jCpd1BtgjRzih2hP
-data "tfe_variable_set" "hashicorp_cloud_provider" {
-  name = "HashiCorp Cloud Provider"
+data "tfe_variable_set" "onepass_connect_server_bedrock" {
+  name = "1PassConnect Server Bedrock"
 }
 
 # ref: https://github.com/settings/installations/20575258
