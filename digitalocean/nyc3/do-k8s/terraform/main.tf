@@ -37,7 +37,7 @@ resource "kubernetes_secret" "onepass_connect_credentials_json" {
     namespace = kubernetes_namespace.onepassconnect.metadata[0].name
   }
   data = {
-    "1password-credentials.json" = base64encode(var.onepassword_credentials_json)
+    "1password-credentials.json" = var.onepassword_credentials_json
   }
 }
 
