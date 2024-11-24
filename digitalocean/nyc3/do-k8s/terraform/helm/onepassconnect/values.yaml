@@ -3,3 +3,5 @@
 connect:
   # The key for the 1Password Connect Credentials stored in the credentials secret, the credentials must be encoded as a base64 string
   credentialsKey: 1password-credentials.json
+
+  serviceType: ClusterIP
