@@ -127,7 +127,7 @@ resource "kubernetes_manifest" "onepass_cluster_secret_store" {
             secretRef = {
               connectTokenSecretRef = {
                 name = kubernetes_secret.onepassword_connect_access_token.metadata[0].name
-                key  = token
+                key  = "token"
               }
             }
           }
