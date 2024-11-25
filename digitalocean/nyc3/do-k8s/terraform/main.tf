@@ -136,3 +136,40 @@ resource "kubectl_manifest" "onepass_cluster_secret_store" {
     }
   })
 }
+
+
+resource "kubectl_manifest" "authentik_eso_secrets" {
+  yaml_body = yamlencode({
+    apiVersion = "external-secrets.io/v1beta1"
+    kind       = "ExternalSecret"
+    metadata = {
+      name      = "authentik-eso-secrets"
+      namespace = kubernetes_namespace.authentik.metadata[0].name
+    }
+    spec = {
+      secretStoreRef = {
+        kind = "ClusterSecretStore"
+        name = kubectl_manifest.onepass_cluster_secret_store.name
+      }
+      target = {
+        creationPolicy = "Owner"
+      }
+      data = [
+        {
+          secretKey = "pg_pass"
+          remoteRef = {
+            key      = "Authentik"
+            property = "postgres password"
+          }
+        },
+        {
+          secretKey = "django_secret_key"
+          remoteRef = {
+            key      = "Authentik"
+            property = "django secret key"
+          }
+        }
+      ]
+    }
+  })
+}
