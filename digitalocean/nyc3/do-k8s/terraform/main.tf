@@ -108,31 +108,31 @@ resource "kubernetes_secret" "onepassword_connect_access_token" {
   }
 }
 
-# resource "kubernetes_manifest" "onepass_cluster_secret_store" {
-#   manifest = {
-#     apiVersion = "external-secrets.io/v1beta1"
-#     kind       = "ClusterSecretStore"
-#     metadata = {
-#       name = "onepass"
-#     }
-#     spec = {
-#       provider = {
-#         onepassword = {
-#           connectHost = "http://onepassword-connect.onepassconnect.svc:8080"
-#           vaults = {
-#             # look in this vault first & only
-#             Bedrock = 1
-#           }
-#           auth = {
-#             secretRef = {
-#               connectTokenSecretRef = {
-#                 name = kubernetes_secret.onepassword_connect_access_token.metadata[0].name
-#                 key  = "token"
-#               }
-#             }
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
+resource "kubectl_manifest" "onepass_cluster_secret_store" {
+  yaml_body = yamlencode({
+    apiVersion = "external-secrets.io/v1beta1"
+    kind       = "ClusterSecretStore"
+    metadata = {
+      name = "onepass"
+    }
+    spec = {
+      provider = {
+        onepassword = {
+          connectHost = "http://onepassword-connect.onepassconnect.svc:8080"
+          vaults = {
+            # look in this vault first & only
+            Bedrock = 1
+          }
+          auth = {
+            secretRef = {
+              connectTokenSecretRef = {
+                name = kubernetes_secret.onepassword_connect_access_token.metadata[0].name
+                key  = "token"
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+}
