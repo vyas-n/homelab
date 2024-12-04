@@ -34,6 +34,12 @@ provider "kubernetes" {
   cluster_ca_certificate = data.tfe_outputs.digitalocean_nyc3_terraform.values.do_k8s_cluster_ca_certificate
 }
 
+provider "kubectl" {
+  host                   = data.tfe_outputs.digitalocean_nyc3_terraform.nonsensitive_values.do_k8s_host
+  token                  = data.tfe_outputs.digitalocean_nyc3_terraform.values.do_k8s_token
+  cluster_ca_certificate = data.tfe_outputs.digitalocean_nyc3_terraform.values.do_k8s_cluster_ca_certificate
+}
+
 provider "helm" {
   kubernetes {
     host                   = data.tfe_outputs.digitalocean_nyc3_terraform.nonsensitive_values.do_k8s_host
