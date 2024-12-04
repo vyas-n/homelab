@@ -1,5 +1,40 @@
 
 ## TFC TF Provider
+# Uses TFC Organization Token
+
+resource "time_rotating" "tfe_organization_token" {
+  rotation_months = 6
+}
+
+resource "tfe_organization_token" "vyas_n" {
+  organization = "vyas-n"
+  expired_at   = time_rotating.tfe_organization_token.rotation_rfc3339
+}
+
+resource "onepassword_item" "tfe_organization_token" {
+  vault    = data.onepassword_vault.private.uuid
+  title    = "TFC Org Token - vyas-n"
+  category = "password"
+
+  password = tfe_organization_token.vyas_n.token
+  url      = "https://app.terraform.io/app/vyas-n/settings/authentication-tokens"
+
+  section {
+    label = "Details"
+    field {
+      label = "valid from"
+      type  = "DATE"
+      value = formatdate("YYYY-MM-DD", time_rotating.tfe_organization_token.rfc3339)
+    }
+
+    field {
+      label = "expires"
+      type  = "DATE"
+      value = formatdate("YYYY-MM-DD", time_rotating.tfe_organization_token.rotation_rfc3339)
+    }
+  }
+}
+
 resource "tfe_variable_set" "tfc" {
   name        = "Terraform Cloud"
   description = "This is an environment variable set that authenticates with TFC's tf provider: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
@@ -7,14 +42,10 @@ resource "tfe_variable_set" "tfc" {
 
 resource "tfe_variable" "tfe_token" {
   key             = "TFE_TOKEN"
-  value           = data.onepassword_item.tfcloud_org_token_vyasn.credential
+  value           = onepassword_item.tfe_organization_token.password
   category        = "env"
   sensitive       = true
-  description     = <<EOF
-    This is a Terraform Cloud Org Token for the vyas-n TFC Org.
-
-    Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=slxckwzmatkjcvuswlq54r3i4e&h=my.1password.com
-    EOF
+  description     = "This is a Terraform Cloud Org Token for the vyas-n TFC Org."
   variable_set_id = tfe_variable_set.tfc.id
 }
 
