@@ -8,10 +8,6 @@ data "onepassword_item" "tfcloud_pat" {
   vault = data.onepassword_vault.private.uuid
   title = "TerraformCloud-PAT"
 }
-data "onepassword_item" "tfcloud_org_token_vyasn" {
-  vault = data.onepassword_vault.private.uuid
-  title = "TFC Org Token - vyas-n"
-}
 
 # Cloudflare
 data "onepassword_item" "cloudflare_pat" {
