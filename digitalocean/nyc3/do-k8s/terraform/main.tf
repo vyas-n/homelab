@@ -113,7 +113,8 @@ resource "kubectl_manifest" "onepass_cluster_secret_store" {
     apiVersion = "external-secrets.io/v1beta1"
     kind       = "ClusterSecretStore"
     metadata = {
-      name = "onepass"
+      name      = "onepass"
+      namespace = kubernetes_namespace.onepassconnect.metadata[0].name
     }
     spec = {
       provider = {
