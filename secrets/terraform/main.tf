@@ -11,6 +11,8 @@ resource "tfe_organization_token" "vyas_n" {
   expired_at   = time_rotating.tfe_organization_token.rotation_rfc3339
 }
 
+
+# TODO: convert this to an API Credential and include creation date & expiry values
 resource "onepassword_item" "tfe_organization_token" {
   vault    = data.onepassword_vault.private.uuid
   title    = "TFC Org Token - vyas-n"
