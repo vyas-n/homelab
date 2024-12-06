@@ -1,17 +1,16 @@
 
-# Token allowed to edit DNS entries for all zones from specific account.
-
-resource "time_rotating" "proxmox_acme" {
-  rotation_months = 6
-}
-
 locals {
   # TODO get this for vyas-n.dev account
   cloudflare_account_id = "9d555bdc06c117b4b4498c14853cbae6"
 }
 
+resource "time_rotating" "proxmox_acme" {
+  rotation_months = 6
+}
+
+# Token allowed to edit DNS entries for all zones from specific account.
 resource "cloudflare_api_token" "proxmox_acme" {
-  name = "dns_edit_all_account"
+  name = "proxmox_acme"
 
   not_before = time_rotating.proxmox_acme.rfc3339
   expires_on = time_rotating.proxmox_acme.rotation_rfc3339
