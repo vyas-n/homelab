@@ -26,7 +26,5 @@ data "onepassword_item" "onepass_connect_access_token" {
 }
 
 # Cloudflare
-data "onepassword_item" "cloudflare_pat" {
-  vault = data.onepassword_vault.private.uuid
-  title = "Cloudflare API Token"
-}
+data "cloudflare_user" "me" {}
+data "cloudflare_api_token_permission_groups" "all" {}

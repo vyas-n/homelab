@@ -56,9 +56,31 @@ resource "tfe_variable_set" "cloudflare" {
   description = "This is an environment variable set that authenticates cloudflare's tf provider: https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs"
 }
 
+resource "time_rotating" "tfe_cloudflare_api_token" {
+  rotation_months = 6
+}
+
+# Token allowed to edit DNS entries for all zones from specific account.
+resource "cloudflare_api_token" "tfe_cloudflare_api_token" {
+  name = "tfe_cloudflare_api_token"
+
+  not_before = time_rotating.tfe_cloudflare_api_token.rfc3339
+  expires_on = time_rotating.tfe_cloudflare_api_token.rotation_rfc3339
+
+  # include all zones from specific account
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.zone["DNS Write"],
+    ]
+    resources = {
+      "com.cloudflare.api.account.*" = "*"
+    }
+  }
+}
+
 resource "tfe_variable" "cloudflare_api_token" {
   key             = "CLOUDFLARE_API_TOKEN"
-  value           = data.onepassword_item.cloudflare_pat.credential
+  value           = cloudflare_api_token.tfe_cloudflare_api_token.value
   category        = "env"
   sensitive       = true
   description     = <<EOF
