@@ -1,4 +1,5 @@
 
+# 1Pass
 data "onepassword_vault" "private" {
   name = "Private"
 }
@@ -10,7 +11,6 @@ data "onepassword_item" "tfcloud_pat" {
 }
 
 # Cloudflare
-
 data "onepassword_item" "cloudflare_global_api_key" {
   vault = data.onepassword_vault.private.uuid
   title = "Cloudflare: Global API Key"

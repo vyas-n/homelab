@@ -5,16 +5,13 @@
 terraform {
   required_providers {
     time = {
-      source  = "hashicorp/time"
-      version = "0.12.1"
+      source = "hashicorp/time"
     }
     proxmox = {
-      source  = "bpg/proxmox"
-      version = "0.67.1"
+      source = "bpg/proxmox"
     }
     cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "4.47.0"
+      source = "cloudflare/cloudflare"
     }
   }
 }

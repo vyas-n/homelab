@@ -3,7 +3,6 @@ data "onepassword_vault" "private" {
   name = "Private"
 }
 
-
 # DigitalOcean
 data "onepassword_item" "digitalocean_pat_for_tfcloud_vyasn" {
   vault = data.onepassword_vault.private.uuid
