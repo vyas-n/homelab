@@ -10,6 +10,14 @@ updates:
       github-actions:
         patterns:
           - "*"
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: daily
+    groups:
+      pip:
+        patterns:
+          - "*"
   - package-ecosystem: terraform
     directories:
       - digitalocean/terraform

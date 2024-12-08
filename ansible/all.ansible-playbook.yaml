@@ -3,6 +3,28 @@
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
 # - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
+
+# Provision TrueNAS
+- name: Provision TrueNAS
+  hosts: truenas
+  tasks:
+    - name: Creates directory & intermediate directories
+      ansible.builtin.file:
+        path: "{{ item.name }}"
+        state: directory
+        owner: admin
+        group: root
+        # Set directories as 0770 & files as 0660
+        # ref: https://stackoverflow.com/a/29793833
+        mode: u=rwX,g=rwX
+      loop:
+        - name: /mnt/data1/apps/dockge/stacks
+
+# Deploy TrueNAS docker-compose Apps
+- name: Deploy homepage
+  ansible.builtin.import_playbook: ../truenas/apps/homepage/deploy.ansible-playbook.yml
+
+# Provision Proxmox
 - name: Provision Proxmox Hosts
   hosts: proxmox
   tasks:
@@ -47,11 +69,13 @@
           vars:
             proxmox_fqdn_hostname: proxmox-1.hosts.vyas-n.dev
           ansible.builtin.template:
-            src: etc/nginx/conf.d/proxmox.conf.j2
-            dest: /etc/nginx/conf.d/proxmox.conf
+            src: "{{ item.name }}.j2"
+            dest: /{{ item.name }}
             owner: root
             group: root
             mode: "0644"
+          loop:
+            - name: etc/nginx/conf.d/proxmox.conf
           notify:
             - ValidateNginxConf
             - RestartNginx
@@ -66,11 +90,13 @@
           vars:
             proxmox_fqdn_hostname: proxmox-1.hosts.vyas-n.dev
           ansible.builtin.copy:
-            src: etc/systemd/system/nginx.service.d/override.conf
-            dest: /etc/systemd/system/nginx.service.d/override.conf
+            src: "{{ item.name }}"
+            dest: /{{ item.name }}
             owner: root
             group: root
             mode: "0644"
+          loop:
+            - name: etc/systemd/system/nginx.service.d/override.conf
           notify:
             - RestartNginx
   handlers:
