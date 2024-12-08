@@ -21,6 +21,8 @@
         - name: /mnt/data1/apps/dockge/stacks/homepage
         - name: /mnt/data1/apps/homepage/config
     - name: Template files (explicitly skip directories in order to use the 'src' attribute)
+      vars:
+        truenas_api_key: "{{ lookup('community.general.onepassword', 'TrueNAS API Key (homepage)', field='credential', vault='Private') }}"
       ansible.builtin.template:
         src: "{{ item.src }}"
         # Your template files should be stored with a .j2 file extension,

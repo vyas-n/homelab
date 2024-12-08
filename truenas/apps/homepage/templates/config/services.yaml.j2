@@ -2,17 +2,22 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/configs/services
 
-- My First Group:
-    - My First Service:
-        href: http://localhost/
-        description: Homepage is awesome
+- TrueNAS:
+  - System:
+      href: https://truenas.hosts.vyas-n.dev
+      widget:
+        type: truenas
+        url: https://truenas.hosts.vyas-n.dev
+        key: {{ truenas_api_key }}
+        enablePools: true
+        nasType: scale
 
 - My Second Group:
-    - My Second Service:
-        href: http://localhost/
-        description: Homepage is the best
+  - My Second Service:
+      href: http://localhost/
+      description: Homepage is the best
 
 - My Third Group:
-    - My Third Service:
-        href: http://localhost/
-        description: Homepage is 😎
+  - My Third Service:
+      href: http://localhost/
+      description: Homepage is 😎

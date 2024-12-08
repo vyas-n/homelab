@@ -108,3 +108,26 @@
         name: nginx
         daemon_reload: true
         state: restarted
+
+# Provision Proxmox
+- name: Provision Proxmox Hosts
+  hosts: proxmox-1
+  tasks: []
+  # TODO add steps to disable macbook lid close from putting the computer to sleep / turning the computer off
+  # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
+  #
+  # Manual Steps:
+  # - $ vim /etc/systemd/logind.conf
+  # - Uncomment the following 3 lines in the config file
+  # ```
+  # #HandleLidSwitch=suspend
+  # #HandleLidSwitchExternalPower=ignore
+  # #HandleLidSwitchDocked=ignore
+  # ```
+  # - Change the HandleLidSwitch line from `suspend` to `ignore`
+  # ```
+  # HandleLidSwitch=suspend
+  # ```
+  # - name: Restart systemd-logind
+  #   $ systemctl restart systemd-logind
+  # # Now you can close the lid of Macbook without bad things happening
