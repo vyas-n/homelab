@@ -10,22 +10,22 @@
       widget:
         type: unifi
         url: https://192.168.2.1
-        username: {{ unifi_gateway_username | tojson }}
-        password: {{ unifi_gateway_password | tojson }}
+        username: {{ unifi_gateway_username }}
+        password: "{{ unifi_gateway_password }}"
   - HomeLab Subnet Router 1 (truenas):
       href: https://login.tailscale.com/admin/machines/100.115.73.35
       fields: ["last_seen", "expires"]
       widget:
         type: tailscale
         deviceid: ngJRMc3Uw911CNTRL
-        key: {{ tailscale_api_token | tojson }}
+        key: {{ tailscale_api_token }}
   - HomeLab Subnet Router 2 (proxmox-1):
       href: https://login.tailscale.com/admin/machines/100.103.208.83
       fields: ["last_seen", "expires"]
       widget:
         type: tailscale
         deviceid: nrSocMUu9t11CNTRL
-        key: {{ tailscale_api_token | tojson }}
+        key: {{ tailscale_api_token }}
 
 - Storage:
   - TrueNAS:
@@ -35,7 +35,7 @@
       widget:
         type: truenas
         url: https://truenas.hosts.vyas-n.dev
-        key: {{ truenas_api_key | tojson }}
+        key: {{ truenas_api_key }}
         enablePools: true
         nasType: scale
 
@@ -47,6 +47,8 @@
       widget:
         type: proxmox
         url: https://proxmox-1.hosts.vyas-n.dev
-        username: {{ proxmox_token_id | tojson }}
-        password: {{ proxmox_api_token | tojson }}
+        username: {{ proxmox_token_id }}
+        password: {{ proxmox_api_token }}
         node: proxmox-1
+
+- Docker Containers: []
