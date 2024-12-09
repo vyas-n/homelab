@@ -3,16 +3,29 @@
 # https://gethomepage.dev/configs/services
 
 - Network:
-  - Vyas's Home Network:
+  - Unifi (Vyas's Home Network):
       href: https://unifi.ui.com/consoles/0CEA144D1F27000000000871A9680000000008E4BFA800000000671C5D48:243437069/network/default/dashboard
       siteMonitor: https://192.168.2.1
       ping: 192.168.2.1
       widget:
         type: unifi
         url: https://192.168.2.1
-        username: {{ unifi_gateway_username }}
-        password: "{{ unifi_gateway_password }}"
-        node: proxmox-1 # optional
+        username: {{ unifi_gateway_username | tojson }}
+        password: {{ unifi_gateway_password | tojson }}
+  - HomeLab Subnet Router 1 (truenas):
+      href: https://login.tailscale.com/admin/machines/100.115.73.35
+      fields: ["last_seen", "expires"]
+      widget:
+        type: tailscale
+        deviceid: ngJRMc3Uw911CNTRL
+        key: {{ tailscale_api_token | tojson }}
+  - HomeLab Subnet Router 2 (proxmox-1):
+      href: https://login.tailscale.com/admin/machines/100.103.208.83
+      fields: ["last_seen", "expires"]
+      widget:
+        type: tailscale
+        deviceid: nrSocMUu9t11CNTRL
+        key: {{ tailscale_api_token | tojson }}
 
 - Storage:
   - TrueNAS:
@@ -22,18 +35,18 @@
       widget:
         type: truenas
         url: https://truenas.hosts.vyas-n.dev
-        key: {{ truenas_api_key }}
+        key: {{ truenas_api_key | tojson }}
         enablePools: true
         nasType: scale
 
 - Compute:
-  - Proxmox:
+  - Proxmox-1:
       href: https://proxmox-1.hosts.vyas-n.dev
       siteMonitor: https://proxmox-1.hosts.vyas-n.dev
       ping: proxmox-1.hosts.vyas-n.dev
       widget:
         type: proxmox
         url: https://proxmox-1.hosts.vyas-n.dev
-        username: {{ proxmox_token_id }}
-        password: {{ proxmox_api_token }}
-        node: proxmox-1 # optional
+        username: {{ proxmox_token_id | tojson }}
+        password: {{ proxmox_api_token | tojson }}
+        node: proxmox-1

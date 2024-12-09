@@ -30,6 +30,8 @@
         # Unifi Gateway Creds (local-only)
         unifi_gateway_username: "{{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='username', vault='Private') }}"
         unifi_gateway_password: "{{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='password', vault='Private') }}"
+        # Tailscale Creds
+        tailscale_api_token: "{{ lookup('community.general.onepassword', 'Tailscale API Token (vyas@github)', field='credential', vault='Private') }}"
       ansible.builtin.template:
         src: "{{ item.src }}"
         # Your template files should be stored with a .j2 file extension,
