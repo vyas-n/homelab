@@ -2,6 +2,27 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/configs/settings
 
+# Themeing
+# TODO: detect OS theme and auto switch the theme.
+
+# TODO: Enable theme switching, but also switch the color palette & background per-theme
+{# theme: light
+color: white
+background: https://images.unsplash.com/photo-1493246507139-91e8fad9978e #}
+theme: dark
+color: slate
+background: https://github.com/gethomepage/homepage/blob/a06964dd175fa798fa9189ba1ecd5766bbde543f/docs/assets/blossom_valley.jpg?raw=true
+
+headerStyle: clean
+
+quicklaunch:
+  searchDescriptions: true
+  showSearchSuggestions: true
+  provider: duckduckgo
+
 providers:
   openweathermap: openweathermapapikey
   weatherapi: weatherapiapikey
+
+# https://gethomepage.dev/configs/settings/#show-docker-stats
+showStats: true

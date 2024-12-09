@@ -2,9 +2,23 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/configs/services
 
-- TrueNAS:
-  - System:
+- Network:
+  - Vyas's Home Network:
+      href: https://unifi.ui.com/consoles/0CEA144D1F27000000000871A9680000000008E4BFA800000000671C5D48:243437069/network/default/dashboard
+      siteMonitor: https://192.168.2.1
+      ping: 192.168.2.1
+      widget:
+        type: unifi
+        url: https://192.168.2.1
+        username: {{ unifi_gateway_username }}
+        password: "{{ unifi_gateway_password }}"
+        node: proxmox-1 # optional
+
+- Storage:
+  - TrueNAS:
       href: https://truenas.hosts.vyas-n.dev
+      siteMonitor: https://truenas.hosts.vyas-n.dev
+      ping: truenas.hosts.vyas-n.dev
       widget:
         type: truenas
         url: https://truenas.hosts.vyas-n.dev
@@ -12,12 +26,14 @@
         enablePools: true
         nasType: scale
 
-- My Second Group:
-  - My Second Service:
-      href: http://localhost/
-      description: Homepage is the best
-
-- My Third Group:
-  - My Third Service:
-      href: http://localhost/
-      description: Homepage is 😎
+- Compute:
+  - Proxmox:
+      href: https://proxmox-1.hosts.vyas-n.dev
+      siteMonitor: https://proxmox-1.hosts.vyas-n.dev
+      ping: proxmox-1.hosts.vyas-n.dev
+      widget:
+        type: proxmox
+        url: https://proxmox-1.hosts.vyas-n.dev
+        username: {{ proxmox_token_id }}
+        password: {{ proxmox_api_token }}
+        node: proxmox-1 # optional

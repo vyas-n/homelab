@@ -45,6 +45,7 @@
       ansible.builtin.apt:
         package:
           - fish
+          - lldpd
         state: present
     - name: Make web interface accessible from 443
       # These steps were taken from: https://pve.proxmox.com/wiki/Web_Interface_Via_Nginx_Proxy
@@ -109,25 +110,30 @@
         daemon_reload: true
         state: restarted
 
-# Provision Proxmox
-- name: Provision Proxmox Hosts
-  hosts: proxmox-1
-  tasks: []
-  # TODO add steps to disable macbook lid close from putting the computer to sleep / turning the computer off
+- name: Disable macbook lid close turning the computer off
   # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
-  #
-  # Manual Steps:
-  # - $ vim /etc/systemd/logind.conf
-  # - Uncomment the following 3 lines in the config file
-  # ```
-  # #HandleLidSwitch=suspend
-  # #HandleLidSwitchExternalPower=ignore
-  # #HandleLidSwitchDocked=ignore
-  # ```
-  # - Change the HandleLidSwitch line from `suspend` to `ignore`
-  # ```
-  # HandleLidSwitch=suspend
-  # ```
-  # - name: Restart systemd-logind
-  #   $ systemctl restart systemd-logind
-  # # Now you can close the lid of Macbook without bad things happening
+  hosts: proxmox_1
+  tasks:
+    - name: ensure that logind drop-in directory exists
+      ansible.builtin.file:
+        dest: /etc/systemd/logind.conf.d
+        owner: root
+        group: root
+        mode: "0755"
+        state: directory
+    - name: Let laptop close lid
+      ansible.builtin.copy:
+        src: "{{ item.name }}"
+        dest: /{{ item.name }}
+        owner: root
+        group: root
+        mode: "0644"
+      loop:
+        - name: etc/systemd/logind.conf.d/let-laptop-close-lid.conf
+      notify:
+        - Restart systemd-logind
+  handlers:
+    - name: Restart systemd-logind
+      ansible.builtin.systemd_service:
+        name: systemd-logind
+        state: restarted
