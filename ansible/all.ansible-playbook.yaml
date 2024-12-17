@@ -22,7 +22,9 @@
 
 # Deploy TrueNAS docker-compose Apps
 - name: Deploy Homepage
-  ansible.builtin.import_playbook: ../truenas/apps/homepage/deploy.ansible-playbook.yml
+  hosts: truenas
+  roles:
+    - deploy_homepage
 # TODO: find an external-dns system for docker-compose apps
 # - name: Deploy Traefik
 #   ansible.builtin.import_playbook: ../truenas/apps/traefik/deploy.ansible-playbook.yml
