@@ -4,8 +4,8 @@
 
 - unifi_console:
     url: https://192.168.2.1
-    username: {{ unifi_gateway_username }}
-    password: "{{ unifi_gateway_password }}"
+    username: {{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='username', vault='Private') }}
+    password: "{{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='password', vault='Private') }}"
 
 - resources:
     label: System
