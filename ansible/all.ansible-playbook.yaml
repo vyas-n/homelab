@@ -25,6 +25,7 @@
   hosts: truenas
   roles:
     - deploy_homepage
+    - deploy_tsdproxy
 # TODO: find an external-dns system for docker-compose apps
 # - name: Deploy Traefik
 #   ansible.builtin.import_playbook: ../truenas/apps/traefik/deploy.ansible-playbook.yml

@@ -22,4 +22,17 @@ services:
       - 3000:3000
     volumes:
       - /mnt/app1/apps/homepage/config:/app/config # Make sure your local config directory exists
+    labels:
+      # Homepage config
+      # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
+      homepage.group: Docker Containers
+      homepage.name: Homepage
+      homepage.icon: sh-homepage
+      homepage.href: https://homepage.tail5c72f1.ts.net
+
+      # Tsdproxy config
+      # ref: https://almeidapaulopt.github.io/tsdproxy/docs/docker
+      tsdproxy.enable: true
+      tsdproxy.name: homepage
+      tsdproxy.container_port: 3000
     restart: unless-stopped

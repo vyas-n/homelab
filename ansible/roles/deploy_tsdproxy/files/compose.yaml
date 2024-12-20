@@ -1,0 +1,24 @@
+services:
+  tsdproxy:
+    image: almeidapaulopt/tsdproxy:1.1.2
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - datadir:/data
+      - /mnt/app1/apps/tsdproxy/config:/config
+    labels:
+      # Homepage config
+      # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
+      homepage.group: Docker Containers
+      homepage.name: TSDProxy
+      homepage.icon: sh-tailscale.svg
+      homepage.href: https://tsdproxy.tail5c72f1.ts.net
+
+      # Tsdproxy config
+      # ref: https://almeidapaulopt.github.io/tsdproxy/docs/docker
+      tsdproxy.enable: true
+      tsdproxy.name: tsdproxy
+      tsdproxy.container_port: 8080
+    restart: unless-stopped
+
+volumes:
+  datadir:
