@@ -12,15 +12,15 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.34.0"
+      version = "2.35.0"
     }
     kubectl = {
       source  = "gavinbunney/kubectl"
-      version = "1.17.0"
+      version = "1.18.0"
     }
     tfe = {
       source  = "hashicorp/tfe"
-      version = "0.60.1"
+      version = "0.62.0"
     }
   }
 }
