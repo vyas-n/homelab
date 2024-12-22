@@ -5,14 +5,19 @@ services:
     container_name: dockerproxy
     environment:
       # ref: https://github.com/Tecnativa/docker-socket-proxy?tab=readme-ov-file#access-revoked-by-default
-      - CONTAINERS=1 # Allow access to viewing containers
-      # - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
-      # - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
-      - POST=0 # Disallow any POST operations (effectively read-only)
+      # Allow access to viewing containers
+      CONTAINERS: 1
+      # Allow access to viewing services (necessary when using Docker Swarm)
+      # SERVICES: 1
+      # Allow access to viewing tasks (necessary when using Docker Swarm)
+      # TASKS: 1
+      # Disallow any POST operations (effectively read-only)
+      POST: 0
     ports:
       - 127.0.0.1:2375:2375
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
+      # Mounted as read-only
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
 
   homepage:
@@ -21,7 +26,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - /mnt/app1/apps/homepage/config:/app/config # Make sure your local config directory exists
+      - ${DEPLOY_HOMEPAGE_CONFIG_DIR}:/app/config # Make sure your local config directory exists
     labels:
       # Homepage config
       # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery

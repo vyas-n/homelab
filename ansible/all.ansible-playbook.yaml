@@ -23,6 +23,11 @@
 # Deploy TrueNAS docker-compose Apps
 - name: Deploy Homepage
   hosts: truenas
+  vars:
+    apps_fast_data_dir: /mnt/app1/apps
+    apps_bulk_data_dir: /mnt/app2/apps
+    apps_safe_data_dir: /mnt/data1/apps
+    apps_dockge_stacks_dir: /mnt/app1/apps/dockge/stacks
   roles:
     - deploy_homepage
     - deploy_tsdproxy
@@ -72,7 +77,7 @@
             - name: /etc/nginx/conf.d/default
           notify:
             - RestartNginx
-        - name: create a new nginx config file
+        - name: Create a new nginx config file
           vars:
             proxmox_fqdn_hostname: proxmox-1.hosts.vyas-n.dev
           ansible.builtin.template:
@@ -86,14 +91,14 @@
           notify:
             - ValidateNginxConf
             - RestartNginx
-        - name: ensure that nginx systemd service override directory exists
+        - name: Ensure that nginx systemd service override directory exists
           ansible.builtin.file:
             dest: /etc/systemd/system/nginx.service.d
             owner: root
             group: root
             mode: "0755"
             state: directory
-        - name: ensure that nginx gets only started after the certificates are available
+        - name: Ensure that nginx gets only started after the certificates are available
           vars:
             proxmox_fqdn_hostname: proxmox-1.hosts.vyas-n.dev
           ansible.builtin.copy:
@@ -120,7 +125,7 @@
   # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
   hosts: proxmox_1
   tasks:
-    - name: ensure that logind drop-in directory exists
+    - name: Ensure that logind drop-in directory exists
       ansible.builtin.file:
         dest: /etc/systemd/logind.conf.d
         owner: root

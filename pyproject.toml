@@ -11,6 +11,9 @@ python = "^3.13"
 
 [tool.poetry.group.dev.dependencies]
 ansible-core = "2.18.1"
+# Using this workaround for ansible-lint using poetry
+# ref: https://github.com/ansible/ansible-lint/issues/2730#issuecomment-1330406601
+ansible-lint = { version = "24.12.2", markers = "platform_system != 'Windows'" }
 
 [build-system]
 requires = ["poetry-core"]

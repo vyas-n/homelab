@@ -1,0 +1,9 @@
+---
+# Standard variables for docker apps
+deploy_homepage_apps_fast_data_dir: "{{ apps_fast_data_dir | mandatory }}/homepage"
+deploy_homepage_apps_bulk_data_dir: "{{ apps_bulk_data_dir | mandatory }}/homepage"
+deploy_homepage_apps_safe_data_dir: "{{ apps_safe_data_dir | mandatory }}/homepage"
+deploy_homepage_apps_dockge_stacks_dir: "{{ apps_dockge_stacks_dir | mandatory }}/homepage"
+
+# Custom variables for homepage
+deploy_homepage_config_dir: "{{ deploy_homepage_apps_fast_data_dir | mandatory }}/config"
