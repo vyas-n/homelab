@@ -1,0 +1,7 @@
+---
+- name: Refresh initramfs
+  ansible.builtin.command:
+    cmd: update-initramfs -u -k all
+- name: Reboot machine
+  ansible.builtin.reboot:
+    msg: Rebooting machine in 5 seconds
