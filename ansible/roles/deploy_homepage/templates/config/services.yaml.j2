@@ -17,6 +17,7 @@
         password: "{{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='password', vault='Private') }}"
   - HomeLab Subnet Router 1 (truenas):
       href: https://login.tailscale.com/admin/machines/100.64.55.20
+      ping: 100.64.55.20
       icon: sh-tailscale.svg
       fields: ["last_seen", "expires"]
       widget:
@@ -25,6 +26,7 @@
         key: {{ lookup('community.general.onepassword', 'Tailscale API Token (vyas@github)', field='credential', vault='Private') }}
   - HomeLab Subnet Router 2 (proxmox-1):
       href: https://login.tailscale.com/admin/machines/100.103.208.83
+      ping: 100.103.208.83
       icon: sh-tailscale.svg
       fields: ["last_seen", "expires"]
       widget:
@@ -44,6 +46,10 @@
         key: {{ lookup('community.general.onepassword', 'TrueNAS API Key (homepage)', field='credential', vault='Private') }}
         enablePools: true
         nasType: scale
+  - TrueNAS IPMI:
+      href: https://truenas-ipmi.hosts.vyas-n.dev
+      siteMonitor: https://truenas-ipmi.hosts.vyas-n.dev
+      ping: truenas-ipmi.hosts.vyas-n.dev
 
 - Compute:
   - Proxmox-1:
@@ -57,5 +63,16 @@
         username: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='Token ID', vault='Private') }}
         password: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='credential', vault='Private') }}
         node: proxmox-1
+  - Proxmox-2:
+      href: https://proxmox-1.hosts.vyas-n.dev
+      siteMonitor: https://proxmox-1.hosts.vyas-n.dev
+      ping: proxmox-2.hosts.vyas-n.dev
+      icon: sh-proxmox.svg
+      widget:
+        type: proxmox
+        url: https://proxmox-1.hosts.vyas-n.dev
+        username: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='Token ID', vault='Private') }}
+        password: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='credential', vault='Private') }}
+        node: proxmox-2
 
 - Docker Containers: []

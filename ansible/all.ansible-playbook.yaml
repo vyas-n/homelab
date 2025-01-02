@@ -39,6 +39,38 @@
 - name: Provision Proxmox Hosts
   hosts: proxmox
   tasks:
+    - name: Setup for PCIe Passthrough
+      block:
+        - name: Initialize kernel parameters variable
+          ansible.builtin.set_fact:
+            kernel_parameters:
+              - root=ZFS=rpool/ROOT/pve-1
+              - boot=zfs
+              - iommu=pt
+        - name: Template Kernel Parameters
+          ansible.builtin.template:
+            src: etc/kernel/cmdline.j2
+            dest: /etc/kernel/cmdline
+            owner: root
+            group: root
+            mode: "0644"
+          notify:
+            - Reboot machine
+        - name: Initialize kernel modules variable
+          ansible.builtin.set_fact:
+            kernel_modules:
+              - vfio
+              - vfio_iommu_type1
+              - vfio_pci
+        - name: Template kernel modules
+          ansible.builtin.template:
+            src: etc/modules-load.d/proxmox.conf.j2
+            dest: /etc/modules-load.d/proxmox.conf
+            owner: root
+            group: root
+            mode: "0644"
+          notify:
+            - Refresh initramfs
     - name: Copy APT Repo sources
       # These files were modified to replace the default enterprise apt sources with the no-subscription variants
       # ref: https://pve.proxmox.com/wiki/Package_Repositories#sysadmin_no_subscription_repo
@@ -57,8 +89,10 @@
         package:
           - fish
           - lldpd
+        update_cache: true
         state: present
     - name: Make web interface accessible from 443
+      when: false
       # These steps were taken from: https://pve.proxmox.com/wiki/Web_Interface_Via_Nginx_Proxy
       block:
         - name: Install nginx
@@ -113,6 +147,8 @@
             - RestartNginx
   handlers:
     - name: ValidateNginxConf
+      # This command doesn't change anything, it just validates the nginx config
+      changed_when: false
       ansible.builtin.command:
         cmd: nginx -t
     - name: RestartNginx
@@ -120,6 +156,12 @@
         name: nginx
         daemon_reload: true
         state: restarted
+    - name: Refresh initramfs
+      ansible.builtin.command:
+        cmd: update-initramfs -u -k all
+    - name: Reboot machine
+      ansible.builtin.reboot:
+        msg: Rebooting machine in 5 seconds
 
 - name: Disable macbook lid close turning the computer off
   # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
@@ -148,3 +190,8 @@
       ansible.builtin.systemd_service:
         name: systemd-logind
         state: restarted
+
+- name: Proxmox AMD GPU fix
+  hosts: proxmox_2
+  roles:
+    - proxmox_fix_amd_gpu

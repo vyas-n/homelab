@@ -1,0 +1,11 @@
+---
+- name: Install vendor-reset kernel module
+  ansible.builtin.command:
+    cmd: /usr/sbin/dkms install .
+    chdir: /usr/local/src/vendor-reset
+- name: Refresh initramfs
+  ansible.builtin.command:
+    cmd: update-initramfs -u -k all
+- name: Reboot machine
+  ansible.builtin.reboot:
+    msg: Rebooting machine in 5 seconds

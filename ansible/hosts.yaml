@@ -7,6 +7,8 @@ all:
       hosts:
         proxmox_1:
           ansible_host: proxmox-1.hosts.vyas-n.dev
+        proxmox_2:
+          ansible_host: proxmox-2.hosts.vyas-n.dev
   hosts:
     truenas:
       ansible_host: truenas.hosts.vyas-n.dev
