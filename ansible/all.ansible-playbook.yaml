@@ -29,8 +29,8 @@
     apps_safe_data_dir: /mnt/data1/apps
     apps_dockge_stacks_dir: /mnt/app1/apps/dockge/stacks
   roles:
-    - deploy_homepage
-    - deploy_tsdproxy
+    - role: deploy_homepage
+    - role: deploy_tsdproxy
 # TODO: find an external-dns system for docker -compose apps
 # - name: Deploy Traefik
 #   ansible.builtin.import_playbook: ../truenas/apps/traefik/deploy.ansible-playbook.yml
@@ -39,7 +39,10 @@
 - name: Provision Proxmox Hosts
   hosts: proxmox
   roles:
-    - shared_handlers
+    - role: shared_handlers
+    - role: proxmox_install_tailscale
+    - role: proxmox_fix_amd_gpu
+      when: (has_amd_gpu is defined) and has_amd_gpu
   tasks:
     - name: Setup for PCIe Passthrough
       block:
@@ -162,6 +165,8 @@
 - name: Disable macbook lid close turning the computer off
   # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
   hosts: proxmox_1
+  roles:
+    - role: shared_handlers
   tasks:
     - name: Ensure that logind drop-in directory exists
       ansible.builtin.file:
@@ -181,13 +186,3 @@
         - name: etc/systemd/logind.conf.d/let-laptop-close-lid.conf
       notify:
         - Restart systemd-logind
-  handlers:
-    - name: Restart systemd-logind
-      ansible.builtin.systemd_service:
-        name: systemd-logind
-        state: restarted
-
-- name: Proxmox AMD GPU fix
-  hosts: proxmox_2
-  roles:
-    - proxmox_fix_amd_gpu
