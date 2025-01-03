@@ -64,13 +64,13 @@
         password: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='credential', vault='Private') }}
         node: proxmox-1
   - Proxmox-2:
-      href: https://proxmox-1.hosts.vyas-n.dev
-      siteMonitor: https://proxmox-1.hosts.vyas-n.dev
+      href: https://proxmox-2.hosts.vyas-n.dev
+      siteMonitor: https://proxmox-2.hosts.vyas-n.dev
       ping: proxmox-2.hosts.vyas-n.dev
       icon: sh-proxmox.svg
       widget:
         type: proxmox
-        url: https://proxmox-1.hosts.vyas-n.dev
+        url: https://proxmox-2.hosts.vyas-n.dev
         username: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='Token ID', vault='Private') }}
         password: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='credential', vault='Private') }}
         node: proxmox-2

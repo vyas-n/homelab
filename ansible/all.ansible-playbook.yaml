@@ -31,13 +31,15 @@
   roles:
     - deploy_homepage
     - deploy_tsdproxy
-# TODO: find an external-dns system for docker-compose apps
+# TODO: find an external-dns system for docker -compose apps
 # - name: Deploy Traefik
 #   ansible.builtin.import_playbook: ../truenas/apps/traefik/deploy.ansible-playbook.yml
 
 # Provision Proxmox
 - name: Provision Proxmox Hosts
   hosts: proxmox
+  roles:
+    - shared_handlers
   tasks:
     - name: Setup for PCIe Passthrough
       block:
@@ -92,7 +94,7 @@
         update_cache: true
         state: present
     - name: Make web interface accessible from 443
-      when: false
+      # when: false
       # These steps were taken from: https://pve.proxmox.com/wiki/Web_Interface_Via_Nginx_Proxy
       block:
         - name: Install nginx
@@ -156,12 +158,6 @@
         name: nginx
         daemon_reload: true
         state: restarted
-    - name: Refresh initramfs
-      ansible.builtin.command:
-        cmd: update-initramfs -u -k all
-    - name: Reboot machine
-      ansible.builtin.reboot:
-        msg: Rebooting machine in 5 seconds
 
 - name: Disable macbook lid close turning the computer off
   # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
