@@ -24,6 +24,15 @@ resource "cloudflare_api_token" "cf_pages_vyas_n_com" {
       "com.cloudflare.api.account.*" = "*"
     }
   }
+
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.user["User Details Read"]
+    ]
+    resources = {
+      "com.cloudflare.api.user.${data.cloudflare_user.me.id}" = "*"
+    }
+  }
 }
 
 resource "github_actions_secret" "vyas_n_cloudflare_account_id" {
@@ -33,6 +42,18 @@ resource "github_actions_secret" "vyas_n_cloudflare_account_id" {
 }
 
 resource "github_actions_secret" "vyas_n_cloudflare_api_token" {
+  repository      = "vyas-n"
+  secret_name     = "CLOUDFLARE_API_TOKEN"
+  plaintext_value = cloudflare_api_token.cf_pages_vyas_n_com.value
+}
+
+resource "github_dependabot_secret" "vyas_n_cloudflare_account_id" {
+  repository      = "vyas-n"
+  secret_name     = "CLOUDFLARE_ACCOUNT_ID"
+  plaintext_value = local.cloudflare_account_id
+}
+
+resource "github_dependabot_secret" "vyas_n_cloudflare_api_token" {
   repository      = "vyas-n"
   secret_name     = "CLOUDFLARE_API_TOKEN"
   plaintext_value = cloudflare_api_token.cf_pages_vyas_n_com.value
