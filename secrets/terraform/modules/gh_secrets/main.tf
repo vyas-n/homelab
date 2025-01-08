@@ -1,9 +1,4 @@
 
-locals {
-  # TODO get this for vyas-n.com account
-  cloudflare_account_id = "9d555bdc06c117b4b4498c14853cbae6"
-}
-
 resource "time_rotating" "cf_pages_vyas_n_com" {
   rotation_months = 6
 }
@@ -38,7 +33,7 @@ resource "cloudflare_api_token" "cf_pages_vyas_n_com" {
 resource "github_actions_secret" "vyas_n_cloudflare_account_id" {
   repository      = "vyas-n"
   secret_name     = "CLOUDFLARE_ACCOUNT_ID"
-  plaintext_value = local.cloudflare_account_id
+  plaintext_value = data.cloudflare_accounts.vyas.accounts[0].id
 }
 
 resource "github_actions_secret" "vyas_n_cloudflare_api_token" {
@@ -50,7 +45,7 @@ resource "github_actions_secret" "vyas_n_cloudflare_api_token" {
 resource "github_dependabot_secret" "vyas_n_cloudflare_account_id" {
   repository      = "vyas-n"
   secret_name     = "CLOUDFLARE_ACCOUNT_ID"
-  plaintext_value = local.cloudflare_account_id
+  plaintext_value = data.cloudflare_accounts.vyas.accounts[0].id
 }
 
 resource "github_dependabot_secret" "vyas_n_cloudflare_api_token" {
