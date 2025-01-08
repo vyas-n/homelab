@@ -13,6 +13,7 @@ resource "cloudflare_api_token" "cf_pages_vyas_n_com" {
   # include all zones from specific account
   policy {
     permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.account["Pages Write"],
       data.cloudflare_api_token_permission_groups.all.zone["DNS Write"],
     ]
     resources = {
@@ -53,3 +54,7 @@ resource "github_dependabot_secret" "vyas_n_cloudflare_api_token" {
   secret_name     = "CLOUDFLARE_API_TOKEN"
   plaintext_value = cloudflare_api_token.cf_pages_vyas_n_com.value
 }
+
+# output "account_map" {
+#   value = data.cloudflare_api_token_permission_groups.all.account
+# }
