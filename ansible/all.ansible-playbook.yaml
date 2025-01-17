@@ -29,8 +29,8 @@
     apps_safe_data_dir: /mnt/data1/apps
     apps_dockge_stacks_dir: /mnt/app1/apps/dockge/stacks
   roles:
-    - role: deploy_homepage
-    - role: deploy_tsdproxy
+    - role: vyas.compose_deployments.homepage
+    - role: vyas.compose_deployments.tsdproxy
 # TODO: find an external-dns system for docker -compose apps
 # - name: Deploy Traefik
 #   ansible.builtin.import_playbook: ../truenas/apps/traefik/deploy.ansible-playbook.yml
@@ -39,9 +39,9 @@
 - name: Provision Proxmox Hosts
   hosts: proxmox
   roles:
-    - role: shared_handlers
-    - role: proxmox_install_tailscale
-    - role: proxmox_fix_amd_gpu
+    - role: vyas.proxmox.shared_handlers
+    - role: vyas.proxmox.install_tailscale
+    - role: vyas.proxmox.fix_for_amd_gpu
       when: (has_amd_gpu is defined) and has_amd_gpu
   tasks:
     - name: Setup for PCIe Passthrough
@@ -166,7 +166,7 @@
   # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
   hosts: proxmox_1
   roles:
-    - role: shared_handlers
+    - role: vyas.proxmox.shared_handlers
   tasks:
     - name: Ensure that logind drop-in directory exists
       ansible.builtin.file:

@@ -1,0 +1,7 @@
+---
+namespace: vyas
+name: compose_deployments
+version: 0.0.0
+readme: README.md
+authors:
+  - Vyas Nellutla <me@vyas-n.com>
