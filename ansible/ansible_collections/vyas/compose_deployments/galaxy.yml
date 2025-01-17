@@ -1,6 +1,8 @@
 ---
 namespace: vyas
 name: compose_deployments
+description: Docker Compose deployments for various applications
+repository: https://github.com/vyas-n/deploy.git
 version: 0.0.0
 readme: README.md
 authors:

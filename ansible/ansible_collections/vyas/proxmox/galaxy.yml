@@ -1,6 +1,8 @@
 ---
 namespace: vyas
 name: proxmox
+description: Collection for configuring proxmox nodes and installing software on them
+repository: https://github.com/vyas-n/deploy.git
 version: 0.0.0
 readme: README.md
 authors:
