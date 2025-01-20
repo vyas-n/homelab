@@ -24,7 +24,7 @@ services:
     image: ghcr.io/gethomepage/homepage:v0.9.13
     container_name: homepage
     ports:
-      - 3000:3000
+      - 3000
     volumes:
       - ${DEPLOY_HOMEPAGE_CONFIG_DIR}:/app/config # Make sure your local config directory exists
     labels:
@@ -34,6 +34,8 @@ services:
       homepage.name: Homepage
       homepage.icon: sh-homepage
       homepage.href: https://homepage.tail5c72f1.ts.net
+      homepage.siteMonitor: https://homepage.tail5c72f1.ts.net
+      homepage.ping: homepage.tail5c72f1.ts.net
 
       # Tsdproxy config
       # ref: https://almeidapaulopt.github.io/tsdproxy/docs/docker
