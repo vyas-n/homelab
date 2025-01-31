@@ -14,7 +14,7 @@ terraform {
   required_providers {
     tfe = {
       source  = "hashicorp/tfe"
-      version = "0.60.1"
+      version = "0.63.0"
     }
     onepassword = {
       source  = "1Password/onepassword"
@@ -26,11 +26,11 @@ terraform {
     }
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.68.0"
+      version = "0.70.1"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.47.0"
+      version = "5.0.0"
     }
   }
 }
