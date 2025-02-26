@@ -22,6 +22,33 @@
       loop:
         - name: /mnt/app1/apps/dockge/stacks
 
+# Provision fedora VM
+- name: Provision Fedora VM
+  hosts: fedora_server
+  tasks:
+    - name: Install snapd
+      # ref: https://snapcraft.io/install/snapd/fedora#install
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - snapd
+        state: present
+    - name: Make passwordless sudo work
+      become: true
+      ansible.builtin.copy:
+        src: "{{ item.name }}"
+        dest: /{{ item.name }}
+        owner: root
+        group: root
+        mode: "0440"
+      loop:
+        - name: etc/sudoers.d/passwordless-sudo
+    - name: Allow passwordless sudo for users
+      ansible.builtin.user:
+        name: vyas
+        groups: wheel
+        append: true
+
 # Deploy TrueNAS docker-compose Apps
 - name: Deploy Homepage
   hosts: truenas

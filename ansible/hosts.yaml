@@ -11,6 +11,10 @@ all:
         proxmox_2:
           ansible_host: proxmox-2.hosts.vyas-n.dev
           has_amd_gpu: true
+    vms:
+      hosts:
+        fedora_server:
+          ansible_host: fedora-server.hosts.vyas-n.dev
   hosts:
     truenas:
       ansible_host: truenas.hosts.vyas-n.dev
