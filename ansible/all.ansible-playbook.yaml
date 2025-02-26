@@ -97,8 +97,8 @@
           - lldpd
         update_cache: true
         state: present
-    - name: Make web interface accessible from 443
-      # when: false
+    - name: Make web interface accessible from standard HTTP/HTTPS ports
+      # TODO: add steps to configure proxmox managed ACME certs before installing nginx
       # These steps were taken from: https://pve.proxmox.com/wiki/Web_Interface_Via_Nginx_Proxy
       block:
         - name: Install nginx
@@ -108,6 +108,11 @@
             state: present
           notify:
             - RestartNginx
+        - name: Ensure nginx is enabled & started
+          ansible.builtin.systemd_service:
+            name: nginx
+            state: started
+            enabled: true
         - name: Remove default nginx config files
           ansible.builtin.file:
             path: "{{ item.name }}"
@@ -138,7 +143,8 @@
             group: root
             mode: "0755"
             state: directory
-        - name: Ensure that nginx gets only started after the certificates are available
+        # TODO: Ensure that nginx only gets started after ACME Certs are issued
+        - name: Ensure that nginx only gets started after proxmox has started
           vars:
             proxmox_fqdn_hostname: proxmox-1.hosts.vyas-n.dev
           ansible.builtin.copy:
@@ -151,6 +157,26 @@
             - name: etc/systemd/system/nginx.service.d/override.conf
           notify:
             - RestartNginx
+        - name: Setup Nginx watcher to reload nginx anytime the certs rotate
+          # ref: https://superuser.com/a/1531261
+          # TODO: replace this with an nginx config that watches the file-system & reloads from nginx
+          ansible.builtin.copy:
+            src: "{{ item.name }}"
+            dest: /{{ item.name }}
+            owner: root
+            group: root
+            mode: "0644"
+          loop:
+            - name: etc/systemd/system/nginx-reloader.service
+            - name: etc/systemd/system/nginx-watcher.path
+        - name: Ensure nginx watcher is enabled & started
+          ansible.builtin.systemd_service:
+            name: "{{ item.name }}"
+            state: started
+            enabled: true
+          loop:
+            - name: nginx-reloader
+
   handlers:
     - name: ValidateNginxConf
       # This command doesn't change anything, it just validates the nginx config
