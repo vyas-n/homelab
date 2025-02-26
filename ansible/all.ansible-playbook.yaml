@@ -4,6 +4,8 @@
 # - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
 
+# Note: This playbook provisions my entire homelab and is designed to be idempotent.
+
 # Provision TrueNAS
 - name: Provision TrueNAS
   hosts: truenas
@@ -169,13 +171,16 @@
           loop:
             - name: etc/systemd/system/nginx-reloader.service
             - name: etc/systemd/system/nginx-watcher.path
-        - name: Ensure nginx watcher is enabled & started
+          notify:
+            - RestartNginxWatcher
+        - name: Ensure nginx watcher is enabled
           ansible.builtin.systemd_service:
             name: "{{ item.name }}"
-            state: started
             enabled: true
           loop:
             - name: nginx-reloader
+          notify:
+            - RestartNginxWatcher
 
   handlers:
     - name: ValidateNginxConf
@@ -186,6 +191,11 @@
     - name: RestartNginx
       ansible.builtin.systemd_service:
         name: nginx
+        daemon_reload: true
+        state: restarted
+    - name: RestartNginxWatcher
+      ansible.builtin.systemd_service:
+        name: nginx-reloader
         daemon_reload: true
         state: restarted
 
