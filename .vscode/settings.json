@@ -8,5 +8,8 @@
     "nil": {
       "formatting": { "command": ["nixfmt"] }
     }
+  },
+  "[properties]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   }
 }

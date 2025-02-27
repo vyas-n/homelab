@@ -36,9 +36,39 @@
             msg: "{{ inventory_hostname }}: Reboot required: {{ reboot_required_check.stat.exists }}"
           changed_when: reboot_required_check.stat.exists
 
+    - name: Upgrade Fedora systems
+      when: ansible_facts['distribution'] == "Fedora"
+      block:
+        - name: Upgrade all packages
+          become: true
+          ansible.builtin.dnf:
+            name: "*"
+            state: latest
+        # ref: https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html
+        - name: Install tool to check if reboot is required
+          become: true
+          ansible.builtin.dnf:
+            name: dnf-plugins-core
+            state: present
+        - name: Check if reboot needed
+          become: true
+          register: check_restart
+          ansible.builtin.shell:
+            cmd: dnf needs-restarting -r
+          ignore_errors: true
+          changed_when: check_restart.rc != 0
+        - name: Notify if reboot is required
+          when: check_restart.rc != 0
+          ansible.builtin.debug:
+            msg: |-
+              {{ check_restart.stdout }}
+          changed_when: check_restart.rc != 0
+
+        # TODO: show reboot needed
+
     - name: Notify that a system without scripted upgrades is in the hosts.yaml file
       # At the moment, I only have debian systems that need to be upgraded.
       # But when I start managing other systems I want this playbook to upgrade those systems too.
-      when: ansible_facts['distribution'] not in ["Debian"]
+      when: ansible_facts['distribution'] not in ["Debian", "Fedora"]
       ansible.builtin.fail:
         msg: This system runs the linux distribution '{{ ansible_facts['distribution'] }}' and currently doesn't have upgrades scripted.
