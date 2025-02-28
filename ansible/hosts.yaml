@@ -17,7 +17,6 @@ all:
           ansible_host: fedora-server.hosts.vyas-n.dev
         k8s_wkr_1:
           ansible_host: k8s-wkr-1.hosts.vyas-n.dev
-          ansible_user: vyas
   hosts:
     truenas:
       ansible_host: truenas.hosts.vyas-n.dev

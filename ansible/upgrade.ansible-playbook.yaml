@@ -1,4 +1,6 @@
 ---
+#!/usr/bin/env ansible-playbook
+
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
 # - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
@@ -53,7 +55,7 @@
         - name: Check if reboot needed
           become: true
           register: check_restart
-          ansible.builtin.shell:
+          ansible.builtin.command:
             cmd: dnf needs-restarting -r
           ignore_errors: true
           changed_when: check_restart.rc != 0

@@ -1,4 +1,6 @@
 ---
+#!/usr/bin/env ansible-playbook
+
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
 # - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
@@ -6,10 +8,9 @@
 
 # Note: This playbook provisions my entire homelab and is designed to be idempotent.
 
-# Provision TrueNAS
-- name: Provision TrueNAS
+- name: Deploy Apps to TrueNAS
   hosts: truenas
-  tasks:
+  pre_tasks:
     - name: Creates directory & intermediate directories
       ansible.builtin.file:
         path: "{{ item.name }}"
@@ -21,37 +22,6 @@
         mode: u=rwX,g=rwX
       loop:
         - name: /mnt/app1/apps/dockge/stacks
-
-# Provision fedora VM
-- name: Provision Fedora VM
-  hosts: fedora_server
-  tasks:
-    - name: Install snapd
-      # ref: https://snapcraft.io/install/snapd/fedora#install
-      become: true
-      ansible.builtin.dnf:
-        name:
-          - snapd
-        state: present
-    - name: Make passwordless sudo work
-      become: true
-      ansible.builtin.copy:
-        src: "{{ item.name }}"
-        dest: /{{ item.name }}
-        owner: root
-        group: root
-        mode: "0440"
-      loop:
-        - name: etc/sudoers.d/passwordless-sudo
-    - name: Allow passwordless sudo for users
-      ansible.builtin.user:
-        name: vyas
-        groups: wheel
-        append: true
-
-# Deploy TrueNAS docker-compose Apps
-- name: Deploy Homepage
-  hosts: truenas
   vars:
     apps_fast_data_dir: /mnt/app1/apps
     apps_safe_data_dir: /mnt/data1/apps
@@ -64,6 +34,33 @@
 # TODO: find an external-dns system for docker -compose apps
 # - name: Deploy Traefik
 #   ansible.builtin.import_playbook: ../truenas/apps/traefik/deploy.ansible-playbook.yml
+
+# Provision MaaS
+- name: Provision MaaS
+  hosts: fedora_server
+  roles:
+    - role: vyas.linux.passwordless_sudo
+      vars:
+        passwordless_sudo_users:
+          - vyas
+  tasks:
+    - name: Install snapd
+      # ref: https://snapcraft.io/install/snapd/fedora#install
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - snapd
+        state: present
+
+# Provision k8s nodes
+- name: Provision k8s nodes
+  hosts: k8s_wkr_1
+  roles:
+    - role: vyas.linux.passwordless_sudo
+      vars:
+        passwordless_sudo_users:
+          - vyas
+  tasks: []
 
 # Provision Proxmox
 - name: Provision Proxmox Hosts

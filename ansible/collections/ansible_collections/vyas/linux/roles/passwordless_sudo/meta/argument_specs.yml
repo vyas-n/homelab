@@ -1,0 +1,11 @@
+---
+argument_specs:
+  # roles/myapp/tasks/main.yml entry point
+  main:
+    options:
+      passwordless_sudo_users:
+        type: list
+        required: true
+      passwordless_sudo_group:
+        type: str
+        required: true
