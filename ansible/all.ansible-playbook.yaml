@@ -1,6 +1,4 @@
 ---
-#!/usr/bin/env ansible-playbook
-
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
 # - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
@@ -55,6 +53,12 @@
 # Provision k8s nodes
 - name: Provision k8s nodes
   hosts: k8s_wkr_1
+  pre_tasks:
+    # TODO: Make idempotent.
+    # TODO: Run this task on all Fedora hosts.
+    - name: Bootstrap a host without python dnf pkgs installed
+      become: true
+      ansible.builtin.raw: dnf install -y python3-libdnf5
   roles:
     - role: vyas.linux.passwordless_sudo
       vars:
