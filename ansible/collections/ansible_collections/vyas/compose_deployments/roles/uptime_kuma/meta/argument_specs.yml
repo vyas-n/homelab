@@ -1,0 +1,17 @@
+---
+argument_specs:
+  # roles/myapp/tasks/main.yml entry point
+  main:
+    options:
+      uptime_kuma_apps_fast_data_dir:
+        type: path
+        required: true
+      uptime_kuma_apps_safe_data_dir:
+        type: path
+        required: true
+      uptime_kuma_apps_dockge_stacks_dir:
+        type: path
+        required: true
+      uptime_kuma_data_dir:
+        type: path
+        required: true

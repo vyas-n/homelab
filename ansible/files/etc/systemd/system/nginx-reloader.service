@@ -1,0 +1,12 @@
+[Unit]
+Description=nginx reloader
+After=network.target
+StartLimitIntervalSec=10
+StartLimitBurst=5
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl reload nginx.service
+
+[Install]
+WantedBy=multi-user.target

@@ -1,8 +1,22 @@
 ---
 # Ansible Inventory Ref: https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible-inventory.json
-proxmox:
+all:
+  children:
+    proxmox:
+      hosts:
+        proxmox_1:
+          ansible_host: proxmox-1.hosts.vyas-n.dev
+          has_amd_gpu: true
+        proxmox_2:
+          ansible_host: proxmox-2.hosts.vyas-n.dev
+          has_amd_gpu: true
+    vms:
+      hosts:
+        fedora_server:
+          ansible_host: fedora-server.hosts.vyas-n.dev
+        k8s_wkr_1:
+          ansible_host: k8s-wkr-1.hosts.vyas-n.dev
   hosts:
-    proxmox_1:
-      ansible_host: proxmox-1.hosts.vyas-n.dev
-      ansible_user: root
+    truenas:
+      ansible_host: truenas.hosts.vyas-n.dev

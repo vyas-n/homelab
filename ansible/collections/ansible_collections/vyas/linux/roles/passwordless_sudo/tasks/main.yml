@@ -1,0 +1,18 @@
+---
+# ref: https://www.nicksherlock.com/2020/11/working-around-the-amd-gpu-reset-bug-on-proxmox/
+- name: Make passwordless sudo work
+  become: true
+  ansible.builtin.template:
+    src: "{{ item.name }}.j2"
+    dest: /{{ item.name }}
+    owner: root
+    group: root
+    mode: "0440"
+  loop:
+    - name: etc/sudoers.d/passwordless-sudo
+- name: Allow passwordless sudo for users
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: wheel
+    append: true
+  loop: "{{ passwordless_sudo_users }}"

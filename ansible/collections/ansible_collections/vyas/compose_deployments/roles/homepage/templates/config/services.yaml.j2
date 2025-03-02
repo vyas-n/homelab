@@ -1,0 +1,78 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services
+
+# For icons, use `sh-<icon>`: https://selfh.st/icons/
+
+- Network:
+  - Unifi (Vyas's Home Network):
+      href: https://unifi.ui.com/consoles/0CEA144D1F27000000000871A9680000000008E4BFA800000000671C5D48:243437069/network/default/dashboard
+      siteMonitor: https://192.168.2.1
+      ping: 192.168.2.1
+      icon: sh-ubiquiti-unifi.svg
+      widget:
+        type: unifi
+        url: https://192.168.2.1
+        username: {{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='username', vault='Private') }}
+        password: "{{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='password', vault='Private') }}"
+  - HomeLab Subnet Router 1 (truenas):
+      href: https://login.tailscale.com/admin/machines/100.64.55.20
+      ping: 100.64.55.20
+      icon: sh-tailscale.svg
+      fields: ["last_seen", "expires"]
+      widget:
+        type: tailscale
+        deviceid: nk5m9JKaPC11CNTRL
+        key: {{ lookup('community.general.onepassword', 'Tailscale API Token (vyas@github)', field='credential', vault='Private') }}
+  - HomeLab Subnet Router 2 (proxmox-1):
+      href: https://login.tailscale.com/admin/machines/100.103.208.83
+      ping: 100.103.208.83
+      icon: sh-tailscale.svg
+      fields: ["last_seen", "expires"]
+      widget:
+        type: tailscale
+        deviceid: nrSocMUu9t11CNTRL
+        key: {{ lookup('community.general.onepassword', 'Tailscale API Token (vyas@github)', field='credential', vault='Private') }}
+
+- Storage:
+  - TrueNAS:
+      href: https://truenas.hosts.vyas-n.dev
+      siteMonitor: https://truenas.hosts.vyas-n.dev
+      ping: truenas.hosts.vyas-n.dev
+      icon: sh-truenas-scale.svg
+      widget:
+        type: truenas
+        url: https://truenas.hosts.vyas-n.dev
+        key: {{ lookup('community.general.onepassword', 'TrueNAS API Key (homepage)', field='credential', vault='Private') }}
+        enablePools: true
+        nasType: scale
+  - TrueNAS IPMI:
+      href: https://truenas-ipmi.hosts.vyas-n.dev
+      siteMonitor: https://truenas-ipmi.hosts.vyas-n.dev
+      ping: truenas-ipmi.hosts.vyas-n.dev
+
+- Compute:
+  - Proxmox-1:
+      href: https://proxmox-1.hosts.vyas-n.dev
+      siteMonitor: https://proxmox-1.hosts.vyas-n.dev
+      ping: proxmox-1.hosts.vyas-n.dev
+      icon: sh-proxmox.svg
+      widget:
+        type: proxmox
+        url: https://proxmox-1.hosts.vyas-n.dev
+        username: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='Token ID', vault='Private') }}
+        password: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='credential', vault='Private') }}
+        node: proxmox-1
+  - Proxmox-2:
+      href: https://proxmox-2.hosts.vyas-n.dev
+      siteMonitor: https://proxmox-2.hosts.vyas-n.dev
+      ping: proxmox-2.hosts.vyas-n.dev
+      icon: sh-proxmox.svg
+      widget:
+        type: proxmox
+        url: https://proxmox-2.hosts.vyas-n.dev
+        username: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='Token ID', vault='Private') }}
+        password: {{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='credential', vault='Private') }}
+        node: proxmox-2
+
+- Docker Containers: []

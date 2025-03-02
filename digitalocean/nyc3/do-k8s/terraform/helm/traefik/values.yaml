@@ -1,0 +1,4 @@
+---
+# https://artifacthub.io/packages/helm/traefik/traefik
+service:
+  type: LoadBalancer

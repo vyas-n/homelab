@@ -1,0 +1,5 @@
+---
+- name: Install vendor-reset kernel module
+  ansible.builtin.command:
+    cmd: /usr/sbin/dkms install .
+    chdir: /usr/local/src/vendor-reset

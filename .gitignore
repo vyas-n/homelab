@@ -11,7 +11,6 @@ license.yaml
 # Generated / Temp Files
 .DS_Store
 *.tfstate*
-.vscode/settings.json
 
 # Outputs
 generated/

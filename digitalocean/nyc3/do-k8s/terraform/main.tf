@@ -1,4 +1,32 @@
 
+resource "kubernetes_namespace" "traefik" {
+  metadata {
+    name = "traefik"
+  }
+}
+
+# ref: https://artifacthub.io/packages/helm/traefik/traefik
+resource "helm_release" "traefik" {
+  name       = "traefik"
+  chart      = "traefik"
+  repository = "oci://ghcr.io/traefik/helm/traefik"
+  version    = "33.1.0"
+
+  max_history      = 5
+  namespace        = kubernetes_namespace.traefik.metadata[0].name
+  create_namespace = false
+  lint             = true
+  timeout          = 300
+  wait             = true
+  wait_for_jobs    = true
+
+  values = [
+    # remove yaml comments & formatting from diff calculations
+    yamlencode(yamldecode(file("${path.module}/helm/traefik/values.yaml"))),
+    yamlencode({})
+  ]
+}
+
 resource "kubernetes_namespace" "authentik" {
   metadata {
     name = "authentik"
