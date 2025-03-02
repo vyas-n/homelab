@@ -1,0 +1,4 @@
+---
+- name: Add kernel parameters
+  ansible.builtin.command:
+    cmd: /usr/sbin/sysctl -p /etc/sysctl.d/99-tailscale.conf

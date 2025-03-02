@@ -1,0 +1,22 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/service-widgets
+
+- openmeteo:
+    units: imperial
+    cache: 5 # Time in minutes to cache API responses, to stay within limits
+    format: # optional, Intl.NumberFormat options
+      maximumFractionDigits: 1
+
+- unifi_console:
+    url: https://192.168.2.1
+    username: {{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='username', vault='Private') }}
+    password: "{{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='password', vault='Private') }}"
+
+- resources:
+    label: TrueNAS Resources
+    expanded: true
+    cpu: true
+    memory: true
+    cputemp: true
+    uptime: true

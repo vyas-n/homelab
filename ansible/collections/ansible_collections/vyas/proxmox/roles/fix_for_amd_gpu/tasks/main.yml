@@ -1,0 +1,49 @@
+---
+# ref: https://www.nicksherlock.com/2020/11/working-around-the-amd-gpu-reset-bug-on-proxmox/
+- name: Get Proxmox kernel headers
+  ansible.builtin.apt:
+    package:
+      - pve-headers
+    state: present
+- name: Get required build tools
+  ansible.builtin.apt:
+    package:
+      - git
+      - dkms
+      - build-essential
+- name: Clone Repo
+  ansible.builtin.git:
+    repo: https://github.com/gnif/vendor-reset.git
+    dest: /usr/local/src/vendor-reset
+    single_branch: true
+    version: master
+  notify:
+    - Install vendor-reset kernel module
+- name: Initialize kernel modules variable
+  ansible.builtin.set_fact:
+    kernel_modules:
+      - vendor-reset
+- name: Template kernel modules
+  ansible.builtin.template:
+    src: etc/modules-load.d/proxmox_fix_amd_gpu.conf.j2
+    dest: /etc/modules-load.d/proxmox_fix_amd_gpu.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Refresh initramfs
+    - Reboot machine
+- name: Initialize kernel modules variable
+  ansible.builtin.set_fact:
+    modprobe_blacklist:
+      - blacklist amdgpu
+      - blacklist radeon
+- name: Template driver blacklist
+  ansible.builtin.template:
+    src: etc/modprobe.d/proxmox_fix_amd_gpu.conf.j2
+    dest: /etc/modprobe.d/proxmox_fix_amd_gpu.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reboot machine

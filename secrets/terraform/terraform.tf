@@ -32,6 +32,10 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "4.47.0"
     }
+    github = {
+      source  = "integrations/github"
+      version = "6.4.0"
+    }
   }
 }
 
@@ -58,4 +62,9 @@ provider "cloudflare" {
   email   = "me@vyas-n.com"
   api_key = data.onepassword_item.cloudflare_global_api_key.credential
   # api_token = data.onepassword_item.cloudflare_pat.credential
+}
+
+provider "github" {
+  owner = "vyas-n"
+  token = data.onepassword_item.github_pat_vyas_n.credential
 }
