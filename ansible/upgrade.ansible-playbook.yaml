@@ -11,6 +11,7 @@
 - name: Upgrade systems
   # TODO: figure out how to safely upgrade truenas
   hosts: all:!truenas
+  strategy: free
   tasks:
     - name: Upgrade Debian systems
       when: ansible_facts['distribution'] == "Debian"
