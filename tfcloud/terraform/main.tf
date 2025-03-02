@@ -1,6 +1,6 @@
 
 locals {
-  terraform_version = "~> 1.9.0"
+  terraform_version = "~> 1.11.0"
 }
 
 # This workspace only executes locally
