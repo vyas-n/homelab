@@ -49,6 +49,11 @@
         name:
           - snapd
         state: present
+    - name: Install maas snap package
+      become: true
+      community.general.snap:
+        name: maas
+        channel: 3.5/stable
 
 # Provision k8s nodes
 - name: Provision k8s nodes
@@ -69,6 +74,7 @@
 # Provision Proxmox
 - name: Provision Proxmox Hosts
   hosts: proxmox
+  strategy: free
   roles:
     - role: vyas.proxmox.shared_handlers
     - role: vyas.proxmox.install_tailscale
