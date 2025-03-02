@@ -5,28 +5,6 @@ resource "kubernetes_namespace" "traefik" {
   }
 }
 
-# ref: https://artifacthub.io/packages/helm/traefik/traefik
-resource "helm_release" "traefik" {
-  name       = "traefik"
-  chart      = "traefik"
-  repository = "oci://ghcr.io/traefik/helm/traefik"
-  version    = "33.1.0"
-
-  max_history      = 5
-  namespace        = kubernetes_namespace.traefik.metadata[0].name
-  create_namespace = false
-  lint             = true
-  timeout          = 300
-  wait             = true
-  wait_for_jobs    = true
-
-  values = [
-    # remove yaml comments & formatting from diff calculations
-    yamlencode(yamldecode(file("${path.module}/helm/traefik/values.yaml"))),
-    yamlencode({})
-  ]
-}
-
 resource "kubernetes_namespace" "authentik" {
   metadata {
     name = "authentik"
@@ -134,71 +112,4 @@ resource "kubernetes_secret" "onepassword_connect_access_token" {
   data = {
     token = var.onepassword_access_token
   }
-}
-
-resource "kubectl_manifest" "onepass_cluster_secret_store" {
-  yaml_body = yamlencode({
-    apiVersion = "external-secrets.io/v1beta1"
-    kind       = "ClusterSecretStore"
-    metadata = {
-      name      = "onepass"
-      namespace = kubernetes_namespace.onepassconnect.metadata[0].name
-    }
-    spec = {
-      provider = {
-        onepassword = {
-          connectHost = "http://onepassword-connect.onepassconnect.svc:8080"
-          vaults = {
-            # look in this vault first & only
-            Bedrock = 1
-          }
-          auth = {
-            secretRef = {
-              connectTokenSecretRef = {
-                name = kubernetes_secret.onepassword_connect_access_token.metadata[0].name
-                key  = "token"
-              }
-            }
-          }
-        }
-      }
-    }
-  })
-}
-
-
-resource "kubectl_manifest" "authentik_eso_secrets" {
-  yaml_body = yamlencode({
-    apiVersion = "external-secrets.io/v1beta1"
-    kind       = "ExternalSecret"
-    metadata = {
-      name      = "authentik-eso-secrets"
-      namespace = kubernetes_namespace.authentik.metadata[0].name
-    }
-    spec = {
-      secretStoreRef = {
-        kind = "ClusterSecretStore"
-        name = kubectl_manifest.onepass_cluster_secret_store.name
-      }
-      target = {
-        creationPolicy = "Owner"
-      }
-      data = [
-        {
-          secretKey = "pg_pass"
-          remoteRef = {
-            key      = "Authentik"
-            property = "postgres password"
-          }
-        },
-        {
-          secretKey = "django_secret_key"
-          remoteRef = {
-            key      = "Authentik"
-            property = "django secret key"
-          }
-        }
-      ]
-    }
-  })
 }
