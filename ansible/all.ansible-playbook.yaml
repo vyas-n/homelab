@@ -57,7 +57,8 @@
 
 # Provision k8s nodes
 - name: Provision k8s nodes
-  hosts: k8s_wkr_1
+  hosts: k8s
+  strategy: free
   pre_tasks:
     # TODO: Make idempotent.
     # TODO: Run this task on all Fedora hosts.

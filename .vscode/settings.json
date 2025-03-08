@@ -11,5 +11,8 @@
   },
   "[properties]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "yaml.schemas": {
+    "https://github.com/canonical/cloud-init/raw/refs/heads/main/cloudinit/config/schemas/versions.schema.cloud-config.json": "file:///Volumes/src/github.com/vyas-n/deploy/proxmox/terraform/k8s-nodes.cloudinit.yaml"
   }
 }

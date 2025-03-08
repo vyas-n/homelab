@@ -9,14 +9,10 @@ terraform {
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "secrets_terraform"
+      name = "proxmox_terraform"
     }
   }
   required_providers {
-    tfe = {
-      source  = "hashicorp/tfe"
-      version = "0.64.0"
-    }
     onepassword = {
       source  = "1Password/onepassword"
       version = "2.1.2"
@@ -29,25 +25,19 @@ terraform {
       source  = "bpg/proxmox"
       version = "0.73.0"
     }
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "4.52.0"
-    }
-    github = {
-      source  = "integrations/github"
-      version = "6.6.0"
+
+    cloudinit = {
+      source = "hashicorp/cloudinit"
+      version = "2.3.6"
     }
   }
 }
 
+provider "cloudinit" {}
+
 provider "onepassword" {
   # verify that this matches with: `op account ls | from ssv | get "URL".0`
   account = "my.1password.com"
-}
-
-provider "tfe" {
-  organization = "vyas-n"
-  token        = data.onepassword_item.tfcloud_pat.credential
 }
 
 provider "time" {}
@@ -57,14 +47,8 @@ provider "proxmox" {
   # If self-signed TLS certificate is in use
   # insecure  = true
   api_token = "root@pam!onepass=${data.onepassword_item.proxmox_api_token.credential}"
-}
-
-provider "cloudflare" {
-  email   = "me@vyas-n.com"
-  api_key = data.onepassword_item.cloudflare_global_api_key.credential
-  # api_token = data.onepassword_item.cloudflare_pat.credential
-}
-
-provider "github" {
-  owner = "vyas-n"
+  ssh {
+    agent    = true
+    username = "root"
+  }
 }
