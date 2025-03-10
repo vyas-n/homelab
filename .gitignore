@@ -7,7 +7,6 @@ license.yaml
 
 # Packages
 .terraform/
-.trunk/
 
 # Generated / Temp Files
 .DS_Store

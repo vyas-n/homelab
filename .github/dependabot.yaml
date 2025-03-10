@@ -34,6 +34,9 @@ updates:
     directories:
       - proxmox/terraform
       - secrets/terraform
+      - secrets/terraform/modules/gh_secrets
+      - secrets/terraform/modules/proxmox_secrets
+      - secrets/terraform/modules/tfe_secrets
       - unifi/terraform
     schedule:
       interval: daily

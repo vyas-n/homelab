@@ -29,6 +29,7 @@
               poetry
               terraform
               k0sctl
+              trunk-io
 
               # Doc Generation
               terraform-docs
