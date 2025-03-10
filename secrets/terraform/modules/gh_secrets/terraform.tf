@@ -1,5 +1,6 @@
 /*
- * This Terraform module is to sync secrets into proxmox
+ * # GitHub Actions Secrets Seeding 
+ * 
 */
 
 terraform {

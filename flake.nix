@@ -30,6 +30,9 @@
               terraform
               k0sctl
 
+              # Doc Generation
+              terraform-docs
+
               # Dev Shell
               nushell
               fish
