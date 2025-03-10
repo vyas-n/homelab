@@ -1,7 +1,8 @@
 #!/usr/bin/env nu
 
-glob **/terraform.tf | path dirname | each {|dir|
+glob **/*.tf | path dirname | uniq | each {|dir| {
+    terraform --chdir=$dir init --backend=false
     terraform-docs $dir
-}
+}}
 
 prettier --write .
