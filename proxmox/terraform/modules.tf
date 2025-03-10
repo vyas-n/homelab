@@ -11,6 +11,7 @@ module "fedora_vm" {
 
   # VM Configs
   hostname            = "fedora-test"
+  domain              = "vms.vyas-n.dev"
   cloud_os_image      = proxmox_virtual_environment_download_file.fedora_cloud_image.id
   cloud_init_filepath = "${path.module}/k8s-nodes.cloudinit.yaml"
 }

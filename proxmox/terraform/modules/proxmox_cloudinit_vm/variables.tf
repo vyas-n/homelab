@@ -3,6 +3,11 @@ variable "hostname" {
   sensitive = false
 }
 
+variable "domain" {
+  type      = string
+  sensitive = false
+}
+
 variable "vm_datastore_id" {
   type      = string
   sensitive = false
