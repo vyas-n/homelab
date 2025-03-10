@@ -33,6 +33,8 @@ updates:
   - package-ecosystem: terraform
     directories:
       - proxmox/terraform
+      - proxmox/terraform/modules/proxmox_cloudinit_vm
+      - proxmox/terraform/modules/proxmox_cloudinit_vm/modules/unifi_host_dns_records
       - secrets/terraform
       - secrets/terraform/modules/gh_secrets
       - secrets/terraform/modules/proxmox_secrets

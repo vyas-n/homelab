@@ -1,7 +1,7 @@
 
 module "fedora_vm" {
   # Module
-  source = "../../modules/proxmox_cloudinit_vm"
+  source = "./modules/proxmox_cloudinit_vm"
 
   ## Variables
   # Proxmox configs
