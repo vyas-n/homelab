@@ -5,7 +5,7 @@ module "fedora_vm" {
 
   ## Variables
   # Proxmox configs
-  vm_datastore_id = "local-zfs"
+  vm_datastore_id = "ceph_block"
   image_datastore_id = "proxmox-smb-from-truenas"
   proxmox_node_name = "proxmox-2"
 

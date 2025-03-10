@@ -29,13 +29,13 @@ variable "cloud_os_image" {
 
 variable "num_cpu_cores" {
   type = number
-  default = 2
+  default = 1
 }
 
 variable "memory" {
   description = "In megabytes (mb)"
   type = number
-  default = 4096
+  default = 2048
 }
 
 variable "disk_space" {

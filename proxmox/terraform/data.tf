@@ -30,3 +30,9 @@ output "proxmox_1" {
 output "proxmox_2" {
   value = data.proxmox_virtual_environment_node.proxmox_2
 }
+
+# Unifi Gateway Homelab Creds
+data "onepassword_item" "unifi_gateway_homelab" {
+  vault = data.onepassword_vault.private.uuid
+  title = "Unifi Gateway Local User (homepage)"
+}

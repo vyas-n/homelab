@@ -30,6 +30,10 @@ terraform {
       source = "hashicorp/cloudinit"
       version = "2.3.6"
     }
+    unifi = {
+      source  = "ubiquiti-community/unifi"
+      version = "0.41.2"
+    }
   }
 }
 
@@ -51,4 +55,12 @@ provider "proxmox" {
     agent    = true
     username = "root"
   }
+}
+
+provider "unifi" {
+  api_url        = "https://192.168.2.1"
+  allow_insecure = true
+
+  username = data.onepassword_item.unifi_gateway_homelab.username
+  password = data.onepassword_item.unifi_gateway_homelab.password
 }
