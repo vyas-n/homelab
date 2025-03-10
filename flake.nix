@@ -24,6 +24,7 @@
               nixfmt-classic
               rust-analyzer
               nodePackages.prettier
+              ansible-lint
 
               # Dev Tools
               poetry
