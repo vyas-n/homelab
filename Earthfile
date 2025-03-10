@@ -23,27 +23,3 @@ refresh-kubeconfig:
 
 deploy:
     BUILD +deploy-k0sctl
-
-docs:
-    FROM ghcr.io/vyas-proj/dev:latest
-
-    COPY . .
-    FOR dir IN $(find "modules" -name "*.tf" | xargs dirname | uniq)
-        RUN terraform-docs $dir
-    END
-    RUN npx prettier --write .
-
-    FOR dir IN $(find "modules" -name "*.tf" | xargs dirname | uniq)
-        SAVE ARTIFACT $dir/README.md AS LOCAL $dir/README.md
-    END
-
-fmt:
-    FROM ghcr.io/vyas-proj/dev:latest
-
-    USER dev
-
-    COPY . .
-    RUN terraform fmt --recursive .
-    FOR file IN $(git diff --name-only | egrep '\.tf$')
-        SAVE ARTIFACT $file AS LOCAL $file
-    END
