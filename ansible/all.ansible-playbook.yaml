@@ -78,6 +78,7 @@
   hosts: gaming-vm-win11
   tasks:
     - name: Setup SSH
+      # ref: https://docs.ansible.com/ansible/latest/os_guide/windows_ssh.html#key-authentication
       ansible.windows.win_copy:
         src: home/.ssh/authorized_keys
         dest: C:\ProgramData\ssh\administrators_authorized_keys
