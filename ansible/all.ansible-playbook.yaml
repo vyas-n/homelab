@@ -236,6 +236,7 @@
         - name: Setup Nginx watcher to reload nginx anytime the certs rotate
           # ref: https://superuser.com/a/1531261
           # TODO: replace this with an nginx config that watches the file-system & reloads from nginx
+          # TODO: replace this with caddy config that watches the file-system & autoreloads
           ansible.builtin.copy:
             src: "{{ item.name }}"
             dest: /{{ item.name }}

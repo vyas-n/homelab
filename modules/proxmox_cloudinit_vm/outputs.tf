@@ -19,7 +19,16 @@ output "ipv6" {
   ][0]
 }
 
+output "mac_address" {
+  sensitive = false
+
+  # Filter out loop-back macaddress
+  value = [
+    for mac_address in proxmox_virtual_environment_vm.vm.mac_addresses : mac_address if !startswith(mac_address, "00:00:00:00:00:00")
+  ][0]
+}
+
 output "hostname" {
   sensitive = false
-  value = var.hostname
+  value     = var.hostname
 }

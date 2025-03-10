@@ -26,7 +26,7 @@ terraform {
     }
 
     cloudinit = {
-      source = "hashicorp/cloudinit"
+      source  = "hashicorp/cloudinit"
       version = "2.3.6"
     }
     unifi = {

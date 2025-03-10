@@ -3,6 +3,8 @@
 # TODO: wrap in nix
 # TODO: fold into flake.nix
 
+terraform fmt --recursive .
+
 glob **/*.tf | path dirname | uniq | each {|dir| {
     terraform --chdir=$dir init --backend=false
     terraform-docs $dir

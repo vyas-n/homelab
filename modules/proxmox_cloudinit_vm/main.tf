@@ -17,12 +17,12 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   agent {
     enabled = true
-    trim = true
+    trim    = true
   }
 
   cpu {
-    cores        = var.num_cpu_cores
-    type         = "x86-64-v4"
+    cores = var.num_cpu_cores
+    type  = "x86-64-v4"
   }
   machine = "q35"
 
@@ -41,12 +41,12 @@ resource "proxmox_virtual_environment_vm" "vm" {
     iothread     = true
     discard      = "on"
     size         = var.disk_space
-    cache = "writeback"
+    cache        = "writeback"
   }
   bios = "ovmf"
   efi_disk {
     datastore_id = var.vm_datastore_id
-    type = "4m"
+    type         = "4m"
   }
 
   # This block is necessary in order to create a network device,
