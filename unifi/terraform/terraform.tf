@@ -4,12 +4,12 @@
 */
 
 terraform {
-  # cloud {
-  #   organization = "vyas-n"
-  #   workspaces {
-  #     name = "unifi_terraform"
-  #   }
-  # }
+  cloud {
+    organization = "vyas-n"
+    workspaces {
+      name = "unifi_terraform"
+    }
+  }
   required_providers {
     onepassword = {
       source  = "1Password/onepassword"

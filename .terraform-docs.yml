@@ -11,6 +11,10 @@ output:
   template: |
     {{ .Content }}
 
+sort:
+  enabled: true
+  by: required
+
 settings:
   anchor: false
   html: false
