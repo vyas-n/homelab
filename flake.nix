@@ -24,6 +24,7 @@
               nixfmt-classic
               rust-analyzer
               nodePackages.prettier
+              nodePackages.prettier-plugin-toml
               ansible-lint
 
               # Dev Tools

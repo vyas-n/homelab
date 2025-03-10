@@ -19,13 +19,6 @@ data "proxmox_virtual_environment_node" "proxmox_2" {
   node_name = "proxmox-2"
 }
 
-output "proxmox_1" {
-  value = data.proxmox_virtual_environment_node.proxmox_1
-}
-output "proxmox_2" {
-  value = data.proxmox_virtual_environment_node.proxmox_2
-}
-
 # Unifi Gateway Homelab Creds
 data "onepassword_item" "unifi_gateway_homelab" {
   vault = data.onepassword_vault.private.uuid
