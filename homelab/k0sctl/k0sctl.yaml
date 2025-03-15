@@ -5,39 +5,25 @@ apiVersion: k0sctl.k0sproject.io/v1beta1
 kind: Cluster
 metadata:
   name: homezone-v1
-  user: admin
+  user: homezone-admin
 spec:
   hosts:
     - role: controller
-      privateAddress: 192.168.2.135
-      installFlags:
+      installFlags: &installflags
         - --labels
         - topology.kubernetes.io/region=homelab
         - --labels
         - topology.kubernetes.io/zone=vlan1
       openSSH:
         address: k8s-ctr-1.vms.vyas-n.dev
-        user: vyas
     - role: worker
-      privateAddress: 192.168.2.33
-      installFlags:
-        - --labels
-        - topology.kubernetes.io/region=homelab
-        - --labels
-        - topology.kubernetes.io/zone=vlan1
+      installFlags: *installflags
       openSSH:
         address: k8s-wkr-1.vms.vyas-n.dev
-        user: vyas
     - role: worker
-      privateAddress: 192.168.2.62
-      installFlags:
-        - --labels
-        - topology.kubernetes.io/region=homelab
-        - --labels
-        - topology.kubernetes.io/zone=vlan1
+      installFlags: *installflags
       openSSH:
         address: k8s-wkr-2.vms.vyas-n.dev
-        user: vyas
   k0s:
     version: v1.32.2+k0s.0
     config:

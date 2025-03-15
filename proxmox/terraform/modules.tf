@@ -39,6 +39,10 @@ module "k8s_wkr_1" {
   num_cpu_cores = 8
   memory        = 8192
   disk_space    = 64
+
+  # TODO: Remove
+  # This is a workaround b/c Ceph currently has a timeout on CephFS lock b/c the current Ceph cluster I/O is too slow
+  depends_on = [module.k8s_ctr_1]
 }
 
 module "k8s_wkr_2" {
@@ -60,4 +64,8 @@ module "k8s_wkr_2" {
   num_cpu_cores = 8
   memory        = 8192
   disk_space    = 64
+
+  # TODO: Remove
+  # This is a workaround b/c Ceph currently has a timeout on CephFS lock b/c the current Ceph cluster I/O is too slow
+  depends_on = [module.k8s_ctr_1, module.k8s_wkr_1]
 }

@@ -16,8 +16,8 @@ users:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+A2Kyl58go8U7sgQjF7M0kfwyn+5jCK4wTcsM6jsAr
     sudo: ALL=(ALL) NOPASSWD:ALL
 
-# package_reboot_if_required: true
-# package_upgrade: true
+package_reboot_if_required: true
+package_upgrade: true
 package_update: true
 packages:
   - nu
