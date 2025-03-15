@@ -121,6 +121,64 @@
     - role: vyas.proxmox.fix_for_amd_gpu
       when: (has_amd_gpu is defined) and has_amd_gpu
   tasks:
+    - name: Fix Disk Usage monitoring
+      block:
+        - name: Insert code to fix disk usage
+          # ref: https://forum.proxmox.com/threads/vm-shows-0-0-disk-usage.114808/
+          ansible.builtin.blockinfile:
+            path: /usr/share/perl5/PVE/QemuServer.pm
+            marker: |
+              {% filter indent(width=8, first=true) %}
+              ##### CODE TO FETCH VM DISK USAGE FROM CEPH + ZFS POOL {mark} #####
+              {% endfilter %}
+            insertafter: "# no info available$"
+            block: |
+              {% filter indent(width=8, first=true) %}
+              my @bootdiskorder = split('=', $conf->{boot});
+              my @bootdiskname = split(';', $bootdiskorder[1]);
+              my @bootdiskinfo = split(",", $conf->{$bootdiskname[0]});
+              my @bootdiskdetail = split(":", $bootdiskinfo[0]);
+              my $bootdiskstorage = $bootdiskdetail[0];
+              my $bootdiskimage = $bootdiskdetail[1];
+
+              if (defined $storecfg->{ids}->{$bootdiskstorage}->{type}) {
+                  my $bootdisktype = $storecfg->{ids}->{$bootdiskstorage}->{type};
+                  my $bootdiskpool = $storecfg->{ids}->{$bootdiskstorage}->{pool};
+                  if ($bootdisktype eq "zfspool") {
+                      my $zfsdiskinfocmd ="zfs get -H -p -oname,value  used ".$bootdiskpool."/".$bootdiskimage;
+                      my $zfsdiskinfo=`$zfsdiskinfocmd`;
+                      $zfsdiskinfo =~ s/\n/""/eg;
+                      $zfsdiskinfo =~ s/\r/""/eg;
+                      my $total_used_size = 0;
+                      if ($zfsdiskinfo =~ /$bootdiskimage/) {
+                              my @zfsdiskbytes=split("\t",$zfsdiskinfo);
+                              $total_used_size=$zfsdiskbytes[1];
+                              }
+                      $d->{disk} = $total_used_size;
+                      }
+                if ($bootdisktype eq "rbd") {
+                      my $cephrbddiskinfocmd = "rbd disk-usage -p " . $bootdiskpool . " " . $bootdiskimage . " --format=json";
+                      my $cephrbddiskinfo = `$cephrbddiskinfocmd`;
+                      $cephrbddiskinfo =~ s/\n/""/eg;
+                      $cephrbddiskinfo =~ s/\r/""/eg;
+                      $cephrbddiskinfo =~ s/\t/""/eg;
+                      $cephrbddiskinfo =~ s/\0/""/eg;
+                      $cephrbddiskinfo =~ s/^[a-zA-z0-9,]//g;
+                      my $total_used_size = 0;
+                      if ($cephrbddiskinfo =~ /$bootdiskimage/) {
+                          my $cephrbddiskinfoarray = decode_json($cephrbddiskinfo);
+                          foreach my $image (@{$cephrbddiskinfoarray->{'images'}}) {
+                              if (defined $image->{'used_size'}) {
+                                  $total_used_size += $image->{'used_size'};
+                              }
+                          }
+                          $d->{disk} = $total_used_size;
+                      }
+                  }
+              }
+              {% endfilter %}
+          notify:
+            - RestartPVEStatd
     - name: Setup for PCIe Passthrough
       block:
         - name: Initialize kernel parameters variable
@@ -271,6 +329,11 @@
     - name: RestartNginxWatcher
       ansible.builtin.systemd_service:
         name: nginx-reloader
+        daemon_reload: true
+        state: restarted
+    - name: RestartPVEStatd
+      ansible.builtin.systemd_service:
+        name: pvestatd
         daemon_reload: true
         state: restarted
 

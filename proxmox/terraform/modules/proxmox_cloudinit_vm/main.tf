@@ -22,7 +22,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   cpu {
     cores = var.num_cpu_cores
-    type  = "x86-64-v4"
+    type  = "x86-64-v3"
   }
   machine = "q35"
 

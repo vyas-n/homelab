@@ -1,0 +1,21 @@
+---
+# Rook-Ceph Operator Ref:
+# - https://rook.github.io/docs/rook/latest-release/Helm-Charts/operator-chart/#configuration
+# - https://artifacthub.io/packages/helm/rook/rook-ceph
+image:
+  repository: docker.io/rook/ceph
+csi:
+  kubeletDirPath: /var/lib/k0s/kubelet
+  serviceMonitor:
+    enabled: true
+monitoring:
+  enabled: true
+enableDiscoveryDaemon: true
+discover:
+  resources:
+    limits:
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+      ephemeral-storage: 128Mi

@@ -9,13 +9,15 @@ variable "domain" {
 }
 
 variable "vm_datastore_id" {
-  type      = string
-  sensitive = false
+  description = "ID of the datastore to host VM's OS & EFI Disks."
+  type        = string
+  sensitive   = false
 }
 
 variable "image_datastore_id" {
-  type      = string
-  sensitive = false
+  description = "ID of the datastore to host VM's cloud-init snippet."
+  type        = string
+  sensitive   = false
 }
 
 variable "proxmox_node_name" {

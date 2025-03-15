@@ -9,13 +9,26 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs-stable, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let pkgs-stable = import nixpkgs-stable { inherit system; config.allowUnfree = true; };
+  outputs =
+    {
+      self,
+      nixpkgs-stable,
+      flake-utils,
+      ...
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs-stable = import nixpkgs-stable {
+          inherit system;
+          config.allowUnfree = true;
+        };
 
-      in {
+      in
+      {
         # Development Environments
-        devShells.default = with pkgs-stable;
+        devShells.default =
+          with pkgs-stable;
           mkShell {
             packages = [
               # IDE integrations
@@ -46,5 +59,9 @@
               exec fish
             '';
           };
-      });
+
+        # Outputs
+        formatter = pkgs-stable.nixfmt-rfc-style;
+      }
+    );
 }

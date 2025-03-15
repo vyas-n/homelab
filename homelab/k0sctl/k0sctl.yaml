@@ -8,14 +8,36 @@ metadata:
   user: admin
 spec:
   hosts:
-    - ssh:
-        address: k8s-ctr-1.hosts.vyas-n.dev
+    - role: controller
+      privateAddress: 192.168.2.135
+      installFlags:
+        - --labels
+        - topology.kubernetes.io/region=homelab
+        - --labels
+        - topology.kubernetes.io/zone=vlan1
+      openSSH:
+        address: k8s-ctr-1.vms.vyas-n.dev
         user: vyas
-      role: controller
-    - ssh:
-        address: k8s-wkr-1.hosts.vyas-n.dev
+    - role: worker
+      privateAddress: 192.168.2.33
+      installFlags:
+        - --labels
+        - topology.kubernetes.io/region=homelab
+        - --labels
+        - topology.kubernetes.io/zone=vlan1
+      openSSH:
+        address: k8s-wkr-1.vms.vyas-n.dev
         user: vyas
-      role: worker
+    - role: worker
+      privateAddress: 192.168.2.62
+      installFlags:
+        - --labels
+        - topology.kubernetes.io/region=homelab
+        - --labels
+        - topology.kubernetes.io/zone=vlan1
+      openSSH:
+        address: k8s-wkr-2.vms.vyas-n.dev
+        user: vyas
   k0s:
     version: v1.32.1+k0s.0
     config:

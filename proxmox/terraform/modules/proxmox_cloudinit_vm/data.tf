@@ -12,6 +12,7 @@ data "cloudinit_config" "user_data_cloud_config" {
       #cloud-config
 
       hostname: ${var.hostname}
+      fqdn: ${var.hostname}.${var.domain}
     EOT
   }
 
