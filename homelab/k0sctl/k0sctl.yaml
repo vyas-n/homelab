@@ -39,7 +39,7 @@ spec:
         address: k8s-wkr-2.vms.vyas-n.dev
         user: vyas
   k0s:
-    version: v1.32.1+k0s.0
+    version: v1.32.2+k0s.0
     config:
       # k0s config
       # ref: https://docs.k0sproject.io/stable/configuration/#configuration-file-reference
@@ -71,9 +71,9 @@ spec:
           podCIDR: 10.244.0.0/16
           serviceCIDR: 10.96.0.0/12
           dualStack:
-            enabled: true
-            IPv6podCIDR: fd00::/108
-            IPv6serviceCIDR: fd01::/108
+            enabled: false
+            # IPv6podCIDR: fd00::/108
+            # IPv6serviceCIDR: fd01::/108
         storage:
           type: etcd
         telemetry:
