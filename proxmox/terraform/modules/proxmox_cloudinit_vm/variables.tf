@@ -14,7 +14,7 @@ variable "vm_datastore_id" {
   sensitive   = false
 }
 
-variable "image_datastore_id" {
+variable "snippet_datastore_id" {
   description = "ID of the datastore to host VM's cloud-init snippet."
   type        = string
   sensitive   = false

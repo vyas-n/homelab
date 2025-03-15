@@ -5,9 +5,9 @@ module "k8s_ctr_1" {
 
   ## Variables
   # Proxmox configs
-  vm_datastore_id    = "ceph_block"
-  image_datastore_id = proxmox_virtual_environment_download_file.fedora_41.datastore_id
-  proxmox_node_name  = data.proxmox_virtual_environment_node.proxmox_1.node_name
+  vm_datastore_id      = "ceph_block"
+  snippet_datastore_id = "cephfs"
+  proxmox_node_name    = data.proxmox_virtual_environment_node.proxmox_1.node_name
 
   # VM Configs
   hostname            = "k8s-ctr-1"
@@ -26,9 +26,9 @@ module "k8s_wkr_1" {
 
   ## Variables
   # Proxmox configs
-  vm_datastore_id    = "ceph_block"
-  image_datastore_id = proxmox_virtual_environment_download_file.fedora_41.datastore_id
-  proxmox_node_name  = data.proxmox_virtual_environment_node.proxmox_1.node_name
+  vm_datastore_id      = "ceph_block"
+  snippet_datastore_id = "cephfs"
+  proxmox_node_name    = data.proxmox_virtual_environment_node.proxmox_1.node_name
 
   # VM Configs
   hostname            = "k8s-wkr-1"
@@ -47,9 +47,9 @@ module "k8s_wkr_2" {
 
   ## Variables
   # Proxmox configs
-  vm_datastore_id    = "ceph_block"
-  image_datastore_id = proxmox_virtual_environment_download_file.fedora_41.datastore_id
-  proxmox_node_name  = data.proxmox_virtual_environment_node.proxmox_2.node_name
+  vm_datastore_id      = "ceph_block"
+  snippet_datastore_id = "cephfs"
+  proxmox_node_name    = data.proxmox_virtual_environment_node.proxmox_2.node_name
 
   # VM Configs
   hostname            = "k8s-wkr-2"

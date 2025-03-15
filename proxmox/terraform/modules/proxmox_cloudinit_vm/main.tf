@@ -1,7 +1,7 @@
 
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   content_type = "snippets"
-  datastore_id = var.image_datastore_id
+  datastore_id = var.snippet_datastore_id
   node_name    = var.proxmox_node_name
 
   source_raw {
