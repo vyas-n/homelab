@@ -4,7 +4,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - datadir:/data
-      - /mnt/app1/apps/tsdproxy/config:/config
+      - /mnt/data1/apps/tsdproxy/config:/config
     labels:
       # Homepage config
       # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery

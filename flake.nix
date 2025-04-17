@@ -39,6 +39,7 @@
               nodePackages.prettier
               nodePackages.prettier-plugin-toml
               ansible-lint
+              terraform-lsp
 
               # Dev Tools
               poetry

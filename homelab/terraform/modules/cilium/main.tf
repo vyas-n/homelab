@@ -91,7 +91,7 @@ resource "kubectl_manifest" "pool1" {
     }
     spec = {
       blocks = [
-        { cidr = "192.168.4.0/24" }
+        { cidr = "192.168.4.128/28" }
       ]
     }
   })

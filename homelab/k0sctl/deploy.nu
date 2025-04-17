@@ -3,7 +3,7 @@
 
 def main [] {
     # Clear logs from last execution
-    rm ~/.cache/k0sctl/k0sctl.log
+    rm -f ~/.cache/k0sctl/k0sctl.log
 
     # Deploy
     k0sctl apply --no-wait --config=k0sctl.yaml
