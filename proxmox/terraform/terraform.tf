@@ -1,6 +1,6 @@
 /*
  * # Proxmox Root
- * 
+ *
 */
 
 terraform {
@@ -46,7 +46,7 @@ provider "onepassword" {
 provider "time" {}
 
 provider "proxmox" {
-  endpoint  = "https://proxmox-1.hosts.vyas-n.dev:8006"
+  endpoint  = "https://proxmox-1.hosts.vyas-n.dev"
   api_token = "root@pam!onepass=${data.onepassword_item.proxmox_api_token.credential}"
   ssh {
     agent    = true

@@ -1,4 +1,25 @@
 
+module "docker_server" {
+  # Module
+  source = "./modules/proxmox_cloudinit_vm"
+
+  ## Variables
+  # Proxmox configs
+  vm_datastore_id      = "ceph_rbd_nvme_osd"
+  snippet_datastore_id = "cephfs"
+  proxmox_node_name    = data.proxmox_virtual_environment_node.proxmox_1.node_name
+
+  # VM Configs
+  hostname            = "docker-server"
+  domain              = "vms.vyas-n.dev"
+  cloud_os_image      = proxmox_virtual_environment_download_file.fedora_41.id
+  cloud_init_filepath = "${path.module}/docker-server.cloudinit.yaml"
+
+  num_cpu_cores = 4
+  memory        = 16384
+  disk_space    = 64
+}
+
 # module "k8s_ctr_1" {
 #   # Module
 #   source = "./modules/proxmox_cloudinit_vm"
