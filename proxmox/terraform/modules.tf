@@ -15,6 +15,7 @@ module "docker_server" {
   cloud_os_image      = proxmox_virtual_environment_download_file.fedora_41.id
   cloud_init_filepath = "${path.module}/docker-server.cloudinit.yaml"
 
+  cpu_type      = "host"
   num_cpu_cores = 4
   memory        = 16384
   disk_space    = 64

@@ -22,7 +22,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   cpu {
     cores = var.num_cpu_cores
-    type  = "x86-64-v3"
+    type  = var.cpu_type
   }
   machine = "q35"
 
@@ -53,7 +53,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
   # but is empty b/c we use all the default values
   network_device {}
 
-  # 
+  #
   initialization {
     ip_config {
       ipv4 {

@@ -8,6 +8,12 @@ variable "domain" {
   sensitive = false
 }
 
+variable "cpu_type" {
+  type      = string
+  sensitive = false
+  default   = "x86-64-v3"
+}
+
 variable "vm_datastore_id" {
   description = "ID of the datastore to host VM's OS & EFI Disks."
   type        = string
