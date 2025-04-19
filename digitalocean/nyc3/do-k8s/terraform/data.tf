@@ -1,5 +1,4 @@
 
-data "tfe_outputs" "digitalocean_nyc3_terraform" {
-  organization = "vyas-n"
-  workspace    = "digitalocean_nyc3_terraform"
+data "digitalocean_kubernetes_cluster" "do_k8s" {
+  name = "do-k8s"
 }

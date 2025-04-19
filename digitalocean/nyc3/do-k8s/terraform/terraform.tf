@@ -1,6 +1,6 @@
 /*
  * # DigitalOcean do-k8s Root
- * 
+ *
 */
 
 terraform {
@@ -24,35 +24,41 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = "1.19.0"
     }
-    tfe = {
-      source  = "hashicorp/tfe"
-      version = "0.64.0"
+    digitalocean = {
+      source  = "digitalocean/digitalocean"
+      version = "2.49.1"
     }
   }
 }
+
+provider "digitalocean" {}
 
 # K8s Cluster Creds:
 # - https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_cluster#kubernetes-terraform-provider-example
 
 provider "kubernetes" {
-  host                   = data.tfe_outputs.digitalocean_nyc3_terraform.nonsensitive_values.do_k8s_host
-  token                  = data.tfe_outputs.digitalocean_nyc3_terraform.values.do_k8s_token
-  cluster_ca_certificate = data.tfe_outputs.digitalocean_nyc3_terraform.values.do_k8s_cluster_ca_certificate
+  host  = data.digitalocean_kubernetes_cluster.do_k8s.endpoint
+  token = data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].token
+  cluster_ca_certificate = base64decode(
+    data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].cluster_ca_certificate
+  )
 }
 
 provider "kubectl" {
-  host                   = data.tfe_outputs.digitalocean_nyc3_terraform.nonsensitive_values.do_k8s_host
-  token                  = data.tfe_outputs.digitalocean_nyc3_terraform.values.do_k8s_token
-  cluster_ca_certificate = data.tfe_outputs.digitalocean_nyc3_terraform.values.do_k8s_cluster_ca_certificate
-  load_config_file       = false
+  host  = data.digitalocean_kubernetes_cluster.do_k8s.endpoint
+  token = data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].token
+  cluster_ca_certificate = base64decode(
+    data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].cluster_ca_certificate
+  )
+  load_config_file = false
 }
 
 provider "helm" {
   kubernetes {
-    host                   = data.tfe_outputs.digitalocean_nyc3_terraform.nonsensitive_values.do_k8s_host
-    token                  = data.tfe_outputs.digitalocean_nyc3_terraform.values.do_k8s_token
-    cluster_ca_certificate = data.tfe_outputs.digitalocean_nyc3_terraform.values.do_k8s_cluster_ca_certificate
+    host  = data.digitalocean_kubernetes_cluster.do_k8s.endpoint
+    token = data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].token
+    cluster_ca_certificate = base64decode(
+      data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].cluster_ca_certificate
+    )
   }
 }
-
-provider "tfe" {}
