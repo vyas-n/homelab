@@ -1,11 +1,16 @@
+/*
+ * # UniFi Root
+ * 
+*/
 
 terraform {
-  # cloud {
-  #   organization = "vyas-n"
-  #   workspaces {
-  #     name = "unifi_terraform"
-  #   }
-  # }
+  required_version = ">= 1.11.0"
+  cloud {
+    organization = "vyas-n"
+    workspaces {
+      name = "unifi_terraform"
+    }
+  }
   required_providers {
     onepassword = {
       source  = "1Password/onepassword"

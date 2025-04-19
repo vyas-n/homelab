@@ -22,36 +22,28 @@ updates:
     directories:
       - digitalocean/terraform
       - digitalocean/nyc3/terraform
-    schedule:
-      interval: daily
-    groups:
-      terraform-digitalocean:
-        patterns:
-          - "*"
-  - package-ecosystem: terraform
-    directories:
       - digitalocean/nyc3/do-k8s/terraform
-    schedule:
-      interval: daily
-    groups:
-      terraform-k8s:
-        patterns:
-          - "*"
-  - package-ecosystem: terraform
-    directories:
       - tfcloud/terraform
     schedule:
       interval: daily
     groups:
-      terraform-tfcloud:
+      terraform-remote-exec:
         patterns:
           - "*"
   - package-ecosystem: terraform
     directories:
+      - homelab/terraform
+      - proxmox/terraform
+      - proxmox/terraform/modules/proxmox_cloudinit_vm
+      - proxmox/terraform/modules/proxmox_cloudinit_vm/modules/unifi_host_dns_records
       - secrets/terraform
+      - secrets/terraform/modules/gh_secrets
+      - secrets/terraform/modules/proxmox_secrets
+      - secrets/terraform/modules/tfe_secrets
+      - unifi/terraform
     schedule:
       interval: daily
     groups:
-      terraform-secrets:
+      terraform-local-exec:
         patterns:
           - "*"

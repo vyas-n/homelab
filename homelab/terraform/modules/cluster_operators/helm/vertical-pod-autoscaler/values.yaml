@@ -1,0 +1,38 @@
+---
+# Vertical Pod Autoscaler Ref: https://artifacthub.io/packages/helm/cowboysysop/vertical-pod-autoscaler
+admissionController:
+  metrics:
+    serviceMonitor:
+      enabled: true
+  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=vertical-pod-autoscaler&var-workload=vertical-pod-autoscaler-admission-controller&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+      ephemeral-storage: 128Mi
+recommender:
+  metrics:
+    serviceMonitor:
+      enabled: true
+  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=vertical-pod-autoscaler&var-workload=vertical-pod-autoscaler-recommender&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 250m
+      memory: 128Mi
+      ephemeral-storage: 128Mi
+updater:
+  metrics:
+    serviceMonitor:
+      enabled: true
+  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=vertical-pod-autoscaler&var-workload=vertical-pod-autoscaler-updater&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+      ephemeral-storage: 128Mi

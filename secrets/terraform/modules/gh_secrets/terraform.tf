@@ -1,17 +1,22 @@
 /*
- * This Terraform module is to sync secrets into proxmox
+ * # GitHub Actions Secrets Seeding 
+ * 
 */
 
 terraform {
+  required_version = ">= 1.11.0"
   required_providers {
     time = {
-      source = "hashicorp/time"
+      source  = "hashicorp/time"
+      version = "0.12.1"
     }
     github = {
-      source = "integrations/github"
+      source  = "integrations/github"
+      version = "6.6.0"
     }
     cloudflare = {
-      source = "cloudflare/cloudflare"
+      source  = "cloudflare/cloudflare"
+      version = "4.52.0"
     }
   }
 }

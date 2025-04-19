@@ -1,0 +1,42 @@
+---
+# Policy Reporter Helm Values Ref: https://artifacthub.io/packages/helm/policy-reporter/policy-reporter
+ui:
+  enabled: true
+  ingress:
+    enabled: true
+    className: cilium
+    annotations:
+      cert-manager.io/cluster-issuer: zerossl-prod
+    hosts:
+      - host: policy-reporter.needham.wsbidev.net
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: policy-reporter.needham.wsbidev.net
+        hosts:
+          - policy-reporter.needham.wsbidev.net
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+      ephemeral-storage: 128Mi
+
+plugin:
+  kyverno:
+    enabled: true
+
+resources:
+  limits:
+    memory: 100Mi
+  requests:
+    cpu: 5m
+    memory: 75Mi
+    ephemeral-storage: 128Mi
+
+metrics:
+  enabled: true
+monitoring:
+  enabled: true
