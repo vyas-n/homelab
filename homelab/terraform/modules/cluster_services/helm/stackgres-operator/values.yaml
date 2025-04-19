@@ -1,0 +1,15 @@
+---
+# https://artifacthub.io/packages/helm/stackgres-charts/stackgres-operator
+adminui:
+  service:
+    exposeHTTP: true
+cert:
+  certManager:
+    autoConfigure: true
+grafana:
+  autoEmbed: true
+  webHost: kube-prometheus-stack-grafana.kube-prometheus-stack
+  secretNamespace: kube-prometheus-stack
+  secretName: kube-prometheus-stack-grafana
+  secretUserKey: admin-user
+  secretPasswordKey: admin-password

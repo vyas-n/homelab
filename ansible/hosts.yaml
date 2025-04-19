@@ -8,15 +8,29 @@ all:
         proxmox_1:
           ansible_host: proxmox-1.hosts.vyas-n.dev
           has_amd_gpu: true
-        proxmox_2:
-          ansible_host: proxmox-2.hosts.vyas-n.dev
-          has_amd_gpu: true
+          is_laptop: false
+          ansible_password: ***REMOVED***
+        # proxmox_2:
+        #   ansible_host: proxmox-2.hosts.vyas-n.dev
+        #   has_amd_gpu: true
     vms:
+      children:
+        k8s:
+          hosts:
+            # k8s_wkr_1:
+            #   ansible_host: k8s-wkr-1.hosts.vyas-n.dev
+            # k8s_ctr_1:
+            #   ansible_host: k8s-ctr-1.hosts.vyas-n.dev
       hosts:
+        gaming-vm-win11:
+          # Must Setup Windows host with ssh:
+          #   - https://docs.ansible.com/ansible/latest/os_guide/windows_ssh.html#ssh-setup
+          #   - https://docs.ansible.com/ansible/latest/os_guide/windows_ssh.html#key-authentication
+          ansible_host: gaming-vm-win11.hosts.vyas-n.dev
+          ansible_shell_type: powershell
+          ansible_connection: ssh
         fedora_server:
           ansible_host: fedora-server.hosts.vyas-n.dev
-        k8s_wkr_1:
-          ansible_host: k8s-wkr-1.hosts.vyas-n.dev
   hosts:
     truenas:
       ansible_host: truenas.hosts.vyas-n.dev

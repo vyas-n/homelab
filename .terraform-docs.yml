@@ -1,0 +1,21 @@
+---
+# ref: https://terraform-docs.io/user-guide/configuration
+
+formatter: markdown
+
+header-from: terraform.tf
+
+output:
+  file: README.md
+  mode: replace
+  template: |
+    {{ .Content }}
+
+sort:
+  enabled: true
+  by: required
+
+settings:
+  anchor: false
+  html: false
+  hide-empty: true

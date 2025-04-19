@@ -1,0 +1,16 @@
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfile
+
+{{ proxmox_fqdn_hostname }} {
+  tls /etc/pve/local/pveproxy-ssl.pem /etc/pve/local/pveproxy-ssl.key
+  {# TODO: use this version using caddy built with cloudflare dns #}
+  {# tls {
+    dns cloudflare {{ lookup('community.general.onepassword', 'Cloudflare API Token (truenas_acme)', field='credential') }}
+    resolvers 1.1.1.1
+  } #}
+  reverse_proxy https://:8006 {
+    transport http {
+      tls_server_name {{ proxmox_fqdn_hostname }}
+    }
+  }
+}

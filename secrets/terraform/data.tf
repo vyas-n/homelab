@@ -21,9 +21,3 @@ data "onepassword_item" "proxmox_api_token" {
   vault = data.onepassword_vault.private.uuid
   title = "Proxmox API Token (HomeLab)"
 }
-
-# GitHub (vyas-n)
-data "onepassword_item" "github_pat_vyas_n" {
-  vault = data.onepassword_vault.private.uuid
-  title = "GitHub-PAT-vyas-n"
-}

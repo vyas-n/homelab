@@ -1,4 +1,5 @@
----
+#!/usr/bin/env ansible-playbook
+
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
 # - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
@@ -13,6 +14,19 @@
   hosts: all:!truenas
   strategy: free
   tasks:
+    - name: Upgrade Windows Systems
+      when: ansible_os_family == 'Windows'
+      block:
+        - name: Install all updates, but don't reboot
+          ansible.windows.win_updates:
+            category_names: "*"
+          register: win_update
+        - name: Notify if reboot is required
+          when: win_update.reboot_required
+          ansible.builtin.debug:
+            msg: "{{ inventory_hostname }}: Reboot required: {{ win_update.reboot_required }}"
+          changed_when: win_update.reboot_required
+
     - name: Upgrade Debian systems
       when: ansible_facts['distribution'] == "Debian"
       block:
@@ -69,6 +83,8 @@
     - name: Notify that a system without scripted upgrades is in the hosts.yaml file
       # At the moment, I only have debian systems that need to be upgraded.
       # But when I start managing other systems I want this playbook to upgrade those systems too.
-      when: ansible_facts['distribution'] not in ["Debian", "Fedora"]
+      when: >
+        ansible_os_family not in ['Windows']
+        and ansible_facts['distribution'] not in ["Debian", "Fedora"]
       ansible.builtin.fail:
         msg: This system runs the linux distribution '{{ ansible_facts['distribution'] }}' and currently doesn't have upgrades scripted.

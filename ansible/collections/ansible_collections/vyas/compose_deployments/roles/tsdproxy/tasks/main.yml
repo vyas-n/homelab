@@ -9,14 +9,14 @@
     # ref: https://stackoverflow.com/a/29793833
     mode: u=rwX,g=rwX
   loop:
-    - name: /mnt/app1/apps/dockge/stacks/tsdproxy
-    - name: /mnt/app1/apps/tsdproxy/config
+    - name: /mnt/data1/apps/dockge/stacks/tsdproxy
+    - name: /mnt/data1/apps/tsdproxy/config
 - name: Template files (explicitly skip directories in order to use the 'src' attribute)
   ansible.builtin.template:
     src: "{{ item.name }}.j2"
     # Your template files should be stored with a .j2 file extension,
     # but should not be deployed with it. splitext|first removes it.
-    dest: /mnt/app1/apps/tsdproxy/{{ item.name }}
+    dest: /mnt/data1/apps/tsdproxy/{{ item.name }}
     owner: admin
     group: root
     # Set directories as 0770 & files as 0660
@@ -35,4 +35,4 @@
     mode: u=rwX,g=rwX
   loop:
     - src: compose.yaml
-      dest: /mnt/app1/apps/dockge/stacks/tsdproxy/compose.yaml
+      dest: /mnt/data1/apps/dockge/stacks/tsdproxy/compose.yaml

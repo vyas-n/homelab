@@ -1,0 +1,14 @@
+---
+- name: Copy APT Repo sources
+  # These files were modified to replace the default enterprise apt sources with the no-subscription variants
+  # ref: https://pve.proxmox.com/wiki/Package_Repositories#sysadmin_no_subscription_repo
+  ansible.builtin.copy:
+    src: "{{ item.name }}"
+    dest: /{{ item.name }}
+    owner: root
+    group: root
+    mode: "0644"
+  loop:
+    - name: etc/apt/sources.list.d/ceph.list
+    - name: etc/apt/sources.list.d/pve-enterprise.list
+    - name: etc/apt/sources.list.d/pve-no-subscription.list

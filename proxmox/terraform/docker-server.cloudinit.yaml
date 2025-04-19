@@ -1,0 +1,29 @@
+---
+#cloud-config
+
+# Cloud-init refs:
+#   - https://cloudinit.readthedocs.io/en/latest/index.html
+# yaml-language-server: $schema=https://github.com/canonical/cloud-init/raw/refs/heads/main/cloudinit/config/schemas/versions.schema.cloud-config.json
+
+timezone: America/Chicago
+users:
+  - name: vyas
+    groups:
+      - sudo
+    # required for k0s b/c k0s can't recognize nushell
+    shell: /usr/bin/fish
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+A2Kyl58go8U7sgQjF7M0kfwyn+5jCK4wTcsM6jsAr
+    sudo: ALL=(ALL) NOPASSWD:ALL
+
+package_reboot_if_required: true
+package_upgrade: true
+package_update: true
+packages:
+  - nu
+  - fish
+  - lldpd
+  - qemu-guest-agent
+runcmd:
+  - [systemctl, daemon-reload]
+  - [systemctl, enable, --now, --no-block, qemu-guest-agent]

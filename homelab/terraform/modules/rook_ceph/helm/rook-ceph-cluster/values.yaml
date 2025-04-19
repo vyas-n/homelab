@@ -1,0 +1,228 @@
+---
+# Rook-Ceph Cluster Ref:
+# - https://rook.github.io/docs/rook/latest-release/Helm-Charts/ceph-cluster-chart/#configuration
+# - https://artifacthub.io/packages/helm/rook/rook-ceph-cluster
+operatorNamespace: rook-ceph-operator
+clusterName: rook-ceph-cluster
+toolbox:
+  enabled: true
+
+monitoring:
+  enabled: true
+  createPrometheusRules: true
+
+ingress:
+  dashboard:
+    annotations:
+      cert-manager.io/cluster-issuer: zerossl-prod
+    ingressClassName: cilium
+    tls:
+      - hosts:
+          - ceph-dashboard.needham.wsbidev.net
+        secretName: ceph-dashboard-needham-wsbidev-net
+    host:
+      name: ceph-dashboard.needham.wsbidev.net
+      path: /
+
+# Cluster Spec Ref: https://rook.github.io/docs/rook/latest-release/CRDs/Cluster/ceph-cluster-crd
+cephClusterSpec:
+  dashboard:
+    prometheusEndpoint: http://kube-prometheus-stack-prometheus.kube-prometheus-stack.svc:9090
+    prometheusEndpointSSLVerify: false
+    enabled: true
+    urlPrefix: /
+    port: 8080
+    ssl: false
+  mon:
+    # TODO: include this for less than 3 nodes
+    allowMultiplePerNode: true
+  mgr:
+    # TODO: include this for less than 2 nodes
+    # allowMultiplePerNode: true
+    modules:
+      - name: pg_autoscaler
+        enabled: true
+      - name: rook
+        enabled: true
+  # cluster level storage configuration and selection
+  storage:
+    useAllNodes: false
+    useAllDevices: false
+    # devices to use for storage can be specified for each node (b/c SMR drives suck)
+    nodes:
+      - name: er7-dev2
+        devices:
+          # 256Gi SSD
+          - name: /dev/disk/by-id/scsi-SATA_Micron_1100_MTFD_17501A319709
+          # 18Ti HDD
+          - name: /dev/disk/by-id/scsi-SWDC_WUH721818AL4200_2MG3HYEB
+          # 18Ti HDD
+          - name: /dev/disk/by-id/scsi-SWDC_WUH721818AL4200_3JGAPETG
+      - name: er6-dev1
+        useAllDevices: true
+      - name: er7-dev3
+        useAllDevices: true
+  removeOSDsIfOutAndSafeToRemove: true
+  resources:
+    exporter:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 200m
+        memory: 50Mi
+        ephemeral-storage: 128Mi
+
+# Ceph Block Pool Ref: https://rook.github.io/docs/rook/latest-release/CRDs/Block-Storage/ceph-block-pool-crd
+cephBlockPools:
+  - name: ceph-blockpool
+    spec:
+      failureDomain: host
+      replicated:
+        size: 2
+      deviceClass: ssd
+      enableRBDStats: true
+    storageClass:
+      enabled: true
+      name: ceph-block
+      isDefault: true
+      reclaimPolicy: Delete
+      allowVolumeExpansion: true
+      volumeBindingMode: Immediate
+      mountOptions: []
+      parameters:
+        imageFormat: "2"
+        imageFeatures: layering
+        # These secrets contain Ceph admin credentials.
+        csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+        csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+        csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+        csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+        csi.storage.k8s.io/fstype: ext4
+  - name: ceph-blockpool-retain
+    spec:
+      failureDomain: host
+      replicated:
+        size: 2
+      deviceClass: ssd
+      enableRBDStats: true
+    storageClass:
+      # Setup with recommendations from stackgres: https://stackgres.io/doc/latest/install/prerequisites/storage/storageclass/
+      enabled: true
+      name: ceph-block-retain
+      isDefault: false
+      reclaimPolicy: Retain
+      allowVolumeExpansion: true
+      volumeBindingMode: WaitForFirstConsumer
+      mountOptions: []
+      parameters:
+        imageFormat: "2"
+        imageFeatures: layering
+        # These secrets contain Ceph admin credentials.
+        csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+        csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+        csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+        csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+        csi.storage.k8s.io/fstype: ext4
+
+# Ceph Filesystem Ref: https://rook.github.io/docs/rook/latest-release/CRDs/Shared-Filesystem/ceph-filesystem-crd
+cephFileSystems:
+  - name: ceph-filesystem
+    spec:
+      metadataPool:
+        failureDomain: host
+        deviceClass: ssd
+        replicated:
+          size: 2
+      dataPools:
+        - name: replicated
+          failureDomain: host
+          replicated:
+            size: 2
+          deviceClass: ssd
+      preserveFilesystemOnDelete: true
+      metadataServer:
+        # Rook will create double the number of MDS instances as requested by the active count. The extra instances will be in standby mode for failover.
+        activeCount: 1
+        activeStandby: true
+        resources:
+          limits:
+            memory: 1024Mi
+          requests:
+            cpu: 500m
+            memory: 1024Mi
+            ephemeral-storage: 128Mi
+    storageClass:
+      enabled: true
+      name: ceph-filesystem
+      parameters:
+        clusterID: rook-ceph
+        fsName: ceph-filesystem
+        pool: replicated
+        # The secrets contain Ceph admin credentials. These are generated automatically by the operator
+        # in the same namespace as the cluster.
+        csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+        csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+        csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+        csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+        csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+        csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+
+# Ceph Object Store Ref: https://rook.github.io/docs/rook/latest-release/CRDs/Object-Storage/ceph-object-store-crd
+cephObjectStores:
+  - name: ceph-objectstore
+    # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
+    spec:
+      metadataPool:
+        # TODO: change this to `osd` for singlenode
+        failureDomain: host
+        replicated:
+          size: 2
+        deviceClass: ssd
+      dataPool:
+        # TODO: change this to `osd` for singlenode
+        failureDomain: host
+        # erasureCoded:
+        #   dataChunks: 2
+        #   codingChunks: 1
+        # deviceClass: hdd
+        replicated:
+          size: 2
+      gateway:
+        port: 80
+        resources:
+          limits:
+            memory: 2Gi
+          requests:
+            cpu: 1000m
+            memory: 1Gi
+            ephemeral-storage: 128Mi
+        instances: 1
+        priorityClassName: system-cluster-critical
+      healthCheck:
+        bucket:
+          interval: 60s
+    storageClass:
+      enabled: true
+      name: ceph-bucket
+      reclaimPolicy: Delete
+      # see https://github.com/rook/rook/blob/master/Documentation/ceph-object-bucket-claim.md#storageclass for available configuration
+      parameters:
+        # note: objectStoreNamespace and objectStoreName are configured by the chart
+        region: us-east-1
+    ingress:
+      # Enable an ingress for the ceph-objectstore
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: zerossl-prod
+      host:
+        name: ceph-objectstore.needham.wsbidev.net
+        path: /
+      tls:
+        - hosts:
+            - ceph-objectstore.needham.wsbidev.net
+          secretName: ceph-objectstore-needham-wsbidev-net
+      ingressClassName: cilium

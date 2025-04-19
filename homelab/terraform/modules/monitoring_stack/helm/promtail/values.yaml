@@ -1,0 +1,19 @@
+---
+# https://artifacthub.io/packages/helm/grafana/promtail
+
+config:
+  # publish data to loki
+  clients:
+    - url: http://loki-gateway/loki/api/v1/push
+      tenant_id: 1
+
+daemonset:
+  autoscaling:
+    enabled: true
+  maxAllowed:
+    cpu: 2000m
+    memory: 4096Mi
+  minAllowed:
+    cpu: 200m
+    memory: 1024Mi
+    ephemeral-storage: 128Mi

@@ -1,0 +1,66 @@
+---
+# k0sctl config
+# ref: https://github.com/k0sproject/k0sctl?tab=readme-ov-file#configuration-file
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: homezone-v1
+  user: homezone-admin
+spec:
+  hosts:
+    - role: controller
+      installFlags: &installflags
+        - --labels
+        - topology.kubernetes.io/region=homelab
+        - --labels
+        - topology.kubernetes.io/zone=vlan1
+      openSSH:
+        address: k8s-ctr-1.vms.vyas-n.dev
+    - role: worker
+      installFlags: *installflags
+      openSSH:
+        address: k8s-wkr-1.vms.vyas-n.dev
+    - role: worker
+      installFlags: *installflags
+      openSSH:
+        address: k8s-wkr-2.vms.vyas-n.dev
+  k0s:
+    version: v1.32.2+k0s.0
+    config:
+      # k0s config
+      # ref: https://docs.k0sproject.io/stable/configuration/#configuration-file-reference
+      apiVersion: k0s.k0sproject.io/v1beta1
+      kind: Cluster
+      metadata:
+        name: homezone-v1
+      spec:
+        api:
+          k0sApiPort: 9443
+          port: 6443
+        installConfig:
+          users:
+            etcdUser: etcd
+            kineUser: kube-apiserver
+            konnectivityUser: konnectivity-server
+            kubeAPIserverUser: kube-apiserver
+            kubeSchedulerUser: kube-scheduler
+        konnectivity:
+          adminPort: 8133
+          agentPort: 8132
+        network:
+          kubeProxy:
+            disabled: true
+          nodeLocalLoadBalancing:
+            enabled: true
+            type: EnvoyProxy
+          provider: custom
+          podCIDR: 10.244.0.0/16
+          serviceCIDR: 10.96.0.0/12
+          dualStack:
+            enabled: false
+            # IPv6podCIDR: fd00::/108
+            # IPv6serviceCIDR: fd01::/108
+        storage:
+          type: etcd
+        telemetry:
+          enabled: true
