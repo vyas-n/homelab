@@ -33,6 +33,11 @@ updates:
   - package-ecosystem: terraform
     directories:
       - homelab/terraform
+      - homelab/terraform/modules/cilium
+      - homelab/terraform/modules/cluster_operators
+      - homelab/terraform/modules/cluster_services
+      - homelab/terraform/modules/monitoring_stack
+      - homelab/terraform/modules/rook_ceph
       - proxmox/terraform
       - proxmox/terraform/modules/proxmox_cloudinit_vm
       - proxmox/terraform/modules/proxmox_cloudinit_vm/modules/unifi_host_dns_records
