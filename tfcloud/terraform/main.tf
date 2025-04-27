@@ -21,6 +21,33 @@ moved {
   to   = tfe_workspace.remote_exec_workspace["tfcloud_terraform"]
 }
 
+import {
+  to = tfe_workspace.homelab_terraform
+  id = "vyas-n/homelab_terraform"
+}
+import {
+  to = tfe_workspace_settings.homelab_terraform
+  id = "vyas-n/homelab_terraform"
+}
+
+import {
+  to = tfe_workspace.proxmox_terraform
+  id = "vyas-n/proxmox_terraform"
+}
+import {
+  to = tfe_workspace_settings.proxmox_terraform
+  id = "vyas-n/proxmox_terraform"
+}
+
+import {
+  to = tfe_workspace.unifi_terraform
+  id = "vyas-n/unifi_terraform"
+}
+import {
+  to = tfe_workspace_settings.unifi_terraform
+  id = "vyas-n/unifi_terraform"
+}
+
 
 # List of remote_exec_workspaces
 
@@ -55,7 +82,33 @@ resource "tfe_workspace" "remote_exec_workspace" {
   }
 }
 
-# This workspace only executes locally
+# These workspaces only execute locally
+resource "tfe_workspace" "homelab_terraform" {
+  name           = "homelab_terraform"
+  project_id     = data.tfe_project.default.id
+  queue_all_runs = false
+
+  terraform_version = local.terraform_version
+}
+
+resource "tfe_workspace_settings" "homelab_terraform" {
+  workspace_id   = tfe_workspace.homelab_terraform.id
+  execution_mode = "local"
+}
+
+resource "tfe_workspace" "proxmox_terraform" {
+  name           = "proxmox_terraform"
+  project_id     = data.tfe_project.default.id
+  queue_all_runs = false
+
+  terraform_version = local.terraform_version
+}
+
+resource "tfe_workspace_settings" "proxmox_terraform" {
+  workspace_id   = tfe_workspace.proxmox_terraform.id
+  execution_mode = "local"
+}
+
 resource "tfe_workspace" "secrets_terraform" {
   name           = "secrets_terraform"
   project_id     = data.tfe_project.default.id
@@ -66,5 +119,18 @@ resource "tfe_workspace" "secrets_terraform" {
 
 resource "tfe_workspace_settings" "secrets_terraform" {
   workspace_id   = tfe_workspace.secrets_terraform.id
+  execution_mode = "local"
+}
+
+resource "tfe_workspace" "unifi_terraform" {
+  name           = "unifi_terraform"
+  project_id     = data.tfe_project.default.id
+  queue_all_runs = false
+
+  terraform_version = local.terraform_version
+}
+
+resource "tfe_workspace_settings" "unifi_terraform" {
+  workspace_id   = tfe_workspace.unifi_terraform.id
   execution_mode = "local"
 }
