@@ -1,6 +1,6 @@
 /*
- * # GitHub Actions Secrets Seeding 
- * 
+ * # GitHub Actions Secrets Seeding
+ *
 */
 
 terraform {
@@ -8,15 +8,15 @@ terraform {
   required_providers {
     time = {
       source  = "hashicorp/time"
-      version = "0.12.1"
+      version = ">= 0.13.0"
     }
     github = {
       source  = "integrations/github"
-      version = "6.6.0"
+      version = ">= 6.6.0"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.52.0"
+      version = ">= 4.52.0"
     }
   }
 }
