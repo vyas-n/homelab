@@ -4,53 +4,6 @@ locals {
 }
 
 # Moved resources
-moved {
-  from = tfe_workspace.digitalocean_terraform
-  to   = tfe_workspace.remote_exec_workspace["digitalocean_terraform"]
-}
-moved {
-  from = tfe_workspace.digitalocean_nyc3_terraform
-  to   = tfe_workspace.remote_exec_workspace["digitalocean_nyc3_terraform"]
-}
-moved {
-  from = tfe_workspace.digitalocean_nyc3_do_k8s_terraform
-  to   = tfe_workspace.remote_exec_workspace["digitalocean_nyc3_do_k8s_terraform"]
-}
-moved {
-  from = tfe_workspace.tfcloud_terraform
-  to   = tfe_workspace.remote_exec_workspace["tfcloud_terraform"]
-}
-
-import {
-  to = tfe_workspace.homelab_terraform
-  id = "vyas-n/homelab_terraform"
-}
-import {
-  to = tfe_workspace.remote_exec_workspace["tailscale_terraform"]
-  id = "vyas-n/tailscale_terraform"
-}
-import {
-  to = tfe_workspace_settings.homelab_terraform
-  id = "vyas-n/homelab_terraform"
-}
-
-import {
-  to = tfe_workspace.proxmox_terraform
-  id = "vyas-n/proxmox_terraform"
-}
-import {
-  to = tfe_workspace_settings.proxmox_terraform
-  id = "vyas-n/proxmox_terraform"
-}
-
-import {
-  to = tfe_workspace.unifi_terraform
-  id = "vyas-n/unifi_terraform"
-}
-import {
-  to = tfe_workspace_settings.unifi_terraform
-  id = "vyas-n/unifi_terraform"
-}
 
 
 # List of remote_exec_workspaces
