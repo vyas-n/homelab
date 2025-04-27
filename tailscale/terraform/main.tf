@@ -29,17 +29,22 @@ import {
 }
 
 import {
-  id = "hosts.vyas-n.edv"
+  id = "host.needham.wsbidev.net"
+  to = tailscale_dns_split_nameservers.devzone_needham
+}
+
+import {
+  id = "hosts.vyas-n.dev"
   to = tailscale_dns_split_nameservers.homezone_hosts
 }
 
 import {
-  id = "svcs.vyas-n.edv"
+  id = "svcs.vyas-n.dev"
   to = tailscale_dns_split_nameservers.homezone_svcs
 }
 
 import {
-  id = "vms.vyas-n.edv"
+  id = "vms.vyas-n.dev"
   to = tailscale_dns_split_nameservers.homezone_vms
 }
 
