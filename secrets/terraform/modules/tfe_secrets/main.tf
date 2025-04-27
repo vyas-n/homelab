@@ -177,7 +177,7 @@ resource "tfe_variable_set" "tailscale" {
 resource "tfe_variable" "tailscale_api_key" {
   key             = "TAILSCALE_API_KEY"
   value           = data.onepassword_item.tailscale_api_key_for_vyasn.credential
-  category        = "terraform"
+  category        = "env"
   sensitive       = true
   description     = <<EOF
     This is a Tailscale API Key for vyas-n's tailnet.
