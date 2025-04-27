@@ -104,7 +104,7 @@ resource "tfe_workspace" "homelab_terraform" {
 }
 
 resource "tfe_workspace_settings" "homelab_terraform" {
-  workspace_id   = tfe_workspace.homelab_terraform.id
+  workspace_id   = data.tfe_workspace.homelab_terraform.id
   execution_mode = "local"
 }
 
