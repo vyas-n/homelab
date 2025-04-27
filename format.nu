@@ -6,8 +6,11 @@
 
 terraform fmt --recursive .
 
-glob **/*.tf | path dirname | uniq | each {|dir| {
+glob **/.terraform.lock.hcl | path dirname | uniq | each {|dir| {
     terraform --chdir=$dir init --backend=false
+}}
+
+glob **/*.tf | path dirname | uniq | each {|dir| {
     terraform-docs $dir
 }}
 

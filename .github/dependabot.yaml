@@ -23,6 +23,7 @@ updates:
       - digitalocean/terraform
       - digitalocean/nyc3/terraform
       - digitalocean/nyc3/do-k8s/terraform
+      - tailscale/terraform
       - tfcloud/terraform
     schedule:
       interval: daily

@@ -18,6 +18,10 @@ data "tfe_variable_set" "terraform_cloud" {
   name = "Terraform Cloud"
 }
 
+data "tfe_variable_set" "tailscale" {
+  name = "Tailscale"
+}
+
 data "tfe_variable_set" "onepass_connect_server_bedrock" {
   name = "1PassConnect Server Bedrock"
 }

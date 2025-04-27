@@ -1,6 +1,6 @@
 /*
  * # Secrets Seeding Root
- * 
+ *
  * This Terraform workspace is used to sync secrets/tokens from 1Password over to the various places that they are used.
  * It will store its state in Terraform Cloud, but only execute locally.
  * The files are named after the location that the secrets are synchronized to (not necessarily the provider that the credentials are used for)
@@ -17,7 +17,7 @@ terraform {
   required_providers {
     tfe = {
       source  = "hashicorp/tfe"
-      version = "0.65.0"
+      version = "0.65.1"
     }
     onepassword = {
       source  = "1Password/onepassword"
@@ -33,7 +33,7 @@ terraform {
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "5.3.0"
+      version = "4.52.0"
     }
     github = {
       source  = "integrations/github"

@@ -13,6 +13,14 @@ data "onepassword_item" "digitalocean_s3access_for_tfcloud_vyasn" {
   title = "DigitalOcean-S3Access-for-Terraform-Cloud-vyas-n"
 }
 
+# Tailscale
+
+data "onepassword_item" "tailscale_api_key_for_vyasn" {
+  vault = data.onepassword_vault.private.uuid
+  title = "Tailscale API Token (vyas@github)"
+}
+
+
 # Bedrock 1PassConnect Server
 data "onepassword_item" "onepass_connect_credentials_json" {
   vault = data.onepassword_vault.private.uuid
