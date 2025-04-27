@@ -90,7 +90,7 @@ resource "tfe_workspace" "remote_exec_workspace" {
 }
 
 resource "tfe_workspace_variable_set" "tailscale" {
-  variable_set_id = tfe_variable_set.tailscale.id
+  variable_set_id = data.tfe_variable_set.tailscale.id
   workspace_id    = tfe_workspace.remote_exec_workspace["tailscale_terraform"].id
 }
 
@@ -104,7 +104,7 @@ resource "tfe_workspace" "homelab_terraform" {
 }
 
 resource "tfe_workspace_settings" "homelab_terraform" {
-  workspace_id   = data.tfe_workspace.homelab_terraform.id
+  workspace_id   = tfe_workspace.homelab_terraform.id
   execution_mode = "local"
 }
 
