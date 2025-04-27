@@ -167,3 +167,22 @@ resource "tfe_variable" "onepass_connect_access_token" {
     EOF
   variable_set_id = tfe_variable_set.onepass_connect_server_bedrock.id
 }
+
+# Tailscale API Credentials
+resource "tfe_variable_set" "tailscale" {
+  name        = "Tailscale"
+  description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"
+}
+
+resource "tfe_variable" "tailscale_api_key" {
+  key             = "tailscale_api_key"
+  value           = data.onepassword_item.tailscale_api_key_for_vyasn.credential
+  category        = "terraform"
+  sensitive       = true
+  description     = <<EOF
+    This is a Tailscale API Key for vyas-n's tailnet.
+
+    Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=xyua5yuxnlcjaqrtja2yykbdee&h=my.1password.com
+    EOF
+  variable_set_id = tfe_variable_set.onepass_connect_server_bedrock.id
+}
