@@ -175,7 +175,7 @@ resource "tfe_variable_set" "tailscale" {
 }
 
 resource "tfe_variable" "tailscale_api_key" {
-  key             = "tailscale_api_key"
+  key             = "TAILSCALE_API_KEY"
   value           = data.onepassword_item.tailscale_api_key_for_vyasn.credential
   category        = "terraform"
   sensitive       = true
