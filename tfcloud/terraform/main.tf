@@ -26,6 +26,10 @@ import {
   id = "vyas-n/homelab_terraform"
 }
 import {
+  to = tfe_workspace.remote_exec_workspace["tailscale_terraform"]
+  id = "vyas-n/tailscale_terraform"
+}
+import {
   to = tfe_workspace_settings.homelab_terraform
   id = "vyas-n/homelab_terraform"
 }
@@ -62,6 +66,9 @@ resource "tfe_workspace" "remote_exec_workspace" {
     digitalocean_nyc3_do_k8s_terraform : {
       working_directory = "digitalocean/nyc3/do-k8s/terraform"
     }
+    tailscale_terraform : {
+      working_directory = "tailscale/terraform"
+    }
     tfcloud_terraform : {
       working_directory = "tfcloud/terraform"
     }
@@ -80,6 +87,11 @@ resource "tfe_workspace" "remote_exec_workspace" {
     identifier                 = "vyas-proj/deploy"
     github_app_installation_id = local.tfc_github_app_install_id
   }
+}
+
+resource "tfe_workspace_variable_set" "tailscale" {
+  variable_set_id = tfe_variable_set.tailscale.id
+  workspace_id    = tfe_workspace.remote_exec_workspace["tailscale_terraform"].id
 }
 
 # These workspaces only execute locally
