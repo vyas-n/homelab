@@ -1,0 +1,15 @@
+---
+services:
+  tfc-agent:
+    container_name: tfc-agent-0
+    image: docker.io/hashicorp/tfc-agent:1.22.1
+    environment:
+      - TFC_AGENT_TOKEN=sample
+      - TFC_AGENT_NAME=tfc-agent-0
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
