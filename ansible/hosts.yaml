@@ -9,7 +9,6 @@ all:
           ansible_host: proxmox-1.hosts.vyas-n.dev
           has_amd_gpu: true
           is_laptop: false
-          ansible_password: 16989571
         # proxmox_2:
         #   ansible_host: proxmox-2.hosts.vyas-n.dev
         #   has_amd_gpu: true
