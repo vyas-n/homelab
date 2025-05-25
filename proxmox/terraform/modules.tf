@@ -5,7 +5,7 @@ module "docker_server" {
 
   ## Variables
   # Proxmox configs
-  vm_datastore_id      = "ceph_rbd_nvme_osd"
+  vm_datastore_id      = "local-zfs"
   snippet_datastore_id = "cephfs"
   proxmox_node_name    = data.proxmox_virtual_environment_node.proxmox_1.node_name
 
@@ -17,7 +17,7 @@ module "docker_server" {
 
   cpu_type      = "host"
   num_cpu_cores = 4
-  memory        = 16384
+  memory        = pow(2, 14) # 16GiB
   disk_space    = 64
 }
 

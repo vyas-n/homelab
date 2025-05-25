@@ -9,7 +9,10 @@ data "onepassword_item" "proxmox_api_token" {
   title = "Proxmox API Token (HomeLab)"
 }
 
-# Proxmox
+data "onepassword_item" "vyas_fast_key_1" {
+  vault = data.onepassword_vault.private.uuid
+  title = "Vyas-Fast-Key-1"
+}
 
 data "proxmox_virtual_environment_node" "proxmox_1" {
   node_name = "proxmox-1"
