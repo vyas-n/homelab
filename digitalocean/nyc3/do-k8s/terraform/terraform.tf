@@ -18,7 +18,7 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.36.0"
+      version = "2.37.1"
     }
     kubectl = {
       source  = "gavinbunney/kubectl"
@@ -26,7 +26,7 @@ terraform {
     }
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = "2.52.0"
+      version = "2.54.0"
     }
   }
 }
