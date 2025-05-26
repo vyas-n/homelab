@@ -42,5 +42,6 @@ jobs:
           sudo rm -fr megalinter-reports
       - name: Trunk Code Quality
         uses: trunk-io/trunk-action@v1.2.3
-        with:
-          check-mode: ${{ !contains(fromJSON('["pull_request", "merge_group"]'), github.event_name) && 'all' }}
+        # with:
+        #   # TODO: set check-mode to all on push events & workflow dispatch
+        #   check-mode: ${{ !contains(fromJSON('["pull_request", "merge_group"]'), github.event_name) && 'all' }}

@@ -13,6 +13,7 @@ jobs:
       contents: write # For trunk to create PRs
       pull-requests: write # For trunk to create PRs
     steps:
+      # TODO: Setup GitHub App to create PR: https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
       - uses: actions/checkout@v4.2.2
       # >>> Install your own deps here (npm install, etc) <<<
       - name: Upgrade Trunk pkgs & dependencies
