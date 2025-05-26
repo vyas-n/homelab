@@ -4,7 +4,8 @@ services:
     container_name: tfc-agent-0
     image: docker.io/hashicorp/tfc-agent:1.22.1
     environment:
-      - TFC_AGENT_TOKEN=sample
+      # This variable needs to be set using a .env file
+      - TFC_AGENT_TOKEN=${TFC_AGENT_TOKEN}
       - TFC_AGENT_NAME=tfc-agent-0
     restart: unless-stopped
     deploy:

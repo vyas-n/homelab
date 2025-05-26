@@ -1,4 +1,5 @@
-#!/usr/bin/env ansible-playbook
+#!/usr/bin/env nix-shell
+#! nix-shell -i ansible-playbook --packages ansible
 
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
@@ -6,6 +7,69 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
 
 # Note: This playbook provisions my entire homelab and is designed to be idempotent.
+
+- name: Deploy Apps to docker-server
+  hosts: docker-server
+  tasks:
+    - name: Creates directory & intermediate directories
+      become: true
+      ansible.builtin.file:
+        path: "{{ item.name }}"
+        state: directory
+        owner: root
+        group: root
+        # Set directories as 0770 & files as 0660
+        # ref: https://stackoverflow.com/a/29793833
+        mode: u=rwX,g=rwX
+      loop:
+        - name: /opt/apps
+        - name: /opt/apps/tfc-agent
+    - name: Setup TFC Agent variables
+      become: true
+      ansible.builtin.copy:
+        content: |
+          TFC_AGENT_TOKEN=${{ lookup('community.general.onepassword', 'TFC-Vyas-Agent-Token', field='credential') }}
+        dest: /opt/apps/tfc-agent/.env
+        owner: root
+        group: root
+        mode: u=rwX,g=rwX
+    - name: Setup TFC Agent compose file
+      become: true
+      ansible.builtin.copy:
+        src: opt/apps/tfc-agent/compose.yaml
+        dest: /opt/apps/tfc-agent/compose.yaml
+        owner: root
+        group: root
+        mode: u=rwX,g=rwX
+      notify:
+        - RestartTFCAgent
+    - name: Setup SystemD Service
+      become: true
+      ansible.builtin.copy:
+        src: etc/systemd/system/tfc-agent.service
+        dest: /etc/systemd/system/tfc-agent.service
+        owner: root
+        group: root
+        mode: "0644"
+      notify:
+        - SystemDDaemonReload
+    - name: Enable SystemD Service
+      become: true
+      ansible.builtin.systemd_service:
+        name: tfc-agent
+        state: started
+        enabled: true
+  handlers:
+    - name: RestartTFCAgent
+      become: true
+      ansible.builtin.systemd_service:
+        name: tfc-agent
+        daemon_reload: true
+        state: restarted
+    - name: SystemDDaemonReload
+      become: true
+      ansible.builtin.systemd_service:
+        daemon_reload: true
 
 # - name: Deploy Apps to TrueNAS
 #   hosts: truenas
@@ -60,7 +124,6 @@
 # Provision k8s nodes
 - name: Provision k8s nodes
   hosts: k8s
-  strategy: free
   pre_tasks:
     # TODO: Make idempotent.
     # TODO: Run this task on all Fedora hosts.
@@ -118,7 +181,6 @@
 # Provision Proxmox
 - name: Provision Proxmox Hosts
   hosts: proxmox
-  strategy: free
   roles:
     - role: vyas.proxmox.config_apt_repo
     - role: vyas.proxmox.shared_handlers

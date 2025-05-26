@@ -31,7 +31,7 @@ all:
         # fedora_server:
         #   ansible_host: fedora-server.hosts.vyas-n.dev
         docker-server:
-          ansible_host: docker-server.hosts.vyas-n.dev
+          ansible_host: docker-server.vms.vyas-n.dev
   hosts:
     truenas:
       ansible_host: truenas.hosts.vyas-n.dev
