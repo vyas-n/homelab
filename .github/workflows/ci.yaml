@@ -39,7 +39,7 @@ jobs:
             megalinter-reports
       - name: Remove MegaLinter artifacts for Trunk Code Scanning
         run: |
-          megalinter-reports
+          rm -r megalinter-reports
       - name: Trunk Code Quality
         uses: trunk-io/trunk-action@v1.2.3
         with:
