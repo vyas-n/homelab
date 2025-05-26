@@ -2,7 +2,9 @@
 name: Nightly
 "on":
   schedule:
-    - cron: 0 8 * * 1-5
+    # ref: https://crontab.guru/#0_8_*_*_*
+    # 08:00 UTC = 03:00 CDT
+    - cron: 0 8 * * *
   workflow_dispatch: {}
 permissions: {}
 jobs:
