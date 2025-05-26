@@ -13,8 +13,8 @@ defaults:
   run:
     shell: bash
 jobs:
-  cache_trunk:
-    name: Cache Trunk
+  prime_cache_trunk:
+    name: Prime Trunk Cache
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -22,7 +22,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: Prime the Trunk Cache
-        uses: trunk-io/trunk-action@v1.2.3
+      - uses: trunk-io/trunk-action@v1.2.3
         with:
           check-mode: populate_cache_only
