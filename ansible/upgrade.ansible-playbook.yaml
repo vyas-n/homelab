@@ -1,4 +1,5 @@
-#!/usr/bin/env ansible-playbook
+#!/usr/bin/env nix-shell
+#! nix-shell -i ansible-playbook --packages ansible
 
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
@@ -12,7 +13,6 @@
 - name: Upgrade systems
   # TODO: figure out how to safely upgrade truenas
   hosts: all:!truenas
-  strategy: free
   tasks:
     - name: Upgrade Windows Systems
       when: ansible_os_family == 'Windows'
