@@ -6,15 +6,16 @@
 
     flake-compat.url = "github:edolstra/flake-compat";
 
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
   };
 
   outputs =
-    {
-      self,
-      nixpkgs-stable,
-      flake-utils,
-      ...
+    { self
+    , nixpkgs-stable
+    , flake-utils
+    , ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -55,7 +56,6 @@
               fish
             ];
 
-            # TODO: fix nushell so that it can be used instead
             shellHook = ''
               exec fish
             '';

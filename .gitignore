@@ -11,6 +11,7 @@ license.yaml
 # Generated / Temp Files
 .DS_Store
 *.tfstate*
+.direnv/
 
 # Outputs
 generated/
