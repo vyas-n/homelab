@@ -27,7 +27,6 @@
             msg: "{{ inventory_hostname }}: Reboot required: {{ win_update.reboot_required }}"
           changed_when: win_update.reboot_required
 
-    # trunk-ignore(checkov/CKV2_ANSIBLE_3)
     - name: Upgrade Debian systems
       when: ansible_facts['distribution'] == "Debian"
       block:

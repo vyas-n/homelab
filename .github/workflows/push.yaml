@@ -1,0 +1,28 @@
+---
+name: CI on Push
+"on":
+  push:
+    branches: [develop]
+    paths: [.trunk/trunk.yaml]
+  workflow_dispatch: {}
+concurrency:
+  group: ${{ github.event_name }}-${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+permissions: {}
+defaults:
+  run:
+    shell: bash
+jobs:
+  cache_trunk:
+    name: Cache Trunk
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Prime the Trunk Cache
+        uses: trunk-io/trunk-action@v1.2.3
+        with:
+          check-mode: populate_cache_only
