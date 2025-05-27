@@ -7,10 +7,10 @@ removed {
     destroy = false
   }
 }
-resource "tfe_variable_set" "tfc" {
-  name        = "Terraform Cloud"
-  description = "This is an environment variable set that authenticates with TFC's tf provider: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
-}
+# resource "tfe_variable_set" "tfc" {
+#   name        = "Terraform Cloud"
+#   description = "This is an environment variable set that authenticates with TFC's tf provider: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
+# }
 
 resource "time_rotating" "tfe_organization_token" {
   rotation_months = 6
@@ -23,7 +23,7 @@ resource "tfe_organization_token" "vyas_n" {
 
 # TODO: convert this to an API Credential and include creation date & expiry values
 resource "onepassword_item" "tfe_organization_token" {
-  vault    = data.onepassword_vault.private.uuid
+  vault    = var.onepass_vault.uuid
   title    = "TFC Org Token - vyas-n"
   category = "password"
 
@@ -62,10 +62,10 @@ removed {
     destroy = false
   }
 }
-resource "tfe_variable_set" "cloudflare" {
-  name        = "Cloudflare"
-  description = "This is an environment variable set that authenticates cloudflare's tf provider: https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs"
-}
+# resource "tfe_variable_set" "cloudflare" {
+#   name        = "Cloudflare"
+#   description = "This is an environment variable set that authenticates cloudflare's tf provider: https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs"
+# }
 
 resource "time_rotating" "tfe_cloudflare_api_token" {
   rotation_months = 6
@@ -79,14 +79,23 @@ resource "cloudflare_api_token" "tfe_cloudflare_api_token" {
   expires_on = time_rotating.tfe_cloudflare_api_token.rotation_rfc3339
 
   # include all zones from specific account
-  policy {
-    permission_groups = [
-      data.cloudflare_api_token_permission_groups.all.zone["DNS Write"],
+  policies = [{
+    effect = "allow"
+    permission_groups = [{
+      # Note: Cloudflare made some very questionable decisions with their terraform provider API.
+      # ref: https://github.com/cloudflare/terraform-provider-cloudflare/issues/5062#issuecomment-2749703161
+      id = element(
+        data.cloudflare_api_token_permission_groups_list.all.result,
+        index(
+          data.cloudflare_api_token_permission_groups_list.all.result.*.name,
+          "DNS Write"
+        )
+      ) }
     ]
     resources = {
       "com.cloudflare.api.account.*" = "*"
     }
-  }
+  }]
 }
 
 resource "tfe_variable" "cloudflare_api_token" {
@@ -99,7 +108,7 @@ resource "tfe_variable" "cloudflare_api_token" {
 
     Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=qjgcn7gza5fhlpnxwvetc42hdi&h=my.1password.com
     EOF
-  variable_set_id = tfe_variable_set.cloudflare.id
+  variable_set_id = data.tfe_variable_set.cloudflare.id
 }
 
 ## DigitalOcean TF Provider
@@ -109,10 +118,10 @@ removed {
     destroy = false
   }
 }
-resource "tfe_variable_set" "digitalocean" {
-  name        = "DigitalOcean"
-  description = "This is an environment variable set that authenticates digitalocean's tf provider: https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs"
-}
+# resource "tfe_variable_set" "digitalocean" {
+#   name        = "DigitalOcean"
+#   description = "This is an environment variable set that authenticates digitalocean's tf provider: https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs"
+# }
 
 resource "tfe_variable" "digitalocean_token" {
   key             = "DIGITALOCEAN_TOKEN"
@@ -160,10 +169,10 @@ removed {
     destroy = false
   }
 }
-resource "tfe_variable_set" "onepass_connect_server_bedrock" {
-  name        = "1PassConnect Server Bedrock"
-  description = "This is a terraform variable set that provisions the Bedrock 1PassConnect Server & Access Token: https://developer.1password.com/docs/connect/get-started"
-}
+# resource "tfe_variable_set" "onepass_connect_server_bedrock" {
+#   name        = "1PassConnect Server Bedrock"
+#   description = "This is a terraform variable set that provisions the Bedrock 1PassConnect Server & Access Token: https://developer.1password.com/docs/connect/get-started"
+# }
 
 resource "tfe_variable" "onepass_connect_credentials_json" {
   key             = "onepassword_credentials_json"
@@ -175,7 +184,7 @@ resource "tfe_variable" "onepass_connect_credentials_json" {
 
     Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=utkwbonv5bwhibprmpcwyy73my&h=my.1password.com
     EOF
-  variable_set_id = tfe_variable_set.onepass_connect_server_bedrock.id
+  variable_set_id = data.tfe_variable_set.onepass_connect_server_bedrock.id
 }
 
 resource "tfe_variable" "onepass_connect_access_token" {
@@ -188,7 +197,7 @@ resource "tfe_variable" "onepass_connect_access_token" {
 
     Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=t7nnsq2rfn6uolkjo6hedl3uve&h=my.1password.com
     EOF
-  variable_set_id = tfe_variable_set.onepass_connect_server_bedrock.id
+  variable_set_id = data.tfe_variable_set.onepass_connect_server_bedrock.id
 }
 
 # Tailscale API Credentials
@@ -198,10 +207,10 @@ removed {
     destroy = false
   }
 }
-resource "tfe_variable_set" "tailscale" {
-  name        = "Tailscale"
-  description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"
-}
+# resource "tfe_variable_set" "tailscale" {
+#   name        = "Tailscale"
+#   description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"
+# }
 
 resource "tfe_variable" "tailscale_api_key" {
   key             = "TAILSCALE_API_KEY"
@@ -213,5 +222,5 @@ resource "tfe_variable" "tailscale_api_key" {
 
     Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=xyua5yuxnlcjaqrtja2yykbdee&h=my.1password.com
     EOF
-  variable_set_id = tfe_variable_set.tailscale.id
+  variable_set_id = data.tfe_variable_set.tailscale.id
 }

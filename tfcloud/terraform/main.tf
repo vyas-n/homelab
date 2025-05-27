@@ -1,6 +1,7 @@
 
 locals {
-  terraform_version = "~> 1.11.0"
+  # TODO: verify that this matches the version of terraform provided by nix
+  terraform_version = "1.12.0"
 }
 
 # Moved resources
