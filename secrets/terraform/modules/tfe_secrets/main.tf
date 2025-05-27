@@ -1,6 +1,16 @@
 
 ## TFC TF Provider
 # Uses TFC Organization Token
+removed {
+  from = tfe_variable_set.tfc
+  lifecycle {
+    destroy = false
+  }
+}
+resource "tfe_variable_set" "tfc" {
+  name        = "Terraform Cloud"
+  description = "This is an environment variable set that authenticates with TFC's tf provider: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
+}
 
 resource "time_rotating" "tfe_organization_token" {
   rotation_months = 6
@@ -36,21 +46,22 @@ resource "onepassword_item" "tfe_organization_token" {
   }
 }
 
-resource "tfe_variable_set" "tfc" {
-  name        = "Terraform Cloud"
-  description = "This is an environment variable set that authenticates with TFC's tf provider: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
-}
-
 resource "tfe_variable" "tfe_token" {
   key             = "TFE_TOKEN"
   value           = onepassword_item.tfe_organization_token.password
   category        = "env"
   sensitive       = true
   description     = "This is a Terraform Cloud Org Token for the vyas-n TFC Org."
-  variable_set_id = tfe_variable_set.tfc.id
+  variable_set_id = data.tfe_variable_set.tfc.id
 }
 
 ## Cloudflare TF Provider
+removed {
+  from = tfe_variable_set.cloudflare
+  lifecycle {
+    destroy = false
+  }
+}
 resource "tfe_variable_set" "cloudflare" {
   name        = "Cloudflare"
   description = "This is an environment variable set that authenticates cloudflare's tf provider: https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs"
@@ -92,6 +103,12 @@ resource "tfe_variable" "cloudflare_api_token" {
 }
 
 ## DigitalOcean TF Provider
+removed {
+  from = tfe_variable_set.digitalocean
+  lifecycle {
+    destroy = false
+  }
+}
 resource "tfe_variable_set" "digitalocean" {
   name        = "DigitalOcean"
   description = "This is an environment variable set that authenticates digitalocean's tf provider: https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs"
@@ -107,7 +124,7 @@ resource "tfe_variable" "digitalocean_token" {
 
     Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=eyuopajlakj4wlefgpdsf7gw3y&h=my.1password.com
     EOF
-  variable_set_id = tfe_variable_set.digitalocean.id
+  variable_set_id = data.tfe_variable_set.digitalocean.id
 }
 
 resource "tfe_variable" "digitalocean_spaces_access_key_id" {
@@ -120,7 +137,7 @@ resource "tfe_variable" "digitalocean_spaces_access_key_id" {
 
     Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=mzhzw6qkxvnvvh7ybltof7c7ge&h=my.1password.com
     EOF
-  variable_set_id = tfe_variable_set.digitalocean.id
+  variable_set_id = data.tfe_variable_set.digitalocean.id
 }
 
 resource "tfe_variable" "digitalocean_spaces_secret_access_key" {
@@ -133,10 +150,16 @@ resource "tfe_variable" "digitalocean_spaces_secret_access_key" {
 
     Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=mzhzw6qkxvnvvh7ybltof7c7ge&h=my.1password.com
     EOF
-  variable_set_id = tfe_variable_set.digitalocean.id
+  variable_set_id = data.tfe_variable_set.digitalocean.id
 }
 
 # Bedrock 1PassConnect Server & Access Token
+removed {
+  from = tfe_variable_set.onepass_connect_server_bedrock
+  lifecycle {
+    destroy = false
+  }
+}
 resource "tfe_variable_set" "onepass_connect_server_bedrock" {
   name        = "1PassConnect Server Bedrock"
   description = "This is a terraform variable set that provisions the Bedrock 1PassConnect Server & Access Token: https://developer.1password.com/docs/connect/get-started"
@@ -169,6 +192,12 @@ resource "tfe_variable" "onepass_connect_access_token" {
 }
 
 # Tailscale API Credentials
+removed {
+  from = tfe_variable_set.tailscale
+  lifecycle {
+    destroy = false
+  }
+}
 resource "tfe_variable_set" "tailscale" {
   name        = "Tailscale"
   description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"

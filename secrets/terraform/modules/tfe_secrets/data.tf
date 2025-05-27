@@ -3,7 +3,15 @@ data "onepassword_vault" "private" {
   name = "Private"
 }
 
+# Terraform Cloud
+data "tfe_variable_set" "tfc" {
+  name = "Terraform Cloud"
+}
+
 # DigitalOcean
+data "tfe_variable_set" "digitalocean" {
+  name = "DigitalOcean"
+}
 data "onepassword_item" "digitalocean_pat_for_tfcloud_vyasn" {
   vault = data.onepassword_vault.private.uuid
   title = "DigitalOcean-PAT-for-Terraform-Cloud-vyas-n"

@@ -99,3 +99,7 @@ resource "tfe_workspace_settings" "unifi_terraform" {
   workspace_id   = tfe_workspace.unifi_terraform.id
   execution_mode = "local"
 }
+
+resource "tfe_variable_set" "proxmox" {
+  name = "Proxmox Auth"
+}
