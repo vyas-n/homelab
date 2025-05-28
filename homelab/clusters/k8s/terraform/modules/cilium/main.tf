@@ -99,3 +99,26 @@ resource "kubectl_manifest" "pool1" {
 
   depends_on = [helm_release.cilium, time_sleep.wait_for_cilium]
 }
+
+resource "kubectl_manifest" "policy1" {
+  yaml_body = yamlencode({
+    apiVersion = "cilium.io/v2alpha1"
+    kind       = "CiliumL2AnnouncementPolicy"
+    metadata = {
+      name = "policy1"
+    }
+    spec = {
+      nodeSelector = {
+        matchExpressions = [
+          {
+            key      = "node-role.kubernetes.io/control-plane"
+            operator = "DoesNotExist"
+          }
+        ]
+      }
+    }
+  })
+  server_side_apply = true
+
+  depends_on = [helm_release.cilium, time_sleep.wait_for_cilium]
+}

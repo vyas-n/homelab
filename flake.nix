@@ -55,10 +55,6 @@
               nushell
               fish
             ];
-
-            shellHook = ''
-              exec fish
-            '';
           };
 
         # Outputs

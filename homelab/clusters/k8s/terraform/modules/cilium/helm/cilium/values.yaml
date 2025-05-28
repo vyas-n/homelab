@@ -10,6 +10,9 @@ bpf:
 egressGateway:
   enabled: true
 
+l2announcements:
+  enabled: true
+
 # Ingress Controller & Envoy Proxy: https://docs.cilium.io/en/stable/network/servicemesh/l7-traffic-management/
 # Needs a Loadbalancer configured in order to enable it
 ingressController:
