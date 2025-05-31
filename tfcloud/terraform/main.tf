@@ -169,6 +169,10 @@ resource "tfe_variable_set" "tailscale" {
   name        = "Tailscale"
   description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"
 }
+import {
+  id = "varset-VVsGstJS9UnDUMda"
+  to = tfe_variable_set.unifi
+}
 resource "tfe_variable_set" "unifi" {
   name        = "Unifi Gateway"
   description = "This is an environment variable set that authenticates unifi's tf provider: https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs"
