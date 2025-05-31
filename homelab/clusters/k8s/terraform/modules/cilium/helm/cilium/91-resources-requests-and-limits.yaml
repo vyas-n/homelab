@@ -1,0 +1,61 @@
+---
+# Cilium Ref: https://artifacthub.io/packages/helm/cilium/cilium
+# yaml-language-server: $schema=https://github.com/cilium/cilium/raw/refs/heads/main/install/kubernetes/cilium/values.schema.json
+resources:
+  limits:
+    memory: 1Gi
+  requests:
+    cpu: 25m
+    memory: 256Mi
+    ephemeral-storage: 8Mi
+nodeinit:
+  resources:
+    limits:
+      memory: 1024M
+    requests:
+      cpu: 100m
+      memory: 100Mi
+      ephemeral-storage: 8Mi
+cgroup:
+  autoMount:
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+        ephemeral-storage: 8Mi
+operator:
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 25m
+      memory: 128Mi
+      ephemeral-storage: 8Mi
+hubble:
+  relay:
+    resources:
+      limits:
+        memory: 1024M
+      requests:
+        cpu: 100m
+        memory: 64Mi
+        ephemeral-storage: 8Mi
+  ui:
+    backend:
+      resources:
+        limits:
+          memory: 1024M
+        requests:
+          cpu: 100m
+          memory: 64Mi
+          ephemeral-storage: 8Mi
+    frontend:
+      resources:
+        limits:
+          memory: 1024M
+        requests:
+          cpu: 100m
+          memory: 64Mi
+          ephemeral-storage: 8Mi

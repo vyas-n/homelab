@@ -13,8 +13,12 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
   # TODO: This line is only a workaround for: https://github.com/cilium/cilium/issues/27000#issuecomment-1648245965
   wait = false
 
-  values = [
-    yamlencode(yamldecode(file("${path.module}/helm/cilium/values.yaml"))), # remove yaml comments & formatting from diff calculations
+
+  values = concat([
+    # We decode & reencode to remove yaml comments & formatting from diff calculations
+    for file in sort(fileset(path.module, "helm/cilium/*.yaml")) :
+    yamlencode(yamldecode(file("${path.module}/${file}")))
+    ], [
     yamlencode({
       k8sServicePort = var.k8s_service_port
       k8sServiceHost = var.k8s_endpoint
@@ -26,7 +30,7 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
         }
       }
     }),
-  ]
+  ])
 }
 
 # resource "kubectl_manifest" "bgp_peering_policy_er7" {

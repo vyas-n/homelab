@@ -1,0 +1,38 @@
+---
+# Cilium Ref: https://artifacthub.io/packages/helm/cilium/cilium
+# yaml-language-server: $schema=https://github.com/cilium/cilium/raw/refs/heads/main/install/kubernetes/cilium/values.schema.json
+
+# Enable Metrics
+# ref: https://docs.cilium.io/en/latest/observability/grafana/#deploy-cilium-and-hubble-with-metrics-enabled
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    trustCRDsExist: true
+dashboards:
+  enabled: true
+
+operator:
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  dashboards:
+    enabled: true
+
+hubble:
+  metrics:
+    enabled:
+      - dns
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      # TODO: uncommend when this issue is resolved: https://github.com/cilium/hubble-ui/issues/321#issuecomment-1571891834
+      # - httpV2:exemplars=true;labelsContext=source_ip\,source_namespace\,source_workload\,destination_ip\,destination_namespace\,destination_workload\,traffic_direction
+    enableOpenMetrics: true
+    serviceMonitor:
+      enabled: true
+    dashboards:
+      enabled: true
