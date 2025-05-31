@@ -4,11 +4,26 @@ locals {
   terraform_version = "1.12.0"
 }
 
+# Default Org Settings
+resource "tfe_organization_default_settings" "vyas_n" {
+  default_execution_mode = "remote"
+}
+
+# Teraform Agent pool
+import {
+  id = "apool-vMjgnfPpMG1yJiEx"
+  to = tfe_agent_pool.homelab
+}
+resource "tfe_agent_pool" "homelab" {
+  name         = "homelab"
+}
+
 # List of remote_exec_workspaces
-resource "tfe_workspace" "remote_exec_workspace" {
-  for_each = {
+locals {
+  remote_workspaces = {
     digitalocean_terraform : {
       working_directory = "digitalocean/terraform"
+      agent
     }
     digitalocean_nyc3_terraform : {
       working_directory = "digitalocean/nyc3/terraform"
@@ -23,6 +38,9 @@ resource "tfe_workspace" "remote_exec_workspace" {
       working_directory = "tfcloud/terraform"
     }
   }
+}
+resource "tfe_workspace" "remote_exec_workspace" {
+  for_each = local.remote_workspaces
 
   name              = each.key
   working_directory = each.value["working_directory"]
@@ -40,14 +58,20 @@ resource "tfe_workspace" "remote_exec_workspace" {
 }
 
 # These workspaces only execute locally
+locals {
+  local_workspaces = {
+    "homelab_terraform" : {}
+    "proxmox_terraform": {}
+    "secrets_terraform": {}
+    "unifi_terraform" : {}
+  }
+}
 moved {
   from = tfe_workspace.homelab_terraform
   to = tfe_workspace.local_exec_workspace["homelab_terraform"]
 }
 resource "tfe_workspace" "local_exec_workspace" {
-  for_each = {
-    "homelab_terraform" : {}
-  }
+  for_each = local.local_workspaces
 
   name           = each.key
   project_id     = data.tfe_project.default.id
@@ -56,56 +80,13 @@ resource "tfe_workspace" "local_exec_workspace" {
   terraform_version = local.terraform_version
 }
 
-# Assign Variable Sets to TFE Workspaces
-resource "tfe_workspace_variable_set" "tailscale" {
-  variable_set_id = tfe_variable_set.tailscale.id
-  workspace_id    = tfe_workspace.remote_exec_workspace["tailscale_terraform"].id
-}
-
-resource "tfe_workspace_settings" "homelab_terraform" {
-  workspace_id   = tfe_workspace.local_exec_workspace["homelab_terraform"].id
+resource "tfe_workspace_settings" "local_exec_workspace" {
+  for_each = local.local_workspaces
+  workspace_id   = tfe_workspace.local_exec_workspace[each.key].id
   execution_mode = "local"
 }
 
-resource "tfe_workspace" "proxmox_terraform" {
-  name           = "proxmox_terraform"
-  project_id     = data.tfe_project.default.id
-  queue_all_runs = false
-
-  terraform_version = local.terraform_version
-}
-
-resource "tfe_workspace_settings" "proxmox_terraform" {
-  workspace_id   = tfe_workspace.proxmox_terraform.id
-  execution_mode = "local"
-}
-
-resource "tfe_workspace" "secrets_terraform" {
-  name           = "secrets_terraform"
-  project_id     = data.tfe_project.default.id
-  queue_all_runs = false
-
-  terraform_version = local.terraform_version
-}
-
-resource "tfe_workspace_settings" "secrets_terraform" {
-  workspace_id   = tfe_workspace.secrets_terraform.id
-  execution_mode = "local"
-}
-
-resource "tfe_workspace" "unifi_terraform" {
-  name           = "unifi_terraform"
-  project_id     = data.tfe_project.default.id
-  queue_all_runs = false
-
-  terraform_version = local.terraform_version
-}
-
-resource "tfe_workspace_settings" "unifi_terraform" {
-  workspace_id   = tfe_workspace.unifi_terraform.id
-  execution_mode = "local"
-}
-
+# TFE Variable Sets
 resource "tfe_variable_set" "proxmox" {
   name = "Proxmox Auth"
 }
@@ -128,4 +109,10 @@ resource "tfe_variable_set" "onepass_connect_server_bedrock" {
 resource "tfe_variable_set" "tailscale" {
   name        = "Tailscale"
   description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"
+}
+
+# Assign Variable Sets to TFE Workspaces
+resource "tfe_workspace_variable_set" "tailscale" {
+  variable_set_id = tfe_variable_set.tailscale.id
+  workspace_id    = tfe_workspace.remote_exec_workspace["tailscale_terraform"].id
 }
