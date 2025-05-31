@@ -5,6 +5,8 @@ module "proxmox_secrets" {
 
 module "tfe_secrets" {
   source = "./modules/tfe_secrets"
+
+  onepass_vault = data.onepassword_vault.private
 }
 
 module "gh_secrets" {

@@ -1,0 +1,48 @@
+---
+# Cilium Ref: https://artifacthub.io/packages/helm/cilium/cilium
+# yaml-language-server: $schema=https://github.com/cilium/cilium/raw/refs/heads/main/install/kubernetes/cilium/values.schema.json
+kubeProxyReplacement: true
+bgpControlPlane:
+  enabled: true
+
+bpf:
+  masquerade: true
+egressGateway:
+  enabled: true
+
+l2announcements:
+  enabled: true
+
+# Ingress Controller & Envoy Proxy: https://docs.cilium.io/en/stable/network/servicemesh/l7-traffic-management/
+# Needs a Loadbalancer configured in order to enable it
+ingressController:
+  enabled: true
+  loadbalancerMode: dedicated
+loadBalancer:
+  l7:
+    backend: envoy
+
+# Enable Envoy Proxy in standalone DaemonSet.
+envoy:
+  enabled: true
+
+# Transparent Encryption: https://docs.cilium.io/en/stable/security/network/encryption-wireguard/#enable-wireguard-in-cilium
+# TODO: Failing to mount ipsec keys for some reason
+# l7Proxy: false
+# encryption:
+#   enabled: true
+#   encryption:
+#     type: wireguard
+externalIPs:
+  enabled: true
+
+k8sClientRateLimit:
+  qps: 33
+  burst: 48
+
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true

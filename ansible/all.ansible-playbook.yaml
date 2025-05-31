@@ -28,11 +28,13 @@
       become: true
       ansible.builtin.copy:
         content: |
-          TFC_AGENT_TOKEN=${{ lookup('community.general.onepassword', 'TFC-Vyas-Agent-Token', field='credential') }}
+          TFC_AGENT_TOKEN={{ lookup('community.general.onepassword', 'TFC-Vyas-Agent-Token', field='credential') }}
         dest: /opt/apps/tfc-agent/.env
         owner: root
         group: root
         mode: u=rwX,g=rwX
+      notify:
+        - RestartTFCAgent
     - name: Setup TFC Agent compose file
       become: true
       ansible.builtin.copy:

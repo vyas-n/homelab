@@ -15,15 +15,23 @@ spec:
         - --labels
         - topology.kubernetes.io/zone=vlan1
       openSSH:
+        address: k8s-ctr-0.vms.vyas-n.dev
+    - role: controller
+      installFlags: *installflags
+      openSSH:
         address: k8s-ctr-1.vms.vyas-n.dev
+    - role: controller
+      installFlags: *installflags
+      openSSH:
+        address: k8s-ctr-2.vms.vyas-n.dev
+    - role: worker
+      installFlags: *installflags
+      openSSH:
+        address: k8s-wkr-0.vms.vyas-n.dev
     - role: worker
       installFlags: *installflags
       openSSH:
         address: k8s-wkr-1.vms.vyas-n.dev
-    - role: worker
-      installFlags: *installflags
-      openSSH:
-        address: k8s-wkr-2.vms.vyas-n.dev
   k0s:
     version: v1.32.2+k0s.0
     config:
