@@ -16,5 +16,5 @@ variable "k8s_service_port" {
 
 variable "k8s_endpoint" {
   type    = string
-  default = "k8s-ctr-1.vms.vyas-n.dev"
+  default = "k8s-ctr-0.vms.vyas-n.dev"
 }

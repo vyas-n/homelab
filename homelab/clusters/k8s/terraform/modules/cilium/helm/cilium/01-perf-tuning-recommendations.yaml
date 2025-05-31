@@ -1,0 +1,26 @@
+---
+# Cilium Ref: https://artifacthub.io/packages/helm/cilium/cilium
+# yaml-language-server: $schema=https://github.com/cilium/cilium/raw/refs/heads/main/install/kubernetes/cilium/values.schema.json
+
+# This is from Cilium's tuning guide
+# ref: https://docs.cilium.io/en/latest/operations/performance/tuning/#tuning-guide
+routingMode: native
+bpf:
+  datapathMode: netkit
+  masquerade: true
+  distributedLRU:
+    enabled: true
+  mapDynamicSizeRatio: 0.08
+ipv6:
+  enabled: true
+enableIPv6BIGTCP: true
+ipv4:
+  enabled: true
+enableIPv4BIGTCP: true
+kubeProxyReplacement: true
+bpfClockProbe: true
+
+# BBR congestion control
+bandwidthManager:
+  enabled: true
+  bbr: true

@@ -14,5 +14,6 @@
   },
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform"
-  }
+  },
+  "nixEnvSelector.nixFile": "${workspaceFolder}/shell.nix"
 }

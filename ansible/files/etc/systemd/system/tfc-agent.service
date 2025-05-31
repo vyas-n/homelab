@@ -13,7 +13,7 @@ WorkingDirectory=/opt/apps/tfc-agent
 # Shutdown container (if running) when unit is started
 ExecStartPre=/usr/bin/docker compose --file=compose.yaml down
 # Start container when unit is started
-ExecStart=/usr/bin/docker compose --exit-code-from=tfc-agent --file=compose.yaml up
+ExecStart=/usr/bin/docker compose --file=compose.yaml up
 # Stop container when unit is stopped
 ExecStop=/usr/bin/docker compose --file=compose.yaml down
 
