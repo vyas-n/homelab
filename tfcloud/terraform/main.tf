@@ -27,7 +27,6 @@ locals {
   remote_workspaces = {
     digitalocean_terraform : {
       working_directory = "digitalocean/terraform"
-      agent_pool_id = tfe_agent_pool.homelab.id
     }
     digitalocean_nyc3_terraform : {
       working_directory = "digitalocean/nyc3/terraform"
@@ -41,7 +40,31 @@ locals {
     tfcloud_terraform : {
       working_directory = "tfcloud/terraform"
     }
+    homelab_terraform : {
+      working_directory = "homelab/clusters/k8s/terraform"
+      agent_pool_id = tfe_agent_pool.homelab.id
+    }
+    proxmox_terraform : {
+      working_directory = "homelab/terraform"
+      agent_pool_id = tfe_agent_pool.homelab.id
+    }
+    unifi_terraform : {
+      working_directory = "unifi/terraform"
+      agent_pool_id = tfe_agent_pool.homelab.id
+    }
   }
+}
+moved {
+  from = tfe_workspace.homelab_terraform
+  to = tfe_workspace.remote_exec_workspace["homelab_terraform"]
+}
+moved {
+  from = tfe_workspace.proxmox_terraform
+  to = tfe_workspace.remote_exec_workspace["proxmox_terraform"]
+}
+moved {
+  from = tfe_workspace.unifi_terraform
+  to = tfe_workspace.remote_exec_workspace["unifi_terraform"]
 }
 resource "tfe_workspace" "remote_exec_workspace" {
   for_each = local.remote_workspaces
@@ -60,6 +83,18 @@ resource "tfe_workspace" "remote_exec_workspace" {
     github_app_installation_id = local.tfc_github_app_install_id
   }
 }
+moved {
+  from = tfe_workspace_settings.homelab_terraform
+  to = tfe_workspace_settings.remote_exec_workspace["homelab_terraform"]
+}
+moved {
+  from = tfe_workspace_settings.proxmox_terraform
+  to = tfe_workspace_settings.remote_exec_workspace["proxmox_terraform"]
+}
+moved {
+  from = tfe_workspace_settings.unifi_terraform
+  to = tfe_workspace_settings.remote_exec_workspace["unifi_terraform"]
+}
 resource "tfe_workspace_settings" "remote_exec_workspace" {
   for_each = {
     for key, value in local.remote_workspaces :
@@ -75,27 +110,13 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
 # These workspaces only execute locally
 locals {
   local_workspaces = {
-    "homelab_terraform" : {}
-    "proxmox_terraform": {}
     "secrets_terraform": {}
-    "unifi_terraform" : {}
   }
 }
-moved {
-  from = tfe_workspace.homelab_terraform
-  to = tfe_workspace.local_exec_workspace["homelab_terraform"]
-}
-moved {
-  from = tfe_workspace.proxmox_terraform
-  to = tfe_workspace.local_exec_workspace["proxmox_terraform"]
-}
+
 moved {
   from = tfe_workspace.secrets_terraform
   to = tfe_workspace.local_exec_workspace["secrets_terraform"]
-}
-moved {
-  from = tfe_workspace.unifi_terraform
-  to = tfe_workspace.local_exec_workspace["unifi_terraform"]
 }
 resource "tfe_workspace" "local_exec_workspace" {
   for_each = local.local_workspaces
@@ -108,20 +129,8 @@ resource "tfe_workspace" "local_exec_workspace" {
 }
 
 moved {
-  from = tfe_workspace_settings.homelab_terraform
-  to = tfe_workspace_settings.local_exec_workspace["homelab_terraform"]
-}
-moved {
-  from = tfe_workspace_settings.proxmox_terraform
-  to = tfe_workspace_settings.local_exec_workspace["proxmox_terraform"]
-}
-moved {
   from = tfe_workspace_settings.secrets_terraform
   to = tfe_workspace_settings.local_exec_workspace["secrets_terraform"]
-}
-moved {
-  from = tfe_workspace_settings.unifi_terraform
-  to = tfe_workspace_settings.local_exec_workspace["unifi_terraform"]
 }
 resource "tfe_workspace_settings" "local_exec_workspace" {
   for_each = local.local_workspaces
