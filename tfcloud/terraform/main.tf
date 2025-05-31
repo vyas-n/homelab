@@ -64,10 +64,11 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
   for_each = {
     for key, value in local.remote_workspaces :
     key => value
-      if contains(keys(value), "agent_pool_id")
+      if lookup(value, "agent_pool_id", "-1") != "-1"
   }
   workspace_id   = tfe_workspace.remote_exec_workspace[each.key].id
-  execution_mode = "local"
+  execution_mode = "agent"
+  agent_pool_id = each.value.agent_pool_id
 }
 
 
