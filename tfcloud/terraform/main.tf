@@ -106,6 +106,22 @@ resource "tfe_workspace" "local_exec_workspace" {
   terraform_version = local.terraform_version
 }
 
+import {
+  id = "vyas-n/homelab_terraform"
+  to = tfe_workspace_settings.local_exec_workspace["homelab_terraform"]
+}
+import {
+  id = "vyas-n/proxmox_terraform"
+  to = tfe_workspace_settings.local_exec_workspace["proxmox_terraform"]
+}
+import {
+  id = "vyas-n/secrets_terraform"
+  to = tfe_workspace_settings.local_exec_workspace["secrets_terraform"]
+}
+import {
+  id = "vyas-n/unifi_terraform"
+  to = tfe_workspace_settings.local_exec_workspace["unifi_terraform"]
+}
 resource "tfe_workspace_settings" "local_exec_workspace" {
   for_each = local.local_workspaces
   workspace_id   = tfe_workspace.local_exec_workspace[each.key].id
@@ -116,21 +132,41 @@ resource "tfe_workspace_settings" "local_exec_workspace" {
 resource "tfe_variable_set" "proxmox" {
   name = "Proxmox Auth"
 }
+import {
+  id = "varset-EZNQLXLLn8JB1tXG"
+  to = tfe_variable_set.tfc
+}
 resource "tfe_variable_set" "tfc" {
   name        = "Terraform Cloud"
   description = "This is an environment variable set that authenticates with TFC's tf provider: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
+}
+import {
+  id = "varset-Yr7D8koHTJfJiGZh"
+  to = tfe_variable_set.cloudflare
 }
 resource "tfe_variable_set" "cloudflare" {
   name        = "Cloudflare"
   description = "This is an environment variable set that authenticates cloudflare's tf provider: https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs"
 }
+import {
+  id = "varset-FyFvfYvR4p3cbUfX"
+  to = tfe_variable_set.digitalocean
+}
 resource "tfe_variable_set" "digitalocean" {
   name        = "DigitalOcean"
   description = "This is an environment variable set that authenticates digitalocean's tf provider: https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs"
 }
+import {
+  id = "varset-EGrhocRMyRYv9NNe"
+  to = tfe_variable_set.onepass_connect_server_bedrock
+}
 resource "tfe_variable_set" "onepass_connect_server_bedrock" {
   name        = "1PassConnect Server Bedrock"
   description = "This is a terraform variable set that provisions the Bedrock 1PassConnect Server & Access Token: https://developer.1password.com/docs/connect/get-started"
+}
+import {
+  id = "varset-xsjQGTWQJ5AtgCnX"
+  to = tfe_variable_set.tailscale
 }
 resource "tfe_variable_set" "tailscale" {
   name        = "Tailscale"
