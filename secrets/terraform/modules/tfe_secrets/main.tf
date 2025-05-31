@@ -1,17 +1,6 @@
 
 ## TFC TF Provider
 # Uses TFC Organization Token
-removed {
-  from = tfe_variable_set.tfc
-  lifecycle {
-    destroy = false
-  }
-}
-# resource "tfe_variable_set" "tfc" {
-#   name        = "Terraform Cloud"
-#   description = "This is an environment variable set that authenticates with TFC's tf provider: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
-# }
-
 resource "time_rotating" "tfe_organization_token" {
   rotation_months = 6
 }
@@ -56,17 +45,6 @@ resource "tfe_variable" "tfe_token" {
 }
 
 ## Cloudflare TF Provider
-removed {
-  from = tfe_variable_set.cloudflare
-  lifecycle {
-    destroy = false
-  }
-}
-# resource "tfe_variable_set" "cloudflare" {
-#   name        = "Cloudflare"
-#   description = "This is an environment variable set that authenticates cloudflare's tf provider: https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs"
-# }
-
 resource "time_rotating" "tfe_cloudflare_api_token" {
   rotation_months = 6
 }
@@ -103,17 +81,6 @@ resource "tfe_variable" "cloudflare_api_token" {
 }
 
 ## DigitalOcean TF Provider
-removed {
-  from = tfe_variable_set.digitalocean
-  lifecycle {
-    destroy = false
-  }
-}
-# resource "tfe_variable_set" "digitalocean" {
-#   name        = "DigitalOcean"
-#   description = "This is an environment variable set that authenticates digitalocean's tf provider: https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs"
-# }
-
 resource "tfe_variable" "digitalocean_token" {
   key             = "DIGITALOCEAN_TOKEN"
   value           = data.onepassword_item.digitalocean_pat_for_tfcloud_vyasn.credential
@@ -154,17 +121,6 @@ resource "tfe_variable" "digitalocean_spaces_secret_access_key" {
 }
 
 # Bedrock 1PassConnect Server & Access Token
-removed {
-  from = tfe_variable_set.onepass_connect_server_bedrock
-  lifecycle {
-    destroy = false
-  }
-}
-# resource "tfe_variable_set" "onepass_connect_server_bedrock" {
-#   name        = "1PassConnect Server Bedrock"
-#   description = "This is a terraform variable set that provisions the Bedrock 1PassConnect Server & Access Token: https://developer.1password.com/docs/connect/get-started"
-# }
-
 resource "tfe_variable" "onepass_connect_credentials_json" {
   key             = "onepassword_credentials_json"
   value           = data.onepassword_item.onepass_connect_credentials_json.file.0.content
@@ -192,17 +148,6 @@ resource "tfe_variable" "onepass_connect_access_token" {
 }
 
 # Tailscale API Credentials
-removed {
-  from = tfe_variable_set.tailscale
-  lifecycle {
-    destroy = false
-  }
-}
-# resource "tfe_variable_set" "tailscale" {
-#   name        = "Tailscale"
-#   description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"
-# }
-
 resource "tfe_variable" "tailscale_api_key" {
   key             = "TAILSCALE_API_KEY"
   value           = data.onepassword_item.tailscale_api_key_for_vyasn.credential

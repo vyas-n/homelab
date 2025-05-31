@@ -4,11 +4,7 @@ locals {
   terraform_version = "1.12.0"
 }
 
-# Moved resources
-
-
 # List of remote_exec_workspaces
-
 resource "tfe_workspace" "remote_exec_workspace" {
   for_each = {
     digitalocean_terraform : {
@@ -43,22 +39,31 @@ resource "tfe_workspace" "remote_exec_workspace" {
   }
 }
 
-resource "tfe_workspace_variable_set" "tailscale" {
-  variable_set_id = data.tfe_variable_set.tailscale.id
-  workspace_id    = tfe_workspace.remote_exec_workspace["tailscale_terraform"].id
-}
-
 # These workspaces only execute locally
-resource "tfe_workspace" "homelab_terraform" {
-  name           = "homelab_terraform"
+moved {
+  from = tfe_workspace.homelab_terraform
+  to = tfe_workspace.local_exec_workspace["homelab_terraform"]
+}
+resource "tfe_workspace" "local_exec_workspace" {
+  for_each = {
+    "homelab_terraform" : {}
+  }
+
+  name           = each.key
   project_id     = data.tfe_project.default.id
   queue_all_runs = false
 
   terraform_version = local.terraform_version
 }
 
+# Assign Variable Sets to TFE Workspaces
+resource "tfe_workspace_variable_set" "tailscale" {
+  variable_set_id = tfe_variable_set.tailscale.id
+  workspace_id    = tfe_workspace.remote_exec_workspace["tailscale_terraform"].id
+}
+
 resource "tfe_workspace_settings" "homelab_terraform" {
-  workspace_id   = tfe_workspace.homelab_terraform.id
+  workspace_id   = tfe_workspace.local_exec_workspace["homelab_terraform"].id
   execution_mode = "local"
 }
 
@@ -103,4 +108,24 @@ resource "tfe_workspace_settings" "unifi_terraform" {
 
 resource "tfe_variable_set" "proxmox" {
   name = "Proxmox Auth"
+}
+resource "tfe_variable_set" "tfc" {
+  name        = "Terraform Cloud"
+  description = "This is an environment variable set that authenticates with TFC's tf provider: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
+}
+resource "tfe_variable_set" "cloudflare" {
+  name        = "Cloudflare"
+  description = "This is an environment variable set that authenticates cloudflare's tf provider: https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs"
+}
+resource "tfe_variable_set" "digitalocean" {
+  name        = "DigitalOcean"
+  description = "This is an environment variable set that authenticates digitalocean's tf provider: https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs"
+}
+resource "tfe_variable_set" "onepass_connect_server_bedrock" {
+  name        = "1PassConnect Server Bedrock"
+  description = "This is a terraform variable set that provisions the Bedrock 1PassConnect Server & Access Token: https://developer.1password.com/docs/connect/get-started"
+}
+resource "tfe_variable_set" "tailscale" {
+  name        = "Tailscale"
+  description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"
 }
