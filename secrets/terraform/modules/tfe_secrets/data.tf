@@ -48,9 +48,5 @@ data "onepassword_item" "onepass_connect_access_token" {
 data "tfe_variable_set" "cloudflare" {
   name = "Cloudflare"
 }
-data "cloudflare_account" "vyas" {
-  filter = {
-    name = "Vyas"
-  }
-}
-data "cloudflare_api_token_permission_groups_list" "all" {}
+data "cloudflare_user" "me" {}
+data "cloudflare_api_token_permission_groups" "all" {}

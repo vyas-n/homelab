@@ -79,23 +79,14 @@ resource "cloudflare_api_token" "tfe_cloudflare_api_token" {
   expires_on = time_rotating.tfe_cloudflare_api_token.rotation_rfc3339
 
   # include all zones from specific account
-  policies = [{
-    effect = "allow"
-    permission_groups = [{
-      # Note: Cloudflare made some very questionable decisions with their terraform provider API.
-      # ref: https://github.com/cloudflare/terraform-provider-cloudflare/issues/5062#issuecomment-2749703161
-      id = element(
-        data.cloudflare_api_token_permission_groups_list.all.result,
-        index(
-          data.cloudflare_api_token_permission_groups_list.all.result.*.name,
-          "DNS Write"
-        )
-      ) }
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.zone["DNS Write"],
     ]
     resources = {
       "com.cloudflare.api.account.*" = "*"
     }
-  }]
+  }
 }
 
 resource "tfe_variable" "cloudflare_api_token" {

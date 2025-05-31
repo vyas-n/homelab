@@ -11,48 +11,30 @@ resource "cloudflare_api_token" "cf_pages_vyas_n_com" {
   expires_on = time_rotating.cf_pages_vyas_n_com.rotation_rfc3339
 
   # include all zones from specific account
-  policies = [{
-    effect = "allow"
-    permission_groups = [{
-      id = element(
-        data.cloudflare_api_token_permission_groups_list.all.result,
-        index(
-          data.cloudflare_api_token_permission_groups_list.all.result.*.name,
-          "Pages Write"
-        )
-      ) }, {
-      id = element(
-        data.cloudflare_api_token_permission_groups_list.all.result,
-        index(
-          data.cloudflare_api_token_permission_groups_list.all.result.*.name,
-          "DNS Write"
-        )
-      ) }
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.account["Pages Write"],
+      data.cloudflare_api_token_permission_groups.all.zone["DNS Write"],
     ]
     resources = {
       "com.cloudflare.api.account.*" = "*"
     }
-    }, {
-    effect = "allow"
+  }
+
+  policy {
     permission_groups = [
-      { id = element(
-        data.cloudflare_api_token_permission_groups_list.all.result,
-        index(
-          data.cloudflare_api_token_permission_groups_list.all.result.*.name,
-          "User Details Read"
-        )
-      ) }
+      data.cloudflare_api_token_permission_groups.all.user["User Details Read"]
     ]
     resources = {
-      "com.cloudflare.api.user.${data.cloudflare_account.vyas.account_id}" = "*"
+      "com.cloudflare.api.user.${data.cloudflare_user.me.id}" = "*"
     }
-  }]
+  }
 }
 
 resource "github_actions_secret" "vyas_n_cloudflare_account_id" {
   repository      = "vyas-n"
   secret_name     = "CLOUDFLARE_ACCOUNT_ID"
-  plaintext_value = data.cloudflare_account.vyas.account_id
+  plaintext_value = data.cloudflare_accounts.vyas.accounts[0].id
 }
 
 resource "github_actions_secret" "vyas_n_cloudflare_api_token" {
@@ -64,7 +46,7 @@ resource "github_actions_secret" "vyas_n_cloudflare_api_token" {
 resource "github_dependabot_secret" "vyas_n_cloudflare_account_id" {
   repository      = "vyas-n"
   secret_name     = "CLOUDFLARE_ACCOUNT_ID"
-  plaintext_value = data.cloudflare_account.vyas.account_id
+  plaintext_value = data.cloudflare_accounts.vyas.accounts[0].id
 }
 
 resource "github_dependabot_secret" "vyas_n_cloudflare_api_token" {
