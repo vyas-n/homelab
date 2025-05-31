@@ -9,16 +9,16 @@ resource "unifi_user" "tplink_managed_switch_1" {
 
 # TrueNAS
 
-resource "unifi_user" "truenas_ipmi" {
+resource "unifi_user" "proxmox_1_ipmi" {
   mac  = "9c:6b:00:13:4a:a7"
-  name = "TrueNAS (IPMI)"
+  name = "Proxmox 1 (IPMI)"
 
   fixed_ip         = "192.168.2.164"
-  local_dns_record = "truenas-ipmi.hosts.vyas-n.dev"
+  local_dns_record = "proxmox-1-ipmi.hosts.vyas-n.dev"
 }
 
 resource "unifi_user" "truenas" {
-  mac  = "6e:c3:83:7e:e6:0d"
+  mac  = "b0:19:21:e3:c5:f0"
   name = "TrueNAS"
 
   fixed_ip         = "192.168.2.244"
@@ -28,7 +28,7 @@ resource "unifi_user" "truenas" {
 # Proxmox
 
 resource "unifi_user" "proxmox_1" {
-  mac  = "00:24:27:88:9f:78"
+  mac  = "9c:6b:00:13:4a:12"
   name = "Proxmox 1"
 
   fixed_ip         = "192.168.2.17"
