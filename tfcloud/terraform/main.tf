@@ -191,3 +191,11 @@ resource "tfe_workspace_variable_set" "unifi" {
   variable_set_id = tfe_variable_set.unifi.id
   workspace_id    = tfe_workspace.remote_exec_workspace["unifi_terraform"].id
 }
+import {
+  id = "vyas-n/proxmox_terraform/Unifi Gateway"
+  to  = tfe_workspace_variable_set.unifi
+}
+resource "tfe_workspace_variable_set" "unifi" {
+  variable_set_id = tfe_variable_set.unifi.id
+  workspace_id    = tfe_workspace.remote_exec_workspace["proxmox_terraform"].id
+}

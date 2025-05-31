@@ -180,7 +180,7 @@ resource "tfe_variable" "UNIFI_PASSWORD" {
   key = "UNIFI_PASSWORD"
   value = data.onepassword_item.unifi_gateway_homelab.password
   category = "env"
-  sensitive = false
+  sensitive = true
   variable_set_id = data.tfe_variable_set.unifi.id
 }
 resource "tfe_variable" "UNIFI_USERNAME" {
