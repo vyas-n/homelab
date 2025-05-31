@@ -5,6 +5,10 @@ locals {
 }
 
 # Default Org Settings
+import {
+  id = "vyas-n"
+  to = tfe_organization_default_settings.vyas_n
+}
 resource "tfe_organization_default_settings" "vyas_n" {
   default_execution_mode = "remote"
 }
