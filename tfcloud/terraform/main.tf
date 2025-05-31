@@ -19,7 +19,7 @@ import {
   to = tfe_agent_pool.homelab
 }
 resource "tfe_agent_pool" "homelab" {
-  name         = "homelab"
+  name = "homelab"
 }
 
 # List of remote_exec_workspaces
@@ -42,29 +42,29 @@ locals {
     }
     homelab_terraform : {
       working_directory = "homelab/clusters/k8s/terraform"
-      agent_pool_id = tfe_agent_pool.homelab.id
+      agent_pool_id     = tfe_agent_pool.homelab.id
     }
     proxmox_terraform : {
       working_directory = "homelab/terraform"
-      agent_pool_id = tfe_agent_pool.homelab.id
+      agent_pool_id     = tfe_agent_pool.homelab.id
     }
     unifi_terraform : {
       working_directory = "unifi/terraform"
-      agent_pool_id = tfe_agent_pool.homelab.id
+      agent_pool_id     = tfe_agent_pool.homelab.id
     }
   }
 }
 moved {
   from = tfe_workspace.homelab_terraform
-  to = tfe_workspace.remote_exec_workspace["homelab_terraform"]
+  to   = tfe_workspace.remote_exec_workspace["homelab_terraform"]
 }
 moved {
   from = tfe_workspace.proxmox_terraform
-  to = tfe_workspace.remote_exec_workspace["proxmox_terraform"]
+  to   = tfe_workspace.remote_exec_workspace["proxmox_terraform"]
 }
 moved {
   from = tfe_workspace.unifi_terraform
-  to = tfe_workspace.remote_exec_workspace["unifi_terraform"]
+  to   = tfe_workspace.remote_exec_workspace["unifi_terraform"]
 }
 resource "tfe_workspace" "remote_exec_workspace" {
   for_each = local.remote_workspaces
@@ -85,29 +85,29 @@ resource "tfe_workspace" "remote_exec_workspace" {
 }
 moved {
   from = tfe_workspace_settings.homelab_terraform
-  to = tfe_workspace_settings.remote_exec_workspace["homelab_terraform"]
+  to   = tfe_workspace_settings.remote_exec_workspace["homelab_terraform"]
 }
 moved {
   from = tfe_workspace_settings.proxmox_terraform
-  to = tfe_workspace_settings.remote_exec_workspace["proxmox_terraform"]
+  to   = tfe_workspace_settings.remote_exec_workspace["proxmox_terraform"]
 }
 moved {
   from = tfe_workspace_settings.unifi_terraform
-  to = tfe_workspace_settings.remote_exec_workspace["unifi_terraform"]
+  to   = tfe_workspace_settings.remote_exec_workspace["unifi_terraform"]
 }
 resource "tfe_workspace_settings" "remote_exec_workspace" {
   for_each = {
     for key, value in local.remote_workspaces :
     key => value
-      if lookup(value, "agent_pool_id", "-1") != "-1"
+    if lookup(value, "agent_pool_id", "-1") != "-1"
   }
   workspace_id   = tfe_workspace.remote_exec_workspace[each.key].id
   execution_mode = "agent"
-  agent_pool_id = each.value.agent_pool_id
+  agent_pool_id  = each.value.agent_pool_id
 }
 # Automatically run all above workspaces when the secrets workspace is run
 resource "tfe_run_trigger" "remote_exec_workspace" {
-  for_each = local.remote_workspaces
+  for_each      = local.remote_workspaces
   workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
   sourceable_id = tfe_workspace.secrets_terraform.id
 }
@@ -185,7 +185,7 @@ resource "tfe_workspace_variable_set" "tailscale" {
 }
 import {
   id = "vyas-n/unifi_terraform/Unifi Gateway"
-  to  = tfe_workspace_variable_set.unifi_to_unifi_terraform
+  to = tfe_workspace_variable_set.unifi_to_unifi_terraform
 }
 resource "tfe_workspace_variable_set" "unifi_to_unifi_terraform" {
   variable_set_id = tfe_variable_set.unifi.id
@@ -193,7 +193,7 @@ resource "tfe_workspace_variable_set" "unifi_to_unifi_terraform" {
 }
 import {
   id = "vyas-n/proxmox_terraform/Unifi Gateway"
-  to  = tfe_workspace_variable_set.unifi_to_proxmox_terraform
+  to = tfe_workspace_variable_set.unifi_to_proxmox_terraform
 }
 resource "tfe_workspace_variable_set" "unifi_to_proxmox_terraform" {
   variable_set_id = tfe_variable_set.unifi.id
