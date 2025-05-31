@@ -80,6 +80,18 @@ moved {
   from = tfe_workspace.homelab_terraform
   to = tfe_workspace.local_exec_workspace["homelab_terraform"]
 }
+moved {
+  from = tfe_workspace.proxmox_terraform
+  to = tfe_workspace.local_exec_workspace["proxmox_terraform"]
+}
+moved {
+  from = tfe_workspace.secrets_terraform
+  to = tfe_workspace.local_exec_workspace["secrets_terraform"]
+}
+moved {
+  from = tfe_workspace.unifi_terraform
+  to = tfe_workspace.local_exec_workspace["unifi_terraform"]
+}
 resource "tfe_workspace" "local_exec_workspace" {
   for_each = local.local_workspaces
 
