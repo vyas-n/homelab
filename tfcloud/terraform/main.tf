@@ -105,36 +105,23 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
   execution_mode = "agent"
   agent_pool_id = each.value.agent_pool_id
 }
-
-
-# These workspaces only execute locally
-locals {
-  local_workspaces = {
-    "secrets_terraform": {}
-  }
+# Automatically run all above workspaces when the secrets workspace is run
+resource "tfe_run_trigger" "remote_exec_workspace" {
+  for_each = local.remote_workspaces
+  workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
+  sourceable_id = tfe_workspace.secrets_terraform.id
 }
 
-moved {
-  from = tfe_workspace.secrets_terraform
-  to = tfe_workspace.local_exec_workspace["secrets_terraform"]
-}
-resource "tfe_workspace" "local_exec_workspace" {
-  for_each = local.local_workspaces
-
-  name           = each.key
+# This workspace only executes locally
+resource "tfe_workspace" "secrets_terraform" {
+  name           = "secrets_terraform"
   project_id     = data.tfe_project.default.id
   queue_all_runs = false
 
   terraform_version = local.terraform_version
 }
-
-moved {
-  from = tfe_workspace_settings.secrets_terraform
-  to = tfe_workspace_settings.local_exec_workspace["secrets_terraform"]
-}
-resource "tfe_workspace_settings" "local_exec_workspace" {
-  for_each = local.local_workspaces
-  workspace_id   = tfe_workspace.local_exec_workspace[each.key].id
+resource "tfe_workspace_settings" "secrets_terraform" {
+  workspace_id   = tfe_workspace.secrets_terraform.id
   execution_mode = "local"
 }
 
