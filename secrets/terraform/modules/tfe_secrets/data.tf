@@ -18,7 +18,6 @@ data "onepassword_item" "digitalocean_s3access_for_tfcloud_vyasn" {
 }
 
 # Tailscale
-
 data "tfe_variable_set" "tailscale" {
   name = "Tailscale"
 }
@@ -50,3 +49,12 @@ data "tfe_variable_set" "cloudflare" {
 }
 data "cloudflare_user" "me" {}
 data "cloudflare_api_token_permission_groups" "all" {}
+
+# Unifi
+data "tfe_variable_set" "unifi" {
+  name = "Unifi Gateway"
+}
+data "onepassword_item" "unifi_gateway_homelab" {
+  vault = var.onepass_vault.uuid
+  title = "Unifi Gateway Local User (1pass-api)"
+}

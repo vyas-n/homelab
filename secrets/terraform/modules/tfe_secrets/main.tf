@@ -160,3 +160,33 @@ resource "tfe_variable" "tailscale_api_key" {
     EOF
   variable_set_id = data.tfe_variable_set.tailscale.id
 }
+
+# Unifi Gateway Credentials
+resource "tfe_variable" "UNIFI_INSECURE" {
+  key = "UNIFI_INSECURE"
+  value = "true"
+  category = "env"
+  sensitive = false
+  variable_set_id = data.tfe_variable_set.unifi.id
+}
+resource "tfe_variable" "UNIFI_API" {
+  key = "UNIFI_API"
+  value = data.onepassword_item.unifi_gateway_homelab.url
+  category = "env"
+  sensitive = false
+  variable_set_id = data.tfe_variable_set.unifi.id
+}
+resource "tfe_variable" "UNIFI_PASSWORD" {
+  key = "UNIFI_PASSWORD"
+  value = data.onepassword_item.unifi_gateway_homelab.password
+  category = "env"
+  sensitive = false
+  variable_set_id = data.tfe_variable_set.unifi.id
+}
+resource "tfe_variable" "UNIFI_USERNAME" {
+  key = "UNIFI_USERNAME"
+  value = data.onepassword_item.unifi_gateway_homelab.username
+  category = "env"
+  sensitive = false
+  variable_set_id = data.tfe_variable_set.unifi.id
+}
