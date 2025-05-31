@@ -106,20 +106,20 @@ resource "tfe_workspace" "local_exec_workspace" {
   terraform_version = local.terraform_version
 }
 
-import {
-  id = "vyas-n/homelab_terraform"
+moved {
+  from = tfe_workspace_settings.homelab_terraform
   to = tfe_workspace_settings.local_exec_workspace["homelab_terraform"]
 }
-import {
-  id = "vyas-n/proxmox_terraform"
+moved {
+  from = tfe_workspace_settings.proxmox_terraform
   to = tfe_workspace_settings.local_exec_workspace["proxmox_terraform"]
 }
-import {
-  id = "vyas-n/secrets_terraform"
+moved {
+  from = tfe_workspace_settings.secrets_terraform
   to = tfe_workspace_settings.local_exec_workspace["secrets_terraform"]
 }
-import {
-  id = "vyas-n/unifi_terraform"
+moved {
+  from = tfe_workspace_settings.unifi_terraform
   to = tfe_workspace_settings.local_exec_workspace["unifi_terraform"]
 }
 resource "tfe_workspace_settings" "local_exec_workspace" {
