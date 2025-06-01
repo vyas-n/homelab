@@ -136,3 +136,11 @@ resource "tfe_workspace_variable_set" "unifi_to_proxmox_terraform" {
   variable_set_id = tfe_variable_set.unifi.id
   workspace_id    = tfe_workspace.remote_exec_workspace["proxmox_terraform"].id
 }
+import {
+  id = "vyas-n/proxmox_terraform/Proxmox Auth"
+  to = tfe_workspace_variable_set.proxmox_to_proxmox_terraform
+}
+resource "tfe_workspace_variable_set" "proxmox_to_proxmox_terraform" {
+  variable_set_id = tfe_variable_set.proxmox.id
+  workspace_id    = tfe_workspace.remote_exec_workspace["proxmox_terraform"].id
+}
