@@ -5,19 +5,11 @@ locals {
 }
 
 # Default Org Settings
-import {
-  id = "vyas-n"
-  to = tfe_organization_default_settings.vyas_n
-}
 resource "tfe_organization_default_settings" "vyas_n" {
   default_execution_mode = "remote"
 }
 
 # Teraform Agent pool
-import {
-  id = "apool-vMjgnfPpMG1yJiEx"
-  to = tfe_agent_pool.homelab
-}
 resource "tfe_agent_pool" "homelab" {
   name = "homelab"
 }
@@ -54,18 +46,6 @@ locals {
     }
   }
 }
-moved {
-  from = tfe_workspace.homelab_terraform
-  to   = tfe_workspace.remote_exec_workspace["homelab_terraform"]
-}
-moved {
-  from = tfe_workspace.proxmox_terraform
-  to   = tfe_workspace.remote_exec_workspace["proxmox_terraform"]
-}
-moved {
-  from = tfe_workspace.unifi_terraform
-  to   = tfe_workspace.remote_exec_workspace["unifi_terraform"]
-}
 resource "tfe_workspace" "remote_exec_workspace" {
   for_each = local.remote_workspaces
 
@@ -83,18 +63,6 @@ resource "tfe_workspace" "remote_exec_workspace" {
     github_app_installation_id = local.tfc_github_app_install_id
   }
 }
-moved {
-  from = tfe_workspace_settings.homelab_terraform
-  to   = tfe_workspace_settings.remote_exec_workspace["homelab_terraform"]
-}
-moved {
-  from = tfe_workspace_settings.proxmox_terraform
-  to   = tfe_workspace_settings.remote_exec_workspace["proxmox_terraform"]
-}
-moved {
-  from = tfe_workspace_settings.unifi_terraform
-  to   = tfe_workspace_settings.remote_exec_workspace["unifi_terraform"]
-}
 resource "tfe_workspace_settings" "remote_exec_workspace" {
   for_each = {
     for key, value in local.remote_workspaces :
@@ -105,6 +73,7 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
   execution_mode = "agent"
   agent_pool_id  = each.value.agent_pool_id
 }
+
 # Automatically run all above workspaces when the secrets workspace is run
 resource "tfe_run_trigger" "remote_exec_workspace" {
   for_each      = local.remote_workspaces
@@ -129,49 +98,25 @@ resource "tfe_workspace_settings" "secrets_terraform" {
 resource "tfe_variable_set" "proxmox" {
   name = "Proxmox Auth"
 }
-import {
-  id = "varset-EZNQLXLLn8JB1tXG"
-  to = tfe_variable_set.tfc
-}
 resource "tfe_variable_set" "tfc" {
   name        = "Terraform Cloud"
   description = "This is an environment variable set that authenticates with TFC's tf provider: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
-}
-import {
-  id = "varset-Yr7D8koHTJfJiGZh"
-  to = tfe_variable_set.cloudflare
 }
 resource "tfe_variable_set" "cloudflare" {
   name        = "Cloudflare"
   description = "This is an environment variable set that authenticates cloudflare's tf provider: https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs"
 }
-import {
-  id = "varset-FyFvfYvR4p3cbUfX"
-  to = tfe_variable_set.digitalocean
-}
 resource "tfe_variable_set" "digitalocean" {
   name        = "DigitalOcean"
   description = "This is an environment variable set that authenticates digitalocean's tf provider: https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs"
-}
-import {
-  id = "varset-EGrhocRMyRYv9NNe"
-  to = tfe_variable_set.onepass_connect_server_bedrock
 }
 resource "tfe_variable_set" "onepass_connect_server_bedrock" {
   name        = "1PassConnect Server Bedrock"
   description = "This is a terraform variable set that provisions the Bedrock 1PassConnect Server & Access Token: https://developer.1password.com/docs/connect/get-started"
 }
-import {
-  id = "varset-xsjQGTWQJ5AtgCnX"
-  to = tfe_variable_set.tailscale
-}
 resource "tfe_variable_set" "tailscale" {
   name        = "Tailscale"
   description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"
-}
-import {
-  id = "varset-VVsGstJS9UnDUMda"
-  to = tfe_variable_set.unifi
 }
 resource "tfe_variable_set" "unifi" {
   name        = "Unifi Gateway"
@@ -183,19 +128,19 @@ resource "tfe_workspace_variable_set" "tailscale" {
   variable_set_id = tfe_variable_set.tailscale.id
   workspace_id    = tfe_workspace.remote_exec_workspace["tailscale_terraform"].id
 }
-import {
-  id = "vyas-n/unifi_terraform/Unifi Gateway"
-  to = tfe_workspace_variable_set.unifi_to_unifi_terraform
-}
 resource "tfe_workspace_variable_set" "unifi_to_unifi_terraform" {
   variable_set_id = tfe_variable_set.unifi.id
   workspace_id    = tfe_workspace.remote_exec_workspace["unifi_terraform"].id
 }
-import {
-  id = "vyas-n/proxmox_terraform/Unifi Gateway"
-  to = tfe_workspace_variable_set.unifi_to_proxmox_terraform
-}
 resource "tfe_workspace_variable_set" "unifi_to_proxmox_terraform" {
   variable_set_id = tfe_variable_set.unifi.id
+  workspace_id    = tfe_workspace.remote_exec_workspace["proxmox_terraform"].id
+}
+import {
+  id = "vyas-n/proxmox_terraform/Proxmox Auth"
+  to = tfe_workspace_variable_set.proxmox_to_proxmox_terraform
+}
+resource "tfe_workspace_variable_set" "proxmox_to_proxmox_terraform" {
+  variable_set_id = tfe_variable_set.proxmox.id
   workspace_id    = tfe_workspace.remote_exec_workspace["proxmox_terraform"].id
 }

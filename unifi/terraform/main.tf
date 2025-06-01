@@ -26,12 +26,11 @@ resource "unifi_user" "truenas" {
 }
 
 # Proxmox
-
 resource "unifi_user" "proxmox_1" {
   mac  = "9c:6b:00:13:4a:12"
   name = "Proxmox 1"
 
-  fixed_ip         = "192.168.2.17"
+  fixed_ip         = "192.168.2.16"
   local_dns_record = "proxmox-1.hosts.vyas-n.dev"
 }
 

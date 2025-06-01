@@ -58,3 +58,16 @@ data "onepassword_item" "unifi_gateway_homelab" {
   vault = var.onepass_vault.uuid
   title = "Unifi Gateway Local User (1pass-api)"
 }
+
+# Proxmox
+data "tfe_variable_set" "proxmox" {
+  name = "Proxmox Auth"
+}
+data "onepassword_item" "proxmox_api_token" {
+  vault = var.onepass_vault.uuid
+  title = "Proxmox API Token (HomeLab)"
+}
+data "onepassword_item" "vyas_fast_key_1" {
+  vault = var.onepass_vault.uuid
+  title = "Vyas-Fast-Key-1"
+}
