@@ -36,12 +36,8 @@ provider "cloudinit" {}
 provider "time" {}
 
 provider "proxmox" {
-  endpoint  = "https://${data.onepassword_item.proxmox_api_token.hostname}"
-  api_token = "${data.onepassword_item.proxmox_api_token.username}=${data.onepassword_item.proxmox_api_token.credential}"
   ssh {
-    agent       = false
-    username    = "root"
-    private_key = data.onepassword_item.vyas_fast_key_1.private_key
+    private_key = var.proxmox_ve_ssh_private_key
   }
 }
 

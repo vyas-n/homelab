@@ -66,7 +66,6 @@ resource "cloudflare_api_token" "tfe_cloudflare_api_token" {
     }
   }
 }
-
 resource "tfe_variable" "cloudflare_api_token" {
   key             = "CLOUDFLARE_API_TOKEN"
   value           = cloudflare_api_token.tfe_cloudflare_api_token.value
@@ -93,7 +92,6 @@ resource "tfe_variable" "digitalocean_token" {
     EOF
   variable_set_id = data.tfe_variable_set.digitalocean.id
 }
-
 resource "tfe_variable" "digitalocean_spaces_access_key_id" {
   key             = "SPACES_ACCESS_KEY_ID"
   value           = data.onepassword_item.digitalocean_s3access_for_tfcloud_vyasn.username
@@ -106,7 +104,6 @@ resource "tfe_variable" "digitalocean_spaces_access_key_id" {
     EOF
   variable_set_id = data.tfe_variable_set.digitalocean.id
 }
-
 resource "tfe_variable" "digitalocean_spaces_secret_access_key" {
   key             = "SPACES_SECRET_ACCESS_KEY"
   value           = data.onepassword_item.digitalocean_s3access_for_tfcloud_vyasn.credential
@@ -133,7 +130,6 @@ resource "tfe_variable" "onepass_connect_credentials_json" {
     EOF
   variable_set_id = data.tfe_variable_set.onepass_connect_server_bedrock.id
 }
-
 resource "tfe_variable" "onepass_connect_access_token" {
   key             = "onepassword_access_token"
   value           = data.onepassword_item.onepass_connect_access_token.credential
@@ -189,4 +185,34 @@ resource "tfe_variable" "UNIFI_USERNAME" {
   category        = "env"
   sensitive       = false
   variable_set_id = data.tfe_variable_set.unifi.id
+}
+
+# Proxmox Credentials
+resource "tfe_variable" "PROXMOX_VE_ENDPOINT" {
+  key             = "PROXMOX_VE_ENDPOINT"
+  value           = "https://${data.onepassword_item.proxmox_api_token.hostname}"
+  category        = "env"
+  sensitive       = false
+  variable_set_id = data.tfe_variable_set.proxmox.id
+}
+resource "tfe_variable" "PROXMOX_VE_API_TOKEN" {
+  key             = "PROXMOX_VE_API_TOKEN"
+  value           = "${data.onepassword_item.proxmox_api_token.username}=${data.onepassword_item.proxmox_api_token.credential}"
+  category        = "env"
+  sensitive       = true
+  variable_set_id = data.tfe_variable_set.proxmox.id
+}
+resource "tfe_variable" "proxmox_ve_ssh_private_key" {
+  key             = "proxmox_ve_ssh_private_key"
+  value           = data.onepassword_item.vyas_fast_key_1.private_key
+  category        = "terraform"
+  sensitive       = true
+  variable_set_id = data.tfe_variable_set.proxmox.id
+}
+resource "tfe_variable" "PROXMOX_VE_SSH_USERNAME" {
+  key             = "PROXMOX_VE_SSH_USERNAME"
+  value           = "root"
+  category        = "env"
+  sensitive       = false
+  variable_set_id = data.tfe_variable_set.proxmox.id
 }

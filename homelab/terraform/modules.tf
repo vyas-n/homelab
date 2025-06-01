@@ -66,5 +66,5 @@ module "k8s_wkr" {
   memory        = pow(2, 15) # 32 GiB
   disk_space    = 128
 
-  depends_on = [ module.k8s_ctr ]
+  depends_on = [module.k8s_ctr]
 }
