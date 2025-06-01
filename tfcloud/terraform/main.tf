@@ -46,9 +46,6 @@ locals {
     }
   }
 }
-
-
-
 resource "tfe_workspace" "remote_exec_workspace" {
   for_each = local.remote_workspaces
 
@@ -66,9 +63,6 @@ resource "tfe_workspace" "remote_exec_workspace" {
     github_app_installation_id = local.tfc_github_app_install_id
   }
 }
-
-
-
 resource "tfe_workspace_settings" "remote_exec_workspace" {
   for_each = {
     for key, value in local.remote_workspaces :
@@ -79,6 +73,7 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
   execution_mode = "agent"
   agent_pool_id  = each.value.agent_pool_id
 }
+
 # Automatically run all above workspaces when the secrets workspace is run
 resource "tfe_run_trigger" "remote_exec_workspace" {
   for_each      = local.remote_workspaces
@@ -115,12 +110,10 @@ resource "tfe_variable_set" "digitalocean" {
   name        = "DigitalOcean"
   description = "This is an environment variable set that authenticates digitalocean's tf provider: https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs"
 }
-
 resource "tfe_variable_set" "onepass_connect_server_bedrock" {
   name        = "1PassConnect Server Bedrock"
   description = "This is a terraform variable set that provisions the Bedrock 1PassConnect Server & Access Token: https://developer.1password.com/docs/connect/get-started"
 }
-
 resource "tfe_variable_set" "tailscale" {
   name        = "Tailscale"
   description = "This is an environment variable set that authenticates tailscale's tf provider: https://registry.terraform.io/providers/tailscale/tailscale/latest/docs"

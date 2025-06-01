@@ -12,10 +12,6 @@ terraform {
     }
   }
   required_providers {
-    onepassword = {
-      source  = "1Password/onepassword"
-      version = ">= 2.1.2"
-    }
     time = {
       source  = "hashicorp/time"
       version = ">= 0.13.0"
@@ -24,7 +20,6 @@ terraform {
       source  = "bpg/proxmox"
       version = ">= 0.73.0"
     }
-
     cloudinit = {
       source  = "hashicorp/cloudinit"
       version = ">= 2.3.6"
@@ -38,11 +33,6 @@ terraform {
 
 provider "cloudinit" {}
 
-provider "onepassword" {
-  # verify that this matches with: `op account ls | from ssv | get "URL".0`
-  account = "my.1password.com"
-}
-
 provider "time" {}
 
 provider "proxmox" {
@@ -55,10 +45,4 @@ provider "proxmox" {
   }
 }
 
-provider "unifi" {
-  api_url        = data.onepassword_item.unifi_gateway_homelab.url
-  allow_insecure = true
-
-  username = data.onepassword_item.unifi_gateway_homelab.username
-  password = data.onepassword_item.unifi_gateway_homelab.password
-}
+provider "unifi" {}
