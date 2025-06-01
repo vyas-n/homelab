@@ -1,52 +1,29 @@
 
-import {
-  id = "dns_search_paths"
-  to = tailscale_dns_search_paths.global
-}
-import {
-  id = "dns_preferences"
-  to = tailscale_dns_preferences.global
-}
 
-import {
-  id = "contacts"
-  to = tailscale_contacts.global
-}
 
-import {
-  id = "bos13"
-  to = tailscale_dns_split_nameservers.bos13
-}
 
-import {
-  id = "needham"
-  to = tailscale_dns_split_nameservers.needham
-}
 
-import {
-  id = "host.bos13.wsbidev.net"
-  to = tailscale_dns_split_nameservers.devzone_bos13
-}
 
-import {
-  id = "host.needham.wsbidev.net"
-  to = tailscale_dns_split_nameservers.devzone_needham
-}
 
-import {
-  id = "hosts.vyas-n.dev"
-  to = tailscale_dns_split_nameservers.homezone_hosts
-}
 
-import {
-  id = "svcs.vyas-n.dev"
-  to = tailscale_dns_split_nameservers.homezone_svcs
-}
 
-import {
-  id = "vms.vyas-n.dev"
-  to = tailscale_dns_split_nameservers.homezone_vms
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 resource "tailscale_contacts" "global" {
   account {
