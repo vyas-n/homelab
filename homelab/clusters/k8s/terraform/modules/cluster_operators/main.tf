@@ -46,9 +46,9 @@ resource "kubectl_manifest" "onepassword_homelab_cluster_secret_store" {
           vault = "HomeLab"
           auth = {
             serviceAccountSecretRef = {
-              name = kubernetes_secret.onepassword_homelab_service_account.metadata[0].name
+              name      = kubernetes_secret.onepassword_homelab_service_account.metadata[0].name
               namespace = kubernetes_namespace.external_secrets.metadata[0].name
-              key = "token"
+              key       = "token"
             }
           }
         }

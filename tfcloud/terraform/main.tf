@@ -53,10 +53,11 @@ resource "tfe_workspace" "remote_exec_workspace" {
   working_directory = each.value["working_directory"]
   project_id        = data.tfe_project.default.id
 
-  terraform_version     = local.terraform_version
-  auto_apply            = true
-  queue_all_runs        = false
-  file_triggers_enabled = false
+  terraform_version      = local.terraform_version
+  auto_apply             = true
+  queue_all_runs         = false
+  file_triggers_enabled  = false
+  auto_apply_run_trigger = true
 
   vcs_repo {
     identifier                 = "vyas-proj/deploy"
@@ -79,6 +80,17 @@ resource "tfe_run_trigger" "remote_exec_workspace" {
   for_each      = local.remote_workspaces
   workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
   sourceable_id = tfe_workspace.secrets_terraform.id
+}
+
+# Automatically run most workspaces when the tfcloud workspace is run
+resource "tfe_run_trigger" "remote_exec_workspace" {
+  for_each = {
+    for workspace_key, workspace_value in local.remote_workspaces :
+    workspace_key => workspace_value
+    if workspace_key != "tfcloud_terraform"
+  }
+  workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
+  sourceable_id = tfe_workspace.remote_exec_workspace["tfcloud_terraform"].id
 }
 
 # This workspace only executes locally
@@ -121,6 +133,10 @@ resource "tfe_variable_set" "tailscale" {
 resource "tfe_variable_set" "unifi" {
   name        = "Unifi Gateway"
   description = "This is an environment variable set that authenticates unifi's tf provider: https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs"
+}
+resource "tfe_variable_set" "homezone_v1" {
+  name        = "HomeZone-v1"
+  description = "This is an environment variable set that authenticates to my HomeZone-v1 k8s cluster using various Kubernetes providers: https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#credentials-config"
 }
 
 # Assign Variable Sets to TFE Workspaces

@@ -28,8 +28,27 @@ def main [] {
     # Deploy
     k0sctl apply --no-wait --config=k0sctl.yaml
 
-    # Save kubeconfig
+    # Save kubeconfig into local ~/kube/config.d/
     mkdir ~/.kube/config.d
     touch ~/.kube/config.d/homezone-v1.yaml
-    k0sctl kubeconfig --config=k0sctl.yaml | save -f ~/.kube/config.d/homezone-v1.yaml
+    let kubeconfig: record = k0sctl kubeconfig --config=k0sctl.yaml | from yaml
+    let kubeconfig_filepath: path = "~/.kube/config.d/homezone-v1.yaml" | path expand
+    $kubeconfig | to yaml | save -f $kubeconfig_filepath
+
+    # Save Kubeconfig into 1Pass
+    let host: string = $kubeconfig | get clusters.cluster.server | first
+    let client_certificate: string = $kubeconfig | get users.user.client-certificate-data | first
+    let client_key: string = $kubeconfig | get users.user.client-key-data | first
+    let client_ca_certificate: string = $kubeconfig | get clusters.cluster.certificate-authority-data | first
+
+    let secrets: list<string> = [
+        # TODO: change kubeconfig upload to use process substitution
+        # ref: https://github.com/nushell/nushell/issues/10610#issuecomment-2427673358
+        $'kubeconfig\.yaml[file]=($kubeconfig_filepath)'
+        $'host[password]=($host)',
+        $'client_certificate[password]=($client_certificate)'
+        $'client_key[password]=($client_key)'
+        $'client_ca_certificate[password]=($client_ca_certificate)'
+    ]
+    op item edit 'HomeZone-v1' ...$secrets
 }

@@ -71,3 +71,8 @@ data "onepassword_item" "vyas_fast_key_1" {
   vault = var.onepass_vault.uuid
   title = "Vyas-Fast-Key-1"
 }
+
+# HomeZone k8s cluster
+data "tfe_workspace" "homezone_k8s" {
+  name = "homelab_terraform"
+}

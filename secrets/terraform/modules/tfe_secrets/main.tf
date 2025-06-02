@@ -216,3 +216,12 @@ resource "tfe_variable" "PROXMOX_VE_SSH_USERNAME" {
   sensitive       = false
   variable_set_id = data.tfe_variable_set.proxmox.id
 }
+
+# HomeZone cluster credentials
+resource "tfe_variable" "external_secrets_onepassword_service_account_token" {
+  key          = "external_secrets_onepassword_service_account_token"
+  value        = "root"
+  category     = "terraform"
+  sensitive    = true
+  workspace_id = data.tfe_workspace.homezone_k8s.id
+}
