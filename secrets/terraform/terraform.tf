@@ -29,11 +29,11 @@ terraform {
     }
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.78.0"
+      version = "0.78.1"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.52.0"
+      version = "5.5.0"
     }
     github = {
       source  = "integrations/github"
