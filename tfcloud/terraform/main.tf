@@ -76,14 +76,14 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
 }
 
 # Automatically run all above workspaces when the secrets workspace is run
-resource "tfe_run_trigger" "remote_exec_workspace" {
+resource "tfe_run_trigger" "remote_exec_workspace_secrets" {
   for_each      = local.remote_workspaces
   workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
   sourceable_id = tfe_workspace.secrets_terraform.id
 }
 
 # Automatically run most workspaces when the tfcloud workspace is run
-resource "tfe_run_trigger" "remote_exec_workspace" {
+resource "tfe_run_trigger" "remote_exec_workspace_tfcloud" {
   for_each = {
     for workspace_key, workspace_value in local.remote_workspaces :
     workspace_key => workspace_value
