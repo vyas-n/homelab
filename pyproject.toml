@@ -10,10 +10,10 @@ package-mode = false
 python = "^3.13"
 
 [tool.poetry.group.dev.dependencies]
-ansible-core = "2.18.1"
+ansible-core = "2.18.6"
 # Using this workaround for ansible-lint using poetry
 # ref: https://github.com/ansible/ansible-lint/issues/2730#issuecomment-1330406601
-ansible-lint = { version = "25.5.0", markers = "platform_system != 'Windows'" }
+ansible-lint = { version = "25.6.0", markers = "platform_system != 'Windows'" }
 
 [build-system]
 requires = ["poetry-core"]
