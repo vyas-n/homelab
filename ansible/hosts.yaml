@@ -5,6 +5,10 @@ all:
   children:
     proxmox:
       hosts:
+        proxmox_0:
+          ansible_host: proxmox-0.hosts.vyas-n.dev
+          has_amd_gpu: true
+          is_laptop: false
         proxmox_1:
           ansible_host: proxmox-1.hosts.vyas-n.dev
           has_amd_gpu: true
