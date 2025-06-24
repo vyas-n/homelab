@@ -26,6 +26,7 @@
         - name: /opt/apps/tfc-agent
     - name: Setup TFC Agent variables
       become: true
+      when: false
       ansible.builtin.copy:
         content: |
           TFC_AGENT_TOKEN={{ lookup('community.general.onepassword', 'TFC-Vyas-Agent-Token', field='credential') }}

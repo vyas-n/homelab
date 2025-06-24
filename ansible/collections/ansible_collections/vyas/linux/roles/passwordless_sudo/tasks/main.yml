@@ -11,6 +11,7 @@
   loop:
     - name: etc/sudoers.d/passwordless-sudo
 - name: Allow passwordless sudo for users
+  become: true
   ansible.builtin.user:
     name: "{{ item }}"
     groups: wheel
