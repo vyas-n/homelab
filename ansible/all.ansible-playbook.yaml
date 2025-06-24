@@ -125,17 +125,19 @@
 #         channel: 3.5/stable
 
 # Provision k8s nodes
-- name: Provision k8s nodes
-  hosts: k8s
+- name: Provision fedora nodes
+  # TODO: use all hosts running a linux os
+  hosts: k8s:raspberrypi-0:raspberrypi-desktop-0:docker-server
   pre_tasks:
     # TODO: Make idempotent.
-    # TODO: Run this task on all Fedora hosts.
     - name: Bootstrap a host without python dnf pkgs installed
+      when: ansible_facts['distribution'] == "Fedora"
       become: true
       ansible.builtin.raw: dnf install -y python3-libdnf5
   roles:
     - role: vyas.proxmox.shared_handlers
     - role: vyas.linux.passwordless_sudo
+      # TODO: Only run if username == vyas
       vars:
         passwordless_sudo_users:
           - vyas

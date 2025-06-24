@@ -1,6 +1,24 @@
 ---
 # ref: https://www.nicksherlock.com/2020/11/working-around-the-amd-gpu-reset-bug-on-proxmox/
-- name: Make passwordless sudo work
+
+# OS-Specific default variables
+# ref: https://gist.github.com/JM1/9363beeb9fb5055e054b5f64aea0a598#approach-using-include_vars-with-os_vars-dictionary-and-conditional-set_fact
+- name: Fetch OS dependent variables
+  include_vars:
+    file: "{{ item }}"
+    name: "os_vars"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.distribution }}.yml"
+        - "{{ ansible_facts.os_family }}.yml"
+      skip: true
+- name: Set OS dependent variables, if not already defined by user # noqa var-naming
+  set_fact:
+    "{{ item.key }}": "{{ item.value }}"
+  when: "not lookup('varnames', '^' + item.key + '$')"
+  loop: "{{ os_vars|dict2items }}"
+
+- name: Make passwordless sudo work for users with admin permissions
   become: true
   ansible.builtin.template:
     src: "{{ item.name }}.j2"
@@ -14,6 +32,6 @@
   become: true
   ansible.builtin.user:
     name: "{{ item }}"
-    groups: wheel
+    groups: "{{ passwordless_sudo_group }}"
     append: true
   loop: "{{ passwordless_sudo_users }}"

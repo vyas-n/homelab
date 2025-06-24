@@ -34,5 +34,5 @@ all:
         docker-server:
   hosts:
     raspberrypi-0:
-    # raspberrypi-desktop-0:
+    raspberrypi-desktop-0:
     truenas:
