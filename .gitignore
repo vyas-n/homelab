@@ -6,8 +6,10 @@ license.yaml
 *.snap
 
 # Packages
-.terraform/
 .ansible/
+.nix-defexpr/
+.terraform/
+.trunk/
 
 # Generated / Temp Files
 .DS_Store
