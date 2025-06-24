@@ -102,27 +102,27 @@
 #   ansible.builtin.import_playbook: ../truenas/apps/traefik/deploy.ansible-playbook.yml
 
 # Provision MaaS
-- name: Provision MaaS
-  hosts: fedora_server
-  roles:
-    - role: vyas.proxmox.shared_handlers
-    - role: vyas.linux.passwordless_sudo
-      vars:
-        passwordless_sudo_users:
-          - vyas
-  tasks:
-    - name: Install snapd
-      # ref: https://snapcraft.io/install/snapd/fedora#install
-      become: true
-      ansible.builtin.dnf:
-        name:
-          - snapd
-        state: present
-    - name: Install maas snap package
-      become: true
-      community.general.snap:
-        name: maas
-        channel: 3.5/stable
+# - name: Provision MaaS
+#   hosts: fedora-server
+#   roles:
+#     - role: vyas.proxmox.shared_handlers
+#     - role: vyas.linux.passwordless_sudo
+#       vars:
+#         passwordless_sudo_users:
+#           - vyas
+#   tasks:
+#     - name: Install snapd
+#       # ref: https://snapcraft.io/install/snapd/fedora#install
+#       become: true
+#       ansible.builtin.dnf:
+#         name:
+#           - snapd
+#         state: present
+#     - name: Install maas snap package
+#       become: true
+#       community.general.snap:
+#         name: maas
+#         channel: 3.5/stable
 
 # Provision k8s nodes
 - name: Provision k8s nodes

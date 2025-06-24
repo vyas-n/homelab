@@ -5,32 +5,24 @@ all:
   children:
     proxmox:
       hosts:
-        proxmox_0:
-          ansible_host: proxmox-0.hosts.vyas-n.dev
+        proxmox-0:
           has_amd_gpu: true
           is_laptop: false
-        proxmox_1:
-          ansible_host: proxmox-1.hosts.vyas-n.dev
+        proxmox-1:
           has_amd_gpu: true
           is_laptop: false
-        proxmox_2:
-          ansible_host: proxmox-2.hosts.vyas-n.dev
+        proxmox-2:
           has_amd_gpu: true
           is_laptop: true
     vms:
       children:
         k8s:
           hosts:
-            k8s_ctr_0:
-              ansible_host: k8s-ctr-0.vms.vyas-n.dev
-            k8s_ctr_1:
-              ansible_host: k8s-ctr-1.vms.vyas-n.dev
-            k8s_ctr_2:
-              ansible_host: k8s-ctr-2.vms.vyas-n.dev
-            k8s_wkr_0:
-              ansible_host: k8s-wkr-0.vms.vyas-n.dev
-            k8s_wkr_1:
-              ansible_host: k8s-wkr-1.vms.vyas-n.dev
+            k8s-ctr-0:
+            k8s-ctr-1:
+            k8s-ctr-2:
+            k8s-wkr-0:
+            k8s-wkr-1:
       hosts:
         # gaming-vm-win11:
         #   # Must Setup Windows host with ssh:
@@ -39,14 +31,8 @@ all:
         #   ansible_host: gaming-vm-win11.hosts.vyas-n.dev
         #   ansible_shell_type: powershell
         #   ansible_connection: ssh
-        # fedora_server:
-        #   ansible_host: fedora-server.hosts.vyas-n.dev
         docker-server:
-          ansible_host: docker-server.vms.vyas-n.dev
   hosts:
-    raspberrypi_0:
-      ansible_host: raspberrypi-0
-    raspberrypi_1:
-      ansible_host: raspberrypi-1
+    raspberrypi-0:
+    # raspberrypi-desktop-0:
     truenas:
-      ansible_host: truenas.hosts.vyas-n.dev

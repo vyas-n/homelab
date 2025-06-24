@@ -28,7 +28,7 @@
           changed_when: win_update.reboot_required
 
     - name: Upgrade Debian systems
-      when: ansible_facts['distribution'] == "Debian"
+      when: ansible_facts['distribution'] in ["Debian", "Ubuntu"]
       block:
         - name: Upgrade APT pkgs
           ansible.builtin.apt:
