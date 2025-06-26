@@ -7,13 +7,10 @@ all:
       hosts:
         proxmox-0:
           has_amd_gpu: true
-          is_laptop: false
         proxmox-1:
           has_amd_gpu: true
-          is_laptop: false
         proxmox-2:
           has_amd_gpu: true
-          is_laptop: true
     vms:
       children:
         k8s:

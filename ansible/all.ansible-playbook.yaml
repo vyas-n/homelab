@@ -129,9 +129,15 @@
   # TODO: use all hosts running a linux os
   hosts: k8s:raspberrypi-0:raspberrypi-desktop-0:docker-server
   pre_tasks:
-    # TODO: Make idempotent.
-    - name: Bootstrap a host without python dnf pkgs installed
+    - name: Check if python3-libdnf5 is installed
       when: ansible_facts['distribution'] == "Fedora"
+      shell: dnf list installed python3-libdnf5
+      register: check_for_python3_libdnf5
+      ignore_errors: true
+      changed_when: false
+
+    - name: Bootstrap a host without python dnf pkg installed
+      when: ansible_facts['distribution'] == "Fedora" and check_for_python3_libdnf5.rc != 0
       become: true
       ansible.builtin.raw: dnf install -y python3-libdnf5
   roles:
@@ -191,6 +197,18 @@
 # Provision Proxmox
 - name: Provision Proxmox Hosts
   hosts: proxmox
+  pre_tasks:
+    - name: Ensure dmidecode is installed
+      become: true
+      ansible.builtin.apt:
+        package:
+          - dmidecode
+        state: present
+    - name: Check the system chasis type
+      shell: dmidecode --string chassis-type
+      register: check_system_chassis_type
+      ignore_errors: true
+      changed_when: false
   roles:
     - role: vyas.proxmox.config_apt_repo
     - role: vyas.proxmox.shared_handlers
@@ -202,6 +220,28 @@
     - role: vyas.proxmox.fix_for_amd_gpu
       when: (has_amd_gpu is defined) and has_amd_gpu
   tasks:
+    - name: Disable laptop lid close
+      # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
+      when: check_system_chassis_type.stdout == "Laptop"
+      block:
+        - name: Ensure that logind drop-in directory exists
+          ansible.builtin.file:
+            dest: /etc/systemd/logind.conf.d
+            owner: root
+            group: root
+            mode: "0755"
+            state: directory
+        - name: Let laptop close lid
+          ansible.builtin.copy:
+            src: "{{ item.name }}"
+            dest: /{{ item.name }}
+            owner: root
+            group: root
+            mode: "0644"
+          loop:
+            - name: etc/systemd/logind.conf.d/let-laptop-close-lid.conf
+          notify:
+            - Restart systemd-logind
     - name: Enable VirGL for VMs
       # ref: https://forum.proxmox.com/threads/virtgl-proxmox-7-3-guides-on-how-to-set-up-what-kind-of-performance-to-expect.118575/#post-513957
       block:
@@ -469,31 +509,3 @@
     - name: SystemDDaemonReload
       ansible.builtin.systemd_service:
         daemon_reload: true
-
-- name: Disable macbook lid close turning the computer off
-  # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
-  hosts: proxmox
-  roles:
-    - role: vyas.proxmox.shared_handlers
-  tasks:
-    - name: Disable laptop lid close
-      when: (is_laptop is defined) and is_laptop
-      block:
-        - name: Ensure that logind drop-in directory exists
-          ansible.builtin.file:
-            dest: /etc/systemd/logind.conf.d
-            owner: root
-            group: root
-            mode: "0755"
-            state: directory
-        - name: Let laptop close lid
-          ansible.builtin.copy:
-            src: "{{ item.name }}"
-            dest: /{{ item.name }}
-            owner: root
-            group: root
-            mode: "0644"
-          loop:
-            - name: etc/systemd/logind.conf.d/let-laptop-close-lid.conf
-          notify:
-            - Restart systemd-logind
