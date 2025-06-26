@@ -218,6 +218,8 @@
         tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', field='credential') }}"
         tailscale_args: "--advertise-exit-node --advertise-routes='192.168.2.0/24'"
     - role: vyas.proxmox.fix_for_amd_gpu
+      # TODO: dynamically detect if the proxmox host has an amd gpu installed
+      # you can `apt install lshw` and then check the output of `lshw -class display -json` for "vendor" : "Advanced Micro Devices, Inc. [AMD/ATI]"
       when: (has_amd_gpu is defined) and has_amd_gpu
   tasks:
     - name: Disable laptop lid close
