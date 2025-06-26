@@ -125,7 +125,7 @@
 #         channel: 3.5/stable
 
 # Provision k8s nodes
-- name: Provision fedora nodes
+- name: Provision fedora & raspberrypi nodes
   # TODO: use all hosts running a linux os
   hosts: k8s:raspberrypi-0:raspberrypi-desktop-0:docker-server
   pre_tasks:
@@ -136,6 +136,11 @@
       ansible.builtin.raw: dnf install -y python3-libdnf5
   roles:
     - role: vyas.proxmox.shared_handlers
+    - role: artis3n.tailscale.machine
+      # TODO: filter to not include truenas and proxmox nodes
+      vars:
+        verbose: true
+        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', field='credential') }}"
     - role: vyas.linux.passwordless_sudo
       # TODO: Only run if username == vyas
       vars:
@@ -189,7 +194,11 @@
   roles:
     - role: vyas.proxmox.config_apt_repo
     - role: vyas.proxmox.shared_handlers
-    - role: vyas.proxmox.install_tailscale
+    - role: artis3n.tailscale.machine
+      vars:
+        verbose: true
+        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', field='credential') }}"
+        tailscale_args: "--advertise-exit-node --advertise-routes='192.168.2.0/24'"
     - role: vyas.proxmox.fix_for_amd_gpu
       when: (has_amd_gpu is defined) and has_amd_gpu
   tasks:
