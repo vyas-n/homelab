@@ -81,7 +81,23 @@
               {{ check_restart.stdout }}
           changed_when: check_restart.rc != 0
 
-        # TODO: show reboot needed
+    - name: Upgrade all flatpaks
+      when: ansible_facts['system'] == "Linux"
+      block:
+        - name: Check if flatpak binary exists
+          ansible.builtin.stat:
+            path: /usr/bin/flatpak
+          register: flatpak_binary
+        - name: Print a debug message
+          ansible.builtin.debug:
+            msg: "Flatpak isn't installed on this host, skipping upgrade"
+          when: not flatpak_binary.stat.exists
+        - name: Upgrade all flatpaks
+          when: flatpak_binary.stat.exists
+          # ref: https://www.reddit.com/r/ansible/comments/fk4qqc/comment/jlonhmf/
+          ansible.builtin.command: flatpak update --noninteractive
+          register: flatpak_update_output
+          changed_when: "'app/' in flatpak_update_output.stdout"
 
     - name: Notify that a system without scripted upgrades is in the hosts.yaml file
       # At the moment, I only have debian systems that need to be upgraded.
