@@ -1,0 +1,243 @@
+---
+services:
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:0.3.0
+    container_name: dockerproxy
+    environment:
+      # ref: https://github.com/Tecnativa/docker-socket-proxy?tab=readme-ov-file#access-revoked-by-default
+      # Allow access to viewing containers
+      CONTAINERS: 1
+      # Allow access to viewing services (necessary when using Docker Swarm)
+      # SERVICES: 1
+      # Allow access to viewing tasks (necessary when using Docker Swarm)
+      # TASKS: 1
+      # Disallow any POST operations (effectively read-only)
+      POST: 0
+    ports:
+      - 127.0.0.1:2375:2375
+    volumes:
+      # Mounted as read-only
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v0.9.13
+    container_name: homepage
+    ports:
+      - 3000:3000
+    configs:
+      - source: custom.css
+        target: /app/config/custom.css
+      - source: custom.js
+        target: /app/config/custom.js
+      - source: docker.yaml
+        target: /app/config/docker.yaml
+      - source: kubernetes.yaml
+        target: /app/config/kubernetes.yaml
+      - source: services.yaml
+        target: /app/config/services.yaml
+      - source: settings.yaml
+        target: /app/config/settings.yaml
+      - source: widgets.yaml
+        target: /app/config/widgets.yaml
+
+    labels:
+      # Homepage config
+      # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
+      homepage.group: Docker Containers
+      homepage.name: Homepage
+      homepage.icon: sh-homepage
+      homepage.href: https://homepage.tail5c72f1.ts.net
+
+      # Tsdproxy config
+      # ref: https://almeidapaulopt.github.io/tsdproxy/docs/docker
+      tsdproxy.enable: true
+      tsdproxy.name: homepage
+      tsdproxy.container_port: 3000
+    restart: unless-stopped
+configs:
+  custom.css:
+    content: |
+
+  custom.js:
+    content: |
+
+  docker.yaml:
+    content: |
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/configs/docker/
+
+      truenas-docker:
+        host: dockerproxy
+        port: 2375
+
+      # my-docker:
+      #   socket: /var/run/docker.sock
+  kubernetes.yaml:
+    content: |
+      ---
+      # sample kubernetes config
+  services.yaml:
+    content: |
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/configs/services
+
+      # For icons, use `sh-<icon>`: https://selfh.st/icons/
+
+      - Network:
+        - Unifi (Vyas's Home Network):
+            href: https://unifi.ui.com/consoles/0CEA144D1F27000000000871A9680000000008E4BFA800000000671C5D48:243437069/network/default/dashboard
+            siteMonitor: https://192.168.2.1
+            ping: 192.168.2.1
+            icon: sh-ubiquiti-unifi.svg
+            # widget:
+            #   type: unifi
+            #   url: https://192.168.2.1
+            #   username: {{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='username', vault='Private') }}
+            #   password: "{{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='password', vault='Private') }}"
+        - HomeLab Subnet Router (truenas):
+            href: https://login.tailscale.com/admin/machines/100.96.207.121
+            ping: truenas.hosts.vyas-n.dev
+            icon: sh-tailscale.svg
+            # fields: ["last_seen", "expires"]
+            # widget:
+            #   type: tailscale
+            #   deviceid: nk5m9JKaPC11CNTRL
+            #   key: {{ lookup('community.general.onepassword', 'Tailscale API Token (vyas@github)', field='credential', vault='Private') }}
+        - HomeLab Subnet Router (proxmox-0):
+            href: https://login.tailscale.com/admin/machines/100.70.202.28
+            ping: proxmox-0.hosts.vyas-n.dev
+            icon: sh-tailscale.svg
+            # fields: ["last_seen", "expires"]
+            # widget:
+            #   type: tailscale
+            #   deviceid: nrSocMUu9t11CNTRL
+            #   key: {{ lookup('community.general.onepassword', 'Tailscale API Token (vyas@github)', field='credential', vault='Private') }}
+        - HomeLab Subnet Router (proxmox-1):
+            href: https://login.tailscale.com/admin/machines/100.113.99.101
+            ping: proxmox-1.hosts.vyas-n.dev
+            icon: sh-tailscale.svg
+            # fields: ["last_seen", "expires"]
+            # widget:
+            #   type: tailscale
+            #   deviceid: nrSocMUu9t11CNTRL
+            #   key: {{ lookup('community.general.onepassword', 'Tailscale API Token (vyas@github)', field='credential', vault='Private') }}
+        - HomeLab Subnet Router (proxmox-2):
+            href: https://login.tailscale.com/admin/machines/100.125.129.4
+            ping: proxmox-2.hosts.vyas-n.dev
+            icon: sh-tailscale.svg
+            # fields: ["last_seen", "expires"]
+            # widget:
+            #   type: tailscale
+            #   deviceid: nrSocMUu9t11CNTRL
+            #   key: {{ lookup('community.general.onepassword', 'Tailscale API Token (vyas@github)', field='credential', vault='Private') }}
+
+      - Storage:
+        - TrueNAS:
+            href: https://truenas.hosts.vyas-n.dev
+            siteMonitor: https://truenas.hosts.vyas-n.dev
+            ping: truenas.hosts.vyas-n.dev
+            icon: sh-truenas-scale.svg
+            # widget:
+            #   type: truenas
+            #   url: https://truenas.hosts.vyas-n.dev
+            #   key: {{ lookup('community.general.onepassword', 'TrueNAS API Key (homepage)', field='credential', vault='Private') }}
+            #   enablePools: true
+            #   nasType: scale
+
+      - Compute:
+        - Proxmox-0:
+            href: https://proxmox-0.hosts.vyas-n.dev
+            siteMonitor: https://proxmox-0.hosts.vyas-n.dev
+            ping: proxmox-0.hosts.vyas-n.dev
+            icon: sh-proxmox.svg
+            widget:
+              type: proxmox
+              url: https://proxmox-0.hosts.vyas-n.dev
+              username: ${PROXMOX_TOKEN_ID}
+              password: ${PROXMOX_API_TOKEN}
+              node: proxmox-0
+        - Proxmox-1:
+            href: https://proxmox-1.hosts.vyas-n.dev
+            siteMonitor: https://proxmox-1.hosts.vyas-n.dev
+            ping: proxmox-1.hosts.vyas-n.dev
+            icon: sh-proxmox.svg
+            widget:
+              type: proxmox
+              url: https://proxmox-1.hosts.vyas-n.dev
+              username: ${PROXMOX_TOKEN_ID}
+              password: ${PROXMOX_API_TOKEN}
+              node: proxmox-1
+        - Proxmox-2:
+            href: https://proxmox-2.hosts.vyas-n.dev
+            siteMonitor: https://proxmox-2.hosts.vyas-n.dev
+            ping: proxmox-2.hosts.vyas-n.dev
+            icon: sh-proxmox.svg
+            widget:
+              type: proxmox
+              url: https://proxmox-2.hosts.vyas-n.dev
+              username: ${PROXMOX_TOKEN_ID}
+              password: ${PROXMOX_API_TOKEN}
+              node: proxmox-2
+
+      - Docker Containers: []
+  settings.yaml:
+    content: |
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/configs/settings
+
+      # Themeing
+      # TODO: detect OS theme and auto switch the theme.
+
+      # TODO: Enable theme switching, but also switch the color palette & background per-theme
+      # theme: light
+      #color: white
+      # background: https://images.unsplash.com/photo-1493246507139-91e8fad9978e
+      theme: dark
+      color: slate
+      background: https://github.com/gethomepage/homepage/blob/a06964dd175fa798fa9189ba1ecd5766bbde543f/docs/assets/blossom_valley.jpg?raw=true
+
+      headerStyle: clean
+
+      quicklaunch:
+        searchDescriptions: true
+        showSearchSuggestions: true
+        provider: duckduckgo
+
+      providers:
+        openweathermap: openweathermapapikey
+        weatherapi: weatherapiapikey
+
+      # Changes the behaviour of links on the homepage,
+      # ref: https://gethomepage.dev/configs/settings/#link-target
+      target: _self
+
+      # https://gethomepage.dev/configs/settings/#show-docker-stats
+      showStats: true
+  widgets.yaml:
+    content: |
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/configs/service-widgets
+
+      - openmeteo:
+          units: imperial
+          cache: 5 # Time in minutes to cache API responses, to stay within limits
+          format: # optional, Intl.NumberFormat options
+            maximumFractionDigits: 1
+
+      # - unifi_console:
+      #     url: https://192.168.2.1
+      #     username: {{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='username', vault='Private') }}
+      #     password: "{{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='password', vault='Private') }}"
+
+      - resources:
+          label: TrueNAS Resources
+          expanded: true
+          cpu: true
+          memory: true
+          cputemp: true
+          uptime: true
