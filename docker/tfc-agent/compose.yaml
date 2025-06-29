@@ -8,6 +8,12 @@ services:
       - TFC_AGENT_TOKEN=${TFC_AGENT_TOKEN}
       - TFC_AGENT_NAME=tfc-agent-0
     restart: unless-stopped
+    labels:
+      # Homepage config
+      # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
+      homepage.group: Docker Containers
+      homepage.name: Terraform Cloud Agent
+      homepage.icon: sh-hashicorp-terraform.svg
     deploy:
       resources:
         limits:
