@@ -6,7 +6,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - datadir:/app/data
     ports:
-      - 3001
+      - 3001:3001
     labels:
       # Homepage config
       # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
@@ -14,8 +14,6 @@ services:
       homepage.name: Uptime-Kuma
       homepage.icon: sh-uptime-kuma.svg
       homepage.href: https://uptime-kuma.tail5c72f1.ts.net
-      homepage.siteMonitor: https://uptime-kuma.tail5c72f1.ts.net
-      homepage.ping: uptime-kuma.tail5c72f1.ts.net
 
       # Tsdproxy config
       # ref: https://almeidapaulopt.github.io/tsdproxy/docs/docker
