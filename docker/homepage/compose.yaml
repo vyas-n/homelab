@@ -73,13 +73,16 @@ configs:
             icon: sh-cloudflare.svg
         - GitHub:
           - href: https://github.com
-            icon: sh-github.svg
+            icon: sh-github-light.svg
         - Grafana:
           - href: https://vyasn.grafana.net
             icon: sh-grafana.svg
         - Tailscale:
           - href: https://login.tailscale.com
-            icon: sh-tailscale.svg
+            icon: sh-tailscale-light.svg
+        - Terraform Cloud:
+          - href: https://app.terraform.io
+            icon: sh-hashicorp-terraform.svg
 
       - Tracking / Stats:
         - YNAB:
@@ -151,7 +154,7 @@ configs:
         - HomeLab Subnet Router (truenas):
             href: https://login.tailscale.com/admin/machines/100.96.207.121
             ping: truenas.hosts.vyas-n.dev
-            icon: sh-tailscale.svg
+            icon: sh-tailscale-light.svg
             fields: ["last_seen", "expires"]
             widget:
               type: tailscale
@@ -160,7 +163,7 @@ configs:
         - HomeLab Subnet Router (proxmox-0):
             href: https://login.tailscale.com/admin/machines/100.70.202.28
             ping: proxmox-0.hosts.vyas-n.dev
-            icon: sh-tailscale.svg
+            icon: sh-tailscale-light.svg
             fields: ["last_seen", "expires"]
             widget:
               type: tailscale
@@ -169,7 +172,7 @@ configs:
         - HomeLab Subnet Router (proxmox-1):
             href: https://login.tailscale.com/admin/machines/100.113.99.101
             ping: proxmox-1.hosts.vyas-n.dev
-            icon: sh-tailscale.svg
+            icon: sh-tailscale-light.svg
             fields: ["last_seen", "expires"]
             widget:
               type: tailscale
@@ -178,7 +181,7 @@ configs:
         - HomeLab Subnet Router (proxmox-2):
             href: https://login.tailscale.com/admin/machines/100.125.129.4
             ping: proxmox-2.hosts.vyas-n.dev
-            icon: sh-tailscale.svg
+            icon: sh-tailscale-light.svg
             fields: ["last_seen", "expires"]
             widget:
               type: tailscale
@@ -200,18 +203,25 @@ configs:
             siteMonitor: https://proxmox-1-ipmi.hosts.vyas-n.dev
             ping: proxmox-1-ipmi.hosts.vyas-n.dev
             icon: sh-asrock.svg
+        - Sunshine (Anshula-Laptop):
+            href: https://anshula-laptop.tail5c72f1.ts.net:47990
+            icon: sh-sunshine.svg
+        - Sunshine (gaming-vm-bazzite):
+            href: https://gaming-vm-bazzite.tail5c72f1.ts.net:47990
+            icon: sh-sunshine.svg
+
       - Storage:
         - TrueNAS:
             href: https://truenas.hosts.vyas-n.dev
             siteMonitor: https://truenas.hosts.vyas-n.dev
             ping: truenas.hosts.vyas-n.dev
             icon: sh-truenas-scale.svg
-            widget:
-              type: truenas
-              url: https://truenas.hosts.vyas-n.dev
-              key: "${TRUENAS_API_KEY}"
-              enablePools: true
-              nasType: scale
+            # widget:
+            #   type: truenas
+            #   url: https://truenas.hosts.vyas-n.dev
+            #   key: "${TRUENAS_API_KEY}"
+            #   enablePools: true
+            #   nasType: scale
 
       - Compute:
         - Proxmox-0:
@@ -290,10 +300,11 @@ configs:
           format: # optional, Intl.NumberFormat options
             maximumFractionDigits: 1
 
-      - unifi_console:
-          url: https://192.168.2.1
-          username: ${UNIFI_GATEWAY_USERNAME}
-          password: ${UNIFI_GATEWAY_PASSWORD}
+      # TODO: Widget seems to be broken
+      # - unifi_console:
+      #     url: http://192.168.2.1
+      #     username: ${UNIFI_GATEWAY_USERNAME}
+      #     password: ${UNIFI_GATEWAY_PASSWORD}
 
       - resources:
           label: TrueNAS Resources

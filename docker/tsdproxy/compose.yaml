@@ -16,7 +16,7 @@ services:
       # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
       homepage.group: Docker Containers
       homepage.name: TSDProxy
-      homepage.icon: sh-tailscale.svg
+      homepage.icon: sh-tailscale-light.svg
       homepage.href: https://tsdproxy.tail5c72f1.ts.net
 
       # Tsdproxy config
@@ -24,6 +24,7 @@ services:
       tsdproxy.enable: true
       tsdproxy.name: tsdproxy
       tsdproxy.container_port: 8080
+      tsdproxy.dash.icon: sh/tailscale-light
     restart: unless-stopped
 configs:
   tsdproxy.yaml:

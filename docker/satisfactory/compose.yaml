@@ -11,6 +11,7 @@ services:
       # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
       homepage.group: Docker Containers
       homepage.name: Satisfactory Server
+      homepage.icon: si-steam
     volumes:
       - datadir:/config
     environment:
