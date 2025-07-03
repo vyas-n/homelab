@@ -16,7 +16,7 @@ updates:
     schedule:
       interval: daily
     groups:
-      pip:
+      docker-compose:
         patterns:
           - "*"
   - package-ecosystem: pip
