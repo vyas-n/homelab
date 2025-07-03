@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i ansible-playbook --packages ansible
+#! nix-shell -i "poetry run ansible-playbook" --packages poetry
 
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax

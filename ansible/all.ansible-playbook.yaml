@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i ansible-playbook --packages ansible
+#! nix-shell -i "poetry run ansible-playbook" --packages poetry
 
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
@@ -327,17 +327,6 @@
             name: caddy
             state: started
             enabled: true
-
-    - name: Cleanup Nginx
-      # We now use Caddy for reverse proxy functionality
-      block:
-        - name: Remove nginx pkg
-          become: true
-          ansible.builtin.apt:
-            package:
-              - nginx
-            state: absent
-            purge: true
   handlers:
     # TODO: add a notify to validate Caddy config
     - name: ReloadCaddy
