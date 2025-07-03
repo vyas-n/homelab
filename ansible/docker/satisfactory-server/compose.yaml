@@ -1,7 +1,7 @@
 ---
 services:
   satisfactory-server:
-    image: ghcr.io/wolveix/satisfactory-server:v1.9.7
+    image: ghcr.io/wolveix/satisfactory-server:v1.9.9
     ports:
       - "7777:7777/tcp"
       - "7777:7777/udp"
