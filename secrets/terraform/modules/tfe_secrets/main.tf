@@ -120,7 +120,7 @@ resource "tfe_variable" "digitalocean_spaces_secret_access_key" {
 # Bedrock 1PassConnect Server & Access Token
 resource "tfe_variable" "onepass_connect_credentials_json" {
   key             = "onepassword_credentials_json"
-  value           = data.onepassword_item.onepass_connect_credentials_json.file.0.content
+  value           = data.onepassword_item.onepass_connect_credentials_json.file[0].content
   category        = "terraform"
   sensitive       = true
   description     = <<EOF
@@ -215,4 +215,13 @@ resource "tfe_variable" "PROXMOX_VE_SSH_USERNAME" {
   category        = "env"
   sensitive       = false
   variable_set_id = data.tfe_variable_set.proxmox.id
+}
+
+# HomeZone cluster credentials
+resource "tfe_variable" "external_secrets_onepassword_service_account_token" {
+  key          = "external_secrets_onepassword_service_account_token"
+  value        = "root"
+  category     = "terraform"
+  sensitive    = true
+  workspace_id = data.tfe_workspace.homezone_k8s.id
 }

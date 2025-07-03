@@ -10,6 +10,15 @@ updates:
       github-actions:
         patterns:
           - "*"
+  - package-ecosystem: docker
+    directories:
+      - ansible/docker/*
+    schedule:
+      interval: daily
+    groups:
+      pip:
+        patterns:
+          - "*"
   - package-ecosystem: pip
     directory: /
     schedule:
@@ -20,18 +29,10 @@ updates:
           - "*"
   - package-ecosystem: terraform
     directories:
-      - digitalocean/terraform
-      - digitalocean/nyc3/terraform
-      - digitalocean/nyc3/do-k8s/terraform
-      - homelab/clusters/k8s/terraform
-      - homelab/clusters/k8s/terraform/modules/cilium
-      - homelab/clusters/k8s/terraform/modules/cluster_operators
-      - homelab/clusters/k8s/terraform/modules/cluster_services
-      - homelab/clusters/k8s/terraform/modules/monitoring_stack
-      - homelab/clusters/k8s/terraform/modules/rook_ceph
-      - homelab/terraform
-      - homelab/terraform/modules/proxmox_cloudinit_vm
-      - homelab/terraform/modules/proxmox_cloudinit_vm/modules/unifi_host_dns_records
+      - digitalocean/**/terraform
+      - homelab/**/terraform
+      - homelab/**/terraform/modules/*
+      - homelab/**/terraform/modules/**/modules/*
       - tailscale/terraform
       - tfcloud/terraform
       - unifi/terraform
@@ -44,9 +45,7 @@ updates:
   - package-ecosystem: terraform
     directories:
       - secrets/terraform
-      - secrets/terraform/modules/gh_secrets
-      - secrets/terraform/modules/proxmox_secrets
-      - secrets/terraform/modules/tfe_secrets
+      - secrets/terraform/modules/*
     schedule:
       interval: daily
     groups:

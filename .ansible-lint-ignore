@@ -1,0 +1,5 @@
+# Ansible lint ignore ref: https://ansible.readthedocs.io/projects/lint/configuring/#ansible-lint-configuration
+
+# The whole point of this playbook is to upgrade all dependencies to the latest version
+# This rule can be ignored for this playbook, but is generally useful to protect against for all other playbooks
+ansible/upgrade.ansible-playbook.yaml package-latest skip # disable package-latest rule for ansible/upgrade.ansible-playbook.yaml

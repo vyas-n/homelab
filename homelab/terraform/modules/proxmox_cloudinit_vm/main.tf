@@ -9,6 +9,10 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
 
     file_name = "${var.hostname}.yaml"
   }
+
+  lifecycle {
+    ignore_changes = [source_raw[0].data]
+  }
 }
 
 resource "proxmox_virtual_environment_vm" "vm" {
@@ -66,5 +70,9 @@ resource "proxmox_virtual_environment_vm" "vm" {
     datastore_id = var.vm_datastore_id
 
     user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
+  }
+
+  lifecycle {
+    ignore_changes = [node_name]
   }
 }

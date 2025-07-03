@@ -1,0 +1,22 @@
+---
+services:
+  tfc-agent:
+    container_name: tfc-agent-0
+    image: docker.io/hashicorp/tfc-agent:1.22.5
+    environment:
+      # This variable needs to be set using a .env file
+      - TFC_AGENT_TOKEN=${TFC_AGENT_TOKEN}
+      - TFC_AGENT_NAME=tfc-agent-0
+    restart: unless-stopped
+    labels:
+      # Homepage config
+      # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
+      homepage.group: Docker Containers
+      homepage.name: Terraform Cloud Agent
+      homepage.icon: sh-hashicorp-terraform.svg
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
