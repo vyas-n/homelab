@@ -2,7 +2,7 @@
 services:
   tfc-agent:
     container_name: tfc-agent-0
-    image: docker.io/hashicorp/tfc-agent:1.22.1
+    image: docker.io/hashicorp/tfc-agent:1.22.5
     environment:
       # This variable needs to be set using a .env file
       - TFC_AGENT_TOKEN=${TFC_AGENT_TOKEN}

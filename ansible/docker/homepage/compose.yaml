@@ -14,7 +14,7 @@ services:
       # Disallow any POST operations (effectively read-only)
       POST: 0
     ports:
-      - 127.0.0.1:2375:2375
+      - 2375
     volumes:
       # Mounted as read-only
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -210,20 +210,12 @@ configs:
             href: https://gaming-vm-bazzite.tail5c72f1.ts.net:47990
             icon: sh-sunshine.svg
 
-      - Storage:
+      - Compute:
         - TrueNAS:
             href: https://truenas.hosts.vyas-n.dev
             siteMonitor: https://truenas.hosts.vyas-n.dev
             ping: truenas.hosts.vyas-n.dev
             icon: sh-truenas-scale.svg
-            # widget:
-            #   type: truenas
-            #   url: https://truenas.hosts.vyas-n.dev
-            #   key: "${TRUENAS_API_KEY}"
-            #   enablePools: true
-            #   nasType: scale
-
-      - Compute:
         - Proxmox-0:
             href: https://proxmox-0.hosts.vyas-n.dev
             siteMonitor: https://proxmox-0.hosts.vyas-n.dev

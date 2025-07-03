@@ -1,0 +1,6 @@
+---
+- name: Restart compose service
+  become: true
+  community.docker.docker_compose_v2:
+    project_src: "{{ compose_dest_dir }}"
+    state: restarted

@@ -28,7 +28,7 @@ all:
         #   ansible_host: gaming-vm-win11.hosts.vyas-n.dev
         #   ansible_shell_type: powershell
         #   ansible_connection: ssh
-        docker-server:
+        gaming-vm-bazzite:
   hosts:
     raspberrypi-0:
     raspberrypi-desktop-0:
