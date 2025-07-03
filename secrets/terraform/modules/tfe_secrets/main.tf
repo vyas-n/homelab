@@ -120,7 +120,7 @@ resource "tfe_variable" "digitalocean_spaces_secret_access_key" {
 # Bedrock 1PassConnect Server & Access Token
 resource "tfe_variable" "onepass_connect_credentials_json" {
   key             = "onepassword_credentials_json"
-  value           = data.onepassword_item.onepass_connect_credentials_json.file.0.content
+  value           = data.onepassword_item.onepass_connect_credentials_json.file[0].content
   category        = "terraform"
   sensitive       = true
   description     = <<EOF
