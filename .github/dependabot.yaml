@@ -12,7 +12,13 @@ updates:
           - "*"
   - package-ecosystem: docker
     directories:
-      - ansible/docker/*/compose.yaml
+      # TODO: replace this list with a wildcard expression
+      - ansible/docker/homepage/compose.yaml
+      - ansible/docker/satisfactory-server/compose.yaml
+      - ansible/docker/tfc-agent/compose.yaml
+      - ansible/docker/tsdproxy/compose.yaml
+      - ansible/docker/uptime-kuma/compose.yaml
+      - ansible/docker/whatsupdocker/compose.yaml
     schedule:
       interval: daily
     groups:
