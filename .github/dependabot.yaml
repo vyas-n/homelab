@@ -12,7 +12,7 @@ updates:
           - "*"
   - package-ecosystem: docker
     directories:
-      - ansible/docker/*
+      - ansible/docker/*/*
     schedule:
       interval: daily
     groups:
