@@ -34,11 +34,10 @@ resource "unifi_user" "proxmox_1" {
   local_dns_record = "proxmox-1.hosts.vyas-n.dev"
 }
 
-# TODO: Error: not found
-# resource "unifi_user" "proxmox_2" {
-#   mac  = "b0:19:21:e3:c5:f0"
-#   name = "Proxmox 2"
+resource "unifi_user" "proxmox_0" {
+  mac  = "a4:ae:11:19:b4:26"
+  name = "Proxmox 0"
 
-#   fixed_ip = "192.168.2.78"
-#   local_dns_record = "proxmox-2.hosts.vyas-n.dev"
-# }
+  fixed_ip         = "192.168.2.7"
+  local_dns_record = "proxmox-0.hosts.vyas-n.dev"
+}

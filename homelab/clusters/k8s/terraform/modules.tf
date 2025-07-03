@@ -11,14 +11,16 @@ module "cilium" {
   ]
 }
 
-# module "cluster_operators" {
-#   source = "./modules/cluster_operators"
+module "cluster_operators" {
+  source = "./modules/cluster_operators"
 
-#   depends_on = [
-#     module.cilium,
-#     helm_release.prometheus_operator_crds
-#   ]
-# }
+  external_secrets_onepassword_service_account_token = var.external_secrets_onepassword_service_account_token
+
+  depends_on = [
+    module.cilium,
+    helm_release.prometheus_operator_crds
+  ]
+}
 
 # module "rook_ceph" {
 #   source = "./modules/rook_ceph"

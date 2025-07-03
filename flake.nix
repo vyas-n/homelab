@@ -6,41 +6,30 @@
 
     flake-compat.url = "github:edolstra/flake-compat";
 
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
+    flake-utils = { url = "github:numtide/flake-utils"; };
   };
 
-  outputs =
-    { self
-    , nixpkgs-stable
-    , flake-utils
-    , ...
-    }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
+  outputs = { self, nixpkgs-stable, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs-stable = import nixpkgs-stable {
           inherit system;
           config.allowUnfree = true;
         };
 
-      in
-      {
+      in {
         # Development Environments
-        devShells.default =
-          with pkgs-stable;
+        devShells.default = with pkgs-stable;
           mkShell {
             packages = [
               # IDE integrations
               nil
               nix
               nixfmt-classic
-              rust-analyzer
               nodePackages.prettier
               # nodePackages.prettier-plugin-toml
               ansible-lint
-              terraform-lsp
+              terraform-ls
 
               # Dev Tools
               poetry
@@ -59,6 +48,5 @@
 
         # Outputs
         formatter = pkgs-stable.nixfmt-rfc-style;
-      }
-    );
+      });
 }

@@ -1,11 +1,18 @@
----
+#!/usr/bin/env nix-shell
+#! nix-shell -i "poetry run ansible-galaxy install --force -r" --packages poetry
+
 collections:
   - name: community.general
     version: 10.4.0
+  - name: community.docker
+    version: 4.6.1
   - name: ansible.posix
     version: 2.0.0
-  # TODO: move the ansible collections into a separate repo with molecule testing
+  # TODO: move the ansible collections into a separate repo
+  # TODO: setup molecule testing for each role in collections
   - name: ./collections/ansible_collections/vyas
     type: subdirs
   - name: ansible.windows
     version: 2.7.0
+  - name: artis3n.tailscale
+    version: 1.0.1

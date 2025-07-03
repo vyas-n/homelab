@@ -53,10 +53,11 @@ resource "tfe_workspace" "remote_exec_workspace" {
   working_directory = each.value["working_directory"]
   project_id        = data.tfe_project.default.id
 
-  terraform_version     = local.terraform_version
-  auto_apply            = true
-  queue_all_runs        = false
-  file_triggers_enabled = false
+  terraform_version      = local.terraform_version
+  auto_apply             = true
+  queue_all_runs         = false
+  file_triggers_enabled  = false
+  auto_apply_run_trigger = true
 
   vcs_repo {
     identifier                 = "vyas-proj/deploy"
@@ -75,10 +76,53 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
 }
 
 # Automatically run all above workspaces when the secrets workspace is run
-resource "tfe_run_trigger" "remote_exec_workspace" {
+moved {
+  from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3_do_k8s_terraform"]
+  to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3_do_k8s_terraform"]
+}
+moved {
+  from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3_terraform"]
+  to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3_terraform"]
+}
+moved {
+  from = tfe_run_trigger.remote_exec_workspace["digitalocean_terraform"]
+  to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_terraform"]
+}
+moved {
+  from = tfe_run_trigger.remote_exec_workspace["homelab_terraform"]
+  to   = tfe_run_trigger.remote_exec_workspace_secrets["homelab_terraform"]
+}
+moved {
+  from = tfe_run_trigger.remote_exec_workspace["proxmox_terraform"]
+  to   = tfe_run_trigger.remote_exec_workspace_secrets["proxmox_terraform"]
+}
+moved {
+  from = tfe_run_trigger.remote_exec_workspace["tailscale_terraform"]
+  to   = tfe_run_trigger.remote_exec_workspace_secrets["tailscale_terraform"]
+}
+moved {
+  from = tfe_run_trigger.remote_exec_workspace["tfcloud_terraform"]
+  to   = tfe_run_trigger.remote_exec_workspace_secrets["tfcloud_terraform"]
+}
+moved {
+  from = tfe_run_trigger.remote_exec_workspace["unifi_terraform"]
+  to   = tfe_run_trigger.remote_exec_workspace_secrets["unifi_terraform"]
+}
+resource "tfe_run_trigger" "remote_exec_workspace_secrets" {
   for_each      = local.remote_workspaces
   workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
   sourceable_id = tfe_workspace.secrets_terraform.id
+}
+
+# Automatically run most workspaces when the tfcloud workspace is run
+resource "tfe_run_trigger" "remote_exec_workspace_tfcloud" {
+  for_each = {
+    for workspace_key, workspace_value in local.remote_workspaces :
+    workspace_key => workspace_value
+    if workspace_key != "tfcloud_terraform"
+  }
+  workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
+  sourceable_id = tfe_workspace.remote_exec_workspace["tfcloud_terraform"].id
 }
 
 # This workspace only executes locally
@@ -121,6 +165,10 @@ resource "tfe_variable_set" "tailscale" {
 resource "tfe_variable_set" "unifi" {
   name        = "Unifi Gateway"
   description = "This is an environment variable set that authenticates unifi's tf provider: https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs"
+}
+resource "tfe_variable_set" "homezone_v1" {
+  name        = "HomeZone-v1"
+  description = "This is an environment variable set that authenticates to my HomeZone-v1 k8s cluster using various Kubernetes providers: https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#credentials-config"
 }
 
 # Assign Variable Sets to TFE Workspaces

@@ -1,8 +1,0 @@
----
-# Standard variables for docker apps
-uptime_kuma_apps_fast_data_dir: "{{ apps_fast_data_dir | mandatory }}/uptime_kuma"
-uptime_kuma_apps_safe_data_dir: "{{ apps_safe_data_dir | mandatory }}/uptime_kuma"
-uptime_kuma_apps_dockge_stacks_dir: "{{ apps_dockge_stacks_dir | mandatory }}/uptime_kuma"
-
-# Custom variables for uptime_kuma
-uptime_kuma_data_dir: "{{ uptime_kuma_apps_fast_data_dir | mandatory }}/data"

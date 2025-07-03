@@ -13,7 +13,6 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
   # TODO: This line is only a workaround for: https://github.com/cilium/cilium/issues/27000#issuecomment-1648245965
   wait = false
 
-
   values = concat([
     # We decode & reencode to remove yaml comments & formatting from diff calculations
     for file in sort(fileset(path.module, "helm/cilium/*.yaml")) :
@@ -22,6 +21,7 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
     yamlencode({
       k8sServicePort = var.k8s_service_port
       k8sServiceHost = var.k8s_endpoint
+      # ipv4NativeRoutingCIDR = var.k8s_pod_cidr
       ipam = {
         operator = {
           clusterPoolIPv4PodCIDRList = [

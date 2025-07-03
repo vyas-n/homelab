@@ -1,0 +1,20 @@
+---
+- name: Create stack directory
+  become: true
+  ansible.builtin.file:
+    path: "{{ compose_dest_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy compose file
+  become: true
+  ansible.builtin.copy:
+    src: "{{ compose_src_file }}"
+    dest: "{{ compose_dest_dir }}/compose.yaml"
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart compose service

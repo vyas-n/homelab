@@ -1,0 +1,11 @@
+---
+argument_specs:
+  # roles/myapp/tasks/main.yml entry point
+  main:
+    options:
+      compose_src_file:
+        type: str
+        required: true
+      compose_dest_dir:
+        type: str
+        required: true

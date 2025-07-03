@@ -18,3 +18,8 @@ variable "k8s_endpoint" {
   type    = string
   default = "k8s-ctr-0.vms.vyas-n.dev"
 }
+
+variable "external_secrets_onepassword_service_account_token" {
+  sensitive = true
+  type      = string
+}
