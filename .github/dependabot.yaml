@@ -10,15 +10,9 @@ updates:
       github-actions:
         patterns:
           - "*"
-  - package-ecosystem: docker
+  - package-ecosystem: docker-compose
     directories:
-      # TODO: replace this list with a wildcard expression
-      - ansible/docker/homepage/compose.yaml
-      - ansible/docker/satisfactory-server/compose.yaml
-      - ansible/docker/tfc-agent/compose.yaml
-      - ansible/docker/tsdproxy/compose.yaml
-      - ansible/docker/uptime-kuma/compose.yaml
-      - ansible/docker/whatsupdocker/compose.yaml
+      - ansible/docker/*
     schedule:
       interval: daily
     groups:
