@@ -12,6 +12,9 @@ services:
       homepage.group: Docker Containers
       homepage.name: Satisfactory Server
       homepage.icon: si-steam
+
+      # Whats up docker config
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
     volumes:
       - datadir:/config
     environment:
