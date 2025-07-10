@@ -46,8 +46,7 @@
 
 # Provision k8s nodes
 - name: Provision fedora & raspberrypi nodes
-  # TODO: use all hosts running a linux os
-  hosts: k8s:raspberrypi-0:raspberrypi-desktop-0
+  hosts: all:!gaming-vm-win11:!truenas
   pre_tasks:
     - name: Check if python3-libdnf5 is installed
       when: ansible_facts['distribution'] == "Fedora"
@@ -64,12 +63,15 @@
     - role: vyas.linux.shared_handlers
     - role: vyas.proxmox.shared_handlers
     - role: artis3n.tailscale.machine
-      # TODO: filter to not include truenas and proxmox nodes
+      when: ansible_hostname != 'gaming-vm-bazzite' and 'proxmox' not in group_names
       vars:
         verbose: true
         tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', field='credential') }}"
+
+    # TODO: Only run if username == vyas
     - role: vyas.linux.passwordless_sudo
-      # TODO: Only run if username == vyas
+      when: |
+        'proxmox' not in group_names
       vars:
         passwordless_sudo_users:
           - vyas
@@ -184,8 +186,6 @@
             update_cache: true
             state: present
     - name: Fix Disk Usage monitoring
-      # TODO: fix
-      # Currently the blockinfile keeps inserting it when already present
       when: false
       block:
         - name: Insert code to fix disk usage

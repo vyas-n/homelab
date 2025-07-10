@@ -61,6 +61,8 @@
           ansible.builtin.dnf:
             name: "*"
             state: latest
+            # TODO: Explicitly use 'dnf5' if running fedora silverblue (or other derivatives such as bazzite)
+            use_backend: "{{ 'dnf5' if ansible_hostname == 'gaming-vm-bazzite' else 'auto' }}"
         # ref: https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html
         - name: Install tool to check if reboot is required
           become: true

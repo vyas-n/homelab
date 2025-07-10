@@ -25,6 +25,9 @@ services:
       tsdproxy.name: tsdproxy
       tsdproxy.container_port: 8080
       tsdproxy.dash.icon: sh/tailscale-light
+
+      # Whats up docker config
+      wud.tag.include: ^v?\d+\.\d+\.\d+$
     restart: unless-stopped
 configs:
   tsdproxy.yaml:
