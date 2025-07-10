@@ -1,0 +1,27 @@
+---
+# GitHub Actions Workflows Ref: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+name: Dependencies
+"on":
+  workflow_dispatch:
+  schedule:
+    # ref: https://crontab.guru/#0_4_*_*_*
+    - cron: 0 4 * * *
+concurrency:
+  group: ${{ github.event_name }}-${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+permissions: {}
+defaults:
+  run:
+    shell: bash
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: renovatebot/github-action@v43.0.2
+        with:
+          mount-docker-socket: true
+          token: ${{ secrets.RENOVATE_GITHUB_TOKEN }}
