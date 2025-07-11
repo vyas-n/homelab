@@ -1,25 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "branchPrefix": "test-renovate/",
   "dryRun": "full",
   "username": "renovate-release",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-  "onboarding": false,
-  // "platform": "github",
-  "forkProcessing": "disabled",
-  "repositories": ["vyas-proj/deploy"],
-  "packageRules": [
-    {
-      "description": "lockFileMaintenance",
-      "matchUpdateTypes": [
-        "pin",
-        "digest",
-        "patch",
-        "minor",
-        "major",
-        "lockFileMaintenance"
-      ],
-      "dependencyDashboardApproval": false,
-      "minimumReleaseAge": "0"
-    }
-  ]
+  "onboarding": true,
+  "platform": "github",
+  "repositories": ["vyas-proj/deploy"]
 }
