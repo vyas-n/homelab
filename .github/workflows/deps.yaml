@@ -2,6 +2,9 @@
 # GitHub Actions Workflows Ref: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
 name: Dependencies
 "on":
+  pull_request:
+    branches:
+      - develop
   workflow_dispatch:
   schedule:
     # ref: https://crontab.guru/#0_4_*_*_*
