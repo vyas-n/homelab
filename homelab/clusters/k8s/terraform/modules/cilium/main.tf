@@ -3,7 +3,7 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
   name       = "cilium"
   chart      = "cilium"
   repository = "https://helm.cilium.io"
-  version    = "1.15.14"
+  version    = "1.17.5"
 
   namespace        = "kube-system"
   create_namespace = false
@@ -13,23 +13,25 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
   # TODO: This line is only a workaround for: https://github.com/cilium/cilium/issues/27000#issuecomment-1648245965
   wait = false
 
-  values = concat([
-    # We decode & reencode to remove yaml comments & formatting from diff calculations
-    for file in sort(fileset(path.module, "helm/cilium/*.yaml")) :
-    yamlencode(yamldecode(file("${path.module}/${file}")))
-    ], [
-    yamlencode({
-      k8sServicePort = var.k8s_service_port
-      k8sServiceHost = var.k8s_endpoint
-      # ipv4NativeRoutingCIDR = var.k8s_pod_cidr
-      ipam = {
-        operator = {
-          clusterPoolIPv4PodCIDRList = [
-            var.k8s_pod_cidr
-          ]
+  values = concat(
+    [
+      # We sort the fileset to preserve the ordering of the values files
+      for file in sort(fileset(path.module, "helm/cilium/*.{yaml,yml}")) :
+      # We decode & reencode to remove yaml comments & formatting from diff calculations
+      yamlencode(yamldecode(file("${path.module}/${file}")))
+      ], [
+      yamlencode({
+        k8sServicePort = var.k8s_service_port
+        k8sServiceHost = var.k8s_endpoint
+        # ipv4NativeRoutingCIDR = var.k8s_pod_cidr
+        ipam = {
+          operator = {
+            clusterPoolIPv4PodCIDRList = [
+              var.k8s_pod_cidr
+            ]
+          }
         }
-      }
-    }),
+      }),
   ])
 }
 

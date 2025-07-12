@@ -1,0 +1,11 @@
+---
+# Cilium Ref: https://artifacthub.io/packages/helm/cilium/cilium
+# yaml-language-server: $schema=https://github.com/cilium/cilium/raw/refs/heads/main/install/kubernetes/cilium/values.schema.json
+
+# Transparent Encryption: https://docs.cilium.io/en/stable/security/network/encryption-wireguard/#enable-wireguard-in-cilium
+# TODO: Failing to mount ipsec keys for some reason
+l7Proxy: false
+encryption:
+  enabled: true
+  encryption:
+    type: wireguard
