@@ -65,38 +65,38 @@ resource "kubectl_manifest" "onepassword_homelab_cluster_secret_store" {
   depends_on = [helm_release.external_secrets]
 }
 
-resource "kubernetes_namespace" "cert_manager" {
-  metadata {
-    name = "cert-manager"
-    labels = {
-      # fix webhook validation issues
-      # ref: https://github.com/cert-manager/cert-manager/issues/6864#issuecomment-2027293360
-      "cert-manager.io/disable-validation" : true
-    }
-  }
-}
+# resource "kubernetes_namespace" "cert_manager" {
+#   metadata {
+#     name = "cert-manager"
+#     labels = {
+#       # fix webhook validation issues
+#       # ref: https://github.com/cert-manager/cert-manager/issues/6864#issuecomment-2027293360
+#       "cert-manager.io/disable-validation" : true
+#     }
+#   }
+# }
 
-resource "helm_release" "cert_manager" { # https://artifacthub.io/packages/helm/cert-manager/cert-manager
-  name       = "cert-manager"
-  chart      = "cert-manager"
-  repository = "https://charts.jetstack.io"
-  version    = "1.15.3"
+# resource "helm_release" "cert_manager" { # https://artifacthub.io/packages/helm/cert-manager/cert-manager
+#   name       = "cert-manager"
+#   chart      = "cert-manager"
+#   repository = "https://charts.jetstack.io"
+#   version    = "1.15.3"
 
-  namespace        = kubernetes_namespace.cert_manager.metadata[0].name
-  create_namespace = false
-  lint             = true
-  timeout          = 300
+#   namespace        = kubernetes_namespace.cert_manager.metadata[0].name
+#   create_namespace = false
+#   lint             = true
+#   timeout          = 300
 
-  values = concat(
-    [
-      # We sort the fileset to preserve the ordering of the values files
-      for file in sort(fileset(path.module, "helm/cert-manager/*.{yaml,yml}")) :
-      # We decode & reencode to remove yaml comments & formatting from diff calculations
-      yamlencode(yamldecode(file("${path.module}/${file}")))
-      ], [
-      yamlencode({}),
-  ])
-}
+#   values = concat(
+#     [
+#       # We sort the fileset to preserve the ordering of the values files
+#       for file in sort(fileset(path.module, "helm/cert-manager/*.{yaml,yml}")) :
+#       # We decode & reencode to remove yaml comments & formatting from diff calculations
+#       yamlencode(yamldecode(file("${path.module}/${file}")))
+#       ], [
+#       yamlencode({}),
+#   ])
+# }
 
 # resource "kubernetes_secret" "cert_manager_aws_creds" {
 #   metadata {
