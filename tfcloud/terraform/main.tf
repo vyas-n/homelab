@@ -76,38 +76,38 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
 }
 
 # Automatically run all above workspaces when the secrets workspace is run
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3_do_k8s_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3_do_k8s_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["digitalocean_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["homelab_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["homelab_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["proxmox_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["proxmox_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["tailscale_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["tailscale_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["tfcloud_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["tfcloud_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["unifi_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["unifi_terraform"]
-}
+# moved {
+#   from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3_do_k8s_terraform"]
+#   to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3_do_k8s_terraform"]
+# }
+# moved {
+#   from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3_terraform"]
+#   to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3_terraform"]
+# }
+# moved {
+#   from = tfe_run_trigger.remote_exec_workspace["digitalocean_terraform"]
+#   to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_terraform"]
+# }
+# moved {
+#   from = tfe_run_trigger.remote_exec_workspace["homelab_terraform"]
+#   to   = tfe_run_trigger.remote_exec_workspace_secrets["homelab_terraform"]
+# }
+# moved {
+#   from = tfe_run_trigger.remote_exec_workspace["proxmox_terraform"]
+#   to   = tfe_run_trigger.remote_exec_workspace_secrets["proxmox_terraform"]
+# }
+# moved {
+#   from = tfe_run_trigger.remote_exec_workspace["tailscale_terraform"]
+#   to   = tfe_run_trigger.remote_exec_workspace_secrets["tailscale_terraform"]
+# }
+# moved {
+#   from = tfe_run_trigger.remote_exec_workspace["tfcloud_terraform"]
+#   to   = tfe_run_trigger.remote_exec_workspace_secrets["tfcloud_terraform"]
+# }
+# moved {
+#   from = tfe_run_trigger.remote_exec_workspace["unifi_terraform"]
+#   to   = tfe_run_trigger.remote_exec_workspace_secrets["unifi_terraform"]
+# }
 resource "tfe_run_trigger" "remote_exec_workspace_secrets" {
   for_each      = local.remote_workspaces
   workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
