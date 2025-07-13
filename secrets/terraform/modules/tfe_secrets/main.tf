@@ -226,7 +226,6 @@ resource "tfe_variable" "external_secrets_onepassword_service_account_token" {
   workspace_id = data.tfe_workspace.k8s_homezone.id
 }
 
-
 # TODO: grab these credentials from 1Password item
 resource "tfe_variable" "kube_host" {
   key             = "kube_host"
