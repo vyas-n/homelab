@@ -1,30 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 resource "tailscale_contacts" "global" {
   account {
     email = "me@vyas-n.com"
