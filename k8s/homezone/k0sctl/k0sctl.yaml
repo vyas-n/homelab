@@ -33,7 +33,8 @@ spec:
       openSSH:
         address: k8s-wkr-1.vms.vyas-n.dev
   k0s:
-    version: v1.32.2+k0s.0
+    # releases: https://github.com/k0sproject/k0s/releases
+    version: v1.33.2+k0s.0
     config:
       # k0s config
       # ref: https://docs.k0sproject.io/stable/configuration/#configuration-file-reference

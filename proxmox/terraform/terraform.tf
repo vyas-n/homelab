@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "proxmox_terraform"
+      name = "proxmox"
     }
   }
   required_providers {

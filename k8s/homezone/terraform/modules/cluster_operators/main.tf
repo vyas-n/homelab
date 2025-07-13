@@ -9,17 +9,22 @@ resource "helm_release" "external_secrets" { # https://artifacthub.io/packages/h
   name       = "external-secrets"
   chart      = "external-secrets"
   repository = "https://charts.external-secrets.io"
-  version    = "0.17.0"
+  version    = "0.18.2"
 
   namespace        = kubernetes_namespace.external_secrets.metadata[0].name
   create_namespace = false
   lint             = true
   timeout          = 300
 
-  values = [
-    yamlencode(yamldecode(file("${path.module}/helm/external-secrets/values.yaml"))), # remove yaml comments & formatting from diff calculations
-    yamlencode({})
-  ]
+  values = concat(
+    [
+      # We sort the fileset to preserve the ordering of the values files
+      for file in sort(fileset(path.module, "helm/external-secrets/*.{yaml,yml}")) :
+      # We decode & reencode to remove yaml comments & formatting from diff calculations
+      yamlencode(yamldecode(file("${path.module}/${file}")))
+      ], [
+      yamlencode({}),
+  ])
 }
 
 resource "kubernetes_secret" "onepassword_homelab_service_account" {
@@ -82,10 +87,15 @@ resource "kubectl_manifest" "onepassword_homelab_cluster_secret_store" {
 #   lint             = true
 #   timeout          = 300
 
-#   values = [
-#     yamlencode(yamldecode(file("${path.module}/helm/cert-manager/values.yaml"))), # remove yaml comments & formatting from diff calculations
-#     yamlencode({})
-#   ]
+#   values = concat(
+#     [
+#       # We sort the fileset to preserve the ordering of the values files
+#       for file in sort(fileset(path.module, "helm/cert-manager/*.{yaml,yml}")) :
+#       # We decode & reencode to remove yaml comments & formatting from diff calculations
+#       yamlencode(yamldecode(file("${path.module}/${file}")))
+#       ], [
+#       yamlencode({}),
+#   ])
 # }
 
 # resource "kubernetes_secret" "cert_manager_aws_creds" {

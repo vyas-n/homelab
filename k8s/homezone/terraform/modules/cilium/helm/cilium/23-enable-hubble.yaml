@@ -1,0 +1,9 @@
+---
+# Cilium Ref: https://artifacthub.io/packages/helm/cilium/cilium
+# yaml-language-server: $schema=https://github.com/cilium/cilium/raw/refs/heads/main/install/kubernetes/cilium/values.schema.json
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true

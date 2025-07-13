@@ -30,9 +30,10 @@ updates:
   - package-ecosystem: terraform
     directories:
       - digitalocean/**/terraform
-      - homelab/**/terraform
-      - homelab/**/terraform/modules/*
-      - homelab/**/terraform/modules/**/modules/*
+      - k8s/**/terraform
+      - k8s/**/modules/*
+      - proxmox/**/terraform
+      - proxmox/**/modules/*
       - tailscale/terraform
       - tfcloud/terraform
       - unifi/terraform
