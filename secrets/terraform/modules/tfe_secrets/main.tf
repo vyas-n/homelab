@@ -225,3 +225,37 @@ resource "tfe_variable" "external_secrets_onepassword_service_account_token" {
   sensitive    = true
   workspace_id = data.tfe_workspace.k8s_homezone.id
 }
+
+
+# TODO: grab these credentials from 1Password item
+resource "tfe_variable" "kube_host" {
+  key             = "kube_host"
+  value           = yamldecode(file("~/.kube/config.d/homezone-v1.yaml")).clusters[0].cluster.server
+  category        = "terraform"
+  sensitive       = false
+  variable_set_id = data.tfe_variable_set.homezone.id
+}
+
+resource "tfe_variable" "kube_cluster_ca_cert_data" {
+  key             = "kube_cluster_ca_cert_data"
+  value           = base64decode(yamldecode(file("~/.kube/config.d/homezone-v1.yaml")).clusters[0].cluster.certificate-authority-data)
+  category        = "terraform"
+  sensitive       = true
+  variable_set_id = data.tfe_variable_set.homezone.id
+}
+
+resource "tfe_variable" "kube_client_cert_data" {
+  key             = "kube_client_cert_data"
+  value           = base64decode(yamldecode(file("~/.kube/config.d/homezone-v1.yaml")).users[0].user.client-certificate-data)
+  category        = "terraform"
+  sensitive       = true
+  variable_set_id = data.tfe_variable_set.homezone.id
+}
+
+resource "tfe_variable" "kube_client_key_data" {
+  key             = "kube_client_key_data"
+  value           = base64decode(yamldecode(file("~/.kube/config.d/homezone-v1.yaml")).users[0].user.client-key-data)
+  category        = "terraform"
+  sensitive       = true
+  variable_set_id = data.tfe_variable_set.homezone.id
+}

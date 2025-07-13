@@ -76,3 +76,10 @@ data "onepassword_item" "vyas_fast_key_1" {
 data "tfe_workspace" "k8s_homezone" {
   name = "k8s_homezone"
 }
+data "onepassword_item" "homezone" {
+  vault = var.onepass_vault.uuid
+  title = "HomeZone-v1"
+}
+data "tfe_variable_set" "homezone" {
+  name = "HomeZone-v1"
+}

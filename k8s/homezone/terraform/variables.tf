@@ -23,3 +23,23 @@ variable "external_secrets_onepassword_service_account_token" {
   sensitive = true
   type      = string
 }
+
+variable "kube_host" {
+  sensitive = false
+  type      = string
+}
+
+variable "kube_cluster_ca_cert_data" {
+  sensitive = true
+  type      = string
+}
+
+variable "kube_client_cert_data" {
+  sensitive = true
+  type      = string
+}
+
+variable "kube_client_key_data" {
+  sensitive = true
+  type      = string
+}

@@ -35,18 +35,24 @@ terraform {
 # - https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_cluster#kubernetes-terraform-provider-example
 
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
-  config_context = "homezone-v1"
+  host                   = var.kube_host
+  cluster_ca_certificate = var.kube_cluster_ca_cert_data
+  client_certificate     = var.kube_client_cert_data
+  client_key             = var.kube_client_key_data
 }
 
 provider "kubectl" {
-  config_path    = "~/.kube/config"
-  config_context = "homezone-v1"
+  host                   = var.kube_host
+  cluster_ca_certificate = var.kube_cluster_ca_cert_data
+  client_certificate     = var.kube_client_cert_data
+  client_key             = var.kube_client_key_data
 }
 
 provider "helm" {
   kubernetes {
-    config_path    = "~/.kube/config"
-    config_context = "homezone-v1"
+    host                   = var.kube_host
+    cluster_ca_certificate = var.kube_cluster_ca_cert_data
+    client_certificate     = var.kube_client_cert_data
+    client_key             = var.kube_client_key_data
   }
 }
