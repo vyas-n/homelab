@@ -1,0 +1,17 @@
+# gitleaks ignore file to ignore certain credentials (they have rotated, expired, or only used for testing)
+# ref: No official config ref exists but you can get the idea from the example below
+# example: https://github.com/gitleaks/gitleaks/blob/master/.gitleaksignore
+
+# These secrets were used for an self-hosted gitpod (https://gitpod.io) proof-of-concept, since been decommissioned and no longer running
+805fef1ba31552521d5fd652bdf21bc92edfa3b8:k8s/kots/gitpod/gitpod.yaml:kubernetes-secret-yaml:252
+805fef1ba31552521d5fd652bdf21bc92edfa3b8:k8s/kots/gitpod/gitpod.yaml:generic-api-key:253
+805fef1ba31552521d5fd652bdf21bc92edfa3b8:k8s/kots/gitpod/gitpod.yaml:generic-api-key:255
+f6b6f567d0614ea53f009c907295922f30526f63:k8s/kots/gitpod/gitpod.yaml:kubernetes-secret-yaml:202
+f6b6f567d0614ea53f009c907295922f30526f63:k8s/kots/gitpod/gitpod.yaml:kubernetes-secret-yaml:219
+f6b6f567d0614ea53f009c907295922f30526f63:k8s/kots/gitpod/gitpod.yaml:kubernetes-secret-yaml:236
+f6b6f567d0614ea53f009c907295922f30526f63:k8s/kots/gitpod/gitpod.yaml:kubernetes-secret-yaml:252
+f6b6f567d0614ea53f009c907295922f30526f63:k8s/kots/gitpod/gitpod.yaml:kubernetes-secret-yaml:267
+f6b6f567d0614ea53f009c907295922f30526f63:k8s/kots/gitpod/gitpod.yaml:kubernetes-secret-yaml:286
+f6b6f567d0614ea53f009c907295922f30526f63:k8s/kots/gitpod/gitpod.yaml:generic-api-key:237
+f6b6f567d0614ea53f009c907295922f30526f63:k8s/kots/gitpod/gitpod.yaml:generic-api-key:238
+f6b6f567d0614ea53f009c907295922f30526f63:k8s/kots/gitpod/gitpod.yaml:generic-api-key:288
