@@ -165,5 +165,5 @@ import {
 }
 resource "tfe_workspace_variable_set" "homezone" {
   variable_set_id = tfe_variable_set.homezone_v1.id
-  workspace_id    = tfe_workspace.remote_exec_workspace["homezone"].id
+  workspace_id    = tfe_workspace.remote_exec_workspace["k8s_homezone"].id
 }
