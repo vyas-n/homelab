@@ -50,7 +50,7 @@ provider "kubectl" {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     host                   = var.kube_host
     cluster_ca_certificate = var.kube_cluster_ca_cert_data
     client_certificate     = var.kube_client_cert_data
