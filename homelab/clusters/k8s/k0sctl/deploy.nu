@@ -1,7 +1,7 @@
 #! /usr/bin/env NIXPKGS_ALLOW_UNFREE=1 nix-shell
 #! nix-shell -i nu --packages nushell terraform openssh k0sctl
 
-def main [] {
+def main [--init=false] {
     # Refresh SSH for these hosts
     let ctr_hosts: list<record> = terraform -chdir=../../../terraform output --json k8s_ctr_nodes
         | from json
@@ -26,7 +26,11 @@ def main [] {
     rm -f ~/.cache/k0sctl/k0sctl.log
 
     # Deploy
-    k0sctl apply --no-wait --config=k0sctl.yaml
+    if $init {
+        k0sctl apply --no-wait --config=k0sctl.yaml
+    } else {
+        k0sctl apply --config=k0sctl.yaml
+    }
 
     # Save kubeconfig into local ~/kube/config.d/
     mkdir ~/.kube/config.d
