@@ -46,6 +46,7 @@ provider "kubectl" {
   cluster_ca_certificate = var.kube_cluster_ca_cert_data
   client_certificate     = var.kube_client_cert_data
   client_key             = var.kube_client_key_data
+  load_config_file       = false
 }
 
 provider "helm" {
