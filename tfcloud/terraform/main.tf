@@ -37,7 +37,7 @@ locals {
       agent_pool_id     = tfe_agent_pool.homelab.id
     }
     proxmox : {
-      working_directory = "homelab/terraform"
+      working_directory = "proxmox/terraform"
       agent_pool_id     = tfe_agent_pool.homelab.id
     }
     unifi : {

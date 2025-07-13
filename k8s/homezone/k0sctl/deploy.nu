@@ -3,10 +3,10 @@
 
 def main [--init=false] {
     # Refresh SSH for these hosts
-    let ctr_hosts: list<record> = terraform -chdir=../../../terraform output --json k8s_ctr_nodes
+    let ctr_hosts: list<record> = terraform -chdir=($env.FILE_PWD | path join ../../../proxmox/terraform) output --json k8s_ctr_nodes
         | from json
         | transpose hostname object
-    let wkr_hosts: list<record> = terraform -chdir=../../../terraform output --json k8s_wkr_nodes
+    let wkr_hosts: list<record> = terraform -chdir=($env.FILE_PWD | path join ../../../proxmox/terraform) output --json k8s_wkr_nodes
         | from json
         | transpose hostname object
 
@@ -27,15 +27,15 @@ def main [--init=false] {
 
     # Deploy
     if $init {
-        k0sctl apply --no-wait --config=k0sctl.yaml
+        k0sctl apply --no-wait --config=($env.FILE_PWD | path join k0sctl.yaml)
     } else {
-        k0sctl apply --config=k0sctl.yaml
+        k0sctl apply --config=($env.FILE_PWD | path join k0sctl.yaml)
     }
 
     # Save kubeconfig into local ~/kube/config.d/
     mkdir ~/.kube/config.d
     touch ~/.kube/config.d/homezone-v1.yaml
-    let kubeconfig: record = k0sctl kubeconfig --config=k0sctl.yaml | from yaml
+    let kubeconfig: record = k0sctl kubeconfig --config=($env.FILE_PWD | path join k0sctl.yaml) | from yaml
     let kubeconfig_filepath: path = "~/.kube/config.d/homezone-v1.yaml" | path expand
     $kubeconfig | to yaml | save -f $kubeconfig_filepath
 

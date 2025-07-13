@@ -2,12 +2,8 @@
 #! nix-shell -i nu --packages nushell nix
 
 def main [] {
-    # cd k8s/homezone/k0sctl
-
-    # TODO: k0s apply
-    # ./deploy.nu
-
-    # cd ../../..
+    # k0s apply
+    ./k8s/homezone/k0sctl/deploy.nu
 
     # TODO: secrets tf workspace
     # cd secrets/terraform
