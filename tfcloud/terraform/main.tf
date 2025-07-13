@@ -75,39 +75,6 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
   agent_pool_id  = each.value.agent_pool_id
 }
 
-# Automatically run all above workspaces when the secrets workspace is run
-# moved {
-#   from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3_do_k8s"]
-#   to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3_do_k8s"]
-# }
-# moved {
-#   from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3"]
-#   to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3"]
-# }
-# moved {
-#   from = tfe_run_trigger.remote_exec_workspace["digitalocean"]
-#   to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean"]
-# }
-# moved {
-#   from = tfe_run_trigger.remote_exec_workspace["homelab"]
-#   to   = tfe_run_trigger.remote_exec_workspace_secrets["homelab"]
-# }
-# moved {
-#   from = tfe_run_trigger.remote_exec_workspace["proxmox"]
-#   to   = tfe_run_trigger.remote_exec_workspace_secrets["proxmox"]
-# }
-# moved {
-#   from = tfe_run_trigger.remote_exec_workspace["tailscale"]
-#   to   = tfe_run_trigger.remote_exec_workspace_secrets["tailscale"]
-# }
-# moved {
-#   from = tfe_run_trigger.remote_exec_workspace["tfcloud"]
-#   to   = tfe_run_trigger.remote_exec_workspace_secrets["tfcloud"]
-# }
-# moved {
-#   from = tfe_run_trigger.remote_exec_workspace["unifi"]
-#   to   = tfe_run_trigger.remote_exec_workspace_secrets["unifi"]
-# }
 resource "tfe_run_trigger" "remote_exec_workspace_secrets" {
   for_each      = local.remote_workspaces
   workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
