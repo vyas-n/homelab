@@ -26,23 +26,9 @@ loadBalancer:
 envoy:
   enabled: true
 
-# Transparent Encryption: https://docs.cilium.io/en/stable/security/network/encryption-wireguard/#enable-wireguard-in-cilium
-# TODO: Failing to mount ipsec keys for some reason
-# l7Proxy: false
-# encryption:
-#   enabled: true
-#   encryption:
-#     type: wireguard
 externalIPs:
   enabled: true
 
 k8sClientRateLimit:
   qps: 33
   burst: 48
-
-hubble:
-  enabled: true
-  relay:
-    enabled: true
-  ui:
-    enabled: true

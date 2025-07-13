@@ -4,6 +4,7 @@
 
 # This is from Cilium's tuning guide
 # ref: https://docs.cilium.io/en/latest/operations/performance/tuning/#tuning-guide
+# TODO: causes cluster network to fail
 routingMode: native
 autoDirectNodeRoutes: true
 

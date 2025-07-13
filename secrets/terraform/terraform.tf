@@ -11,7 +11,7 @@ terraform {
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "secrets_terraform"
+      name = "secrets"
     }
   }
   required_providers {

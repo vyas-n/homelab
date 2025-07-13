@@ -17,30 +17,30 @@ resource "tfe_agent_pool" "homelab" {
 # List of remote_exec_workspaces
 locals {
   remote_workspaces = {
-    digitalocean_terraform : {
+    digitalocean : {
       working_directory = "digitalocean/terraform"
     }
-    digitalocean_nyc3_terraform : {
+    digitalocean_nyc3 : {
       working_directory = "digitalocean/nyc3/terraform"
     }
-    digitalocean_nyc3_do_k8s_terraform : {
-      working_directory = "digitalocean/nyc3/do-k8s/terraform"
+    k8s_digitalocean : {
+      working_directory = "k8s/digitalocean/terraform"
     }
-    tailscale_terraform : {
+    tailscale : {
       working_directory = "tailscale/terraform"
     }
-    tfcloud_terraform : {
+    tfcloud : {
       working_directory = "tfcloud/terraform"
     }
-    homelab_terraform : {
-      working_directory = "homelab/clusters/k8s/terraform"
+    k8s_homezone : {
+      working_directory = "k8s/homezone/terraform"
       agent_pool_id     = tfe_agent_pool.homelab.id
     }
-    proxmox_terraform : {
-      working_directory = "homelab/terraform"
+    proxmox : {
+      working_directory = "proxmox/terraform"
       agent_pool_id     = tfe_agent_pool.homelab.id
     }
-    unifi_terraform : {
+    unifi : {
       working_directory = "unifi/terraform"
       agent_pool_id     = tfe_agent_pool.homelab.id
     }
@@ -75,43 +75,10 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
   agent_pool_id  = each.value.agent_pool_id
 }
 
-# Automatically run all above workspaces when the secrets workspace is run
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3_do_k8s_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3_do_k8s_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["digitalocean_nyc3_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_nyc3_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["digitalocean_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["digitalocean_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["homelab_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["homelab_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["proxmox_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["proxmox_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["tailscale_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["tailscale_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["tfcloud_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["tfcloud_terraform"]
-}
-moved {
-  from = tfe_run_trigger.remote_exec_workspace["unifi_terraform"]
-  to   = tfe_run_trigger.remote_exec_workspace_secrets["unifi_terraform"]
-}
 resource "tfe_run_trigger" "remote_exec_workspace_secrets" {
   for_each      = local.remote_workspaces
   workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
-  sourceable_id = tfe_workspace.secrets_terraform.id
+  sourceable_id = tfe_workspace.secrets.id
 }
 
 # Automatically run most workspaces when the tfcloud workspace is run
@@ -119,22 +86,22 @@ resource "tfe_run_trigger" "remote_exec_workspace_tfcloud" {
   for_each = {
     for workspace_key, workspace_value in local.remote_workspaces :
     workspace_key => workspace_value
-    if workspace_key != "tfcloud_terraform"
+    if workspace_key != "tfcloud"
   }
   workspace_id  = tfe_workspace.remote_exec_workspace[each.key].id
-  sourceable_id = tfe_workspace.remote_exec_workspace["tfcloud_terraform"].id
+  sourceable_id = tfe_workspace.remote_exec_workspace["tfcloud"].id
 }
 
 # This workspace only executes locally
-resource "tfe_workspace" "secrets_terraform" {
-  name           = "secrets_terraform"
+resource "tfe_workspace" "secrets" {
+  name           = "secrets"
   project_id     = data.tfe_project.default.id
   queue_all_runs = false
 
   terraform_version = local.terraform_version
 }
-resource "tfe_workspace_settings" "secrets_terraform" {
-  workspace_id   = tfe_workspace.secrets_terraform.id
+resource "tfe_workspace_settings" "secrets" {
+  workspace_id   = tfe_workspace.secrets.id
   execution_mode = "local"
 }
 
@@ -174,21 +141,29 @@ resource "tfe_variable_set" "homezone_v1" {
 # Assign Variable Sets to TFE Workspaces
 resource "tfe_workspace_variable_set" "tailscale" {
   variable_set_id = tfe_variable_set.tailscale.id
-  workspace_id    = tfe_workspace.remote_exec_workspace["tailscale_terraform"].id
+  workspace_id    = tfe_workspace.remote_exec_workspace["tailscale"].id
 }
-resource "tfe_workspace_variable_set" "unifi_to_unifi_terraform" {
+resource "tfe_workspace_variable_set" "unifi_to_unifi" {
   variable_set_id = tfe_variable_set.unifi.id
-  workspace_id    = tfe_workspace.remote_exec_workspace["unifi_terraform"].id
+  workspace_id    = tfe_workspace.remote_exec_workspace["unifi"].id
 }
-resource "tfe_workspace_variable_set" "unifi_to_proxmox_terraform" {
+resource "tfe_workspace_variable_set" "unifi_to_proxmox" {
   variable_set_id = tfe_variable_set.unifi.id
-  workspace_id    = tfe_workspace.remote_exec_workspace["proxmox_terraform"].id
+  workspace_id    = tfe_workspace.remote_exec_workspace["proxmox"].id
 }
 import {
-  id = "vyas-n/proxmox_terraform/Proxmox Auth"
-  to = tfe_workspace_variable_set.proxmox_to_proxmox_terraform
+  id = "vyas-n/proxmox/Proxmox Auth"
+  to = tfe_workspace_variable_set.proxmox_to_proxmox
 }
-resource "tfe_workspace_variable_set" "proxmox_to_proxmox_terraform" {
+resource "tfe_workspace_variable_set" "proxmox_to_proxmox" {
   variable_set_id = tfe_variable_set.proxmox.id
-  workspace_id    = tfe_workspace.remote_exec_workspace["proxmox_terraform"].id
+  workspace_id    = tfe_workspace.remote_exec_workspace["proxmox"].id
+}
+import {
+  id = "vyas-n/k8s_homezone/HomeZone-v1"
+  to = tfe_workspace_variable_set.homezone
+}
+resource "tfe_workspace_variable_set" "homezone" {
+  variable_set_id = tfe_variable_set.homezone_v1.id
+  workspace_id    = tfe_workspace.remote_exec_workspace["k8s_homezone"].id
 }

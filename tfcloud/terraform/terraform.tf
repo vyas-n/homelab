@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "tfcloud_terraform"
+      name = "tfcloud"
     }
   }
   required_providers {
