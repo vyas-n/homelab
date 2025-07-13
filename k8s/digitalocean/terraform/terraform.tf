@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "k8s_digitalocean_terraform"
+      name = "k8s_digitalocean"
     }
   }
   required_providers {

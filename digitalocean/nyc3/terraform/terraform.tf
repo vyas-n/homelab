@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "digitalocean_nyc3_terraform"
+      name = "digitalocean_nyc3"
     }
   }
   required_providers {

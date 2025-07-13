@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "homelab_terraform"
+      name = "k8s_homezone"
     }
   }
   required_providers {

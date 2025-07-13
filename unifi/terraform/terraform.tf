@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "vyas-n"
     workspaces {
-      name = "unifi_terraform"
+      name = "unifi"
     }
   }
   required_providers {
