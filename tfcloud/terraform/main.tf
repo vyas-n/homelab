@@ -159,3 +159,12 @@ resource "tfe_workspace_variable_set" "proxmox_to_proxmox" {
   variable_set_id = tfe_variable_set.proxmox.id
   workspace_id    = tfe_workspace.remote_exec_workspace["proxmox"].id
 }
+
+import {
+  id = "vyas-n/homezone/HomeZone-v1"
+  to = tfe_workspace_variable_set.homezone
+}
+resource "tfe_workspace_variable_set" "homezone" {
+  variable_set_id = tfe_variable_set.homezone_v1.id
+  workspace_id    = tfe_workspace.remote_exec_workspace["homezone"].id
+}
