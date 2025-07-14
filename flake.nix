@@ -1,5 +1,5 @@
 {
-  description = "My personal website used to learn and test things.";
+  description = "My homelab!";
 
   inputs = {
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
