@@ -40,6 +40,11 @@ jobs:
           name: MegaLinter reports
           path: |
             megalinter-reports
+      - name: Upload MegaLinter scan results to GitHub Security tab
+        if: always() && !cancelled()
+        uses: github/codeql-action/upload-sarif@181d5eefc20863364f96762470ba6f862bdef56b # v3.29.2
+        with:
+          sarif_file: megalinter-reports/megalinter-report.sarif
   CodeQL:
     name: Analyze (${{ matrix.language }})
     # Runner size impacts CodeQL analysis time. To learn more, please see:
