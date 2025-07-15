@@ -3,9 +3,10 @@
 
 # General Settings
 SHOW_ELAPSED_TIME: true
-DISABLE_ERRORS: true
+SARIF_REPORTER: true
 
 # Linter Enable/Disable
+DISABLE_ERRORS: true
 DISABLE:
   - COPYPASTE
   - SPELL
