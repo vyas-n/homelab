@@ -60,7 +60,7 @@ resource "tfe_workspace" "remote_exec_workspace" {
   auto_apply_run_trigger = true
 
   vcs_repo {
-    identifier                 = "vyas-proj/deploy"
+    identifier                 = "vyas-n/homelab"
     github_app_installation_id = local.tfc_github_app_install_id
   }
 }

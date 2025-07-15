@@ -5,9 +5,10 @@ data "tfe_project" "default" {
   name = "Default"
 }
 
-# ref: https://github.com/settings/installations/20575258
+# ref: https://github.com/settings/installations/75993109
+# TODO: dynamically retrieve this from GitHub App installation in account `vyas-n`
 locals {
-  tfc_github_app_install_id = "ghain-EfRbKi6QDumqrW5A"
+  tfc_github_app_install_id = "ghain-duPboA75dCWmDjRT"
 }
 
 # data "tfe_github_app_installation" "vyas_n" {
