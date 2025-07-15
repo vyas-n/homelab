@@ -153,6 +153,15 @@
       # you can `apt install lshw` and then check the output of `lshw -class display -json` for "vendor" : "Advanced Micro Devices, Inc. [AMD/ATI]"
       when: (has_amd_gpu is defined) and has_amd_gpu
   tasks:
+    - name: Setup Ceph Dashboard
+      # ref: https://gist.github.com/Drallas/84ece855dc39b6af33f25d4b9f3a1fe3?permalink_comment_id=5046557#setup-ceph-dashboard
+      block:
+        - name: Install Ceph Dashboard dependencies
+          become: true
+          ansible.builtin.apt:
+            package:
+              - ceph-mgr-dashboard
+
     - name: Disable laptop lid close
       # ref: https://youtu.be/FsPYgZYXyZw?si=HgeFVVoom-vbTYcs&t=481
       when: check_system_chassis_type.stdout == "Laptop"
@@ -334,3 +343,21 @@
       ansible.builtin.systemd_service:
         name: caddy
         state: reloaded
+
+# Provision Proxmox
+- name: Setup Proxmox Ceph Dashboard
+  # TODO: adjust hosts so that it automatically runs on any proxmox host even when one is down
+  hosts: proxmox-0
+  tasks:
+    - name: Enable Ceph Dashboard
+      # ref: https://gist.github.com/Drallas/84ece855dc39b6af33f25d4b9f3a1fe3?permalink_comment_id=5046557#setup-ceph-dashboard
+      block:
+        - name: Enable Ceph Dashboard
+          become: true
+          ansible.builtin.shell:
+            cmd: |
+              ceph mgr module enable dashboard
+        # TODO: detect if dashboard has a cert and automatically run create-self-signed-cert if it doesn't
+        # TODO: use Caddy to proxy Dashboard and provide ZeroSSL TLS
+        # TODO: setup DNS values for tailscale & Unifi
+        # TODO: setup Caddy to route based on DNS
