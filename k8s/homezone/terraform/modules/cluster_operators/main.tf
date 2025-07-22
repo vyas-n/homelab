@@ -153,7 +153,7 @@ resource "kubectl_manifest" "zerossl_clusterissuer" {
         externalAccountBinding = {
           keyID = var.cert_manager_zerossl_eab_kid
           keySecretRef = {
-            name = kubectl_manifest.cert_manager_zerossl_eab_creds.name
+            name = kubernetes_secret.cert_manager_zerossl_eab_creds.metadata[0].name
             key  = "eab_hmac_key"
           }
         }
