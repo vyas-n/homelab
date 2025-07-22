@@ -158,28 +158,28 @@ resource "tfe_variable" "tailscale_api_key" {
 }
 
 # Unifi Gateway Credentials
-resource "tfe_variable" "UNIFI_INSECURE" {
+resource "tfe_variable" "unifi_insecure" {
   key             = "UNIFI_INSECURE"
   value           = "true"
   category        = "env"
   sensitive       = false
   variable_set_id = data.tfe_variable_set.unifi.id
 }
-resource "tfe_variable" "UNIFI_API" {
+resource "tfe_variable" "unifi_api" {
   key             = "UNIFI_API"
   value           = data.onepassword_item.unifi_gateway_homelab.url
   category        = "env"
   sensitive       = false
   variable_set_id = data.tfe_variable_set.unifi.id
 }
-resource "tfe_variable" "UNIFI_PASSWORD" {
+resource "tfe_variable" "unifi_password" {
   key             = "UNIFI_PASSWORD"
   value           = data.onepassword_item.unifi_gateway_homelab.password
   category        = "env"
   sensitive       = true
   variable_set_id = data.tfe_variable_set.unifi.id
 }
-resource "tfe_variable" "UNIFI_USERNAME" {
+resource "tfe_variable" "unifi_username" {
   key             = "UNIFI_USERNAME"
   value           = data.onepassword_item.unifi_gateway_homelab.username
   category        = "env"
@@ -188,14 +188,14 @@ resource "tfe_variable" "UNIFI_USERNAME" {
 }
 
 # Proxmox Credentials
-resource "tfe_variable" "PROXMOX_VE_ENDPOINT" {
+resource "tfe_variable" "proxmox_ve_endpoint" {
   key             = "PROXMOX_VE_ENDPOINT"
   value           = "https://${data.onepassword_item.proxmox_api_token.hostname}"
   category        = "env"
   sensitive       = false
   variable_set_id = data.tfe_variable_set.proxmox.id
 }
-resource "tfe_variable" "PROXMOX_VE_API_TOKEN" {
+resource "tfe_variable" "proxmox_ve_api_token" {
   key             = "PROXMOX_VE_API_TOKEN"
   value           = "${data.onepassword_item.proxmox_api_token.username}=${data.onepassword_item.proxmox_api_token.credential}"
   category        = "env"

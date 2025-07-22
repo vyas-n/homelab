@@ -14,9 +14,9 @@ bpf:
   distributedLRU:
     enabled: true
   mapDynamicSizeRatio: 0.08
-# ipv6:
-#   enabled: true
-# enableIPv6BIGTCP: true
+ipv6:
+  enabled: true
+enableIPv6BIGTCP: true
 ipv4:
   enabled: true
 enableIPv4BIGTCP: true

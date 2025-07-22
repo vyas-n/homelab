@@ -1,6 +1,0 @@
-[Path]
-Unit=nginx-reloader.service
-PathChanged=/etc/pve/local
-
-[Install]
-WantedBy=multi-user.target

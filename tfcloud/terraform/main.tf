@@ -1,7 +1,6 @@
 
 locals {
-  # TODO: verify that this matches the version of terraform provided by nix
-  terraform_version = "1.12.0"
+  terraform_version = trimspace(file("${path.module}/../../.terraform-version"))
 }
 
 # Default Org Settings
@@ -54,7 +53,6 @@ resource "tfe_workspace" "remote_exec_workspace" {
   project_id        = data.tfe_project.default.id
 
   terraform_version      = local.terraform_version
-  auto_apply             = true
   queue_all_runs         = false
   file_triggers_enabled  = false
   auto_apply_run_trigger = true
@@ -72,6 +70,7 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
   }
   workspace_id   = tfe_workspace.remote_exec_workspace[each.key].id
   execution_mode = "agent"
+  auto_apply     = true
   agent_pool_id  = each.value.agent_pool_id
 }
 
@@ -151,17 +150,9 @@ resource "tfe_workspace_variable_set" "unifi_to_proxmox" {
   variable_set_id = tfe_variable_set.unifi.id
   workspace_id    = tfe_workspace.remote_exec_workspace["proxmox"].id
 }
-import {
-  id = "vyas-n/proxmox/Proxmox Auth"
-  to = tfe_workspace_variable_set.proxmox_to_proxmox
-}
 resource "tfe_workspace_variable_set" "proxmox_to_proxmox" {
   variable_set_id = tfe_variable_set.proxmox.id
   workspace_id    = tfe_workspace.remote_exec_workspace["proxmox"].id
-}
-import {
-  id = "vyas-n/k8s_homezone/HomeZone-v1"
-  to = tfe_workspace_variable_set.homezone
 }
 resource "tfe_workspace_variable_set" "homezone" {
   variable_set_id = tfe_variable_set.homezone_v1.id
