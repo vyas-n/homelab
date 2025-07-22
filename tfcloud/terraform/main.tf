@@ -1,7 +1,6 @@
 
 locals {
-  # TODO: verify that this matches the version of terraform provided by nix
-  terraform_version = "1.12.0"
+  terraform_version = trim(file("${path.module}/../../.terraform-version"))
 }
 
 # Default Org Settings
