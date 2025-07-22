@@ -12,26 +12,26 @@ resource "kubernetes_namespace" "authentik" {
 }
 
 # ref: https://artifacthub.io/packages/helm/goauthentik/authentik
-resource "helm_release" "authentik" {
-  name       = "authentik"
-  chart      = "authentik"
-  repository = "oci://ghcr.io/goauthentik/helm-charts"
-  version    = "2024.8.2"
+# resource "helm_release" "authentik" {
+#   name       = "authentik"
+#   chart      = "authentik"
+#   repository = "oci://ghcr.io/goauthentik/helm-charts"
+#   version    = "2024.8.2"
 
-  max_history      = 5
-  namespace        = kubernetes_namespace.authentik.metadata[0].name
-  create_namespace = false
-  lint             = true
-  timeout          = 600
-  wait             = true
-  wait_for_jobs    = true
+#   max_history      = 5
+#   namespace        = kubernetes_namespace.authentik.metadata[0].name
+#   create_namespace = false
+#   lint             = true
+#   timeout          = 600
+#   wait             = true
+#   wait_for_jobs    = true
 
-  values = [
-    # remove yaml comments & formatting from diff calculations
-    yamlencode(yamldecode(file("${path.module}/helm/authentik/values.yaml"))),
-    yamlencode({})
-  ]
-}
+#   values = [
+#     # remove yaml comments & formatting from diff calculations
+#     yamlencode(yamldecode(file("${path.module}/helm/authentik/values.yaml"))),
+#     yamlencode({})
+#   ]
+# }
 
 resource "kubernetes_namespace" "onepassconnect" {
   metadata {
