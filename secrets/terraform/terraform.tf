@@ -39,6 +39,10 @@ terraform {
       source  = "integrations/github"
       version = "6.6.0"
     }
+    zerossl = {
+      source  = "toowoxx/zerossl"
+      version = "0.1.1"
+    }
   }
 }
 
@@ -53,6 +57,8 @@ provider "tfe" {
 }
 
 provider "time" {}
+
+provider "zerossl" {}
 
 provider "proxmox" {
   endpoint = "https://proxmox-1.hosts.vyas-n.dev/"

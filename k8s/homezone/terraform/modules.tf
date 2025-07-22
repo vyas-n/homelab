@@ -16,6 +16,11 @@ module "cluster_operators" {
 
   external_secrets_onepassword_service_account_token = var.external_secrets_onepassword_service_account_token
 
+  cert_manager_cloudflare_api_token = var.cert_manager_cloudflare_api_token
+  cert_manager_zerossl_eab_id       = var.cert_manager_zerossl_eab_id
+  cert_manager_zerossl_eab_kid      = var.cert_manager_zerossl_eab_kid
+  cert_manager_zerossl_eab_hmac_key = var.cert_manager_zerossl_eab_hmac_key
+
   depends_on = [
     module.cilium,
     helm_release.prometheus_operator_crds

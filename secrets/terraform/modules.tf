@@ -6,7 +6,8 @@ module "proxmox_secrets" {
 module "tfe_secrets" {
   source = "./modules/tfe_secrets"
 
-  onepass_vault = data.onepassword_vault.private
+  onepass_vault   = data.onepassword_vault.private
+  zerossl_api_key = data.onepassword_item.zerossl_api_key.credential
 }
 
 module "gh_secrets" {
@@ -19,6 +20,7 @@ output "proxmox_secrets" {
 
 output "tfe_secrets" {
   value = module.tfe_secrets
+
 }
 
 output "gh_secrets" {

@@ -65,141 +65,126 @@ resource "kubectl_manifest" "onepassword_homelab_cluster_secret_store" {
   depends_on = [helm_release.external_secrets]
 }
 
-# resource "kubernetes_namespace" "cert_manager" {
-#   metadata {
-#     name = "cert-manager"
-#     labels = {
-#       # fix webhook validation issues
-#       # ref: https://github.com/cert-manager/cert-manager/issues/6864#issuecomment-2027293360
-#       "cert-manager.io/disable-validation" : true
-#     }
-#   }
-# }
+resource "kubernetes_namespace" "cert_manager" {
+  metadata {
+    name = "cert-manager"
+    labels = {
+      # fix webhook validation issues
+      # ref: https://github.com/cert-manager/cert-manager/issues/6864#issuecomment-2027293360
+      "cert-manager.io/disable-validation" : true
+    }
+  }
+}
 
-# resource "helm_release" "cert_manager" { # https://artifacthub.io/packages/helm/cert-manager/cert-manager
-#   name       = "cert-manager"
-#   chart      = "cert-manager"
-#   repository = "https://charts.jetstack.io"
-#   version    = "1.15.3"
+resource "helm_release" "cert_manager" { # https://artifacthub.io/packages/helm/cert-manager/cert-manager
+  name       = "cert-manager"
+  chart      = "cert-manager"
+  repository = "https://charts.jetstack.io"
+  version    = "1.15.3"
 
-#   namespace        = kubernetes_namespace.cert_manager.metadata[0].name
-#   create_namespace = false
-#   lint             = true
-#   timeout          = 300
+  namespace        = kubernetes_namespace.cert_manager.metadata[0].name
+  create_namespace = false
+  lint             = true
+  timeout          = 300
 
-#   values = concat(
-#     [
-#       # We sort the fileset to preserve the ordering of the values files
-#       for file in sort(fileset(path.module, "helm/cert-manager/*.{yaml,yml}")) :
-#       # We decode & reencode to remove yaml comments & formatting from diff calculations
-#       yamlencode(yamldecode(file("${path.module}/${file}")))
-#       ], [
-#       yamlencode({}),
-#   ])
-# }
+  values = concat(
+    [
+      # We sort the fileset to preserve the ordering of the values files
+      for file in sort(fileset(path.module, "helm/cert-manager/*.{yaml,yml}")) :
+      # We decode & reencode to remove yaml comments & formatting from diff calculations
+      yamlencode(yamldecode(file("${path.module}/${file}")))
+      ], [
+      yamlencode({}),
+  ])
+}
 
-# resource "kubernetes_secret" "cert_manager_aws_creds" {
-#   metadata {
-#     name      = "cert-manager-aws-creds"
-#     namespace = kubernetes_namespace.cert_manager.metadata[0].name
-#   }
-#   type = "Opaque"
-#   data = {
-#     aws_access_key_id     = var.cert_manager_aws_iam_access_key
-#     aws_secret_access_key = var.cert_manager_aws_iam_secret_key
-#   }
-# }
+# ref: https://cert-manager.io/docs/configuration/acme/dns01/cloudflare/#api-tokens
+resource "kubernetes_secret" "cert_manager_cloudflare_creds" {
+  metadata {
+    name      = "cert-manager-cloudflare-creds"
+    namespace = kubernetes_namespace.cert_manager.metadata[0].name
+  }
+  type = "Opaque"
+  data = {
+    api-token = var.cert_manager_cloudflare_api_token
+  }
+}
 
-# resource "kubectl_manifest" "cert_manager_zerossl_eab_creds" {
-#   yaml_body = yamlencode({
-#     apiVersion = "external-secrets.io/v1beta1"
-#     kind       = "ExternalSecret"
-#     metadata = {
-#       name      = "cert-manager-zerossl-eab-creds"
-#       namespace = kubernetes_namespace.cert_manager.metadata[0].name
-#     }
-#     spec = {
-#       refreshInterval = "5m"
-#       secretStoreRef = {
-#         name = "aws-nonprod"
-#         kind = "ClusterSecretStore"
-#       }
-#       target = {
-#         name           = "cert-manager-zerossl-eab-creds"
-#         creationPolicy = "Owner"
-#       }
-#       data = [
-#         {
-#           secretKey = "eab_key_id"
-#           remoteRef = {
-#             key      = "devzone/k8s/terraform"
-#             property = "eab_key_id"
-#           }
-#         },
-#         {
-#           secretKey = "eab_hmac_key"
-#           remoteRef = {
-#             key      = "devzone/k8s/terraform"
-#             property = "eab_hmac_key"
-#           }
-#         },
-#       ]
-#     }
-#   })
+resource "kubernetes_secret" "cert_manager_zerossl_eab_creds" {
+  metadata {
+    name      = "cert-manager-zerossl-eab-creds"
+    namespace = kubernetes_namespace.cert_manager.metadata[0].name
+  }
+  type = "Opaque"
+  data = {
+    eab_key_id = var.cert_manager_zerossl_eab_kid
 
-#   server_side_apply = true
-#   depends_on        = [helm_release.cert_manager]
-# }
+    # ref: https://cert-manager.io/docs/configuration/acme/#external-account-bindings
+    eab_hmac_key = replace(
+      replace(
+        replace(
+          base64encode(
+            var.cert_manager_zerossl_eab_hmac_key
+          ),
+          "+",
+          "-"
+        ),
+        "/",
+        "_"
+      ),
+      "=",
+      ""
+    )
+  }
+}
 
+resource "kubectl_manifest" "zerossl_clusterissuer" {
+  # ClusterIsssuer Ref: https://cert-manager.io/docs/configuration/acme/#configuration
+  yaml_body = yamlencode({
+    apiVersion = "cert-manager.io/v1"
+    kind       = "ClusterIssuer"
+    metadata = {
+      name = "zerossl-prod"
+    }
+    spec = {
+      acme = {
+        email  = "me@vyas-n.com"
+        server = "https://acme.zerossl.com/v2/DV90"
+        externalAccountBinding = {
+          keyID = var.cert_manager_zerossl_eab_kid
+          keySecretRef = {
+            name = kubernetes_secret.cert_manager_zerossl_eab_creds.metadata[0].name
+            key  = "eab_hmac_key"
+          }
+        }
+        # This secret gets autogenerated by the CRD, the name is just to identify it for later
+        privateKeySecretRef = {
+          name = "zerossl-prod-issuer-account-key"
+        }
+        solvers = [
+          {
+            selector = {
+              dnsZones = [
+                "vyas-n.com"
+              ]
+            }
+            dns01 = {
+              cloudflare = {
+                apiTokenSecretRef = {
+                  name = kubernetes_secret.cert_manager_cloudflare_creds.metadata[0].name
+                  key  = "api-token"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  })
+  server_side_apply = true
 
-# resource "kubectl_manifest" "zerossl_clusterissuer" {
-#   # ClusterIsssuer Ref: https://cert-manager.io/docs/configuration/acme/#configuration
-#   yaml_body = yamlencode({
-#     apiVersion = "cert-manager.io/v1"
-#     kind       = "ClusterIssuer"
-#     metadata = {
-#       name = "zerossl-prod"
-#     }
-#     spec = {
-#       acme = {
-#         email  = "infrateam@wasabi.com"
-#         server = "https://acme.zerossl.com/v2/DV90"
-#         externalAccountBinding = {
-#           keyID = "Ol6hYwftw8sz_dO2wROJGQ"
-#           keySecretRef = {
-#             name = kubectl_manifest.cert_manager_zerossl_eab_creds.name
-#             key  = "eab_hmac_key"
-#           }
-#         }
-#         privateKeySecretRef = {
-#           name = "zerossl-issuer-account-key"
-#         }
-#         solvers = [
-#           {
-#             selector = {
-#               dnsZones = [
-#                 "wsbidev.net"
-#               ]
-#             }
-#             dns01 = {
-#               route53 = {
-#                 region      = "us-east-1"
-#                 accessKeyID = var.cert_manager_aws_iam_access_key
-#                 secretAccessKeySecretRef = {
-#                   name = kubernetes_secret.cert_manager_aws_creds.metadata[0].name
-#                   key  = "aws_secret_access_key"
-#                 }
-#               }
-#             }
-#           }
-#         ]
-#       }
-#     }
-#   })
-#   server_side_apply = true
-
-#   depends_on = [helm_release.cert_manager]
-# }
+  depends_on = [helm_release.cert_manager]
+}
 
 # resource "kubernetes_namespace" "external_dns" {
 #   metadata {

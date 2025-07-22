@@ -26,5 +26,9 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = ">= 4.0.0"
     }
+    zerossl = {
+      source  = "toowoxx/zerossl"
+      version = ">= 0.1.1"
+    }
   }
 }
