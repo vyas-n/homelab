@@ -14,6 +14,8 @@ spec:
         - topology.kubernetes.io/region=homelab
         - --labels
         - topology.kubernetes.io/zone=vlan1
+        # Monitoring k8s Control Plane: https://docs.k0sproject.io/stable/system-monitoring/#system-components-monitoring
+        - --enable-metrics-scraper
       openSSH:
         address: k8s-ctr-0.vms.vyas-n.dev
     - role: controller
@@ -34,7 +36,7 @@ spec:
         address: k8s-wkr-1.vms.vyas-n.dev
   k0s:
     # releases: https://github.com/k0sproject/k0s/releases
-    version: v1.33.2+k0s.0
+    version: v1.33.3+k0s.0
     config:
       # k0s config
       # ref: https://docs.k0sproject.io/stable/configuration/#configuration-file-reference
