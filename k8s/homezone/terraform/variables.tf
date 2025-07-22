@@ -43,3 +43,23 @@ variable "kube_client_key_data" {
   sensitive = true
   type      = string
 }
+
+variable "cert_manager_cloudflare_api_token" {
+  sensitive = true
+  type      = string
+}
+
+variable "cert_manager_zerossl_eab_id" {
+  sensitive = false
+  type      = string
+}
+
+variable "cert_manager_zerossl_eab_kid" {
+  sensitive = true
+  type      = string
+}
+
+variable "cert_manager_zerossl_eab_hmac_key" {
+  sensitive = true
+  type      = string
+}

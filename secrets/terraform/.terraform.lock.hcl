@@ -132,3 +132,20 @@ provider "registry.terraform.io/integrations/github" {
     "zh:fbd1fee2c9df3aa19cf8851ce134dea6e45ea01cb85695c1726670c285797e25",
   ]
 }
+
+provider "registry.terraform.io/toowoxx/zerossl" {
+  version     = "0.1.1"
+  constraints = ">= 0.1.1, 0.1.1"
+  hashes = [
+    "h1:UJLTqDOJHy7LUn5g1ZHhE56NhGWr06gM7Yo2M8em1CI=",
+    "zh:300da0ac9bf45121638102a22233b7892315d7726b86d78da5d47f87a29e3bc9",
+    "zh:4521c07804b4102c568213cb80f9995806a74097687ca32de4fc3441e7384529",
+    "zh:78f9bd4b4b5bb6f6eeefed6ef8cdc8125e3da359559d20eda07b4d251507c3f1",
+    "zh:7b310e0959a5473bb64499c0b7f1fc604c4c60dec77429a2f573e6861de3abe1",
+    "zh:977bc403ffb56c0142b5a2db175bc7270bf24b19b2e95b2530a4a0fdc250d965",
+    "zh:9ea6f25e12b280663eb8d657d35d26195e9d35a0241bda58fc57c34c7ebf79a5",
+    "zh:c8303c8a0e8bc019c27fe42a0a26497daae598620a8d36495a1fe5b6c93b4a64",
+    "zh:db616711fc20bdf78a751d8b9a72f887be842253c17fa10ecd8721cdf766e6b6",
+    "zh:e55c5ef7251ad6e8b27b36bba034f7e100e44296a41103a9ddd820ea14baedf7",
+  ]
+}
