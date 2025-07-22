@@ -54,7 +54,6 @@ resource "tfe_workspace" "remote_exec_workspace" {
   project_id        = data.tfe_project.default.id
 
   terraform_version      = local.terraform_version
-  auto_apply             = true
   queue_all_runs         = false
   file_triggers_enabled  = false
   auto_apply_run_trigger = true
@@ -72,6 +71,7 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
   }
   workspace_id   = tfe_workspace.remote_exec_workspace[each.key].id
   execution_mode = "agent"
+  auto_apply     = true
   agent_pool_id  = each.value.agent_pool_id
 }
 
