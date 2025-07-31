@@ -1,6 +1,6 @@
 
 locals {
-  terraform_version = trimspace(file("${path.module}/../../.terraform-version"))
+  terraform_version = trimspace(file("${path.module}/../../../.terraform-version"))
 }
 
 # Default Org Settings
@@ -17,30 +17,30 @@ resource "tfe_agent_pool" "homelab" {
 locals {
   remote_workspaces = {
     digitalocean : {
-      working_directory = "digitalocean/terraform"
+      working_directory = "infra/digitalocean/terraform"
     }
     digitalocean_nyc3 : {
-      working_directory = "digitalocean/nyc3/terraform"
+      working_directory = "infra/digitalocean/nyc3/terraform"
     }
     k8s_digitalocean : {
-      working_directory = "k8s/digitalocean/terraform"
+      working_directory = "infra/k8s/digitalocean/terraform"
     }
     tailscale : {
-      working_directory = "tailscale/terraform"
+      working_directory = "infra/tailscale/terraform"
     }
     tfcloud : {
-      working_directory = "tfcloud/terraform"
+      working_directory = "infra/tfcloud/terraform"
     }
     k8s_homezone : {
-      working_directory = "k8s/homezone/terraform"
+      working_directory = "infra/k8s/homezone/terraform"
       agent_pool_id     = tfe_agent_pool.homelab.id
     }
     proxmox : {
-      working_directory = "proxmox/terraform"
+      working_directory = "infra/proxmox/terraform"
       agent_pool_id     = tfe_agent_pool.homelab.id
     }
     unifi : {
-      working_directory = "unifi/terraform"
+      working_directory = "infra/unifi/terraform"
       agent_pool_id     = tfe_agent_pool.homelab.id
     }
   }

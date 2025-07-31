@@ -29,14 +29,14 @@ updates:
           - "*"
   - package-ecosystem: terraform
     directories:
-      - digitalocean/**/terraform
-      - k8s/**/terraform
-      - k8s/**/modules/*
-      - proxmox/**/terraform
-      - proxmox/**/modules/*
-      - tailscale/terraform
-      - tfcloud/terraform
-      - unifi/terraform
+      - infra/digitalocean/**/terraform
+      - infra/k8s/**/terraform
+      - infra/k8s/**/modules/*
+      - infra/proxmox/**/terraform
+      - infra/proxmox/**/modules/*
+      - infra/tailscale/terraform
+      - infra/tfcloud/terraform
+      - infra/unifi/terraform
     schedule:
       interval: daily
     groups:
@@ -45,8 +45,8 @@ updates:
           - "*"
   - package-ecosystem: terraform
     directories:
-      - secrets/terraform
-      - secrets/terraform/modules/*
+      - infra/secrets/terraform
+      - infra/secrets/terraform/modules/*
     schedule:
       interval: daily
     groups:
