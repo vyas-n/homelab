@@ -1,6 +1,6 @@
 
 locals {
-  terraform_version = trimspace(file("${path.module}/../../.terraform-version"))
+  terraform_version = trimspace(file("${path.module}/../../../.terraform-version"))
 }
 
 # Default Org Settings
