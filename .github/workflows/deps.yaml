@@ -2,6 +2,9 @@
 # GitHub Actions Workflows Ref: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
 name: Dependencies
 "on":
+  pull_request:
+    branches:
+      - develop
   workflow_dispatch:
   schedule:
     # ref: https://crontab.guru/#0_4_*_*_*
@@ -18,10 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
-      contents: read
+      actions: write
+      contents: write
     steps:
       - uses: actions/checkout@v4.2.2
       - uses: renovatebot/github-action@v43.0.5
         with:
-          mount-docker-socket: true
+          # mount-docker-socket: true
+          configurationFile: .github/renovate.json
           token: ${{ secrets.RENOVATE_GITHUB_TOKEN }}
