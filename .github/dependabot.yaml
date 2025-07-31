@@ -53,3 +53,8 @@ updates:
       terraform-local-exec:
         patterns:
           - "*"
+    ignore:
+      # Cloudflare provider version 5 doesn't have a clear upgrade path from version 4.
+      - dependency-name: cloudflare/cloudflare
+        update-types:
+          - version-update:semver-major
