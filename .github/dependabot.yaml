@@ -29,6 +29,7 @@ updates:
           - "*"
   - package-ecosystem: terraform
     directories:
+      - modules/*
       - infra/digitalocean/**/terraform
       - infra/k8s/**/terraform
       - infra/k8s/**/modules/*
