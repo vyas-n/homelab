@@ -1,5 +1,6 @@
 ---
 # .ansible-lint
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/refs/heads/main/src/ansiblelint/schemas/ansible-lint-config.json
 
 quiet: false
 verbosity: 1
