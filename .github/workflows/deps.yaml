@@ -20,8 +20,8 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v5.0.0
-      - uses: renovatebot/github-action@v43.0.7
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: renovatebot/github-action@6927a58a017ee9ac468a34a5b0d2a9a9bd45cac3 # v43.0.11
         with:
           mount-docker-socket: true
           token: ${{ secrets.RENOVATE_GITHUB_TOKEN }}
