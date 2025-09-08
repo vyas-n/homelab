@@ -58,3 +58,11 @@ updates:
       - dependency-name: cloudflare/cloudflare
         update-types:
           - version-update:semver-major
+  - package-ecosystem: devcontainers
+    directory: /
+    schedule:
+      interval: daily
+    groups:
+      devcontainers:
+        patterns:
+          - "*"
