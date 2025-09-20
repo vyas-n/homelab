@@ -1,0 +1,14 @@
+[tools]
+# Core tools
+node = "latest"
+usage = "latest"
+uv = "latest"
+direnv = "latest"
+
+# Packages
+"npm:prettier" = "latest"
+
+[settings]
+experimental = true
+python.uv_venv_auto = true
+idiomatic_version_file_enable_tools = ["terraform"]
