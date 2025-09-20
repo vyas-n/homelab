@@ -10,6 +10,7 @@ license.yaml
 .nix-defexpr/
 .terraform/
 .trunk/
+.venv/
 
 # Generated / Temp Files
 .DS_Store
