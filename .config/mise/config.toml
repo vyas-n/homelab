@@ -1,9 +1,9 @@
 [tools]
-
 # Core tools
 node = "latest"
 usage = "latest"
 uv = "latest"
+direnv = "latest"
 
 # Packages
 "npm:prettier" = "latest"
