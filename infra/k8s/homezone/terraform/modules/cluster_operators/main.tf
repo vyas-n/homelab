@@ -217,24 +217,26 @@ resource "helm_release" "external_dns" { # https://artifacthub.io/packages/helm/
   values = [
     yamlencode(yamldecode(file("${path.module}/helm/external-dns/values.yaml"))), # remove yaml comments & formatting from diff calculations
     yamlencode({
-      webhook = {
-        env = [
-          { name  = "UNIFI_HOST"
-            value = "https://192.168.2.1"
-          },
-          { name  = "UNIFI_EXTERNAL_CONTROLLER"
-            value = "false"
-          },
-          {
-            name = "UNIFI_API_KEY"
-            valueFrom = {
-              secretKeyRef = {
-                name = kubernetes_secret.external_dns_unifi_secret.metadata[0].name
-                key  = "api-key"
+      provider = {
+        webhook = {
+          env = [
+            { name  = "UNIFI_HOST"
+              value = "https://192.168.2.1"
+            },
+            { name  = "UNIFI_EXTERNAL_CONTROLLER"
+              value = "false"
+            },
+            {
+              name = "UNIFI_API_KEY"
+              valueFrom = {
+                secretKeyRef = {
+                  name = kubernetes_secret.external_dns_unifi_secret.metadata[0].name
+                  key  = "api-key"
+                }
               }
             }
-          }
-        ]
+          ]
+        }
       }
     })
   ]
