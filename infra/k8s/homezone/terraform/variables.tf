@@ -14,6 +14,13 @@ variable "k8s_service_port" {
   default = 6443
 }
 
+
+variable "k8s_loadbalancer_cidr_ipv4" {
+  type = string
+  default = "192.168.5.128/25"
+}
+
+
 variable "k8s_endpoint" {
   type    = string
   default = "k8s-ctr-0.vms.vyas-n.dev"

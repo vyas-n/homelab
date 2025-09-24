@@ -1,0 +1,36 @@
+# Unifi Gateway config file to enable BGP for:
+# - Cilium's BGP-based Loadbalancer implementation
+# examples used for reference:
+# - https://medium.com/@rob.de.graaf88/having-fun-with-cilium-bgp-talos-and-unifi-cloud-gateway-ultra-111ffb39757e
+# - https://help.ui.com/hc/en-us/articles/16271338193559-UniFi-Border-Gateway-Protocol-BGP
+
+# TODO: automatically upload this to Unifi Gateway settings page when it changes
+# ref:
+# - https://unifi.ui.com/consoles/0CEA144D1F27000000000871A9680000000008E4BFA800000000671C5D48:243437069/network/default/settings/policy-table/routing
+
+router bgp 65510
+ bgp ebgp-requires-policy
+ bgp router-id 192.168.2.1
+ maximum-paths 1
+ !
+ ! Peer group for Cilium
+ neighbor CI peer-group
+ neighbor CI remote-as 65512
+ neighbor CI activate
+ neighbor CI soft-reconfiguration inbound
+ neighbor CI timers 15 45
+ neighbor CI timers connect 15
+ ! Neighbors for Cilium
+ neighbor 192.168.2.36 peer-group CI
+ neighbor 192.168.2.166 peer-group CI
+
+ address-family ipv4 unicast
+  redistribute connected
+  !
+  neighbor CI activate
+  neighbor CI route-map ALLOW-ALL in
+  neighbor CI route-map ALLOW-ALL out
+  neighbor CI next-hop-self
+ exit-address-family
+ !
+route-map ALLOW-ALL permit 10
