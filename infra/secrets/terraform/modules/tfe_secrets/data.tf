@@ -58,6 +58,10 @@ data "onepassword_item" "unifi_gateway_homelab" {
   vault = var.onepass_vault.uuid
   title = "Unifi Gateway Local User (1pass-api)"
 }
+data "onepassword_item" "unifi_homezone_externaldns_apikey" {
+  vault = var.onepass_vault.uuid
+  title = "Unifi-Homezone-externaldns-apikey"
+}
 
 # Proxmox
 data "tfe_variable_set" "proxmox" {

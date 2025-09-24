@@ -2,9 +2,9 @@
 module "cilium" {
   source = "./modules/cilium"
 
-  k8s_service_port = var.k8s_service_port
-  k8s_endpoint     = var.k8s_endpoint
-  k8s_pod_cidr     = var.k8s_pod_cidr
+  k8s_service_port           = var.k8s_service_port
+  k8s_endpoint               = var.k8s_endpoint
+  k8s_pod_cidr               = var.k8s_pod_cidr
   k8s_loadbalancer_cidr_ipv4 = var.k8s_loadbalancer_cidr_ipv4
 
   depends_on = [
@@ -21,6 +21,8 @@ module "cluster_operators" {
   cert_manager_zerossl_eab_id       = var.cert_manager_zerossl_eab_id
   cert_manager_zerossl_eab_kid      = var.cert_manager_zerossl_eab_kid
   cert_manager_zerossl_eab_hmac_key = var.cert_manager_zerossl_eab_hmac_key
+
+  external_dns_unifi_secret_api_key = var.external_dns_unifi_secret_api_key
 
   depends_on = [
     module.cilium,

@@ -16,7 +16,7 @@ variable "k8s_service_port" {
 
 
 variable "k8s_loadbalancer_cidr_ipv4" {
-  type = string
+  type    = string
   default = "192.168.5.128/25"
 }
 
@@ -67,6 +67,11 @@ variable "cert_manager_zerossl_eab_kid" {
 }
 
 variable "cert_manager_zerossl_eab_hmac_key" {
+  sensitive = true
+  type      = string
+}
+
+variable "external_dns_unifi_secret_api_key" {
   sensitive = true
   type      = string
 }

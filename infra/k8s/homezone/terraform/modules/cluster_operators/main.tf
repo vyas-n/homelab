@@ -186,70 +186,59 @@ resource "kubectl_manifest" "zerossl_clusterissuer" {
   depends_on = [helm_release.cert_manager]
 }
 
-# resource "kubernetes_namespace" "external_dns" {
-#   metadata {
-#     name = "external-dns"
-#   }
-# }
+resource "kubernetes_namespace" "external_dns" {
+  metadata {
+    name = "external-dns"
+  }
+}
 
-# resource "kubernetes_secret" "external_dns_aws_access_key" {
-#   metadata {
-#     name      = "external-dns-aws-access-key"
-#     namespace = kubernetes_namespace.external_dns.metadata[0].name
-#   }
-#   type = "Opaque"
-#   data = {
-#     aws_access_key_id     = var.external_dns_aws_iam_access_key
-#     aws_secret_access_key = var.external_dns_aws_iam_secret_key
-#   }
+resource "kubernetes_secret" "external_dns_unifi_secret" {
+  metadata {
+    name      = "external-dns-unifi-secret"
+    namespace = kubernetes_namespace.external_dns.metadata[0].name
+  }
+  type = "Opaque"
+  data = {
+    api-key = var.external_dns_unifi_secret_api_key
+  }
+}
 
-#   depends_on = [kubectl_manifest.aws_nonprod_secretstore]
-# }
+resource "helm_release" "external_dns" { # https://artifacthub.io/packages/helm/external-dns/external-dns
+  name       = "external-dns"
+  chart      = "external-dns"
+  repository = "https://kubernetes-sigs.github.io/external-dns"
+  version    = "1.19.0"
 
-# resource "helm_release" "external_dns" { # https://artifacthub.io/packages/helm/external-dns/external-dns
-#   name       = "external-dns"
-#   chart      = "external-dns"
-#   repository = "https://kubernetes-sigs.github.io/external-dns"
-#   version    = "1.15.2"
+  namespace        = kubernetes_namespace.external_dns.metadata[0].name
+  create_namespace = false
+  lint             = true
+  timeout          = 300
 
-#   namespace        = kubernetes_namespace.external_dns.metadata[0].name
-#   create_namespace = false
-#   lint             = true
-#   timeout          = 300
-
-#   values = [
-#     yamlencode(yamldecode(file("${path.module}/helm/external-dns/values.yaml"))), # remove yaml comments & formatting from diff calculations
-#     yamlencode({
-#       provider = "aws"
-#       env = [
-#         {
-#           name  = "AWS_DEFAULT_REGION"
-#           value = "us-east-1"
-#         },
-#         {
-#           name = "AWS_ACCESS_KEY_ID"
-#           valueFrom = {
-#             secretKeyRef = {
-#               name     = kubernetes_secret.external_dns_aws_access_key.metadata[0].name
-#               key      = "aws_access_key_id"
-#               optional = false
-#             }
-#           }
-#         },
-#         {
-#           name = "AWS_SECRET_ACCESS_KEY"
-#           valueFrom = {
-#             secretKeyRef = {
-#               name     = kubernetes_secret.external_dns_aws_access_key.metadata[0].name
-#               key      = "aws_secret_access_key"
-#               optional = false
-#             }
-#           }
-#         }
-#       ]
-#     })
-#   ]
-# }
+  values = [
+    yamlencode(yamldecode(file("${path.module}/helm/external-dns/values.yaml"))), # remove yaml comments & formatting from diff calculations
+    yamlencode({
+      webhook = {
+        env = [
+          { name  = "UNIFI_HOST"
+            value = "https://192.168.2.1"
+          },
+          { name  = "UNIFI_EXTERNAL_CONTROLLER"
+            value = "false"
+          },
+          {
+            name = "UNIFI_API_KEY"
+            valueFrom = {
+              secretKeyRef = {
+                name = kubernetes_secret.external_dns_unifi_secret.metadata[0].name
+                key  = "api-key"
+              }
+            }
+          }
+        ]
+      }
+    })
+  ]
+}
 
 
 # resource "kubernetes_namespace" "kyverno" {
