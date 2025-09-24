@@ -53,7 +53,7 @@ flowchart TD
             Proxmox["Proxmox + Ceph"]
             Kubernetes
             VirtualMachines
-            
+
             Proxmox --> VirtualMachines --> Kubernetes
         end
 

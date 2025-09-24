@@ -12,6 +12,6 @@ variable "k8s_pod_cidr" {
 }
 
 variable "k8s_loadbalancer_cidr_ipv4" {
-  type = string
+  type      = string
   sensitive = false
 }

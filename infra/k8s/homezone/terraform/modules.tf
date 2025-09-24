@@ -2,9 +2,9 @@
 module "cilium" {
   source = "./modules/cilium"
 
-  k8s_service_port = var.k8s_service_port
-  k8s_endpoint     = var.k8s_endpoint
-  k8s_pod_cidr     = var.k8s_pod_cidr
+  k8s_service_port           = var.k8s_service_port
+  k8s_endpoint               = var.k8s_endpoint
+  k8s_pod_cidr               = var.k8s_pod_cidr
   k8s_loadbalancer_cidr_ipv4 = var.k8s_loadbalancer_cidr_ipv4
 
   depends_on = [
