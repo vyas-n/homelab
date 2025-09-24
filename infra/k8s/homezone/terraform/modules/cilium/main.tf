@@ -99,7 +99,7 @@ resource "kubectl_manifest" "pool1" {
     }
     spec = {
       blocks = [
-        { cidr = "192.168.4.128/28" }
+        { cidr = var.k8s_loadbalancer_cidr_ipv4 }
       ]
     }
   })
