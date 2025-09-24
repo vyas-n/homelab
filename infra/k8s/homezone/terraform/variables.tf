@@ -70,3 +70,8 @@ variable "cert_manager_zerossl_eab_hmac_key" {
   sensitive = true
   type      = string
 }
+
+variable "external_dns_unifi_secret_api_key" {
+  sensitive = true
+  type      = string
+}

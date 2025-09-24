@@ -22,6 +22,8 @@ module "cluster_operators" {
   cert_manager_zerossl_eab_kid      = var.cert_manager_zerossl_eab_kid
   cert_manager_zerossl_eab_hmac_key = var.cert_manager_zerossl_eab_hmac_key
 
+  external_dns_unifi_secret_api_key = var.external_dns_unifi_secret_api_key
+
   depends_on = [
     module.cilium,
     helm_release.prometheus_operator_crds
