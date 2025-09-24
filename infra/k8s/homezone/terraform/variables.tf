@@ -17,7 +17,7 @@ variable "k8s_service_port" {
 
 variable "k8s_loadbalancer_cidr_ipv4" {
   type = string
-  default = "192.168.4.128/28"
+  default = "192.168.5.128/25"
 }
 
 
