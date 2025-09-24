@@ -226,6 +226,14 @@ resource "tfe_variable" "external_secrets_onepassword_service_account_token" {
   workspace_id = data.tfe_workspace.k8s_homezone.id
 }
 
+resource "tfe_variable" "external_dns_unifi_secret_api_key" {
+  key          = "external_dns_unifi_secret_api_key"
+  value        = data.onepassword_item.unifi_homezone_externaldns_apikey.credential
+  category     = "terraform"
+  sensitive    = true
+  workspace_id = data.tfe_workspace.k8s_homezone.id
+}
+
 # TODO: grab these credentials from 1Password item
 resource "tfe_variable" "kube_host" {
   key             = "kube_host"
