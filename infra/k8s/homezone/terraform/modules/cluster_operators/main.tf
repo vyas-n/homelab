@@ -80,7 +80,7 @@ resource "helm_release" "cert_manager" { # https://artifacthub.io/packages/helm/
   name       = "cert-manager"
   chart      = "cert-manager"
   repository = "https://charts.jetstack.io"
-  version    = "1.15.3"
+  version    = "1.15.4"
 
   namespace        = kubernetes_namespace.cert_manager.metadata[0].name
   create_namespace = false
@@ -120,21 +120,7 @@ resource "kubernetes_secret" "cert_manager_zerossl_eab_creds" {
     eab_key_id = var.cert_manager_zerossl_eab_kid
 
     # ref: https://cert-manager.io/docs/configuration/acme/#external-account-bindings
-    eab_hmac_key = replace(
-      replace(
-        replace(
-          base64encode(
-            var.cert_manager_zerossl_eab_hmac_key
-          ),
-          "+",
-          "-"
-        ),
-        "/",
-        "_"
-      ),
-      "=",
-      ""
-    )
+    eab_hmac_key = var.cert_manager_zerossl_eab_hmac_key
   }
 }
 
