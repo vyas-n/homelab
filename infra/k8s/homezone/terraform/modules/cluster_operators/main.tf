@@ -151,7 +151,7 @@ resource "kubectl_manifest" "zerossl_clusterissuer" {
           {
             selector = {
               dnsZones = [
-                "vyas-n.com"
+                "vyas-n.dev"
               ]
             }
             dns01 = {
