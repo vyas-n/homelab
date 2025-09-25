@@ -2,8 +2,6 @@ resource "zerossl_eab_credentials" "homezone_cert_manager_zerossl_eab_credential
   api_key = var.zerossl_api_key
 }
 
-
-
 resource "time_rotating" "homezone_cert_manager_cloudflare_api_token" {
   rotation_months = 6
 }
