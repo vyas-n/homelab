@@ -240,6 +240,9 @@ resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/pac
           }
         }
       }]
+      domainFilters = [
+        "svc.vyas-n.dev"
+      ]
     })
   ]
 }
