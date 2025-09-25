@@ -1,0 +1,11 @@
+---
+# External DNS Ref: https://artifacthub.io/packages/helm/external-dns/external-dns
+# yaml-language-server: $schema=https://github.com/kubernetes-sigs/external-dns/raw/refs/heads/master/charts/external-dns/values.schema.json
+
+resources:
+  limits:
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 96Mi
+    ephemeral-storage: 128Mi

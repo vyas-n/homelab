@@ -248,6 +248,14 @@ resource "cloudflare_api_token" "tfe_external_dns_cloudflare_api_token" {
   }
 }
 
+resource "tfe_variable" "external_dns_unifi_secret_api_key" {
+  key          = "external_dns_unifi_secret_api_key"
+  value        = data.onepassword_item.unifi_homezone_externaldns_apikey.credential
+  category     = "terraform"
+  sensitive    = true
+  workspace_id = data.tfe_workspace.k8s_homezone.id
+}
+
 resource "tfe_variable" "external_dns_cloudflare_api_token" {
   key          = "external_dns_cloudflare_api_token"
   value        = cloudflare_api_token.tfe_cloudflare_api_token.value

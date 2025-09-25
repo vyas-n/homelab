@@ -23,6 +23,7 @@ module "cluster_operators" {
   cert_manager_zerossl_eab_hmac_key = var.cert_manager_zerossl_eab_hmac_key
 
   external_dns_unifi_secret_api_key = var.external_dns_unifi_secret_api_key
+  external_dns_cloudflare_api_token = var.external_dns_cloudflare_api_token
 
   depends_on = [
     module.cilium,
