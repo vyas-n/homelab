@@ -203,6 +203,17 @@ resource "kubernetes_secret" "external_dns_unifi_secret" {
   }
 }
 
+resource "kubernetes_secret" "external_dns_cloudflare_secret" {
+  metadata {
+    name      = "external-dns-cloudflare-secret"
+    namespace = kubernetes_namespace.external_dns.metadata[0].name
+  }
+  type = "Opaque"
+  data = {
+    apiKey = var.external_dns_cloudflare_api_token
+  }
+}
+
 resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/packages/helm/external-dns/external-dns
   name       = "external-dns-cloudflare"
   chart      = "external-dns"
@@ -218,68 +229,60 @@ resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/pac
     yamlencode(yamldecode(file("${path.module}/helm/external-dns-cloudflare/values.yaml"))), # remove yaml comments & formatting from diff calculations
     yamlencode({
       provider = {
-        webhook = {
-          env = [
-            { name  = "UNIFI_HOST"
-              value = "https://192.168.2.1"
-            },
-            { name  = "UNIFI_EXTERNAL_CONTROLLER"
-              value = "false"
-            },
-            {
-              name = "UNIFI_API_KEY"
-              valueFrom = {
-                secretKeyRef = {
-                  name = kubernetes_secret.external_dns_unifi_secret.metadata[0].name
-                  key  = "api-key"
-                }
-              }
-            }
-          ]
-        }
+        name = "cloudflare"
       }
+      env = [{
+        name = "CF_API_TOKEN"
+        valueFrom = {
+          secretKeyRef = {
+            name = kubernetes_secret.external_dns_cloudflare_secret.metadata[0].name
+            key  = "apiKey"
+          }
+        }
+      }]
     })
   ]
 }
 
-resource "helm_release" "external_dns_unifi" { # https://artifacthub.io/packages/helm/external-dns/external-dns
-  name       = "external-dns-unifi"
-  chart      = "external-dns"
-  repository = "https://kubernetes-sigs.github.io/external-dns"
-  version    = "1.19.0"
+# TODO: use unifi external-dns instead of cloudflare
+# resource "helm_release" "external_dns_unifi" { # https://artifacthub.io/packages/helm/external-dns/external-dns
+#   name       = "external-dns-unifi"
+#   chart      = "external-dns"
+#   repository = "https://kubernetes-sigs.github.io/external-dns"
+#   version    = "1.19.0"
 
-  namespace        = kubernetes_namespace.external_dns.metadata[0].name
-  create_namespace = false
-  lint             = true
-  timeout          = 300
+#   namespace        = kubernetes_namespace.external_dns.metadata[0].name
+#   create_namespace = false
+#   lint             = true
+#   timeout          = 300
 
-  values = [
-    yamlencode(yamldecode(file("${path.module}/helm/external-dns-unifi/values.yaml"))), # remove yaml comments & formatting from diff calculations
-    yamlencode({
-      provider = {
-        webhook = {
-          env = [
-            { name  = "UNIFI_HOST"
-              value = "https://192.168.2.1"
-            },
-            { name  = "UNIFI_EXTERNAL_CONTROLLER"
-              value = "false"
-            },
-            {
-              name = "UNIFI_API_KEY"
-              valueFrom = {
-                secretKeyRef = {
-                  name = kubernetes_secret.external_dns_unifi_secret.metadata[0].name
-                  key  = "api-key"
-                }
-              }
-            }
-          ]
-        }
-      }
-    })
-  ]
-}
+#   values = [
+#     yamlencode(yamldecode(file("${path.module}/helm/external-dns-unifi/values.yaml"))), # remove yaml comments & formatting from diff calculations
+#     yamlencode({
+#       provider = {
+#         webhook = {
+#           env = [
+#             { name  = "UNIFI_HOST"
+#               value = "https://192.168.2.1"
+#             },
+#             { name  = "UNIFI_EXTERNAL_CONTROLLER"
+#               value = "false"
+#             },
+#             {
+#               name = "UNIFI_API_KEY"
+#               valueFrom = {
+#                 secretKeyRef = {
+#                   name = kubernetes_secret.external_dns_unifi_secret.metadata[0].name
+#                   key  = "api-key"
+#                 }
+#               }
+#             }
+#           ]
+#         }
+#       }
+#     })
+#   ]
+# }
 
 
 # resource "kubernetes_namespace" "kyverno" {
