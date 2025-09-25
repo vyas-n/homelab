@@ -226,9 +226,31 @@ resource "tfe_variable" "external_secrets_onepassword_service_account_token" {
   workspace_id = data.tfe_workspace.k8s_homezone.id
 }
 
-resource "tfe_variable" "external_dns_unifi_secret_api_key" {
-  key          = "external_dns_unifi_secret_api_key"
-  value        = data.onepassword_item.unifi_homezone_externaldns_apikey.credential
+resource "time_rotating" "tfe_external_dns_cloudflare_api_token" {
+  rotation_months = 6
+}
+
+# Token allowed to edit DNS entries for all zones from specific account.
+resource "cloudflare_api_token" "tfe_external_dns_cloudflare_api_token" {
+  name = "tfe_external_dns_cloudflare_api_token"
+
+  not_before = time_rotating.tfe_external_dns_cloudflare_api_token.rfc3339
+  expires_on = time_rotating.tfe_external_dns_cloudflare_api_token.rotation_rfc3339
+
+  # include all zones from specific account
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.zone["DNS Write"],
+    ]
+    resources = {
+      "com.cloudflare.api.account.*" = "*"
+    }
+  }
+}
+
+resource "tfe_variable" "external_dns_cloudflare_api_token" {
+  key          = "external_dns_cloudflare_api_token"
+  value        = cloudflare_api_token.tfe_cloudflare_api_token.value
   category     = "terraform"
   sensitive    = true
   workspace_id = data.tfe_workspace.k8s_homezone.id
