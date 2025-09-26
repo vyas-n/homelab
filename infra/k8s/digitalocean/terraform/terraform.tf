@@ -14,19 +14,19 @@ terraform {
   required_providers {
     helm = {
       source  = "hashicorp/helm"
-      version = "3.0.2"
+      version = ">= 3.0.2"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.38.0"
+      version = ">= 2.38.0"
     }
     kubectl = {
       source  = "gavinbunney/kubectl"
-      version = "1.19.0"
+      version = ">= 1.19.0"
     }
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = "2.67.0"
+      version = ">= 2.67.0"
     }
   }
 }
