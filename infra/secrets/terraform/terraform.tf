@@ -17,31 +17,31 @@ terraform {
   required_providers {
     tfe = {
       source  = "hashicorp/tfe"
-      version = "0.69.0"
+      version = ">= 0.69.0"
     }
     onepassword = {
       source  = "1Password/onepassword"
-      version = "2.1.2"
+      version = ">= 2.1.2"
     }
     time = {
       source  = "hashicorp/time"
-      version = "0.13.1"
+      version = ">= 0.13.1"
     }
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.83.2"
+      version = ">= 0.83.2"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.52.5"
+      version = ">= 4.52.5"
     }
     github = {
       source  = "integrations/github"
-      version = "6.6.0"
+      version = ">= 6.6.0"
     }
     zerossl = {
       source  = "toowoxx/zerossl"
-      version = "0.1.1"
+      version = ">= 0.1.1"
     }
   }
 }
