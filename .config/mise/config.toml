@@ -4,9 +4,11 @@ node = "latest"
 usage = "latest"
 uv = "latest"
 direnv = "latest"
+go = "latest"
 
 # Packages
 "npm:prettier" = "latest"
+"go:github.com/k0sproject/k0sctl" = "v0.25.1"
 
 [settings]
 experimental = true

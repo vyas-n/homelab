@@ -38,6 +38,7 @@
   "postCreateCommand": {
     "mise-fish-completion": "mise completion fish > ~/.config/fish/completions/mise.fish",
     "uv-fish-completion": "mise exec uv -- uv generate-shell-completion fish > ~/.config/fish/completions/uv.fish",
+    "k0sctl-fish-completion": "mise exec go:github.com/k0sproject/k0sctl -- k0sctl completion > ~/.config/fish/completions/k0sctl.fish",
     "mise-and-uv-install": "mise install && mise exec uv -- uv python install && mise exec uv -- uv sync",
     "mise-fish-activate": "mise activate fish > ~/.config/fish/conf.d/mise.fish",
     "nix-prefetch": "nix flake prefetch && nix flake prefetch-inputs"
