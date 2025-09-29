@@ -7,15 +7,29 @@
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
-    "ghcr.io/meaningful-ooo/devcontainer-features/fish:2": {},
+    "ghcr.io/meaningful-ooo/devcontainer-features/fish:2.0.0": {},
     "ghcr.io/eitsupi/devcontainer-features/nushell:0.1.1": {},
     "ghcr.io/atty303/devcontainer-features/mise:1.3.0": {},
-    "ghcr.io/devcontainers/features/nix:1.3.1": {}
+    "ghcr.io/devcontainers/features/nix:1.3.1": {
+      "extraNixConfig": "extra-experimental-features = nix-command flakes"
+    },
+    "ghcr.io/rocker-org/devcontainer-features/apt-packages:1.0.2": {
+      "packages": "dnsutils,ssh-askpass"
+    },
+    "ghcr.io/flexwie/devcontainer-features/op:1.0.0": {}
   },
 
   "containerEnv": {
     "MISE_TRUSTED_CONFIG_PATHS": "${containerWorkspaceFolder}"
   },
+
+  "remoteUser": "vscode",
+  "mounts": [
+    // This is to allow access to .ssh/config & .ssh/known_hosts for Ansible & k0sctl
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+  ],
+  // This is for dns resolution of tailscale endpoints
+  "runArgs": ["--dns-search=tail5c72f1.ts.net"],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
@@ -25,7 +39,8 @@
     "mise-fish-completion": "mise completion fish > ~/.config/fish/completions/mise.fish",
     "uv-fish-completion": "mise exec uv -- uv generate-shell-completion fish > ~/.config/fish/completions/uv.fish",
     "mise-and-uv-install": "mise install && mise exec uv -- uv python install && mise exec uv -- uv sync",
-    "mise-fish-activate": "mise activate fish > ~/.config/fish/conf.d/mise.fish"
+    "mise-fish-activate": "mise activate fish > ~/.config/fish/conf.d/mise.fish",
+    "nix-prefetch": "nix flake prefetch && nix flake prefetch-inputs"
   },
 
   // Configure tool-specific properties.
@@ -68,5 +83,4 @@
   }
 
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-  // "remoteUser": "root"
 }
