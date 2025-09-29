@@ -2,8 +2,12 @@
 # Ansible Inventory Ref: https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible-inventory.json
 all:
+  vars:
+    ansible_user: vyas
   children:
     proxmox:
+      vars:
+        ansible_user: root
       hosts:
         proxmox-0:
           has_amd_gpu: true

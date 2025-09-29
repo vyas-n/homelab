@@ -5,7 +5,7 @@
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "image": "mcr.microsoft.com/devcontainers/base:noble",
 
-  // Features to add to the dev container. More info: https://containers.dev/features.
+  // Features to add to the dev container. More info: https://containers.dev/features
   "features": {
     "ghcr.io/meaningful-ooo/devcontainer-features/fish:2.0.0": {},
     "ghcr.io/eitsupi/devcontainer-features/nushell:0.1.1": {},
@@ -14,20 +14,17 @@
       "extraNixConfig": "extra-experimental-features = nix-command flakes"
     },
     "ghcr.io/rocker-org/devcontainer-features/apt-packages:1.0.2": {
-      "packages": "dnsutils,ssh-askpass"
+      "packages": "dnsutils"
     },
     "ghcr.io/flexwie/devcontainer-features/op:1.0.0": {}
   },
 
   "containerEnv": {
+    // Needed for mise create commands to run successfully
     "MISE_TRUSTED_CONFIG_PATHS": "${containerWorkspaceFolder}"
   },
 
   "remoteUser": "vscode",
-  "mounts": [
-    // This is to allow access to .ssh/config & .ssh/known_hosts for Ansible & k0sctl
-    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
-  ],
   // This is for dns resolution of tailscale endpoints
   "runArgs": ["--dns-search=tail5c72f1.ts.net"],
 
