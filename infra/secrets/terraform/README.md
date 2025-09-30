@@ -9,12 +9,13 @@ The files are named after the location that the secrets are synchronized to (not
 | Name        | Version   |
 |-------------|-----------|
 | terraform   | >= 1.11.0 |
-| cloudflare  | 4.52.0    |
-| github      | 6.6.0     |
-| onepassword | 2.1.2     |
-| proxmox     | 0.73.0    |
-| tfe         | 0.64.0    |
-| time        | 0.12.1    |
+| cloudflare  | >= 4.52.5 |
+| github      | >= 6.6.0  |
+| onepassword | >= 2.1.2  |
+| proxmox     | >= 0.83.2 |
+| tfe         | >= 0.69.0 |
+| time        | >= 0.13.1 |
+| zerossl     | >= 0.1.1  |
 
 ## Providers
 
@@ -32,13 +33,13 @@ The files are named after the location that the secrets are synchronized to (not
 
 ## Resources
 
-| Name                                                                                                                                     | Type        |
-|------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [onepassword_item.cloudflare_global_api_key](https://registry.terraform.io/providers/1Password/onepassword/2.1.2/docs/data-sources/item) | data source |
-| [onepassword_item.github_pat_vyas_n](https://registry.terraform.io/providers/1Password/onepassword/2.1.2/docs/data-sources/item)         | data source |
-| [onepassword_item.proxmox_api_token](https://registry.terraform.io/providers/1Password/onepassword/2.1.2/docs/data-sources/item)         | data source |
-| [onepassword_item.tfcloud_pat](https://registry.terraform.io/providers/1Password/onepassword/2.1.2/docs/data-sources/item)               | data source |
-| [onepassword_vault.private](https://registry.terraform.io/providers/1Password/onepassword/2.1.2/docs/data-sources/vault)                 | data source |
+| Name                                                                                                                                      | Type        |
+|-------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [onepassword_item.cloudflare_global_api_key](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item) | data source |
+| [onepassword_item.proxmox_api_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)         | data source |
+| [onepassword_item.tfcloud_pat](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)               | data source |
+| [onepassword_item.zerossl_api_key](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)           | data source |
+| [onepassword_vault.private](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/vault)                 | data source |
 
 ## Outputs
 

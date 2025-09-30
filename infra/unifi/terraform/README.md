@@ -2,20 +2,23 @@
 
 ## Requirements
 
-| Name        | Version |
-|-------------|---------|
-| onepassword | 2.1.2   |
-| unifi       | 0.41.2  |
+| Name      | Version   |
+|-----------|-----------|
+| terraform | >= 1.11.0 |
+| unifi     | >= 0.41.3 |
 
 ## Providers
 
-| Name        | Version |
-|-------------|---------|
-| onepassword | 2.1.2   |
+| Name  | Version |
+|-------|---------|
+| unifi | 0.41.3  |
 
 ## Resources
 
-| Name                                                                                                                                 | Type        |
-|--------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [onepassword_item.unifi_gateway_homelab](https://registry.terraform.io/providers/1Password/onepassword/2.1.2/docs/data-sources/item) | data source |
-| [onepassword_vault.private](https://registry.terraform.io/providers/1Password/onepassword/2.1.2/docs/data-sources/vault)             | data source |
+| Name                                                                                                                              | Type     |
+|-----------------------------------------------------------------------------------------------------------------------------------|----------|
+| [unifi_user.proxmox_0](https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs/resources/user)               | resource |
+| [unifi_user.proxmox_1](https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs/resources/user)               | resource |
+| [unifi_user.proxmox_1_ipmi](https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs/resources/user)          | resource |
+| [unifi_user.tplink_managed_switch_1](https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs/resources/user) | resource |
+| [unifi_user.truenas](https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs/resources/user)                 | resource |

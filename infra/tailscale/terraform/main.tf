@@ -20,34 +20,8 @@ resource "tailscale_dns_preferences" "global" {
 resource "tailscale_dns_search_paths" "global" {
   search_paths = [
     "hosts.vyas-n.dev",
-    "vms.vyas-n.dev",
-    "host.bos13.wsbidev.net",
-    "host.needham.wsbidev.net"
+    "vms.vyas-n.dev"
   ]
-}
-
-resource "tailscale_dns_split_nameservers" "bos13" {
-  domain = "bos13"
-
-  nameservers = ["10.12.10.105", "10.12.10.106", "10.12.11.107"]
-}
-
-resource "tailscale_dns_split_nameservers" "needham" {
-  domain = "needham"
-
-  nameservers = ["10.0.50.105", "10.0.50.106", "10.0.50.107"]
-}
-
-resource "tailscale_dns_split_nameservers" "devzone_bos13" {
-  domain = "host.bos13.wsbidev.net"
-
-  nameservers = ["10.12.121.10"]
-}
-
-resource "tailscale_dns_split_nameservers" "devzone_needham" {
-  domain = "host.needham.wsbidev.net"
-
-  nameservers = ["10.0.92.10"]
 }
 
 resource "tailscale_dns_split_nameservers" "homezone_hosts" {

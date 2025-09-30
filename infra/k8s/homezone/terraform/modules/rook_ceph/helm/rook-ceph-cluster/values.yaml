@@ -18,10 +18,10 @@ ingress:
     ingressClassName: cilium
     tls:
       - hosts:
-          - ceph-dashboard.needham.wsbidev.net
-        secretName: ceph-dashboard-needham-wsbidev-net
+          - ceph-dashboard.homezone-v1.vyas-n.dev
+        secretName: ceph-dashboard.homezone-v1.vyas-n.dev
     host:
-      name: ceph-dashboard.needham.wsbidev.net
+      name: ceph-dashboard.homezone-v1.vyas-n.dev
       path: /
 
 # Cluster Spec Ref: https://rook.github.io/docs/rook/latest-release/CRDs/Cluster/ceph-cluster-crd
@@ -219,10 +219,10 @@ cephObjectStores:
       annotations:
         cert-manager.io/cluster-issuer: zerossl-prod
       host:
-        name: ceph-objectstore.needham.wsbidev.net
+        name: ceph-objectstore.homezone-v1.vyas-n.dev
         path: /
       tls:
         - hosts:
-            - ceph-objectstore.needham.wsbidev.net
-          secretName: ceph-objectstore-needham-wsbidev-net
+            - ceph-objectstore.homezone-v1.vyas-n.dev
+          secretName: ceph-objectstore.homezone-v1.vyas-n.dev
       ingressClassName: cilium

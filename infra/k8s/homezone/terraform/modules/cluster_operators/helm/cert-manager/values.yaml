@@ -8,13 +8,8 @@ prometheus:
   servicemonitor:
     enabled: true
 
-replicaCount: 3
-podDisruptionBudget:
-  enabled: true
-  minAvailable: 1
 livenessProbe:
   enabled: true
-# Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=cert-manager&var-workload=cert-manager&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
 resources:
   limits:
     memory: 128Mi
@@ -23,11 +18,6 @@ resources:
     memory: 64Mi
 
 webhook:
-  replicaCount: 3
-  podDisruptionBudget:
-    enabled: true
-    minAvailable: 1
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=cert-manager&var-workload=cert-manager-webhook&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
   resources:
     limits:
       memory: 64Mi
@@ -36,11 +26,6 @@ webhook:
       memory: 32Mi
 
 cainjector:
-  replicaCount: 3
-  podDisruptionBudget:
-    enabled: true
-    minAvailable: 1
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=cert-manager&var-workload=cert-manager-cainjector&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
   resources:
     limits:
       memory: 512Mi

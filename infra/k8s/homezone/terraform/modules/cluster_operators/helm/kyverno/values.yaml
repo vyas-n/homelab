@@ -5,10 +5,6 @@ grafana:
 
 # https://kyverno.io/docs/installation/methods/#high-availability
 admissionController:
-  replicas: 3
-  podDisruptionBudget:
-    enabled: true
-    minAvailable: 1
   serviceMonitor:
     enabled: true
   container:
@@ -21,10 +17,6 @@ admissionController:
         ephemeral-storage: 128Mi
 
 backgroundController:
-  replicas: 2
-  podDisruptionBudget:
-    enabled: true
-    minAvailable: 1
   serviceMonitor:
     enabled: true
   resources:
@@ -36,10 +28,6 @@ backgroundController:
       ephemeral-storage: 128Mi
 
 cleanupController:
-  replicas: 2
-  podDisruptionBudget:
-    enabled: true
-    minAvailable: 1
   serviceMonitor:
     enabled: true
   resources:
@@ -51,10 +39,6 @@ cleanupController:
       ephemeral-storage: 128Mi
 
 reportsController:
-  replicas: 2
-  podDisruptionBudget:
-    enabled: true
-    minAvailable: 1
   serviceMonitor:
     enabled: true
   resources:

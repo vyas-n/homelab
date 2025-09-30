@@ -6,7 +6,6 @@ defaultRules:
 prometheusOperator:
   verticalPodAutoscaler:
     enabled: true
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=kube-prometheus-stack&var-workload=kube-prometheus-stack-operator&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
   resources:
     limits:
       memory: 128Mi
@@ -31,7 +30,6 @@ prometheus:
     scrapeConfigNamespaceSelector:
       any: true
     scrapeConfigSelectorNilUsesHelmValues: false
-    # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=kube-prometheus-stack&var-workload=prometheus-kube-prometheus-stack-prometheus&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
     resources:
       limits:
         memory: 4Gi
@@ -106,8 +104,8 @@ grafana:
     storageClassName: ceph-block
   grafana.ini:
     server:
-      domain: grafana.needham.wsbidev.net
-      root_url: https://grafana.needham.wsbidev.net
+      domain: grafana.homezone-v1.vyas-n.dev
+      root_url: https://grafana.homezone-v1.vyas-n.dev
   ingress:
     enabled: true
     annotations:
@@ -115,11 +113,10 @@ grafana:
     ingressClassName: cilium
     tls:
       - hosts:
-          - grafana.needham.wsbidev.net
-        secretName: grafana-needham-wsbidev-net
+          - grafana.homezone-v1.vyas-n.dev
+        secretName: grafana-homezone-v1-vyas-n-dev
     hosts:
-      - grafana.needham.wsbidev.net
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=kube-prometheus-stack&var-workload=kube-prometheus-stack-grafana&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
+      - grafana.homezone-v1.vyas-n.dev
   resources:
     limits:
       memory: 1Gi
@@ -161,7 +158,6 @@ grafana:
         ephemeral-storage: 128Mi
 # Config Ref: https://artifacthub.io/packages/helm/prometheus-community/prometheus-node-exporter
 prometheus-node-exporter:
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=kube-prometheus-stack&var-workload=kube-prometheus-stack-prometheus-node-exporter&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
   resources:
     limits:
       memory: 128Mi
@@ -173,9 +169,8 @@ prometheus-node-exporter:
 kube-state-metrics:
   verticalPodAutoscaler:
     # Our VPA uses metrics from kube-state-metrics to determine the new values for requests & limits.
-    # DevZone Architecture disables the VPA object only for kube-state-metrics to avoid dependency loops.
+    # I disable the VPA object only for kube-state-metrics to avoid dependency loops.
     enabled: false
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-datasource=default&var-cluster=&var-namespace=kube-prometheus-stack&var-workload=kube-prometheus-stack-kube-state-metrics&var-type=All&orgId=1&refresh=10s&from=now-30d&to=now
   resources:
     limits:
       memory: 512Mi

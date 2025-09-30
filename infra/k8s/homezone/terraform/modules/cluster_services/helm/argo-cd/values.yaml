@@ -13,20 +13,12 @@ configs:
       name: docker-registry
       enableOCI: "true"
       type: helm
-    harbor-registry:
-      url: harbor.wsbidev.net
-      username: docker
-      password: ""
-      name: harbor-registry
-      enableOCI: "true"
-      type: helm
 controller:
   replicas: 1
   metrics:
     enabled: true
     serviceMonitor:
       enabled: true
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?orgId=1&refresh=10s&var-datasource=default&var-cluster=&var-namespace=argo-cd&var-type=All&var-workload=argo-cd-argocd-application-controller&from=now-30d&to=now
   resources:
     limits:
       memory: 1Gi
@@ -40,7 +32,6 @@ applicationSet:
     enabled: true
     serviceMonitor:
       enabled: true
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?orgId=1&refresh=10s&var-datasource=default&var-cluster=&var-namespace=argo-cd&var-type=All&var-workload=argo-cd-argocd-applicationset-controller&from=now-30d&to=now
   resources:
     limits:
       memory: 128Mi
@@ -53,7 +44,6 @@ dex:
     enabled: true
     serviceMonitor:
       enabled: true
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?orgId=1&refresh=10s&var-datasource=default&var-cluster=&var-namespace=argo-cd&var-type=All&var-workload=argo-cd-argocd-dex-server&from=now-30d&to=now
   resources:
     limits:
       memory: 64Mi
@@ -66,7 +56,6 @@ notifications:
     enabled: true
     serviceMonitor:
       enabled: true
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?orgId=1&refresh=10s&var-datasource=default&var-cluster=&var-namespace=argo-cd&var-type=All&var-workload=argo-cd-argocd-notifications-controller&from=now-30d&to=now
   resources:
     limits:
       memory: 128Mi
@@ -84,7 +73,6 @@ notifications:
           memory: 128Mi
           ephemeral-storage: 128Mi
 redis:
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?orgId=1&refresh=10s&var-datasource=default&var-cluster=&var-namespace=argo-cd&var-type=All&var-workload=argo-cd-argocd-redis&from=now-30d&to=now
   resources:
     limits:
       memory: 64Mi
@@ -111,7 +99,6 @@ repoServer:
     enabled: true
     serviceMonitor:
       enabled: true
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?orgId=1&refresh=10s&var-datasource=default&var-cluster=&var-namespace=argo-cd&var-type=All&var-workload=argo-cd-argocd-repo-server&from=now-30d&to=now
   resources:
     limits:
       memory: 512Mi
@@ -132,9 +119,8 @@ server:
     tls: true
     annotations:
       cert-manager.io/cluster-issuer: zerossl-prod
-    hostname: argo-cd.needham.wsbidev.net
+    hostname: argo-cd.homezone-v1.vyas-n.dev
     ingressClassName: cilium
-  # Based on: https://grafana.needham.wsbidev.net/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?orgId=1&refresh=10s&var-datasource=default&var-cluster=&var-namespace=argo-cd&var-type=All&var-workload=argo-cd-argocd-server&from=now-30d&to=now
   resources:
     limits:
       memory: 256Mi
