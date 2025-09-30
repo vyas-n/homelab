@@ -6,7 +6,7 @@ Hi there! This is my homelab where I try out new technologies, run home services
 
 ## Architecture
 
-### Homelab
+### Home Hardware
 
 ```mermaid
 flowchart TD
@@ -87,22 +87,22 @@ Terraform workspaces / modules:
 <!-- glob ./**/*.tf | path dirname | uniq | each {|| $in | path relative-to (pwd) } | each {|| $"[($in)]\(($in)\)"} | to yaml | str replace --all "'" "" -->
 <!-- TODO: automatically generate this list via ./format.nu -->
 
-- [infra/proxmox/terraform](infra/proxmox/terraform)
-- [infra/proxmox/terraform/modules/proxmox_cloudinit_vm](infra/proxmox/terraform/modules/proxmox_cloudinit_vm)
-- [infra/proxmox/terraform/modules/proxmox_cloudinit_vm/modules/unifi_host_dns_records](infra/proxmox/terraform/modules/proxmox_cloudinit_vm/modules/unifi_host_dns_records)
-- [infra/k8s/digitalocean/terraform](infra/k8s/digitalocean/terraform)
-- [infra/k8s/homezone/terraform](infra/k8s/homezone/terraform)
-- [infra/k8s/homezone/terraform/modules/rook_ceph](infra/k8s/homezone/terraform/modules/rook_ceph)
-- [infra/k8s/homezone/terraform/modules/cluster_operators](infra/k8s/homezone/terraform/modules/cluster_operators)
-- [infra/k8s/homezone/terraform/modules/monitoring_stack](infra/k8s/homezone/terraform/modules/monitoring_stack)
-- [infra/k8s/homezone/terraform/modules/cilium](infra/k8s/homezone/terraform/modules/cilium)
-- [infra/k8s/homezone/terraform/modules/cluster_services](infra/k8s/homezone/terraform/modules/cluster_services)
-- [infra/secrets/terraform](infra/secrets/terraform)
-- [infra/secrets/terraform/modules/proxmox_secrets](infra/secrets/terraform/modules/proxmox_secrets)
-- [infra/secrets/terraform/modules/tfe_secrets](infra/secrets/terraform/modules/tfe_secrets)
-- [infra/secrets/terraform/modules/gh_secrets](infra/secrets/terraform/modules/gh_secrets)
-- [infra/digitalocean/terraform](infra/digitalocean/terraform)
-- [infra/digitalocean/nyc3/terraform](infra/digitalocean/nyc3/terraform)
-- [infra/tfcloud/terraform](infra/tfcloud/terraform)
-- [infra/unifi/terraform](infra/unifi/terraform)
-- [infra/tailscale/terraform](infra/tailscale/terraform)
+- [infra/proxmox/terraform](infra/proxmox/terraform/README.md)
+- [infra/proxmox/terraform/modules/proxmox_cloudinit_vm](infra/proxmox/terraform/modules/proxmox_cloudinit_vm/README.md)
+- [infra/proxmox/terraform/modules/proxmox_cloudinit_vm/modules/unifi_host_dns_records](infra/proxmox/terraform/modules/proxmox_cloudinit_vm/modules/unifi_host_dns_records/README.md)
+- [infra/k8s/digitalocean/terraform](infra/k8s/digitalocean/terraform/README.md)
+- [infra/k8s/homezone/terraform](infra/k8s/homezone/terraform/README.md)
+- [infra/k8s/homezone/terraform/modules/rook_ceph](infra/k8s/homezone/terraform/modules/rook_ceph/README.md)
+- [infra/k8s/homezone/terraform/modules/cluster_operators](infra/k8s/homezone/terraform/modules/cluster_operators/README.md)
+- [infra/k8s/homezone/terraform/modules/monitoring_stack](infra/k8s/homezone/terraform/modules/monitoring_stack/README.md)
+- [infra/k8s/homezone/terraform/modules/cilium](infra/k8s/homezone/terraform/modules/cilium/README.md)
+- [infra/k8s/homezone/terraform/modules/cluster_services](infra/k8s/homezone/terraform/modules/cluster_services/README.md)
+- [infra/secrets/terraform](infra/secrets/terraform/README.md)
+- [infra/secrets/terraform/modules/proxmox_secrets](infra/secrets/terraform/modules/proxmox_secrets/README.md)
+- [infra/secrets/terraform/modules/tfe_secrets](infra/secrets/terraform/modules/tfe_secrets/README.md)
+- [infra/secrets/terraform/modules/gh_secrets](infra/secrets/terraform/modules/gh_secrets/README.md)
+- [infra/digitalocean/terraform](infra/digitalocean/terraform/README.md)
+- [infra/digitalocean/nyc3/terraform](infra/digitalocean/nyc3/terraform/README.md)
+- [infra/tfcloud/terraform](infra/tfcloud/terraform/README.md)
+- [infra/unifi/terraform](infra/unifi/terraform/README.md)
+- [infra/tailscale/terraform](infra/tailscale/terraform/README.md)
