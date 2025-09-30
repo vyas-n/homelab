@@ -3,7 +3,7 @@
 ## Providers
 
 | Name        | Version |
-| ----------- | ------- |
+|-------------|---------|
 | cloudflare  | 5.1.0   |
 | onepassword | 2.1.2   |
 | tfe         | 0.64.0  |
@@ -12,7 +12,7 @@
 ## Resources
 
 | Name                                                                                                                                                             | Type        |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | [cloudflare_api_token.tfe_cloudflare_api_token](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token)                   | resource    |
 | [onepassword_item.tfe_organization_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/resources/item)                              | resource    |
 | [tfe_organization_token.vyas_n](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization_token)                                  | resource    |

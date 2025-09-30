@@ -1,5 +1,4 @@
-#! /usr/bin/env NIXPKGS_ALLOW_UNFREE=1 nix-shell
-#! nix-shell -i nu --packages nushell terraform openssh k0sctl
+#! /usr/bin/env nu
 
 def main [--init=false] {
     # Refresh SSH for these hosts

@@ -3,7 +3,7 @@
 ## Requirements
 
 | Name       | Version |
-| ---------- | ------- |
+|------------|---------|
 | helm       | 2.17.0  |
 | kubectl    | 1.19.0  |
 | kubernetes | 2.36.0  |
@@ -12,7 +12,7 @@
 ## Providers
 
 | Name       | Version |
-| ---------- | ------- |
+|------------|---------|
 | helm       | 2.17.0  |
 | kubernetes | 2.36.0  |
 | tfe        | 0.64.0  |
@@ -20,7 +20,7 @@
 ## Resources
 
 | Name                                                                                                                                            | Type        |
-| ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | [helm_release.authentik](https://registry.terraform.io/providers/hashicorp/helm/2.17.0/docs/resources/release)                                  | resource    |
 | [helm_release.external_secrets](https://registry.terraform.io/providers/hashicorp/helm/2.17.0/docs/resources/release)                           | resource    |
 | [helm_release.onepassconnect](https://registry.terraform.io/providers/hashicorp/helm/2.17.0/docs/resources/release)                             | resource    |
@@ -35,6 +35,6 @@
 ## Inputs
 
 | Name                         | Description | Type  | Default | Required |
-| ---------------------------- | ----------- | ----- | ------- | :------: |
+|------------------------------|-------------|-------|---------|:--------:|
 | onepassword_access_token     | n/a         | `any` | n/a     |   yes    |
 | onepassword_credentials_json | n/a         | `any` | n/a     |   yes    |

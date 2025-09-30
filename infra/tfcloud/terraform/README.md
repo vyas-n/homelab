@@ -3,19 +3,19 @@
 ## Requirements
 
 | Name | Version |
-| ---- | ------- |
+|------|---------|
 | tfe  | 0.64.0  |
 
 ## Providers
 
 | Name | Version |
-| ---- | ------- |
+|------|---------|
 | tfe  | 0.64.0  |
 
 ## Resources
 
 | Name                                                                                                                                           | Type        |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+|------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | [tfe_workspace.digitalocean_nyc3_do_k8s_terraform](https://registry.terraform.io/providers/hashicorp/tfe/0.64.0/docs/resources/workspace)      | resource    |
 | [tfe_workspace.digitalocean_nyc3_terraform](https://registry.terraform.io/providers/hashicorp/tfe/0.64.0/docs/resources/workspace)             | resource    |
 | [tfe_workspace.digitalocean_terraform](https://registry.terraform.io/providers/hashicorp/tfe/0.64.0/docs/resources/workspace)                  | resource    |

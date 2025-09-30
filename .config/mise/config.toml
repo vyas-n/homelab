@@ -4,11 +4,16 @@ node = "latest"
 usage = "latest"
 uv = "latest"
 direnv = "latest"
+go = "latest"
+bun = "latest"
 
 # Packages
 "npm:prettier" = "latest"
+"npm:markdown-table-formatter" = "latest"
+"go:github.com/k0sproject/k0sctl" = "v0.25.1"
 
 [settings]
 experimental = true
 python.uv_venv_auto = true
 idiomatic_version_file_enable_tools = ["terraform"]
+npm.bun = true
