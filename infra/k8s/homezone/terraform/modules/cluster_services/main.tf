@@ -117,9 +117,9 @@ resource "kubectl_manifest" "deploy_app" {
     spec = {
       project = "default"
       source = {
-        repoURL        = "https://github.com/BlueArchive/deploy.git"
-        targetRevision = "main"
-        path           = "needham/vaults/devzone-v2/argo-cd"
+        repoURL        = "https://github.com/vyas-n/homelab.git"
+        targetRevision = "develop"
+        path           = "infra/k8s/homezone/argo-cd"
       }
       destination = {
         server    = "https://kubernetes.default.svc"
@@ -178,11 +178,11 @@ resource "kubernetes_ingress_v1" "stackgres_operator" {
   spec {
     ingress_class_name = "cilium"
     tls {
-      hosts       = ["stackgres.needham.wsbidev.net"]
-      secret_name = "stackgres-needham-wsbidev-net"
+      hosts       = ["stackgres.homezone-v1.vyas-n.dev"]
+      secret_name = "stackgres.homezone-v1.vyas-n.dev"
     }
     rule {
-      host = "stackgres.needham.wsbidev.net"
+      host = "stackgres.homezone-v1.vyas-n.dev"
       http {
         path {
           path      = "/"

@@ -271,73 +271,73 @@ resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/pac
 # }
 
 
-# resource "kubernetes_namespace" "kyverno" {
-#   metadata {
-#     name = "kyverno"
-#   }
-# }
+resource "kubernetes_namespace" "kyverno" {
+  metadata {
+    name = "kyverno"
+  }
+}
 
-# resource "helm_release" "kyverno" { # https://artifacthub.io/packages/helm/kyverno/kyverno
-#   name       = "kyverno"
-#   chart      = "kyverno"
-#   repository = "https://kyverno.github.io/kyverno"
-#   version    = "3.3.7"
+resource "helm_release" "kyverno" { # https://artifacthub.io/packages/helm/kyverno/kyverno
+  name       = "kyverno"
+  chart      = "kyverno"
+  repository = "https://kyverno.github.io/kyverno"
+  version    = "3.3.7"
 
-#   namespace        = kubernetes_namespace.kyverno.metadata[0].name
-#   create_namespace = false
-#   lint             = true
-#   timeout          = 300
+  namespace        = kubernetes_namespace.kyverno.metadata[0].name
+  create_namespace = false
+  lint             = true
+  timeout          = 300
 
-#   values = [
-#     yamlencode(yamldecode(file("${path.module}/helm/kyverno/values.yaml"))), # remove yaml comments & formatting from diff calculations
-#     yamlencode({})
-#   ]
-# }
+  values = [
+    yamlencode(yamldecode(file("${path.module}/helm/kyverno/values.yaml"))), # remove yaml comments & formatting from diff calculations
+    yamlencode({})
+  ]
+}
 
-# resource "kubernetes_namespace" "policy_reporter" {
-#   metadata {
-#     name = "policy-reporter"
-#   }
-# }
+resource "kubernetes_namespace" "policy_reporter" {
+  metadata {
+    name = "policy-reporter"
+  }
+}
 
-# resource "helm_release" "policy_reporter" { # https://artifacthub.io/packages/helm/policy-reporter/policy-reporter
-#   name       = "policy-reporter"
-#   chart      = "policy-reporter"
-#   repository = "oci://ghcr.io/kyverno/charts"
-#   version    = "3.0.4"
+resource "helm_release" "policy_reporter" { # https://artifacthub.io/packages/helm/policy-reporter/policy-reporter
+  name       = "policy-reporter"
+  chart      = "policy-reporter"
+  repository = "oci://ghcr.io/kyverno/charts"
+  version    = "3.0.4"
 
-#   namespace        = kubernetes_namespace.policy_reporter.metadata[0].name
-#   create_namespace = false
-#   lint             = true
-#   timeout          = 300
+  namespace        = kubernetes_namespace.policy_reporter.metadata[0].name
+  create_namespace = false
+  lint             = true
+  timeout          = 300
 
-#   values = [
-#     yamlencode(yamldecode(file("${path.module}/helm/policy_reporter/values.yaml"))), # remove yaml comments & formatting from diff calculations
-#     yamlencode({})
-#   ]
+  values = [
+    yamlencode(yamldecode(file("${path.module}/helm/policy_reporter/values.yaml"))), # remove yaml comments & formatting from diff calculations
+    yamlencode({})
+  ]
 
-#   depends_on = [helm_release.kyverno]
-# }
+  depends_on = [helm_release.kyverno]
+}
 
-# resource "kubernetes_namespace" "vertical_pod_autoscaler" {
-#   metadata {
-#     name = "vertical-pod-autoscaler"
-#   }
-# }
+resource "kubernetes_namespace" "vertical_pod_autoscaler" {
+  metadata {
+    name = "vertical-pod-autoscaler"
+  }
+}
 
-# resource "helm_release" "vertical_pod_autoscaler" { # https://artifacthub.io/packages/helm/cowboysysop/vertical-pod-autoscaler
-#   name       = "vertical-pod-autoscaler"
-#   chart      = "vertical-pod-autoscaler"
-#   repository = "https://cowboysysop.github.io/charts"
-#   version    = "10.0.0"
+resource "helm_release" "vertical_pod_autoscaler" { # https://artifacthub.io/packages/helm/cowboysysop/vertical-pod-autoscaler
+  name       = "vertical-pod-autoscaler"
+  chart      = "vertical-pod-autoscaler"
+  repository = "https://cowboysysop.github.io/charts"
+  version    = "10.0.0"
 
-#   namespace        = kubernetes_namespace.vertical_pod_autoscaler.metadata[0].name
-#   create_namespace = false
-#   lint             = true
-#   timeout          = 300
+  namespace        = kubernetes_namespace.vertical_pod_autoscaler.metadata[0].name
+  create_namespace = false
+  lint             = true
+  timeout          = 300
 
-#   values = [
-#     yamlencode(yamldecode(file("${path.module}/helm/vertical-pod-autoscaler/values.yaml"))), # remove yaml comments & formatting from diff calculations
-#     yamlencode({})
-#   ]
-# }
+  values = [
+    yamlencode(yamldecode(file("${path.module}/helm/vertical-pod-autoscaler/values.yaml"))), # remove yaml comments & formatting from diff calculations
+    yamlencode({})
+  ]
+}

@@ -8,14 +8,14 @@ ui:
     annotations:
       cert-manager.io/cluster-issuer: zerossl-prod
     hosts:
-      - host: policy-reporter.homezone.svc.vyas-n.dev
+      - host: policy-reporter.homezone-v1.svc.vyas-n.dev
         paths:
           - path: /
             pathType: Prefix
     tls:
-      - secretName: policy-reporter.homezone.svc.vyas-n.dev
+      - secretName: policy-reporter.homezone-v1.svc.vyas-n.dev
         hosts:
-          - policy-reporter.homezone.svc.vyas-n.dev
+          - policy-reporter.homezone-v1.svc.vyas-n.dev
   resources:
     limits:
       memory: 128Mi

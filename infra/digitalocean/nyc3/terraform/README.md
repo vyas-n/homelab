@@ -2,25 +2,26 @@
 
 ## Requirements
 
-| Name         | Version |
-|--------------|---------|
-| digitalocean | 2.49.1  |
+| Name         | Version   |
+|--------------|-----------|
+| terraform    | >= 1.11.0 |
+| digitalocean | >= 2.67.0 |
 
 ## Providers
 
 | Name         | Version |
 |--------------|---------|
-| digitalocean | 2.49.1  |
+| digitalocean | 2.67.0  |
 
 ## Resources
 
 | Name                                                                                                                                                      | Type        |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [digitalocean_kubernetes_cluster.do_k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/2.49.1/docs/resources/kubernetes_cluster)      | resource    |
-| [digitalocean_kubernetes_node_pool.pool1](https://registry.terraform.io/providers/digitalocean/digitalocean/2.49.1/docs/resources/kubernetes_node_pool)   | resource    |
-| [digitalocean_project.bedrock](https://registry.terraform.io/providers/digitalocean/digitalocean/2.49.1/docs/resources/project)                           | resource    |
-| [digitalocean_project_resources.bedrock](https://registry.terraform.io/providers/digitalocean/digitalocean/2.49.1/docs/resources/project_resources)       | resource    |
-| [digitalocean_kubernetes_versions.do_k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/2.49.1/docs/data-sources/kubernetes_versions) | data source |
+| [digitalocean_kubernetes_cluster.do_k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_cluster)      | resource    |
+| [digitalocean_kubernetes_node_pool.pool1](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_node_pool)   | resource    |
+| [digitalocean_project.bedrock](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project)                           | resource    |
+| [digitalocean_project_resources.bedrock](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project_resources)       | resource    |
+| [digitalocean_kubernetes_versions.do_k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/kubernetes_versions) | data source |
 
 ## Outputs
 

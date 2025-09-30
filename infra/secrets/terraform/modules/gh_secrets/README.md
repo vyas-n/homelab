@@ -1,12 +1,21 @@
 # GitHub Actions Secrets Seeding
 
+## Requirements
+
+| Name       | Version   |
+|------------|-----------|
+| terraform  | >= 1.11.0 |
+| cloudflare | >= 4.52.0 |
+| github     | >= 6.6.0  |
+| time       | >= 0.13.0 |
+
 ## Providers
 
-| Name       | Version |
-|------------|---------|
-| cloudflare | 5.1.0   |
-| github     | 6.6.0   |
-| time       | 0.13.0  |
+| Name       | Version   |
+|------------|-----------|
+| cloudflare | >= 4.52.0 |
+| github     | >= 6.6.0  |
+| time       | >= 0.13.0 |
 
 ## Resources
 
