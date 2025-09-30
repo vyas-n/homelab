@@ -5,7 +5,7 @@
 ## Requirements
 
 | Name       | Version |
-| ---------- | ------- |
+|------------|---------|
 | helm       | ~> 2.6  |
 | kubectl    | ~> 1.14 |
 | kubernetes | ~> 2.12 |
@@ -13,7 +13,7 @@
 ## Providers
 
 | Name       | Version |
-| ---------- | ------- |
+|------------|---------|
 | helm       | ~> 2.6  |
 | kubectl    | ~> 1.14 |
 | kubernetes | ~> 2.12 |
@@ -25,7 +25,7 @@ No modules.
 ## Resources
 
 | Name                                                                                                                                           | Type     |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+|------------------------------------------------------------------------------------------------------------------------------------------------|----------|
 | [helm_release.cert_manager](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                              | resource |
 | [helm_release.external_dns](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                              | resource |
 | [helm_release.external_secrets](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                          | resource |
@@ -46,7 +46,7 @@ No modules.
 ## Inputs
 
 | Name                                | Description | Type     | Default | Required |
-| ----------------------------------- | ----------- | -------- | ------- | :------: |
+|-------------------------------------|-------------|----------|---------|:--------:|
 | cert_manager_aws_iam_access_key     | n/a         | `string` | n/a     |   yes    |
 | cert_manager_aws_iam_secret_key     | n/a         | `string` | n/a     |   yes    |
 | external_dns_aws_iam_access_key     | n/a         | `string` | n/a     |   yes    |

@@ -11,3 +11,5 @@ glob **/*.tf | path dirname | uniq | each {|dir| {
 }}
 
 prettier --write .
+
+markdown-table-formatter **/*.md

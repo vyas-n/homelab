@@ -3,7 +3,7 @@
 ## Providers
 
 | Name       | Version |
-| ---------- | ------- |
+|------------|---------|
 | cloudflare | 5.1.0   |
 | github     | 6.6.0   |
 | time       | 0.13.0  |
@@ -11,7 +11,7 @@
 ## Resources
 
 | Name                                                                                                                                                             | Type        |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | [cloudflare_api_token.cf_pages_vyas_n_com](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token)                        | resource    |
 | [github_actions_secret.vyas_n_cloudflare_account_id](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/actions_secret)           | resource    |
 | [github_actions_secret.vyas_n_cloudflare_api_token](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/actions_secret)            | resource    |

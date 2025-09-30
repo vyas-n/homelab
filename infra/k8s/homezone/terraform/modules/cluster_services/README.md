@@ -5,7 +5,7 @@
 ## Requirements
 
 | Name       | Version |
-| ---------- | ------- |
+|------------|---------|
 | helm       | ~> 2.6  |
 | kubectl    | ~> 1.14 |
 | kubernetes | ~> 2.12 |
@@ -14,7 +14,7 @@
 ## Providers
 
 | Name       | Version |
-| ---------- | ------- |
+|------------|---------|
 | helm       | ~> 2.6  |
 | kubectl    | ~> 1.14 |
 | kubernetes | ~> 2.12 |
@@ -27,7 +27,7 @@ No modules.
 ## Resources
 
 | Name                                                                                                                                     | Type     |
-| ---------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+|------------------------------------------------------------------------------------------------------------------------------------------|----------|
 | [helm_release.argo_cd](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                             | resource |
 | [helm_release.sdm_relay](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                           | resource |
 | [kubectl_manifest.deploy_app](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)                | resource |

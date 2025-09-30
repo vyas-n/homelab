@@ -5,7 +5,7 @@
 ## Requirements
 
 | Name       | Version |
-| ---------- | ------- |
+|------------|---------|
 | helm       | ~> 2.6  |
 | kubectl    | ~> 1.14 |
 | kubernetes | ~> 2.12 |
@@ -13,7 +13,7 @@
 ## Providers
 
 | Name       | Version |
-| ---------- | ------- |
+|------------|---------|
 | helm       | ~> 2.6  |
 | kubectl    | ~> 1.14 |
 | kubernetes | ~> 2.12 |
@@ -25,7 +25,7 @@ No modules.
 ## Resources
 
 | Name                                                                                                                                       | Type     |
-| ------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+|--------------------------------------------------------------------------------------------------------------------------------------------|----------|
 | [helm_release.kube_prometheus_stack](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                 | resource |
 | [helm_release.loki](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                                  | resource |
 | [helm_release.promtail](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                              | resource |
