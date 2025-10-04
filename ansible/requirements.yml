@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i "poetry run ansible-galaxy install --force -r" --packages poetry
+#!/usr/bin/env ansible-galaxy collection install --force -r
 
 collections:
   - name: community.general

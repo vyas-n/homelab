@@ -3,9 +3,10 @@
 
 provider "registry.terraform.io/ubiquiti-community/unifi" {
   version     = "0.41.3"
-  constraints = "0.41.3"
+  constraints = ">= 0.41.3"
   hashes = [
     "h1:FPq9RwlHkj4P8dbTWoDd5JOteRdK/wviexnKWfDB9bM=",
+    "h1:ksSB4bmefV/5B4EUrAdy1DXhVvFzgs83EihAXly4z4Q=",
     "zh:239f297e94e784698f49c7adcd098f97108f71759b1771981da495b1b612e911",
     "zh:274399720a31f70b79302aed1da23f5bd710b511c1b3164db16797988b1fe207",
     "zh:2787cb0e4e9f879f57a802938f05dc50041e6004757ca85af8c10ec116208b34",
