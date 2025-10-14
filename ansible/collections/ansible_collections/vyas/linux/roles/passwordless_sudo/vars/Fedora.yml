@@ -1,2 +1,2 @@
 ---
-passwordless_sudo_group: "wheel"
+passwordless_sudo_group: wheel

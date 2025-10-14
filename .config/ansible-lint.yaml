@@ -1,5 +1,12 @@
 ---
 # .ansible-lint
+# ref: https://ansible.readthedocs.io/projects/lint/configuring/#ansible-lint-configuration
 
 quiet: false
 verbosity: 1
+skip_list:
+  # This is to allow ansible playbooks to be executed via shebang syntax at the top of a playbook.
+  - yaml[comments]
+exclude_paths:
+  - infra/
+  - .github/

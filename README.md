@@ -6,6 +6,10 @@ Hi there! This is my homelab where I try out new technologies, run home services
 
 ## Architecture
 
+<details open>
+
+<summary>Home Hardware</summary>
+
 ### Home Hardware
 
 ```mermaid
@@ -15,12 +19,11 @@ flowchart TD
     end
 
     subgraph Network
-        UnifiRouter --> UnifiSwitches --> UnifiAP
         subgraph UnifiSwitches
             Switch1
             Switch2
         end
-        UnifiAP["Unifi Wireless Access Point"]
+        UnifiRouter --> UnifiSwitches --> UnifiAP["Unifi Wireless Access Point"]
     end
 
     subgraph Management
@@ -37,6 +40,11 @@ flowchart TD
     end
 
     subgraph Infrastructure
+
+        subgraph Software
+            Proxmox["Proxmox + Ceph"] --> VirtualMachines --> Kubernetes
+        end
+
         subgraph Hardware
             subgraph HCI["Hyper Converged Nodes"]
                 LenovoP520["Lenovo P520 x2"]
@@ -49,14 +57,6 @@ flowchart TD
             end
         end
 
-        subgraph Software
-            Proxmox["Proxmox + Ceph"]
-            Kubernetes
-            VirtualMachines
-
-            Proxmox --> VirtualMachines --> Kubernetes
-        end
-
         Hardware --> Software
     end
 
@@ -65,6 +65,8 @@ flowchart TD
     Power & Network & Management --> Provisioning
     Power & Network & Management & Provisioning --> Infrastructure
 ```
+
+</details>
 
 ## Terraform Organization
 

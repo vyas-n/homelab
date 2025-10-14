@@ -4,19 +4,19 @@
 # OS-Specific default variables
 # ref: https://gist.github.com/JM1/9363beeb9fb5055e054b5f64aea0a598#approach-using-include_vars-with-os_vars-dictionary-and-conditional-set_fact
 - name: Fetch OS dependent variables
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item }}"
-    name: "os_vars"
+    name: os_vars
   with_first_found:
     - files:
         - "{{ ansible_facts.distribution }}.yml"
         - "{{ ansible_facts.os_family }}.yml"
       skip: true
 - name: Set OS dependent variables, if not already defined by user # noqa var-naming
-  set_fact:
+  ansible.builtin.set_fact:
     "{{ item.key }}": "{{ item.value }}"
-  when: "not lookup('varnames', '^' + item.key + '$')"
-  loop: "{{ os_vars|dict2items }}"
+  when: not lookup('varnames', '^' + item.key + '$')
+  loop: "{{ os_vars | dict2items }}"
 
 - name: Make passwordless sudo work for users with admin permissions
   become: true

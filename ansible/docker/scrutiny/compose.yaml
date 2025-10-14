@@ -7,9 +7,9 @@ services:
     ports:
       - 8086
     volumes:
-      - "./influxdb:/var/lib/influxdb2"
+      - ./influxdb:/var/lib/influxdb2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
+      test: [CMD, curl, -f, http://localhost:8086/health]
       interval: 5s
       timeout: 10s
       retries: 20
@@ -17,16 +17,16 @@ services:
   web:
     image: ghcr.io/analogj/scrutiny:master-web
     ports:
-      - "8080:8080"
+      - 8080:8080
     volumes:
-      - "./config:/opt/scrutiny/config"
+      - ./config:/opt/scrutiny/config
     environment:
-      SCRUTINY_WEB_INFLUXDB_HOST: "influxdb"
+      SCRUTINY_WEB_INFLUXDB_HOST: influxdb
     depends_on:
       influxdb:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      test: [CMD, curl, -f, http://localhost:8080/api/health]
       interval: 5s
       timeout: 10s
       retries: 20

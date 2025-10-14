@@ -92,7 +92,7 @@
           register: flatpak_binary
         - name: Print a debug message
           ansible.builtin.debug:
-            msg: "Flatpak isn't installed on this host, skipping upgrade"
+            msg: Flatpak isn't installed on this host, skipping upgrade
           when: not flatpak_binary.stat.exists
         - name: Upgrade all flatpaks
           when: flatpak_binary.stat.exists

@@ -50,7 +50,7 @@
   pre_tasks:
     - name: Check if python3-libdnf5 is installed
       when: ansible_facts['distribution'] == "Fedora"
-      shell: dnf list installed python3-libdnf5
+      ansible.builtin.shell: dnf list installed python3-libdnf5
       register: check_for_python3_libdnf5
       ignore_errors: true
       changed_when: false
@@ -135,7 +135,7 @@
           - dmidecode
         state: present
     - name: Check the system chasis type
-      shell: dmidecode --string chassis-type
+      ansible.builtin.shell: dmidecode --string chassis-type
       register: check_system_chassis_type
       ignore_errors: true
       changed_when: false

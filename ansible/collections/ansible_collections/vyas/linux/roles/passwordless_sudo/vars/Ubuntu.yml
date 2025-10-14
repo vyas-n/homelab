@@ -1,2 +1,2 @@
 ---
-passwordless_sudo_group: "root"
+passwordless_sudo_group: root
