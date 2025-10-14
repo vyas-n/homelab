@@ -5,5 +5,7 @@ description: Collection for configuring linux nodes and installing software on t
 repository: https://github.com/vyas-n/deploy.git
 version: 0.0.0
 readme: README.md
+tags:
+  - linux
 authors:
   - Vyas Nellutla <me@vyas-n.com>
