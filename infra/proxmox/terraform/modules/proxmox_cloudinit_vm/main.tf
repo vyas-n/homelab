@@ -26,6 +26,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   cpu {
     cores = var.num_cpu_cores
+    units = 1024
     type  = var.cpu_type
   }
   machine = "q35"
