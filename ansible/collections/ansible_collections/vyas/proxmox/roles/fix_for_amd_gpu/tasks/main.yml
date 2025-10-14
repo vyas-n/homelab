@@ -21,7 +21,7 @@
     - Install vendor-reset kernel module
 - name: Initialize kernel modules variable
   ansible.builtin.set_fact:
-    kernel_modules:
+    fix_for_amd_gpu_kernel_modules:
       - vendor-reset
 - name: Template kernel modules
   ansible.builtin.template:
@@ -35,7 +35,7 @@
     - Reboot machine
 - name: Initialize kernel modules variable
   ansible.builtin.set_fact:
-    modprobe_blacklist:
+    fix_for_amd_gpu_modprobe_blacklist:
       - blacklist amdgpu
       - blacklist radeon
 - name: Template driver blacklist
