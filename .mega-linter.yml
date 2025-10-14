@@ -11,3 +11,5 @@ DISABLE:
   - COPYPASTE
   - SPELL
 # Tool Specific Config
+
+ANSIBLE_FILTER_REGEX_INCLUDE: "ansible/*"

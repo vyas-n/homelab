@@ -5,7 +5,7 @@ services:
     configs:
       - source: tsdproxy.yaml
         target: /config/tsdproxy.yaml
-        mode: 0440
+        mode: "0440"
     ports:
       - 8080
     volumes:
