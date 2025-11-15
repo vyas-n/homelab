@@ -10,6 +10,12 @@ data "onepassword_item" "tfcloud_pat" {
   title = "TerraformCloud-PAT"
 }
 
+# GitHub PAT
+data "onepassword_item" "gh_pat" {
+  vault = data.onepassword_vault.private.uuid
+  title = "GitHub-PAT-vyas-n"
+}
+
 # Cloudflare
 data "onepassword_item" "cloudflare_global_api_key" {
   vault = data.onepassword_vault.private.uuid

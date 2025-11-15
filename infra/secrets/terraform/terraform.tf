@@ -33,11 +33,11 @@ terraform {
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = ">= 4.52.5"
+      version = "< 5.0.0"
     }
     github = {
       source  = "integrations/github"
-      version = ">= 6.6.0"
+      version = "= 6.7.5"
     }
     zerossl = {
       source  = "toowoxx/zerossl"
@@ -75,4 +75,6 @@ provider "cloudflare" {
 
 provider "github" {
   owner = "vyas-n"
+  # TODO: for some reason the github provider doesn't seem to use this credential when provided.
+  # token = data.onepassword_item.gh_pat.credential
 }
