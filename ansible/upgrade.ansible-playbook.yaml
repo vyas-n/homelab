@@ -13,6 +13,7 @@
 - name: Upgrade systems
   # TODO: figure out how to safely upgrade truenas
   hosts: all:!truenas
+  serial: 3
   tasks:
     - name: Upgrade Windows Systems
       when: ansible_facts['os_family'] == 'Windows'

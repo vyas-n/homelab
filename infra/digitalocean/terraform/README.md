@@ -11,7 +11,7 @@
 
 | Name         | Version |
 |--------------|---------|
-| digitalocean | 2.67.0  |
+| digitalocean | 2.69.0  |
 
 ## Resources
 

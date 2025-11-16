@@ -37,3 +37,4 @@ all:
     raspberrypi-0:
     raspberrypi-desktop-0:
     truenas:
+      ansible_host: truenas.hosts.vyas-n.dev

@@ -1,7 +1,7 @@
 ---
 services:
   uptime_kuma:
-    image: docker.io/louislam/uptime-kuma:1.23.16
+    image: docker.io/louislam/uptime-kuma:1.23.17
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - datadir:/app/data

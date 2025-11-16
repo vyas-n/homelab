@@ -9,8 +9,8 @@ The files are named after the location that the secrets are synchronized to (not
 | Name        | Version   |
 |-------------|-----------|
 | terraform   | >= 1.11.0 |
-| cloudflare  | >= 4.52.5 |
-| github      | >= 6.6.0  |
+| cloudflare  | < 5.0.0   |
+| github      | = 6.7.5   |
 | onepassword | >= 2.1.2  |
 | proxmox     | >= 0.83.2 |
 | tfe         | >= 0.69.0 |
@@ -21,7 +21,7 @@ The files are named after the location that the secrets are synchronized to (not
 
 | Name        | Version |
 |-------------|---------|
-| onepassword | 2.1.2   |
+| onepassword | 2.2.0   |
 
 ## Modules
 
@@ -36,6 +36,7 @@ The files are named after the location that the secrets are synchronized to (not
 | Name                                                                                                                                      | Type        |
 |-------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | [onepassword_item.cloudflare_global_api_key](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item) | data source |
+| [onepassword_item.gh_pat](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                    | data source |
 | [onepassword_item.proxmox_api_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)         | data source |
 | [onepassword_item.tfcloud_pat](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)               | data source |
 | [onepassword_item.zerossl_api_key](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)           | data source |

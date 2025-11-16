@@ -2,25 +2,19 @@
 
 ## Requirements
 
-| Name        | Version   |
-|-------------|-----------|
-| terraform   | >= 1.11.0 |
-| cloudflare  | >= 4.0.0  |
-| onepassword | >= 2.1.2  |
-| proxmox     | >= 0.76.0 |
-| tfe         | >= 0.65.1 |
-| time        | >= 0.13.0 |
-| zerossl     | >= 0.1.1  |
+| Name      | Version   |
+|-----------|-----------|
+| terraform | >= 1.11.0 |
 
 ## Providers
 
-| Name        | Version   |
-|-------------|-----------|
-| cloudflare  | >= 4.0.0  |
-| onepassword | >= 2.1.2  |
-| tfe         | >= 0.65.1 |
-| time        | >= 0.13.0 |
-| zerossl     | >= 0.1.1  |
+| Name        | Version |
+|-------------|---------|
+| cloudflare  | n/a     |
+| onepassword | n/a     |
+| tfe         | n/a     |
+| time        | n/a     |
+| zerossl     | n/a     |
 
 ## Resources
 
