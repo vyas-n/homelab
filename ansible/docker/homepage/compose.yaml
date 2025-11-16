@@ -29,7 +29,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      SAMPLE: try-again-3h
+      SAMPLE: try-again-4
       HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS}
     configs:
       - source: bookmarks.yaml
