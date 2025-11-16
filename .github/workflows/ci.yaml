@@ -56,6 +56,13 @@ jobs:
         uses: github/codeql-action/upload-sarif@014f16e7ab1402f30e7c3329d33797e7948572db # v4.31.3
         with:
           sarif_file: megalinter-reports/megalinter-report.sarif
+  zizmor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - uses: zizmorcore/zizmor-action@e673c3917a1aef3c65c972347ed84ccd013ecda4 # v0.2.0
   CodeQL:
     name: Analyze (${{ matrix.language }})
     # Runner size impacts CodeQL analysis time. To learn more, please see:
