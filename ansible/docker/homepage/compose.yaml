@@ -1,7 +1,7 @@
 ---
 services:
   dockerproxy:
-    image: ghcr.io/tecnativa/docker-socket-proxy:0.3.0
+    image: ghcr.io/tecnativa/docker-socket-proxy:v0.4.1
     container_name: dockerproxy
     environment:
       # ref: https://github.com/Tecnativa/docker-socket-proxy?tab=readme-ov-file#access-revoked-by-default
@@ -24,12 +24,12 @@ services:
     restart: unless-stopped
 
   homepage:
-    image: ghcr.io/gethomepage/homepage:v1.3.2
+    image: ghcr.io/gethomepage/homepage:v1.7.0
     container_name: homepage
     ports:
       - 3000:3000
     environment:
-      SAMPLE: try-again-3
+      SAMPLE: try-again-3h
       HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS}
     configs:
       - source: bookmarks.yaml
