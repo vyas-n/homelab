@@ -63,6 +63,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: zizmorcore/zizmor-action@e673c3917a1aef3c65c972347ed84ccd013ecda4 # v0.2.0
+        with:
+          persona: pedantic
   CodeQL:
     name: Analyze (${{ matrix.language }})
     # Runner size impacts CodeQL analysis time. To learn more, please see:
