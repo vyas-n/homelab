@@ -7,22 +7,24 @@ terraform {
   required_version = ">= 1.11.0"
   required_providers {
     onepassword = {
-      source = "1Password/onepassword"
+      source  = "1Password/onepassword"
+      version = ">= 2.1.2"
     }
     tfe = {
-      source = "hashicorp/tfe"
+      source  = "hashicorp/tfe"
+      version = ">= 0.69.0"
     }
     time = {
-      source = "hashicorp/time"
-    }
-    proxmox = {
-      source = "bpg/proxmox"
+      source  = "hashicorp/time"
+      version = ">= 0.13.0"
     }
     cloudflare = {
-      source = "cloudflare/cloudflare"
+      source  = "cloudflare/cloudflare"
+      version = ">= 4.52.0, < 5.0.0"
     }
     zerossl = {
-      source = "toowoxx/zerossl"
+      source  = "toowoxx/zerossl"
+      version = ">= 0.1.1"
     }
   }
 }

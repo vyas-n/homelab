@@ -2,12 +2,11 @@
 
 ## Requirements
 
-| Name       | Version   |
-|------------|-----------|
-| helm       | >= 3.0    |
-| kubectl    | >= 1.14   |
-| kubernetes | >= 2.12   |
-| time       | >= 0.13.1 |
+| Name    | Version   |
+|---------|-----------|
+| helm    | >= 3.0    |
+| kubectl | >= 1.14   |
+| time    | >= 0.13.1 |
 
 ## Providers
 

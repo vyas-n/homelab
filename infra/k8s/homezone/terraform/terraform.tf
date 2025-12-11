@@ -1,6 +1,6 @@
 /*
  * # HomeZone k8s cluster Root
- * 
+ *
 */
 
 terraform {
@@ -23,10 +23,6 @@ terraform {
     kubectl = {
       source  = "gavinbunney/kubectl"
       version = ">= 1.19.0"
-    }
-    time = {
-      source  = "hashicorp/time"
-      version = ">= 0.13.1"
     }
   }
 }

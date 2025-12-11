@@ -14,7 +14,7 @@
 
 | Name    | Version |
 |---------|---------|
-| proxmox | 0.86.0  |
+| proxmox | 0.89.1  |
 
 ## Modules
 
