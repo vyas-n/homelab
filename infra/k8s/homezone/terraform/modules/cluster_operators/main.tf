@@ -325,19 +325,19 @@ resource "kubernetes_namespace" "vertical_pod_autoscaler" {
   }
 }
 
-resource "helm_release" "vertical_pod_autoscaler" { # https://artifacthub.io/packages/helm/cowboysysop/vertical-pod-autoscaler
-  name       = "vertical-pod-autoscaler"
-  chart      = "vertical-pod-autoscaler"
-  repository = "https://cowboysysop.github.io/charts"
-  version    = "10.0.0"
+# resource "helm_release" "vertical_pod_autoscaler" { # https://artifacthub.io/packages/helm/cowboysysop/vertical-pod-autoscaler
+#   name       = "vertical-pod-autoscaler"
+#   chart      = "vertical-pod-autoscaler"
+#   repository = "https://cowboysysop.github.io/charts"
+#   version    = "10.0.0"
 
-  namespace        = kubernetes_namespace.vertical_pod_autoscaler.metadata[0].name
-  create_namespace = false
-  lint             = true
-  timeout          = 300
+#   namespace        = kubernetes_namespace.vertical_pod_autoscaler.metadata[0].name
+#   create_namespace = false
+#   lint             = true
+#   timeout          = 300
 
-  values = [
-    yamlencode(yamldecode(file("${path.module}/helm/vertical-pod-autoscaler/values.yaml"))), # remove yaml comments & formatting from diff calculations
-    yamlencode({})
-  ]
-}
+#   values = [
+#     yamlencode(yamldecode(file("${path.module}/helm/vertical-pod-autoscaler/values.yaml"))), # remove yaml comments & formatting from diff calculations
+#     yamlencode({})
+#   ]
+# }
