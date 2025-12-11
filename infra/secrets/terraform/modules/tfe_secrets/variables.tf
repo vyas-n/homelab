@@ -1,6 +1,8 @@
 variable "onepass_vault" {
   sensitive   = true
-  type        = string
+  type        = object({
+    uuid: string
+  })
   description = "The 1Password Vault id to grab from and store credentials in."
 }
 
