@@ -22,6 +22,7 @@ defaults:
     shell: bash
 jobs:
   Lint:
+    name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -57,8 +58,10 @@ jobs:
         with:
           sarif_file: megalinter-reports/megalinter-report.sarif
   zizmor:
+    name: zizmor
     runs-on: ubuntu-latest
     permissions:
+      # required to upload zizmor sarif to GitHub Advanced Security
       security-events: write
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0

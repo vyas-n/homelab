@@ -21,7 +21,7 @@ The files are named after the location that the secrets are synchronized to (not
 
 | Name        | Version |
 |-------------|---------|
-| onepassword | 2.2.0   |
+| onepassword | 3.0.0   |
 
 ## Modules
 

@@ -2,19 +2,24 @@
 
 ## Requirements
 
-| Name      | Version   |
-|-----------|-----------|
-| terraform | >= 1.11.0 |
+| Name        | Version            |
+|-------------|--------------------|
+| terraform   | >= 1.11.0          |
+| cloudflare  | >= 4.52.0, < 5.0.0 |
+| onepassword | >= 2.1.2           |
+| tfe         | >= 0.69.0          |
+| time        | >= 0.13.0          |
+| zerossl     | >= 0.1.1           |
 
 ## Providers
 
-| Name        | Version |
-|-------------|---------|
-| cloudflare  | n/a     |
-| onepassword | n/a     |
-| tfe         | n/a     |
-| time        | n/a     |
-| zerossl     | n/a     |
+| Name        | Version            |
+|-------------|--------------------|
+| cloudflare  | >= 4.52.0, < 5.0.0 |
+| onepassword | >= 2.1.2           |
+| tfe         | >= 0.69.0          |
+| time        | >= 0.13.0          |
+| zerossl     | >= 0.1.1           |
 
 ## Resources
 
@@ -81,7 +86,7 @@
 
 ## Inputs
 
-| Name            | Description | Type     | Default | Required |
-|-----------------|-------------|----------|---------|:--------:|
-| onepass_vault   | n/a         | `any`    | n/a     |   yes    |
-| zerossl_api_key | n/a         | `string` | n/a     |   yes    |
+| Name            | Description                                                   | Type     | Default | Required |
+|-----------------|---------------------------------------------------------------|----------|---------|:--------:|
+| onepass_vault   | The 1Password Vault id to grab from and store credentials in. | `string` | n/a     |   yes    |
+| zerossl_api_key | n/a                                                           | `string` | n/a     |   yes    |

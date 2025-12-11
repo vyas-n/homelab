@@ -2,6 +2,7 @@
 # Core tools
 node = "latest"
 usage = "latest"
+# Keeping rust installed via rustup b/c mise doesn't have all the options that I want for changing rust versions between user-level & project-level
 uv = "latest"
 direnv = "latest"
 go = "latest"
@@ -11,6 +12,8 @@ bun = "latest"
 "npm:prettier" = "latest"
 "npm:markdown-table-formatter" = "latest"
 "go:github.com/k0sproject/k0sctl" = "v0.25.1"
+"go:github.com/terraform-linters/tflint" = "v0.60.0"
+"cargo:zizmor" = "latest"
 
 [settings]
 experimental = true

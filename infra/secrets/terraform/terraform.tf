@@ -21,7 +21,7 @@ terraform {
     }
     onepassword = {
       source  = "1Password/onepassword"
-      version = ">= 2.1.2"
+      version = ">= 2.1.2, < 3.0.0"
     }
     time = {
       source  = "hashicorp/time"

@@ -14,9 +14,9 @@
 
 | Name         | Version |
 |--------------|---------|
-| digitalocean | 2.69.0  |
-| helm         | 3.1.0   |
-| kubernetes   | 2.38.0  |
+| digitalocean | 2.71.0  |
+| helm         | 3.1.1   |
+| kubernetes   | 3.0.1   |
 
 ## Resources
 

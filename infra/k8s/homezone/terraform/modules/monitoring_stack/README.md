@@ -12,9 +12,9 @@
 
 | Name       | Version |
 |------------|---------|
-| helm       | 3.1.0   |
-| kubectl    | 1.19.0  |
-| kubernetes | 2.38.0  |
+| helm       | >= 3.0  |
+| kubectl    | >= 1.14 |
+| kubernetes | >= 2.12 |
 
 ## Resources
 

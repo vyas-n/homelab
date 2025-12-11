@@ -8,13 +8,12 @@
 | helm       | >= 2.17.0 |
 | kubectl    | >= 1.19.0 |
 | kubernetes | >= 2.37.1 |
-| time       | >= 0.13.1 |
 
 ## Providers
 
 | Name    | Version |
 |---------|---------|
-| helm    | 3.1.0   |
+| helm    | 3.1.1   |
 | kubectl | 1.19.0  |
 
 ## Modules
