@@ -54,7 +54,7 @@ jobs:
             megalinter-reports
       - name: Upload MegaLinter scan results to GitHub Security tab
         if: always() && !cancelled()
-        uses: github/codeql-action/upload-sarif@cf1bb45a277cb3c205638b2cd5c984db1c46a412 # v4.31.7
+        uses: github/codeql-action/upload-sarif@1b168cd39490f61582a9beae412bb7057a6b2c4e # v4.31.8
         with:
           sarif_file: megalinter-reports/megalinter-report.sarif
   zizmor:
@@ -114,7 +114,7 @@ jobs:
       #   uses: actions/setup-example@v1
 
       # Initializes the CodeQL tools for scanning.
-      - uses: github/codeql-action/init@cf1bb45a277cb3c205638b2cd5c984db1c46a412 # v4.31.7
+      - uses: github/codeql-action/init@1b168cd39490f61582a9beae412bb7057a6b2c4e # v4.31.8
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -141,6 +141,6 @@ jobs:
           echo '  make release'
           exit 1
 
-      - uses: github/codeql-action/analyze@cf1bb45a277cb3c205638b2cd5c984db1c46a412 # v4.31.7
+      - uses: github/codeql-action/analyze@1b168cd39490f61582a9beae412bb7057a6b2c4e # v4.31.8
         with:
           category: "/language:${{matrix.language}}"
