@@ -23,9 +23,6 @@
 | [helm_release.cert_manager](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                                       | resource |
 | [helm_release.external_dns_cloudflare](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                            | resource |
 | [helm_release.external_secrets](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                                   | resource |
-| [helm_release.kyverno](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                                            | resource |
-| [helm_release.policy_reporter](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                                    | resource |
-| [helm_release.vertical_pod_autoscaler](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                            | resource |
 | [kubectl_manifest.onepassword_homelab_cluster_secret_store](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.zerossl_clusterissuer](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)                    | resource |
 | [kubernetes_namespace.cert_manager](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace)                       | resource |
