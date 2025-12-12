@@ -6,22 +6,22 @@ The files are named after the location that the secrets are synchronized to (not
 
 ## Requirements
 
-| Name        | Version   |
-|-------------|-----------|
-| terraform   | >= 1.11.0 |
-| cloudflare  | < 5.0.0   |
-| github      | = 6.7.5   |
-| onepassword | >= 2.1.2  |
-| proxmox     | >= 0.83.2 |
-| tfe         | >= 0.69.0 |
-| time        | >= 0.13.1 |
-| zerossl     | >= 0.1.1  |
+| Name        | Version           |
+|-------------|-------------------|
+| terraform   | >= 1.11.0         |
+| cloudflare  | < 5.0.0           |
+| github      | = 6.7.5           |
+| onepassword | >= 2.1.2, < 3.0.0 |
+| proxmox     | >= 0.83.2         |
+| tfe         | >= 0.69.0         |
+| time        | >= 0.13.1         |
+| zerossl     | >= 0.1.1          |
 
 ## Providers
 
 | Name        | Version |
 |-------------|---------|
-| onepassword | 3.0.0   |
+| onepassword | 2.2.1   |
 
 ## Modules
 
