@@ -46,8 +46,6 @@
 | [tfe_variable.kube_client_key_data](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                              | resource    |
 | [tfe_variable.kube_cluster_ca_cert_data](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                         | resource    |
 | [tfe_variable.kube_host](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                                         | resource    |
-| [tfe_variable.onepass_connect_access_token](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                      | resource    |
-| [tfe_variable.onepass_connect_credentials_json](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                  | resource    |
 | [tfe_variable.proxmox_ve_api_token](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                              | resource    |
 | [tfe_variable.proxmox_ve_endpoint](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                               | resource    |
 | [tfe_variable.proxmox_ve_ssh_private_key](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                        | resource    |
@@ -68,7 +66,6 @@
 | [onepassword_item.digitalocean_s3access_for_tfcloud_vyasn](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                | data source |
 | [onepassword_item.homezone](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                               | data source |
 | [onepassword_item.onepass_connect_access_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                           | data source |
-| [onepassword_item.onepass_connect_credentials_json](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                       | data source |
 | [onepassword_item.proxmox_api_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                      | data source |
 | [onepassword_item.tailscale_api_key_for_vyasn](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                            | data source |
 | [onepassword_item.unifi_gateway_homelab](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                  | data source |

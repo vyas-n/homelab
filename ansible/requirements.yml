@@ -3,9 +3,9 @@
 collections:
   # https://galaxy.ansible.com/ui/repo/published/community/general/
   - name: community.general
-    version: 12.0.1
+    version: 12.1.0
   - name: community.docker
-    version: 5.0.1
+    version: 5.0.4
   - name: ansible.posix
     version: 2.1.0
   # TODO: move the ansible collections into a separate repo
@@ -13,6 +13,6 @@ collections:
   - name: ./collections/ansible_collections/vyas
     type: subdirs
   - name: ansible.windows
-    version: 2.7.0
+    version: 3.3.0
   - name: artis3n.tailscale
     version: 1.1.0
