@@ -117,32 +117,6 @@ resource "tfe_variable" "digitalocean_spaces_secret_access_key" {
   variable_set_id = data.tfe_variable_set.digitalocean.id
 }
 
-# Bedrock 1PassConnect Server & Access Token
-resource "tfe_variable" "onepass_connect_credentials_json" {
-  key             = "onepassword_credentials_json"
-  value           = data.onepassword_item.onepass_connect_credentials_json.file[0].content
-  category        = "terraform"
-  sensitive       = true
-  description     = <<EOF
-    This is a 1password-credentials.json file used to provision the bedrock 1PassConnect instance.
-
-    Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=utkwbonv5bwhibprmpcwyy73my&h=my.1password.com
-    EOF
-  variable_set_id = data.tfe_variable_set.onepass_connect_server_bedrock.id
-}
-resource "tfe_variable" "onepass_connect_access_token" {
-  key             = "onepassword_access_token"
-  value           = data.onepassword_item.onepass_connect_access_token.credential
-  category        = "terraform"
-  sensitive       = true
-  description     = <<EOF
-    This is a 1password connect access token used to retrieve secrets from the bedrock 1PassConnect instance.
-
-    Stored here: https://start.1password.com/open/i?a=JUCISKH67RAPBO6RKNPIERCVI4&v=t4f4664r2vhpryeipyn3dax5em&i=t7nnsq2rfn6uolkjo6hedl3uve&h=my.1password.com
-    EOF
-  variable_set_id = data.tfe_variable_set.onepass_connect_server_bedrock.id
-}
-
 # Tailscale API Credentials
 resource "tfe_variable" "tailscale_api_key" {
   key             = "TAILSCALE_API_KEY"

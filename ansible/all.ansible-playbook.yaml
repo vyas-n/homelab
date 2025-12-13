@@ -8,42 +8,6 @@
 
 # Note: This playbook provisions the Hosts & Virtual Machines for my entire homelab and is designed to be idempotent.
 
-- name: Deploy Apps to TrueNAS
-  hosts: truenas
-  roles:
-    # TODO: loop the role
-    # TODO: dynamically retrieve this list based on directory ./ansible/docker
-    - name: Deploy homepage
-      role: vyas.linux.compose_deploy
-      vars:
-        compose_src_file: docker/homepage/compose.yaml
-        compose_dest_dir: /mnt/app1/apps/dockge/stacks/homepage
-    - name: Deploy satisfactory-server
-      role: vyas.linux.compose_deploy
-      vars:
-        compose_src_file: docker/satisfactory-server/compose.yaml
-        compose_dest_dir: /mnt/app1/apps/dockge/stacks/satisfactory-server
-    - name: Deploy tfc-agent
-      role: vyas.linux.compose_deploy
-      vars:
-        compose_src_file: docker/tfc-agent/compose.yaml
-        compose_dest_dir: /mnt/app1/apps/dockge/stacks/tfc-agent
-    - name: Deploy tsdproxy
-      role: vyas.linux.compose_deploy
-      vars:
-        compose_src_file: docker/tsdproxy/compose.yaml
-        compose_dest_dir: /mnt/app1/apps/dockge/stacks/tsdproxy
-    - name: Deploy uptime-kuma
-      role: vyas.linux.compose_deploy
-      vars:
-        compose_src_file: docker/uptime-kuma/compose.yaml
-        compose_dest_dir: /mnt/app1/apps/dockge/stacks/uptime-kuma
-    - name: Deploy whatsupdocker
-      role: vyas.linux.compose_deploy
-      vars:
-        compose_src_file: docker/whatsupdocker/compose.yaml
-        compose_dest_dir: /mnt/app1/apps/dockge/stacks/whatsupdocker
-
 # Provision k8s nodes
 - name: Provision fedora & raspberrypi nodes
   hosts: all:!gaming-vm-win11:!truenas
@@ -66,7 +30,7 @@
       when: ansible_hostname != 'gaming-vm-bazzite' and 'proxmox' not in group_names
       vars:
         verbose: true
-        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', field='credential') }}"
+        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', vault='HomeLab', field='credential') }}"
 
     # TODO: Only run if username == vyas
     - role: vyas.linux.passwordless_sudo
@@ -93,12 +57,12 @@
           ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon
             name: DefaultUserName
-            data: "{{ lookup('community.general.onepassword', 'Gaming-VM-Win11', field='username') }}"
+            data: "{{ lookup('community.general.onepassword', 'Gaming-VM-Win11', vault='HomeLab', field='username') }}"
         - name: Set Password
           ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon
             name: DefaultPassword
-            data: "{{ lookup('community.general.onepassword', 'Gaming-VM-Win11') }}"
+            data: "{{ lookup('community.general.onepassword', 'Gaming-VM-Win11', vault='HomeLab' }}"
         - name: Autologin
           ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon
@@ -146,7 +110,7 @@
     - role: artis3n.tailscale.machine
       vars:
         verbose: true
-        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', field='credential') }}"
+        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', vault='HomeLab', field='credential') }}"
         tailscale_args: "--advertise-exit-node --advertise-routes='{{ my_playbook_advertise_tailscale_cidrs | join(',') }}'"
     - role: vyas.proxmox.fix_for_amd_gpu
       # TODO: dynamically detect if the proxmox host has an AMD gpu installed
