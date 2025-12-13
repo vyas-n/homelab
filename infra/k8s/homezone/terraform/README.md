@@ -22,6 +22,7 @@
 |-------------------|-----------------------------|---------|
 | cilium            | ./modules/cilium            | n/a     |
 | cluster_operators | ./modules/cluster_operators | n/a     |
+| cluster_services  | ./modules/cluster_services  | n/a     |
 
 ## Resources
 
