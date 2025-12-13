@@ -20,3 +20,5 @@ license.yaml
 # Outputs
 generated/
 kubeconfig.yaml
+**/data/**/*
+!.gitkeep

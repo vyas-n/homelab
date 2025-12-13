@@ -9,7 +9,7 @@ setup:
 
 deploy:
     # k0s apply
-    # ./infra/k8s/homezone/k0sctl/deploy.nu
+    ./infra/k8s/homezone/k0sctl/deploy.nu
 
     # TODO: secrets tf workspace
     # cd secrets/terraform
@@ -34,3 +34,6 @@ deps-upgrade:
     fd --hidden .terraform.lock | xargs dirname | uniq | xargs -I {} terraform -chdir={} init --upgrade
 
     uv lock --upgrade
+
+server-upgrade:
+    ansible-playbook ansible/upgrade.ansible-playbook.yaml

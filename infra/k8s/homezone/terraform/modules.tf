@@ -41,15 +41,15 @@ module "cluster_operators" {
 #   ]
 # }
 
-# module "cluster_services" {
-#   source = "./modules/cluster_services"
+module "cluster_services" {
+  source = "./modules/cluster_services"
 
-#   depends_on = [
-#     module.cluster_operators,
-#     module.cilium,
-#     helm_release.prometheus_operator_crds
-#   ]
-# }
+  depends_on = [
+    module.cluster_operators,
+    module.cilium,
+    helm_release.prometheus_operator_crds
+  ]
+}
 
 # module "monitoring_stack" {
 #   source = "./modules/monitoring_stack"
