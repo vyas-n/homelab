@@ -46,7 +46,7 @@ dex:
       enabled: true
   resources:
     limits:
-      memory: 64Mi
+      memory: 256Mi
     requests:
       cpu: 10m
       memory: 32Mi
