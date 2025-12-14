@@ -17,8 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      pull-requests: read
-      contents: read
+      pull-requests: read # Action needs access to PR title to determine conventional commit compliance
     steps:
       - name: Check if PR Title is Conventional Commit
         uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
