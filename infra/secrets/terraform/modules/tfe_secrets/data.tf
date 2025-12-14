@@ -27,22 +27,10 @@ data "onepassword_item" "tailscale_api_key_for_vyasn" {
   title = "Tailscale API Token (vyas@github)"
 }
 
-
-# Bedrock 1PassConnect Server
-data "tfe_variable_set" "onepass_connect_server_bedrock" {
-  name = "1PassConnect Server Bedrock"
-}
-# Bedrock 1PassConnect Access Token
-data "onepassword_item" "onepass_connect_access_token" {
-  vault = var.onepass_vault.uuid
-  title = "1Pass Connect Bedrock Access Token: Kubernetes"
-}
-
 # Cloudflare
 data "tfe_variable_set" "cloudflare" {
   name = "Cloudflare"
 }
-data "cloudflare_user" "me" {}
 data "cloudflare_api_token_permission_groups" "all" {}
 
 # Unifi
@@ -74,10 +62,6 @@ data "onepassword_item" "vyas_fast_key_1" {
 # HomeZone k8s cluster
 data "tfe_workspace" "k8s_homezone" {
   name = "k8s_homezone"
-}
-data "onepassword_item" "homezone" {
-  vault = var.onepass_vault.uuid
-  title = "HomeZone-v1"
 }
 data "tfe_variable_set" "homezone" {
   name = "HomeZone-v1"

@@ -183,7 +183,7 @@ resource "tfe_variable" "proxmox_ve_ssh_private_key" {
   sensitive       = true
   variable_set_id = data.tfe_variable_set.proxmox.id
 }
-resource "tfe_variable" "PROXMOX_VE_SSH_USERNAME" {
+resource "tfe_variable" "proxmox_ve_ssh_username" {
   key             = "PROXMOX_VE_SSH_USERNAME"
   value           = "root"
   category        = "env"

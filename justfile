@@ -1,12 +1,17 @@
 # https://just.systems
 
 setup:
+    #!/usr/bin/env nu
     mise install
     tflint --init
     uv python install
     uv sync
     ansible-galaxy collection install -r ./ansible/requirements.yml --force
-    fd --hidden .terraform.lock | xargs dirname | uniq | xargs -I {} terraform -chdir={} init --backend=false
+
+    glob infra/**/*/.terraform.lock.hcl | path dirname | uniq
+        | par-each {|tf_directory|
+            terraform -chdir=($tf_directory) init --backend=false
+        }
 
 deploy:
     # k0s apply
@@ -21,7 +26,7 @@ deploy:
     ansible-playbook ansible/all.ansible-playbook.yaml
 
 lint:
-    tflint --recursive
+    tflint --recursive --config=$(pwd)/.tflint.hcl
 
 format:
     just --fmt --unstable
@@ -41,3 +46,10 @@ deps-upgrade:
 
 server-upgrade:
     ansible-playbook ansible/upgrade.ansible-playbook.yaml
+
+validate:
+    #!/usr/bin/env nu
+
+    for tf_directory in (glob infra/**/*/.terraform.lock.hcl | path dirname | uniq) {
+        terraform -chdir=($tf_directory) validate
+    }
