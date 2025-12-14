@@ -2,6 +2,7 @@
 
 setup:
     mise install
+    tflint --init
     uv python install
     uv sync
     ansible-galaxy collection install -r ./ansible/requirements.yml --force
@@ -18,6 +19,9 @@ deploy:
 
     # Ansible provisioning
     ansible-playbook ansible/all.ansible-playbook.yaml
+
+lint:
+    tflint --recursive
 
 format:
     just --fmt --unstable

@@ -5,16 +5,20 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       github-actions:
         patterns:
           - "*"
   - package-ecosystem: docker-compose
     directories:
-      - ansible/docker/*
+      - infra/docker-server/*
     schedule:
-      interval: daily
+      interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       docker-compose:
         patterns:
@@ -22,7 +26,9 @@ updates:
   - package-ecosystem: uv
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       uv:
         patterns:
@@ -38,7 +44,9 @@ updates:
       - infra/tfcloud/terraform
       - infra/unifi/terraform
     schedule:
-      interval: daily
+      interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       terraform-remote-exec:
         patterns:
@@ -48,7 +56,9 @@ updates:
       - infra/secrets/terraform
       - infra/secrets/terraform/modules/*
     schedule:
-      interval: daily
+      interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       terraform-local-exec:
         patterns:
@@ -58,10 +68,16 @@ updates:
       - dependency-name: cloudflare/cloudflare
         update-types:
           - version-update:semver-major
+      # 1Password provider version 3 doesn't support using the op cli for authentication into Private Vault.
+      - dependency-name: cloudflare/cloudflare
+        update-types:
+          - version-update:semver-major
   - package-ecosystem: devcontainers
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       devcontainers:
         patterns:
