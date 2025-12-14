@@ -7,6 +7,7 @@ variable "onepass_vault" {
 }
 
 variable "zerossl_api_key" {
-  sensitive = true
-  type      = string
+  sensitive   = true
+  type        = string
+  description = "ZeroSSL API Key to generate ACME Credentials"
 }

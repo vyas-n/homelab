@@ -2,10 +2,11 @@
 
 ## Requirements
 
-| Name       | Version |
-|------------|---------|
-| helm       | >= 3.0  |
-| kubernetes | >= 2.12 |
+| Name       | Version   |
+|------------|-----------|
+| terraform  | >= 1.14.2 |
+| helm       | >= 3.0    |
+| kubernetes | >= 2.12   |
 
 ## Providers
 

@@ -30,7 +30,6 @@
 | [cloudflare_api_token.tfe_external_dns_cloudflare_api_token](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token)            | resource    |
 | [onepassword_item.tfe_organization_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/resources/item)                                    | resource    |
 | [tfe_organization_token.vyas_n](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization_token)                                        | resource    |
-| [tfe_variable.PROXMOX_VE_SSH_USERNAME](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                           | resource    |
 | [tfe_variable.cloudflare_api_token](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                              | resource    |
 | [tfe_variable.digitalocean_spaces_access_key_id](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                 | resource    |
 | [tfe_variable.digitalocean_spaces_secret_access_key](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                             | resource    |
@@ -49,6 +48,7 @@
 | [tfe_variable.proxmox_ve_api_token](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                              | resource    |
 | [tfe_variable.proxmox_ve_endpoint](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                               | resource    |
 | [tfe_variable.proxmox_ve_ssh_private_key](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                        | resource    |
+| [tfe_variable.proxmox_ve_ssh_username](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                           | resource    |
 | [tfe_variable.tailscale_api_key](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                                 | resource    |
 | [tfe_variable.tfe_token](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                                         | resource    |
 | [tfe_variable.unifi_api](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable)                                                         | resource    |
@@ -61,11 +61,8 @@
 | [time_rotating.tfe_organization_token](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/rotating)                                          | resource    |
 | [zerossl_eab_credentials.homezone_cert_manager_zerossl_eab_credentials](https://registry.terraform.io/providers/toowoxx/zerossl/latest/docs/resources/eab_credentials) | resource    |
 | [cloudflare_api_token_permission_groups.all](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/api_token_permission_groups)       | data source |
-| [cloudflare_user.me](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/user)                                                      | data source |
 | [onepassword_item.digitalocean_pat_for_tfcloud_vyasn](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                     | data source |
 | [onepassword_item.digitalocean_s3access_for_tfcloud_vyasn](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                | data source |
-| [onepassword_item.homezone](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                               | data source |
-| [onepassword_item.onepass_connect_access_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                           | data source |
 | [onepassword_item.proxmox_api_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                      | data source |
 | [onepassword_item.tailscale_api_key_for_vyasn](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                            | data source |
 | [onepassword_item.unifi_gateway_homelab](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                  | data source |
@@ -74,7 +71,6 @@
 | [tfe_variable_set.cloudflare](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                                             | data source |
 | [tfe_variable_set.digitalocean](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                                           | data source |
 | [tfe_variable_set.homezone](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                                               | data source |
-| [tfe_variable_set.onepass_connect_server_bedrock](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                         | data source |
 | [tfe_variable_set.proxmox](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                                                | data source |
 | [tfe_variable_set.tailscale](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                                              | data source |
 | [tfe_variable_set.tfc](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                                                    | data source |
@@ -86,4 +82,4 @@
 | Name            | Description                                                   | Type                        | Default | Required |
 |-----------------|---------------------------------------------------------------|-----------------------------|---------|:--------:|
 | onepass_vault   | The 1Password Vault id to grab from and store credentials in. | `object({ uuid : string })` | n/a     |   yes    |
-| zerossl_api_key | n/a                                                           | `string`                    | n/a     |   yes    |
+| zerossl_api_key | ZeroSSL API Key to generate ACME Credentials                  | `string`                    | n/a     |   yes    |

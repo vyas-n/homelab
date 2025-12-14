@@ -26,4 +26,3 @@
 | [time_rotating.proxmox_acme](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/rotating)                                                     | resource    |
 | [cloudflare_accounts.vyas](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/accounts)                                             | data source |
 | [cloudflare_api_token_permission_groups.all](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/api_token_permission_groups)        | data source |
-| [cloudflare_user.me](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/user)                                                       | data source |
