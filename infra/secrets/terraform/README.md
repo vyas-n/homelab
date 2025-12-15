@@ -10,7 +10,7 @@ The files are named after the location that the secrets are synchronized to (not
 |-------------|-------------------|
 | terraform   | >= 1.11.0         |
 | cloudflare  | < 5.0.0           |
-| github      | = 6.7.5           |
+| github      | 6.9.0             |
 | onepassword | >= 2.1.2, < 3.0.0 |
 | proxmox     | >= 0.83.2         |
 | tfe         | >= 0.69.0         |

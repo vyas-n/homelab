@@ -39,6 +39,11 @@ spec:
       openSSH:
         address: k8s-wkr-1.vms.vyas-n.dev
         user: vyas
+    - role: worker
+      installFlags: *installflags
+      openSSH:
+        address: k8s-wkr-2.vms.vyas-n.dev
+        user: vyas
   k0s:
     # releases: https://github.com/k0sproject/k0s/releases
     version: v1.34.2+k0s.0

@@ -46,3 +46,27 @@ module "k8s_wkr" {
 
   depends_on = [module.k8s_ctr]
 }
+
+module "k8s_wkr_proxmox0" {
+  # Module
+  source = "./modules/proxmox_cloudinit_vm"
+
+  ## Variables
+  # Proxmox configs
+  vm_datastore_id      = "ceph_rbd_nvme_osd"
+  snippet_datastore_id = "cephfs"
+  proxmox_node_name    = data.proxmox_virtual_environment_node.proxmox_0.node_name
+
+  # VM Configs
+  cpu_type            = "host"
+  hostname            = "k8s-wkr-2"
+  domain              = "vms.vyas-n.dev"
+  cloud_os_image      = proxmox_virtual_environment_download_file.fedora_41.id
+  cloud_init_filepath = "${path.module}/k8s-nodes.cloudinit.yaml"
+
+  num_cpu_cores = 8
+  memory        = pow(2, 15) # 32 GiB
+  disk_space    = 32
+
+  depends_on = [module.k8s_ctr]
+}

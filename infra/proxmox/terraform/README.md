@@ -18,16 +18,18 @@
 
 ## Modules
 
-| Name    | Source                         | Version |
-|---------|--------------------------------|---------|
-| k8s_ctr | ./modules/proxmox_cloudinit_vm | n/a     |
-| k8s_wkr | ./modules/proxmox_cloudinit_vm | n/a     |
+| Name             | Source                         | Version |
+|------------------|--------------------------------|---------|
+| k8s_ctr          | ./modules/proxmox_cloudinit_vm | n/a     |
+| k8s_wkr          | ./modules/proxmox_cloudinit_vm | n/a     |
+| k8s_wkr_proxmox0 | ./modules/proxmox_cloudinit_vm | n/a     |
 
 ## Resources
 
 | Name                                                                                                                                                               | Type        |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | [proxmox_virtual_environment_download_file.fedora_41](https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_download_file) | resource    |
+| [proxmox_virtual_environment_node.proxmox_0](https://registry.terraform.io/providers/bpg/proxmox/latest/docs/data-sources/virtual_environment_node)                | data source |
 | [proxmox_virtual_environment_node.proxmox_1](https://registry.terraform.io/providers/bpg/proxmox/latest/docs/data-sources/virtual_environment_node)                | data source |
 
 ## Inputs

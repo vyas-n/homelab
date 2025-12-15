@@ -24,6 +24,7 @@ all:
             k8s-ctr-2:
             k8s-wkr-0:
             k8s-wkr-1:
+            k8s-wkr-2:
       hosts:
         # gaming-vm-win11:
         #   # Must Setup Windows host with ssh:
