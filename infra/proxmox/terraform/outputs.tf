@@ -6,5 +6,5 @@ output "k8s_ctr_nodes" {
 
 output "k8s_wkr_nodes" {
   sensitive = false
-  value     = { for node in flatten([module.k8s_wkr[*]]) : node.hostname => node }
+  value     = { for node in flatten([module.k8s_wkr[*], module.k8s_wkr_proxmox0, module.k8s_wkr_proxmox2]) : node.hostname => node }
 }

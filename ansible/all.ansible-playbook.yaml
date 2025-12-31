@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i "poetry run ansible-playbook" --packages poetry
+#!/usr/bin/env -S uv run ansible-playbook
 
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
@@ -13,14 +12,14 @@
   hosts: all:!gaming-vm-win11:!truenas
   pre_tasks:
     - name: Check if python3-libdnf5 is installed
-      when: ansible_facts['distribution'] == "Fedora"
+      when: ansible_facts['pkg_mgr'] == "dnf5"
       ansible.builtin.shell: dnf list installed python3-libdnf5
       register: check_for_python3_libdnf5
       ignore_errors: true
       changed_when: false
 
     - name: Bootstrap a host without python dnf pkg installed
-      when: ansible_facts['distribution'] == "Fedora" and check_for_python3_libdnf5.rc != 0
+      when: ansible_facts['pkg_mgr'] == "dnf5" and check_for_python3_libdnf5.rc != 0
       become: true
       ansible.builtin.raw: dnf install -y python3-libdnf5
   roles:

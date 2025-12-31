@@ -1,5 +1,5 @@
 
-resource "kubernetes_namespace" "argo_cd" {
+resource "kubernetes_namespace_v1" "argo_cd" {
   metadata {
     name = "argo-cd"
   }
@@ -11,7 +11,7 @@ resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/
   repository = "https://argoproj.github.io/argo-helm"
   version    = "9.1.7"
 
-  namespace        = kubernetes_namespace.argo_cd.metadata[0].name
+  namespace        = kubernetes_namespace_v1.argo_cd.metadata[0].name
   create_namespace = false
   lint             = true
   timeout          = 600
@@ -28,7 +28,7 @@ resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/
 #     kind       = "ExternalSecret"
 #     metadata = {
 #       name      = "repo-creds"
-#       namespace = kubernetes_namespace.argo_cd.metadata[0].name
+#       namespace = kubernetes_namespace_v1.argo_cd.metadata[0].name
 
 #       # labels and annotations are copied over to the secret that will be created
 #       labels = {
@@ -89,10 +89,10 @@ resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/
 #   server_side_apply = true
 # }
 
-# resource "kubernetes_secret" "deploy_repo" {
+# resource "kubernetes_secret_v1" "deploy_repo" {
 #   metadata {
 #     name      = "deploy-repo"
-#     namespace = kubernetes_namespace.argo_cd.metadata[0].name
+#     namespace = kubernetes_namespace_v1.argo_cd.metadata[0].name
 #     labels = {
 #       "argocd.argoproj.io/secret-type" = "repository"
 #     }
@@ -112,7 +112,7 @@ resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/
 #     kind       = "Application"
 #     metadata = {
 #       name      = "deploy"
-#       namespace = kubernetes_namespace.argo_cd.metadata[0].name
+#       namespace = kubernetes_namespace_v1.argo_cd.metadata[0].name
 #     }
 #     spec = {
 #       project = "default"
@@ -123,7 +123,7 @@ resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/
 #       }
 #       destination = {
 #         server    = "https://kubernetes.default.svc"
-#         namespace = kubernetes_namespace.argo_cd.metadata[0].name
+#         namespace = kubernetes_namespace_v1.argo_cd.metadata[0].name
 #       }
 #       syncPolicy = {
 #         syncOptions = [
@@ -140,7 +140,7 @@ resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/
 #   }
 # }
 
-resource "kubernetes_namespace" "stackgres_operator" {
+resource "kubernetes_namespace_v1" "stackgres_operator" {
   metadata {
     name = "stackgres-operator"
   }
@@ -152,7 +152,7 @@ resource "kubernetes_namespace" "stackgres_operator" {
 #   repository = "https://stackgres.io/downloads/stackgres-k8s/stackgres/helm"
 #   version    = "1.13.0"
 
-#   namespace        = kubernetes_namespace.stackgres_operator.metadata[0].name
+#   namespace        = kubernetes_namespace_v1.stackgres_operator.metadata[0].name
 #   create_namespace = false
 #   lint             = true
 #   wait             = false # The Helm webhooks only run properly if wait is set to false.
@@ -167,7 +167,7 @@ resource "kubernetes_namespace" "stackgres_operator" {
 # resource "kubernetes_ingress_v1" "stackgres_operator" {
 #   metadata {
 #     name      = "stackgres-restapi"
-#     namespace = kubernetes_namespace.stackgres_operator.metadata[0].name
+#     namespace = kubernetes_namespace_v1.stackgres_operator.metadata[0].name
 #     annotations = {
 #       "cert-manager.io/cluster-issuer" = "zerossl-prod"
 

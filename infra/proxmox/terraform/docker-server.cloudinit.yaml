@@ -23,6 +23,8 @@ packages:
   - fish
   - lldpd
   - qemu-guest-agent
+
+  - podman-compose
 runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, enable, --now, --no-block, qemu-guest-agent]

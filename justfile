@@ -6,7 +6,8 @@ setup:
     tflint --init
     uv python install
     uv sync
-    ansible-galaxy collection install -r ./ansible/requirements.yml --force
+
+    ./ansible/requirements.yml
 
     glob infra/**/*/.terraform.lock.hcl | path dirname | uniq
         | par-each {|tf_directory|

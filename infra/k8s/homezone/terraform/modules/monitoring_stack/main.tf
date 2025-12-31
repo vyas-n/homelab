@@ -1,5 +1,5 @@
 
-resource "kubernetes_namespace" "kube_prometheus_stack" {
+resource "kubernetes_namespace_v1" "kube_prometheus_stack" {
   metadata {
     name = "kube-prometheus-stack"
   }
@@ -11,7 +11,7 @@ resource "helm_release" "kube_prometheus_stack" { # https://artifacthub.io/packa
   repository = "https://prometheus-community.github.io/helm-charts"
   version    = "69.4.1"
 
-  namespace        = kubernetes_namespace.kube_prometheus_stack.metadata[0].name
+  namespace        = kubernetes_namespace_v1.kube_prometheus_stack.metadata[0].name
   create_namespace = false
   lint             = true
   timeout          = 1200
@@ -22,7 +22,7 @@ resource "helm_release" "kube_prometheus_stack" { # https://artifacthub.io/packa
   ]
 }
 
-resource "kubernetes_namespace" "loki" {
+resource "kubernetes_namespace_v1" "loki" {
   metadata {
     name = "loki"
   }
@@ -34,7 +34,7 @@ resource "kubectl_manifest" "loki_bucket" {
     kind       = "ObjectBucketClaim"
     metadata = {
       name      = "loki-bucket"
-      namespace = kubernetes_namespace.loki.metadata[0].name
+      namespace = kubernetes_namespace_v1.loki.metadata[0].name
     }
     spec = {
       bucketName       = "loki-bucket"
@@ -50,7 +50,7 @@ resource "helm_release" "loki" { # https://artifacthub.io/packages/helm/grafana/
   repository = "https://grafana.github.io/helm-charts"
   version    = "5.48.0"
 
-  namespace        = kubernetes_namespace.loki.metadata[0].name
+  namespace        = kubernetes_namespace_v1.loki.metadata[0].name
   create_namespace = false
   lint             = true
   timeout          = 900
@@ -70,7 +70,7 @@ resource "kubectl_manifest" "loki_grafana_datasource" {
     kind       = "ConfigMap"
     metadata = {
       name      = "loki-grafana-datasource"
-      namespace = kubernetes_namespace.loki.metadata[0].name
+      namespace = kubernetes_namespace_v1.loki.metadata[0].name
       labels = {
         grafana_datasource : "1"
       }
@@ -101,7 +101,7 @@ resource "helm_release" "promtail" { # https://artifacthub.io/packages/helm/graf
   repository = "https://grafana.github.io/helm-charts"
   version    = "6.16.6"
 
-  namespace        = kubernetes_namespace.loki.metadata[0].name
+  namespace        = kubernetes_namespace_v1.loki.metadata[0].name
   create_namespace = false
   lint             = true
 
