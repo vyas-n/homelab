@@ -70,3 +70,27 @@ module "k8s_wkr_proxmox0" {
 
   depends_on = [module.k8s_ctr]
 }
+
+module "docker_server_0" {
+  # Module
+  source = "./modules/proxmox_cloudinit_vm"
+
+  ## Variables
+  # Proxmox configs
+  vm_datastore_id      = "ceph_rbd_nvme_osd"
+  snippet_datastore_id = "cephfs"
+  proxmox_node_name    = data.proxmox_virtual_environment_node.proxmox_0.node_name
+
+  # VM Configs
+  cpu_type            = "host"
+  hostname            = "docker-server-0"
+  domain              = "vms.vyas-n.dev"
+  cloud_os_image      = proxmox_virtual_environment_download_file.fedora_43_1_6.id
+  cloud_init_filepath = "${path.module}/docker-server.cloudinit.yaml"
+
+  num_cpu_cores = 4
+  memory        = pow(2, 14) # 16 GiB
+  disk_space    = 32
+
+  depends_on = [module.k8s_ctr]
+}
