@@ -29,18 +29,26 @@ lint:
     tflint --recursive --config=$(pwd)/.tflint.hcl
 
 format:
+    #!/usr/bin/env nu
+
     just --fmt --unstable
 
     terraform fmt --recursive .
 
-    fd .tf infra/ | xargs dirname | uniq | xargs -I {} terraform-docs markdown {}
+    for tf_directory in (glob infra/**/*.tf | path dirname | uniq) {
+        terraform-docs markdown $tf_directory
+    }
 
     prettier --write .
 
     markdown-table-formatter **/*.md
 
 deps-upgrade:
-    fd --hidden .terraform.lock | xargs dirname | uniq | xargs -I {} terraform -chdir={} init --upgrade
+    #!/usr/bin/env nu
+
+    for tf_directory in (glob infra/**/*/.terraform.lock.hcl | path dirname | uniq) {
+        terraform -chdir=($tf_directory) init --upgrade
+    }
 
     uv lock --upgrade
 
