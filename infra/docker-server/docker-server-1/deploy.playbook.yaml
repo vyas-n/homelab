@@ -1,0 +1,161 @@
+#!/usr/bin/env -S uv run ansible-playbook
+
+# Ansible Playbook Refs:
+# - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
+# - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
+
+# Provision k8s nodes
+- name: Deploy podman-compose apps
+  hosts: docker-server-1
+  tasks:
+    # - name: Debug
+    #   ansible.builtin.debug:
+    #     msg: "{{ ansible_facts }}"
+
+    - name: Setup podman-compose systemd unit file
+      become: true
+      ansible.builtin.command:
+        creates: /etc/systemd/user/podman-compose@.service
+        cmd: podman-compose systemd --action create-unit
+
+    - name: Enable linger for user
+      become: true
+      ansible.builtin.command:
+        creates: "/var/lib/systemd/linger/{{ ansible_facts.user_id }}"
+        cmd: loginctl enable-linger {{ ansible_facts.user_id }}
+
+    - name: Create required directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ ansible_facts.user_dir }}/apps"
+
+    - name: Deploy TSDProxy
+      block:
+        - name: Create directories
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+          loop:
+            - "{{ ansible_facts.user_dir }}/apps/tsdproxy"
+            - "{{ ansible_facts.user_dir }}/apps/tsdproxy/config"
+            - "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@tsdproxy.service.d"
+
+        - name: Copy podman-compose files
+          ansible.builtin.copy:
+            src: "{{ item.src }}"
+            dest: "{{ item.dest }}"
+          loop:
+            - src: compose/tsdproxy/compose.yaml
+              dest: "{{ ansible_facts.user_dir }}/apps/tsdproxy/compose.yaml"
+            - src: compose/tsdproxy/config/tsdproxy.yaml
+              dest: "{{ ansible_facts.user_dir }}/apps/tsdproxy/config/tsdproxy.yaml"
+          notify:
+            - restart_tsdproxy_service
+
+        - name: Template environment variables
+          ansible.builtin.copy:
+            content: |-
+              TAILSCALE_AUTHKEY={{ lookup('community.general.onepassword', 'tailscale-authkey-tsdproxy-truenas', field='credential', vault='HomeLab') }}
+              HOST_USER_UID={{ ansible_facts.user_uid }}
+            dest: "{{ ansible_facts.user_dir }}/apps/tsdproxy/.env"
+          notify:
+            - restart_tsdproxy_service
+
+        - name: Create systemd unit for compose deployment
+          ansible.builtin.command:
+            creates: "{{ ansible_facts.user_dir }}/.config/systemd/user/default.target.wants/podman-compose@tsdproxy.service"
+            cmd: podman-compose systemd --action register
+            chdir: "{{ ansible_facts.user_dir }}/apps/tsdproxy"
+
+        - name: Override timeout & require podman user-space socket
+          ansible.builtin.copy:
+            content: |-
+              [Unit]
+              Requires=podman.socket
+              [Service]
+              TimeoutStartSec=900
+            dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@tsdproxy.service.d/override.conf"
+          notify:
+            - restart_tsdproxy_service
+
+        - name: Make sure the service unit is running
+          ansible.builtin.systemd_service:
+            name: podman-compose@tsdproxy.service
+            state: started
+            enabled: true
+            scope: user
+
+    - name: Deploy TFC Agent
+      block:
+        - name: Create directories
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+          loop:
+            - "{{ ansible_facts.user_dir }}/apps/tfc-agent"
+            - "{{ ansible_facts.user_dir }}/apps/tfc-agent/config"
+            - "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@tfc-agent.service.d"
+
+        - name: Copy podman-compose files
+          ansible.builtin.copy:
+            src: "{{ item.src }}"
+            dest: "{{ item.dest }}"
+          loop:
+            - src: compose/tfc-agent/compose.yaml
+              dest: "{{ ansible_facts.user_dir }}/apps/tfc-agent/compose.yaml"
+          notify:
+            - restart_tfc_service
+
+        - name: Template environment variables
+          ansible.builtin.copy:
+            content: |-
+              TFC_AGENT_TOKEN={{ lookup('community.general.onepassword', 'TFC-Vyas-Agent-Token', field='credential', vault='HomeLab') }}
+            dest: "{{ ansible_facts.user_dir }}/apps/tfc-agent/.env"
+          notify:
+            - restart_tfc_service
+
+        - name: Create systemd unit for compose deployment
+          ansible.builtin.command:
+            creates: "{{ ansible_facts.user_dir }}/.config/systemd/user/default.target.wants/podman-compose@tfc-agent.service"
+            cmd: podman-compose systemd --action register
+            chdir: "{{ ansible_facts.user_dir }}/apps/tfc-agent"
+
+        - name: Override timeout & require podman user-space socket
+          ansible.builtin.copy:
+            content: |-
+              [Service]
+              TimeoutStartSec=900
+            dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@tfc-agent.service.d/override.conf"
+          notify:
+            - restart_tfc_service
+
+        - name: Make sure the service unit is running
+          ansible.builtin.systemd_service:
+            name: podman-compose@tfc-agent.service
+            state: started
+            enabled: true
+            scope: user
+  handlers:
+    - name: restart_tfc_service
+      block:
+        - ansible.builtin.command:
+            cmd: podman-compose pull
+            chdir: "{{ ansible_facts.user_dir }}/apps/tfc-agent"
+        - ansible.builtin.systemd_service:
+            name: podman-compose@tfc-agent.service
+            scope: user
+            daemon_reload: true
+            state: restarted
+    - name: restart_tsdproxy_service
+      block:
+        - ansible.builtin.command:
+            cmd: podman-compose pull
+            chdir: "{{ ansible_facts.user_dir }}/apps/tsdproxy"
+        - ansible.builtin.systemd_service:
+            name: podman-compose@tsdproxy.service
+            scope: user
+            daemon_reload: true
+            state: restarted

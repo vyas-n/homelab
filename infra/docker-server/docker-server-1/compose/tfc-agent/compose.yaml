@@ -17,9 +17,3 @@ services:
 
       # Whats up docker config
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
-    deploy:
-      resources:
-        limits:
-          memory: 8G
-        reservations:
-          memory: 4G

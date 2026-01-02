@@ -1,7 +1,6 @@
 # gitignore Format Ref: https://git-scm.com/docs/gitignore
 
 # Secrets
-.env
 license.yaml
 *.snap
 
