@@ -1,0 +1,27 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/settings
+
+# Themeing
+theme: dark
+color: slate
+background:
+  image: https://github.com/gethomepage/homepage/blob/a06964dd175fa798fa9189ba1ecd5766bbde543f/docs/assets/blossom_valley.jpg?raw=true
+
+headerStyle: clean
+
+quicklaunch:
+  searchDescriptions: true
+  showSearchSuggestions: true
+  provider: duckduckgo
+
+# providers:
+#   openweathermap: openweathermapapikey
+#   weatherapi: weatherapiapikey
+
+# Changes the behaviour of links on the homepage,
+# ref: https://gethomepage.dev/configs/settings/#link-target
+target: _self
+
+# https://gethomepage.dev/configs/settings/#show-docker-stats
+showStats: true

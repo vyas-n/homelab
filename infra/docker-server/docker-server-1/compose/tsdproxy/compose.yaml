@@ -10,7 +10,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - /run/user/${HOST_USER_UID}/podman/podman.sock:/var/run/docker.sock
+      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock
       - ./data/tsdproxy:/data:z
     labels:
       # Homepage config

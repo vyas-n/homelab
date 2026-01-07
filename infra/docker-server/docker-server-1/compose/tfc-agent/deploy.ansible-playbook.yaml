@@ -1,0 +1,71 @@
+#!/usr/bin/env -S uv run ansible-playbook
+
+# Ansible Playbook Refs:
+# - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
+# - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
+
+- name: Deploy TFC Agent
+  hosts: docker-server-1
+  vars:
+    service_slug: tfc-agent
+  tasks:
+    - name: Create directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}"
+        - "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@{{ service_slug }}.service.d"
+
+    - name: Copy podman-compose files
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: compose.yaml
+          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/compose.yaml"
+      notify:
+        - pull_service
+        - restart_service
+
+    - name: Template environment variables
+      ansible.builtin.copy:
+        content: |-
+          TFC_AGENT_TOKEN={{ lookup('community.general.onepassword', 'TFC-Vyas-Agent-Token', field='credential', vault='HomeLab') }}
+        dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/.env"
+      notify:
+        - restart_service
+
+    - name: Create systemd unit for compose deployment
+      ansible.builtin.command:
+        creates: "{{ ansible_facts.user_dir }}/.config/systemd/user/default.target.wants/podman-compose@{{ service_slug }}.service"
+        cmd: podman-compose systemd --action register
+        chdir: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}"
+
+    - name: Override timeout & require podman user-space socket
+      ansible.builtin.copy:
+        content: |-
+          [Service]
+          TimeoutStartSec=900
+        dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@{{ service_slug }}.service.d/override.conf"
+      notify:
+        - restart_service
+
+    - name: Make sure the service unit is running
+      ansible.builtin.systemd_service:
+        name: podman-compose@{{ service_slug }}.service
+        state: started
+        enabled: true
+        scope: user
+  handlers:
+    - name: pull_service
+      ansible.builtin.command:
+        cmd: podman-compose pull
+        chdir: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}"
+    - name: restart_service
+      ansible.builtin.systemd_service:
+        name: podman-compose@{{ service_slug }}.service
+        scope: user
+        daemon_reload: true
+        state: restarted
