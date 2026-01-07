@@ -29,7 +29,7 @@
       when: ansible_hostname != 'gaming-vm-bazzite' and 'proxmox' not in group_names
       vars:
         verbose: true
-        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', vault='HomeLab', field='credential') }}"
+        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-homelab-Auth-Key', vault='HomeLab', field='credential') }}"
 
     # TODO: Only run if username == vyas
     - role: vyas.linux.passwordless_sudo
@@ -109,7 +109,7 @@
     - role: artis3n.tailscale.machine
       vars:
         verbose: true
-        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-Auth-Key (vyas@github)', vault='HomeLab', field='credential') }}"
+        tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-homelab-Auth-Key', vault='HomeLab', field='credential') }}"
         tailscale_args: "--advertise-exit-node --advertise-routes='{{ my_playbook_advertise_tailscale_cidrs | join(',') }}'"
     - role: vyas.proxmox.fix_for_amd_gpu
       # TODO: dynamically detect if the proxmox host has an AMD gpu installed

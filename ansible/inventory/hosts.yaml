@@ -4,15 +4,14 @@
 all:
   vars:
     ansible_user: vyas
-
-    # Workaround for an ssh issue with the default search domain on my laptop
-    # ref: https://stackoverflow.com/a/77461212
-    host_domain: hosts.vyas-n.dev
-    ansible_host: "{{inventory_hostname_short}}.{{host_domain}}"
-
   children:
     proxmox:
       vars:
+        # Workaround for an ssh issue with the default search domain on my laptop
+        # ref: https://stackoverflow.com/a/77461212
+        host_domain: hosts.vyas-n.dev
+        ansible_host: "{{inventory_hostname_short}}.{{host_domain}}"
+
         # TODO: add local user vyas to avoid direct root connection
         ansible_user: root
       hosts:
@@ -53,8 +52,6 @@ all:
         #   ansible_connection: ssh
         gaming-vm-bazzite:
   hosts:
-    raspberrypi-0:
-    raspberrypi-desktop-0:
     truenas:
       # TODO: fix DNS resolver so that truenas correctly resolves
       ansible_host: truenas.hosts.vyas-n.dev
