@@ -26,7 +26,8 @@
     - role: vyas.linux.shared_handlers
     - role: vyas.proxmox.shared_handlers
     - role: artis3n.tailscale.machine
-      when: ansible_hostname != 'gaming-vm-bazzite' and 'proxmox' not in group_names
+      when: |
+        'proxmox' not in group_names
       vars:
         verbose: true
         tailscale_authkey: "{{ lookup('community.general.onepassword', 'Tailscale-homelab-Auth-Key', vault='HomeLab', field='credential') }}"
