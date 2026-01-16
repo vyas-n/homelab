@@ -10,6 +10,7 @@ license.yaml
 .terraform/
 .trunk/
 .venv/
+/ansible/ansible-tailscale-inventory/
 
 # Generated / Temp Files
 .DS_Store

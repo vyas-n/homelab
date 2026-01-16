@@ -1,5 +1,11 @@
 # https://just.systems
 
+ci:
+    just setup
+    just format
+    just validate
+    just lint
+
 setup:
     #!/usr/bin/env nu
     mise install
@@ -24,7 +30,7 @@ deploy:
     # cd ../..
 
     # Ansible provisioning
-    ansible-playbook ansible/all.ansible-playbook.yaml
+    ./ansible/all.ansible-playbook.yaml
 
 lint:
     tflint --recursive --config=$(pwd)/.tflint.hcl

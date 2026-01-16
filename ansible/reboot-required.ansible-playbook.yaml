@@ -55,7 +55,7 @@
           changed_when: check_restart.rc != 0
         - become: true
           ansible.builtin.reboot:
-          when: check_restart.rc != 0
+          # when: check_restart.rc != 0
         - name: Wait for service 'k0scontroller.service' to be running
           ansible.builtin.service_facts:
           register: result
