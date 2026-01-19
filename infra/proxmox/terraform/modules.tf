@@ -144,3 +144,47 @@ module "docker_server_1" {
 
   depends_on = [module.k8s_ctr]
 }
+
+module "test_k8s_ctr" {
+  # Module
+  source = "./modules/proxmox_cloudinit_vm"
+
+  ## Variables
+  # Proxmox configs
+  vm_datastore_id      = "ceph_rbd_nvme_osd"
+  snippet_datastore_id = "cephfs"
+  proxmox_node_name    = data.proxmox_virtual_environment_node.proxmox_1.node_name
+
+  # VM Configs
+  cpu_type            = "x86-64-v2-AES"
+  hostname            = "test-k8s-ctr-0"
+  domain              = "vms.vyas-n.dev"
+  cloud_os_image      = data.proxmox_virtual_environment_file.ubuntu_2404_iso.id
+  cloud_init_filepath = "${path.module}/ubuntu-k8s-nodes.cloudinit.yaml"
+
+  num_cpu_cores = 1
+  memory        = 4096
+  disk_space    = 32
+}
+
+module "test_k8s_wkr" {
+  # Module
+  source = "./modules/proxmox_cloudinit_vm"
+
+  ## Variables
+  # Proxmox configs
+  vm_datastore_id      = "ceph_rbd_nvme_osd"
+  snippet_datastore_id = "cephfs"
+  proxmox_node_name    = data.proxmox_virtual_environment_node.proxmox_1.node_name
+
+  # VM Configs
+  cpu_type            = "host"
+  hostname            = "test-k8s-wkr-0"
+  domain              = "vms.vyas-n.dev"
+  cloud_os_image      = data.proxmox_virtual_environment_file.ubuntu_2404_iso.id
+  cloud_init_filepath = "${path.module}/ubuntu-k8s-nodes.cloudinit.yaml"
+
+  num_cpu_cores = 4
+  memory        = pow(2, 13) # 8 GiB
+  disk_space    = 32
+}
