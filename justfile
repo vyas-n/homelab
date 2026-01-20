@@ -53,6 +53,8 @@ format:
 deps-upgrade:
     #!/usr/bin/env nu
 
+    mise upgrade
+
     for tf_directory in (glob infra/**/*/.terraform.lock.hcl | path dirname | uniq) {
         terraform -chdir=($tf_directory) init --upgrade
     }

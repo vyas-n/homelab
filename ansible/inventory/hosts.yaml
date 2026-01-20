@@ -33,6 +33,10 @@ all:
                 k8s-wkr-1:
                 k8s-wkr-2:
                 k8s-wkr-3:
+        test_k8s:
+          hosts:
+            test-k8s-ctr-0:
+            test-k8s-wkr-0:
       hosts:
         gaming-vm-bazzite:
   hosts:

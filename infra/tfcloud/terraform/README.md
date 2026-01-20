@@ -11,7 +11,7 @@
 
 | Name | Version |
 |------|---------|
-| tfe  | 0.71.0  |
+| tfe  | 0.73.0  |
 
 ## Resources
 

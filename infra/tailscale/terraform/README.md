@@ -11,7 +11,7 @@
 
 | Name      | Version |
 |-----------|---------|
-| tailscale | 0.24.0  |
+| tailscale | 0.25.0  |
 
 ## Resources
 

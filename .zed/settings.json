@@ -1,4 +1,16 @@
 {
   "colorize_brackets": true,
-  "show_edit_predictions": false
+  "show_edit_predictions": false,
+  "auto_install_extensions": {
+    "ansible": true,
+    "just": true,
+    "terraform": true,
+    "toml": true,
+    "nu": true,
+    "git-firefly": true,
+    "caddyfile": true
+  },
+  "file_types": {
+    "Ansible": ["**/*.ansible-playbook.yaml"]
+  }
 }
