@@ -32,6 +32,9 @@ deploy:
     # Ansible provisioning
     ./ansible/all.ansible-playbook.yaml
 
+deploy-proxmox:
+    terraform -chdir=infra/proxmox/terraform apply
+
 lint:
     tflint --recursive --config=$(pwd)/.tflint.hcl
 

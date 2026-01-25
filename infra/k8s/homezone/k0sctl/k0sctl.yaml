@@ -55,7 +55,7 @@ spec:
         user: vyas
   k0s:
     # releases: https://github.com/k0sproject/k0s/releases/latest
-    version: v1.34.2+k0s.0
+    version: v1.34.3+k0s.0
     config:
       # k0s config
       # ref: https://docs.k0sproject.io/stable/configuration/#configuration-file-reference

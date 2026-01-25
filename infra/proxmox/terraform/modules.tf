@@ -159,10 +159,10 @@ module "test_k8s_ctr" {
   cpu_type            = "x86-64-v2-AES"
   hostname            = "test-k8s-ctr-0"
   domain              = "vms.vyas-n.dev"
-  cloud_os_image      = data.proxmox_virtual_environment_file.ubuntu_2404_iso.id
-  cloud_init_filepath = "${path.module}/ubuntu-k8s-nodes.cloudinit.yaml"
+  cloud_os_image      = proxmox_virtual_environment_download_file.fedora_43_1_6.id
+  cloud_init_filepath = "${path.module}/k8s-nodes.cloudinit.yaml"
 
-  num_cpu_cores = 1
+  num_cpu_cores = 2
   memory        = 4096
   disk_space    = 32
 }
@@ -181,8 +181,8 @@ module "test_k8s_wkr" {
   cpu_type            = "host"
   hostname            = "test-k8s-wkr-0"
   domain              = "vms.vyas-n.dev"
-  cloud_os_image      = data.proxmox_virtual_environment_file.ubuntu_2404_iso.id
-  cloud_init_filepath = "${path.module}/ubuntu-k8s-nodes.cloudinit.yaml"
+  cloud_os_image      = proxmox_virtual_environment_download_file.fedora_43_1_6.id
+  cloud_init_filepath = "${path.module}/k8s-nodes.cloudinit.yaml"
 
   num_cpu_cores = 4
   memory        = pow(2, 13) # 8 GiB

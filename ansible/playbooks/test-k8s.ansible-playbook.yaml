@@ -1,0 +1,49 @@
+#!/usr/bin/env -S uv run ansible-playbook
+
+# Ansible Playbook Refs:
+# - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
+# - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
+
+- name: Setup kubernetes packages
+  # ref: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm
+  hosts: test-k8s
+  tasks:
+    - name: Set SELinux in permissive mode (effectively disabling it)
+      become: true
+      when: false
+      ansible.builtin.command:
+        cmd: |
+          setenforce 0
+          sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+    - name: Setup yum repo
+      become: true
+      register: yum_repo
+      ansible.builtin.copy:
+        dest: /etc/yum.repos.d/kubernetes.repo
+        content: |
+          [kubernetes]
+          name=Kubernetes
+          baseurl=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/
+          enabled=1
+          gpgcheck=1
+          gpgkey=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/repodata/repomd.xml.key
+          exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
+        owner: root
+        group: root
+        mode: "0644"
+    - name: Install the k8s packages
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        state: present
+        disable_excludes: kubernetes
+    - name: Enable kubelet service
+      become: true
+      ansible.builtin.systemd_service:
+        name: kubelet.service
+        state: started
+        enabled: true
