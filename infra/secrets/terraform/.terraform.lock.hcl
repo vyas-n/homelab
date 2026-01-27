@@ -29,6 +29,7 @@ provider "registry.terraform.io/bpg/proxmox" {
   version     = "0.93.0"
   constraints = ">= 0.76.0, >= 0.83.2"
   hashes = [
+    "h1:/05FygzgUbFUKWgJ9k2MW5Ij84Ehy+rHYHgRUoluFb8=",
     "h1:yYhnmVwP6UtwAYaPMUyGQiicg+adzLj3q3gsE3Ve8UE=",
     "zh:0e497d36981f5b70edc9ac23287222d17854781a911c4c44a058ca0ba7a7807f",
     "zh:1276a3db28ab442ebc47eac9d6505b1b86aa7c525a0c1e630802e6199f074721",
@@ -76,6 +77,7 @@ provider "registry.terraform.io/hashicorp/tfe" {
   version     = "0.73.0"
   constraints = ">= 0.69.0"
   hashes = [
+    "h1:L17oEwUCCIM/BTHFiT4QFUNvr0riGjvraFnUOilPuGE=",
     "h1:ZNeSgNWA/SdS9sBIEeg6w3eQtcHlORZRpdk8Ie3R7Ag=",
     "zh:063efb04537080f009e3cc4f2402c7d6c583b51ed29af5b1e7575af677e0643b",
     "zh:284ca57835ebdaa2c8aad5881ab0712603c3ccc1654fdb43138e207e3f6272d6",
