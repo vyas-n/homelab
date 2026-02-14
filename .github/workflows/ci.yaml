@@ -33,11 +33,11 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: oxsecurity/megalinter/flavors/terraform@55a59b24a441e0e1943080d4a512d827710d4a9d # v9.2.0
+      - uses: oxsecurity/megalinter/flavors/terraform@42bb470545e359597e7f12156947c436e4e3fb9a # v9.3.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
@@ -57,10 +57,10 @@ jobs:
     permissions:
       security-events: write # required to upload zizmor sarif to GitHub Advanced Security
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - uses: zizmorcore/zizmor-action@e639db99335bc9038abc0e066dfcd72e23d26fb4 # v0.3.0
+      - uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
         with:
           persona: pedantic
   CodeQL:
@@ -77,7 +77,7 @@ jobs:
           - language: actions
             build-mode: none
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
       # Initializes the CodeQL tools for scanning.
