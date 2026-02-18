@@ -40,7 +40,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: ceph-block
+          storageClassName: ceph-rbd
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
@@ -101,7 +101,7 @@ grafana:
   persistence:
     enabled: true
     type: statefulset
-    storageClassName: ceph-block
+    storageClassName: ceph-rbd
   grafana.ini:
     server:
       domain: grafana.homezone-v1.vyas-n.dev
@@ -114,7 +114,7 @@ grafana:
     tls:
       - hosts:
           - grafana.homezone-v1.vyas-n.dev
-        secretName: grafana-homezone-v1-vyas-n-dev
+        secretName: grafana.homezone-v1.vyas-n.dev
     hosts:
       - grafana.homezone-v1.vyas-n.dev
   resources:

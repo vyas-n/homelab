@@ -9,14 +9,6 @@
 #   - Avoid any downtime (if an step would cause downtime for a service, it doesn't belong in this playbook)
 #   - Provide output showing if there's any additional manual steps needed
 
-- name: Refresh Tailscale
-  hosts: k8s:gaming-vm-bazzite
-  tasks:
-    # TODO: condition this to only refresh when node is < 1 month from expiry
-    - name: Refresh Tailscale Authkey
-      become: true
-      ansible.builtin.command: bash -c 'tailscale logout && tailscale up --authkey {{ lookup('community.general.onepassword', 'Tailscale-homelab-Auth-Key', vault='HomeLab', field='credential') }}'
-
 - name: Upgrade systems
   # TODO: figure out how to safely automate upgrading truenas
   hosts: all:!truenas

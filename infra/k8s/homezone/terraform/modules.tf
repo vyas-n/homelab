@@ -49,17 +49,18 @@ module "cluster_services" {
   depends_on = [
     module.cluster_operators,
     module.cilium,
-    helm_release.prometheus_operator_crds
+    helm_release.prometheus_operator_crds,
+    module.monitoring_stack,
   ]
 }
 
-# module "monitoring_stack" {
-#   source = "./modules/monitoring_stack"
+module "monitoring_stack" {
+  source = "./modules/monitoring_stack"
 
-#   depends_on = [
-#     helm_release.prometheus_operator_crds,
-#     module.rook_ceph,
-#     module.cluster_operators,
-#     module.cilium
-#   ]
-# }
+  depends_on = [
+    helm_release.prometheus_operator_crds,
+    module.rook_ceph,
+    module.cluster_operators,
+    module.cilium
+  ]
+}
