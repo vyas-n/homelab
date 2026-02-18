@@ -17,39 +17,13 @@
       loop:
         - "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}"
         - "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config"
-        - "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@{{ service_slug }}.service.d"
-
-    - name: Copy podman-compose files
-      ansible.builtin.copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      loop:
-        - src: compose.yaml
-          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/compose.yaml"
-        - src: config/bookmarks.yaml
-          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config/bookmarks.yaml"
-        - src: config/custom.css
-          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config/custom.css"
-        - src: config/custom.js
-          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config/custom.js"
-        - src: config/docker.yaml
-          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config/docker.yaml"
-        - src: config/kubernetes.yaml
-          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config/kubernetes.yaml"
-        - src: config/services.yaml
-          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config/services.yaml"
-        - src: config/settings.yaml
-          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config/settings.yaml"
-        - src: config/widgets.yaml
-          dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config/widgets.yaml"
-      notify:
-        - pull_service
-        - restart_service
 
     - name: Template environment variables
       ansible.builtin.copy:
         # HOMEPAGE_ALLOWED_HOSTS=docker-server-1:3000,homepage.tail5c72f1.ts.net
         content: |-
+          TS_AUTHKEY="{{ lookup('community.general.onepassword', 'tailscale-authkey-tsdproxy-truenas', field='credential', vault='HomeLab') }}"
+
           HOMEPAGE_ALLOWED_HOSTS="*"
           PROXMOX_TOKEN_ID={{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='username', vault='HomeLab') }}
           PROXMOX_API_TOKEN={{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='credential', vault='HomeLab') }}
@@ -59,38 +33,3 @@
           UNIFI_GATEWAY_USERNAME={{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='username', vault='HomeLab') }}
           UNIFI_GATEWAY_PASSWORD={{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='password', vault='HomeLab') }}
         dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/.env"
-      notify:
-        - restart_service
-
-    - name: Create systemd unit for compose deployment
-      ansible.builtin.command:
-        creates: "{{ ansible_facts.user_dir }}/.config/systemd/user/default.target.wants/podman-compose@{{ service_slug }}.service"
-        cmd: podman-compose systemd --action register
-        chdir: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}"
-
-    - name: Override timeout & require podman user-space socket
-      ansible.builtin.copy:
-        content: |-
-          [Service]
-          TimeoutStartSec=900
-        dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@{{ service_slug }}.service.d/override.conf"
-      notify:
-        - restart_service
-
-    - name: Make sure the service unit is running
-      ansible.builtin.systemd_service:
-        name: podman-compose@{{ service_slug }}.service
-        state: started
-        enabled: true
-        scope: user
-  handlers:
-    - name: pull_service
-      ansible.builtin.command:
-        cmd: podman-compose pull
-        chdir: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}"
-    - name: restart_service
-      ansible.builtin.systemd_service:
-        name: podman-compose@{{ service_slug }}.service
-        scope: user
-        daemon_reload: true
-        state: restarted

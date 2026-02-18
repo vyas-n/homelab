@@ -14,6 +14,14 @@ resource "helm_release" "prometheus_operator_crds" { # https://artifacthub.io/pa
   values = []
 }
 
+
+resource "kubernetes_namespace" "rook_ceph" {
+  metadata {
+    name = "rook-ceph"
+  }
+}
+
+
 # ref: https://docs.k0sproject.io/stable/system-monitoring/#system-components-monitoring
 resource "kubectl_manifest" "k0s_service_monitor" {
   yaml_body = yamlencode({

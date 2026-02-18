@@ -3,6 +3,7 @@
 # Secrets
 license.yaml
 *.snap
+.env
 
 # Packages
 .ansible/

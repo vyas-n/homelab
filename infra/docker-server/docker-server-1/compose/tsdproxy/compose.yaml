@@ -1,12 +1,15 @@
 ---
 services:
-  tsdproxy-1:
-    image: docker.io/almeidapaulopt/tsdproxy:1.4.7
+  tsdproxy:
+    image: docker.io/almeidapaulopt/tsdproxy:1.4.3
     configs:
       - source: tsdproxy.yaml
         target: /config/tsdproxy.yaml
         mode: "0440"
     privileged: true
+    env_file:
+      - path: ./.env
+        required: true
     ports:
       - 8080:8080
     volumes:
@@ -18,12 +21,12 @@ services:
       homepage.group: Docker Containers
       homepage.name: TSDProxy
       homepage.icon: sh-tailscale-light.svg
-      homepage.href: https://tsdproxy-1.tail5c72f1.ts.net
+      homepage.href: https://tsdproxy.tail5c72f1.ts.net
 
       # Tsdproxy config
       # ref: https://almeidapaulopt.github.io/tsdproxy/docs/docker
       tsdproxy.enable: true
-      tsdproxy.name: tsdproxy-1
+      tsdproxy.name: tsdproxy
       tsdproxy.container_port: 8080
       tsdproxy.dash.icon: sh/tailscale-light
 

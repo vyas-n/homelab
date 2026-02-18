@@ -31,15 +31,17 @@ module "cluster_operators" {
   ]
 }
 
-# module "rook_ceph" {
-#   source = "./modules/rook_ceph"
+module "rook_ceph" {
+  source = "./modules/rook_ceph"
 
-#   depends_on = [
-#     module.cilium,
-#     module.cluster_operators,
-#     helm_release.prometheus_operator_crds
-#   ]
-# }
+  namespace_name = kubernetes_namespace.rook_ceph.metadata[0].name
+
+  depends_on = [
+    module.cilium,
+    module.cluster_operators,
+    helm_release.prometheus_operator_crds
+  ]
+}
 
 module "cluster_services" {
   source = "./modules/cluster_services"
