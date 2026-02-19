@@ -69,9 +69,10 @@ resource "kubernetes_namespace_v1" "cert_manager" {
   metadata {
     name = "cert-manager"
     labels = {
+      # This might not be necessary anymore since cert-manager now includes a validation job on each helm apply
       # fix webhook validation issues
       # ref: https://github.com/cert-manager/cert-manager/issues/6864#issuecomment-2027293360
-      "cert-manager.io/disable-validation" : true
+      # "cert-manager.io/disable-validation" : true
     }
   }
 }
