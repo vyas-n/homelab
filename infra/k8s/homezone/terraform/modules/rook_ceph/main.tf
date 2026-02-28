@@ -5,7 +5,7 @@ resource "helm_release" "rook_ceph_cluster" { # https://artifacthub.io/packages/
   repository = "https://charts.rook.io/release"
   version    = "1.16.4"
 
-  namespace        = var.namespace_name
+  namespace        = var.namespace
   create_namespace = false
   lint             = true
   timeout          = 300
@@ -26,7 +26,7 @@ resource "helm_release" "rook_ceph_operator" { # https://artifacthub.io/packages
   repository = "https://charts.rook.io/release"
   version    = "1.16.4"
 
-  namespace        = var.namespace_name
+  namespace        = var.namespace
   create_namespace = false
   lint             = true
   timeout          = 300

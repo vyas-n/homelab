@@ -34,7 +34,7 @@ module "cluster_operators" {
 module "rook_ceph" {
   source = "./modules/rook_ceph"
 
-  namespace_name = kubernetes_namespace.rook_ceph.metadata[0].name
+  namespace = kubernetes_namespace.rook_ceph.metadata[0].name
 
   depends_on = [
     module.cilium,

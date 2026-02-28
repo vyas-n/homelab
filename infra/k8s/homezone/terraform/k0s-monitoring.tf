@@ -1,27 +1,4 @@
 
-resource "helm_release" "prometheus_operator_crds" { # https://artifacthub.io/packages/helm/prometheus-community/prometheus-operator-crds
-  name       = "prometheus-operator-crds"
-  chart      = "prometheus-operator-crds"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  version    = "25.0.1"
-
-  # CRDs are cluster-wide resources so the namespace only stores helm metadata
-  namespace        = "kube-system"
-  create_namespace = false
-  lint             = true
-  timeout          = 300
-
-  values = []
-}
-
-
-resource "kubernetes_namespace" "rook_ceph" {
-  metadata {
-    name = "rook-ceph"
-  }
-}
-
-
 # ref: https://docs.k0sproject.io/stable/system-monitoring/#system-components-monitoring
 resource "kubectl_manifest" "k0s_service_monitor" {
   yaml_body = yamlencode({
