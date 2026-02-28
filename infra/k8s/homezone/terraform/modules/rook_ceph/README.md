@@ -28,6 +28,12 @@ This module has a few manual steps involved. In particular you need to:
 
 ## Inputs
 
-| Name           | Description | Type     | Default | Required |
-|----------------|-------------|----------|---------|:--------:|
-| namespace_name | n/a         | `string` | n/a     |   yes    |
+| Name      | Description                                                                               | Type     | Default | Required |
+|-----------|-------------------------------------------------------------------------------------------|----------|---------|:--------:|
+| namespace | Name of the pre-existing namespace to deploy rook-ceph operator & rook-ceph cluster into. | `string` | n/a     |   yes    |
+
+## Outputs
+
+| Name              | Description |
+|-------------------|-------------|
+| storage_class_rwo | n/a         |

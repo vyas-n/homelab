@@ -6,22 +6,22 @@ The files are named after the location that the secrets are synchronized to (not
 
 ## Requirements
 
-| Name        | Version           |
-|-------------|-------------------|
-| terraform   | >= 1.11.0         |
-| cloudflare  | < 5.0.0           |
-| github      | 6.9.0             |
-| onepassword | >= 2.1.2, < 3.0.0 |
-| proxmox     | >= 0.83.2         |
-| tfe         | >= 0.69.0         |
-| time        | >= 0.13.1         |
-| zerossl     | >= 0.1.1          |
+| Name        | Version   |
+|-------------|-----------|
+| terraform   | >= 1.11.0 |
+| cloudflare  | < 5.0.0   |
+| github      | >= 6.9.0  |
+| onepassword | >= 2.1.2  |
+| proxmox     | >= 0.83.2 |
+| tfe         | >= 0.69.0 |
+| time        | >= 0.13.1 |
+| zerossl     | >= 0.1.1  |
 
 ## Providers
 
 | Name        | Version |
 |-------------|---------|
-| onepassword | 2.2.1   |
+| onepassword | 3.2.1   |
 
 ## Modules
 
@@ -35,12 +35,13 @@ The files are named after the location that the secrets are synchronized to (not
 
 | Name                                                                                                                                      | Type        |
 |-------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [onepassword_item.cloudflare_api_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)      | data source |
 | [onepassword_item.cloudflare_global_api_key](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item) | data source |
-| [onepassword_item.gh_pat](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                    | data source |
 | [onepassword_item.proxmox_api_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)         | data source |
 | [onepassword_item.tfcloud_pat](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)               | data source |
 | [onepassword_item.zerossl_api_key](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)           | data source |
-| [onepassword_vault.private](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/vault)                 | data source |
+| [onepassword_vault.homelab](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/vault)                 | data source |
+| [onepassword_vault.seeding](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/vault)                 | data source |
 
 ## Outputs
 

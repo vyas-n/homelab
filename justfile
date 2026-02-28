@@ -10,10 +10,9 @@ setup:
     #!/usr/bin/env nu
     mise install
     tflint --init
-    uv python install
     uv sync
 
-    ./ansible/requirements.yml
+    mise run setup-ansible
 
     for tf_directory in (glob infra/**/*/.terraform.lock.hcl | path dirname | uniq) {
         terraform -chdir=($tf_directory) init --backend=false
@@ -38,19 +37,7 @@ lint:
     tflint --recursive --config=$(pwd)/.tflint.hcl
 
 format:
-    #!/usr/bin/env nu
-
-    just --fmt --unstable
-
-    terraform fmt --recursive .
-
-    for tf_directory in (glob infra/**/*.tf | path dirname | uniq) {
-        terraform-docs markdown $tf_directory
-    }
-
-    prettier --write .
-
-    markdown-table-formatter **/*.md
+    mise run format
 
 deps-upgrade:
     #!/usr/bin/env nu

@@ -24,6 +24,7 @@
 | cilium            | ./modules/cilium            | n/a     |
 | cluster_operators | ./modules/cluster_operators | n/a     |
 | cluster_services  | ./modules/cluster_services  | n/a     |
+| monitoring_stack  | ./modules/monitoring_stack  | n/a     |
 | rook_ceph         | ./modules/rook_ceph         | n/a     |
 
 ## Resources
@@ -54,9 +55,3 @@
 | k8s_pod_cidr                                       | n/a         | `string` | `"10.244.0.0/16"`            |    no    |
 | k8s_service_cidr                                   | n/a         | `string` | `"10.96.0.0/12"`             |    no    |
 | k8s_service_port                                   | n/a         | `number` | `6443`                       |    no    |
-
-## Outputs
-
-| Name              | Description |
-|-------------------|-------------|
-| storage_class_rwo | n/a         |

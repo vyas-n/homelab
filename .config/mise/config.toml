@@ -1,3 +1,13 @@
+
+[env]
+ANSIBLE_CONFIG = "{{ config_root }}/ansible/ansible.cfg"
+
+[settings]
+experimental = true
+python.uv_venv_auto = true
+idiomatic_version_file_enable_tools = ["terraform", "python"]
+npm.bun = true
+
 [tools]
 # Core tools
 node = "latest"
@@ -17,8 +27,27 @@ bun = "latest"
 "cargo:just" = "latest"
 "cargo:fd-find" = "latest"
 
-[settings]
-experimental = true
-python.uv_venv_auto = true
-idiomatic_version_file_enable_tools = ["terraform", "python"]
-npm.bun = true
+[tasks.setup-ansible]
+run = "ansible/requirements.yml"
+sources = ['ansible/requirements.yml', 'ansible/collections/**/*']
+outputs = ['{{env.HOME}}/.ansible/collections/ansible_collections']
+
+[tasks.docs]
+run = '''
+    #!/usr/bin/env nu
+
+    for tf_directory in (glob infra/**/*.tf | path dirname | uniq) {
+        terraform-docs markdown $tf_directory
+    }
+'''
+sources = ['**/*.tf', '**/.terraform.lock.hcl']
+outputs = ['**/README.md']
+
+[tasks.format]
+depends = ['docs']
+run = '''
+    just --fmt --unstable
+    terraform fmt --recursive .
+    prettier --write .
+    markdown-table-formatter **/*.md
+'''

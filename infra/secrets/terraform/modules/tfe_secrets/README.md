@@ -64,10 +64,10 @@
 | [onepassword_item.digitalocean_pat_for_tfcloud_vyasn](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                     | data source |
 | [onepassword_item.digitalocean_s3access_for_tfcloud_vyasn](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                | data source |
 | [onepassword_item.proxmox_api_token](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                      | data source |
+| [onepassword_item.proxmox_root_ssh_key](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                   | data source |
 | [onepassword_item.tailscale_api_key_for_vyasn](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                            | data source |
 | [onepassword_item.unifi_gateway_homelab](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                  | data source |
 | [onepassword_item.unifi_homezone_externaldns_apikey](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                      | data source |
-| [onepassword_item.vyas_fast_key_1](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item)                                        | data source |
 | [tfe_variable_set.cloudflare](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                                             | data source |
 | [tfe_variable_set.digitalocean](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                                           | data source |
 | [tfe_variable_set.homezone](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/variable_set)                                               | data source |

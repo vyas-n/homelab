@@ -178,7 +178,7 @@ resource "tfe_variable" "proxmox_ve_api_token" {
 }
 resource "tfe_variable" "proxmox_ve_ssh_private_key" {
   key             = "proxmox_ve_ssh_private_key"
-  value           = data.onepassword_item.vyas_fast_key_1.private_key
+  value           = data.onepassword_item.proxmox_root_ssh_key.private_key
   category        = "terraform"
   sensitive       = true
   variable_set_id = data.tfe_variable_set.proxmox.id

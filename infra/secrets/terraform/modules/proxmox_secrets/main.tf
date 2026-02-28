@@ -25,7 +25,7 @@ resource "proxmox_virtual_environment_acme_dns_plugin" "cloudflare" {
   plugin = "cloudflare"
   api    = "cf"
   data = {
-    CF_Account_ID = data.cloudflare_accounts.vyas.accounts[0].id
+    CF_Account_ID = var.cloudflare_account_id
     CF_Token      = cloudflare_api_token.proxmox_acme.value
   }
 }
