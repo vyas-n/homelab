@@ -81,7 +81,7 @@ resource "helm_release" "cert_manager" { # https://artifacthub.io/packages/helm/
   name       = "cert-manager"
   chart      = "cert-manager"
   repository = "https://charts.jetstack.io"
-  version    = "1.19.2"
+  version    = "1.19.4"
 
   namespace        = kubernetes_namespace_v1.cert_manager.metadata[0].name
   create_namespace = false
@@ -205,7 +205,7 @@ resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/pac
   name       = "external-dns-cloudflare"
   chart      = "external-dns"
   repository = "https://kubernetes-sigs.github.io/external-dns"
-  version    = "1.19.0"
+  version    = "1.20.0"
 
   namespace        = kubernetes_namespace_v1.external_dns.metadata[0].name
   create_namespace = false
