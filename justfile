@@ -7,16 +7,7 @@ ci:
     just lint
 
 setup:
-    #!/usr/bin/env nu
-    mise install
-    tflint --init
-    uv sync
-
-    mise run setup-ansible
-
-    for tf_directory in (glob infra/**/*/.terraform.lock.hcl | path dirname | uniq) {
-        terraform -chdir=($tf_directory) init --backend=false
-    }
+    mise run setup
 
 deploy:
     # k0s apply
@@ -39,30 +30,27 @@ lint:
 format:
     mise run format
 
-deps-upgrade:
+upgrade-deps:
     #!/usr/bin/env nu
 
-    mise upgrade
-
-    for tf_directory in (glob infra/**/*/.terraform.lock.hcl | path dirname | uniq) {
-        terraform -chdir=($tf_directory) init --upgrade
-    }
-
-    uv lock --upgrade
+    mise run upgrade-deps
 
 reboot-k8s-wkrs:
     #!/usr/bin/env nu
 
     for node in (kubectl get nodes -o wide | from ssv | get NAME) {
-        # TODO: check if the node even needs to be rebooted at all
-        kubectl cordon $node
-        kubectl drain $node --delete-emptydir-data --ignore-daemonsets
-        ssh $node -- sudo systemctl reboot
-        sleep 10sec
-        while (kubectl get nodes | from ssv | where {|| $in.NAME == $node } | first | get STATUS ) != "Ready,SchedulingDisabled" {
-            sleep 2sec
+        let restart_check = ssh k8s-wkr-0.vms.vyas-n.dev -- dnf needs-restarting -r | complete | tee { print }
+
+        if restart_check.exit_code != 0 {
+            kubectl cordon $node
+            kubectl drain $node --delete-emptydir-data --ignore-daemonsets
+            ssh $node -- sudo systemctl reboot
+            sleep 10sec
+            while (kubectl get nodes | from ssv --aligned-columns | where {|| $in.NAME == $node } | first | get STATUS ) != "Ready,SchedulingDisabled" {
+                sleep 2sec
+            }
+            kubectl uncordon $node
         }
-        kubectl uncordon $node
     }
 
 server-upgrade:

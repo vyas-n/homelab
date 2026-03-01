@@ -10,6 +10,7 @@ readme = "README.md"
 dev = [
     "ansible-core",
     "ansible-lint ; platform_system != 'Windows'",
+    "checkov"
 ]
 
 [tool.uv]

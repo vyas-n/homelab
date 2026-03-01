@@ -26,7 +26,7 @@
           become: true
           register: check_restart
           ansible.builtin.command:
-            cmd: dnf needs-restarting -r
+            cmd: dnf needs-restarting
           ignore_errors: true
           changed_when: check_restart.rc != 0
         - become: true

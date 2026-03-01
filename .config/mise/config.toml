@@ -26,28 +26,3 @@ bun = "latest"
 "cargo:zizmor" = "latest"
 "cargo:just" = "latest"
 "cargo:fd-find" = "latest"
-
-[tasks.setup-ansible]
-run = "ansible/requirements.yml"
-sources = ['ansible/requirements.yml', 'ansible/collections/**/*']
-outputs = ['{{env.HOME}}/.ansible/collections/ansible_collections']
-
-[tasks.docs]
-run = '''
-    #!/usr/bin/env nu
-
-    for tf_directory in (glob infra/**/*.tf | path dirname | uniq) {
-        terraform-docs markdown $tf_directory
-    }
-'''
-sources = ['**/*.tf', '**/.terraform.lock.hcl']
-outputs = ['**/README.md']
-
-[tasks.format]
-depends = ['docs']
-run = '''
-    just --fmt --unstable
-    terraform fmt --recursive .
-    prettier --write .
-    markdown-table-formatter **/*.md
-'''
