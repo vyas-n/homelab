@@ -33,6 +33,9 @@ format:
 upgrade-deps:
     #!/usr/bin/env nu
 
+    mise latest terraform | save -f .terraform-version
+    mise latest python | save -f .python-version
+
     mise run upgrade-deps
 
 reboot-k8s-wkrs:
