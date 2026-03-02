@@ -46,11 +46,11 @@ jobs:
           name: MegaLinter reports
           path: |
             megalinter-reports
-      - name: Upload MegaLinter scan results to GitHub Security tab
-        if: always() && !cancelled()
-        uses: github/codeql-action/upload-sarif@89a39a4e59826350b863aa6b6252a07ad50cf83e # v4.32.4
-        with:
-          sarif_file: megalinter-reports/megalinter-report.sarif
+      # - name: Upload MegaLinter scan results to GitHub Security tab
+      #   if: always() && !cancelled()
+      #   uses: github/codeql-action/upload-sarif@89a39a4e59826350b863aa6b6252a07ad50cf83e # v4.32.4
+      #   with:
+      #     sarif_file: megalinter-reports/megalinter-report.sarif
   zizmor:
     name: zizmor
     runs-on: ubuntu-latest
