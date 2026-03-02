@@ -10,7 +10,8 @@ outputs = ['{{env.HOME}}/.ansible/collections/ansible_collections']
 [tasks.setup-terraform]
 run = '''
     #!/usr/bin/env nu
-    for tf_directory in (glob infra/**/*/.terraform.lock.hcl | path dirname | uniq) {
+
+    glob infra/**/*/.terraform.lock.hcl | path dirname | uniq | par-each { |tf_directory|
         terraform -chdir=($tf_directory) init --backend=false
     }
 '''
@@ -33,7 +34,7 @@ wait_for = ["upgrade-dep-mise"]
 run = '''
     #!/usr/bin/env nu
 
-    let _ = (glob infra/**/*/.terraform.lock.hcl | path dirname | uniq) | par-each { |tf_directory|
+    glob infra/**/*/.terraform.lock.hcl | path dirname | uniq | par-each { |tf_directory|
         terraform -chdir=($tf_directory) init --upgrade
     }
 '''

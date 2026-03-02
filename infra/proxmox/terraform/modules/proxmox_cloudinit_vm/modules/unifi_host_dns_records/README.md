@@ -15,9 +15,9 @@
 
 ## Resources
 
-| Name                                                                                                                    | Type     |
-|-------------------------------------------------------------------------------------------------------------------------|----------|
-| [unifi_user.client_device](https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs/resources/user) | resource |
+| Name                                                                                                                        | Type     |
+|-----------------------------------------------------------------------------------------------------------------------------|----------|
+| [unifi_client.client_device](https://registry.terraform.io/providers/ubiquiti-community/unifi/latest/docs/resources/client) | resource |
 
 ## Inputs
 
