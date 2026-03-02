@@ -14,6 +14,7 @@ resource "proxmox_virtual_environment_download_file" "fedora_43_1_6" {
   datastore_id       = "cephfs"
   node_name          = data.proxmox_virtual_environment_node.proxmox_1.node_name
   url                = "https://download.fedoraproject.org/pub/fedora/linux/releases/43/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-43-1.6.x86_64.qcow2"
+  file_name          = "Fedora-Cloud-Base-Generic-43-1.6.x86_64.img"
   checksum           = "846574c8a97cd2d8dc1f231062d73107cc85cbbbda56335e264a46e3a6c8ab2f"
   checksum_algorithm = "sha256"
 }

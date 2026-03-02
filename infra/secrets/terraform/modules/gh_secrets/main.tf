@@ -34,7 +34,7 @@ resource "cloudflare_api_token" "cf_pages_vyas_n_com" {
 resource "github_actions_secret" "vyas_n_cloudflare_account_id" {
   repository      = "vyas-n"
   secret_name     = "CLOUDFLARE_ACCOUNT_ID"
-  plaintext_value = data.cloudflare_accounts.vyas.accounts[0].id
+  plaintext_value = var.cloudflare_account_id
 }
 
 resource "github_actions_secret" "vyas_n_cloudflare_api_token" {
@@ -46,7 +46,7 @@ resource "github_actions_secret" "vyas_n_cloudflare_api_token" {
 resource "github_dependabot_secret" "vyas_n_cloudflare_account_id" {
   repository      = "vyas-n"
   secret_name     = "CLOUDFLARE_ACCOUNT_ID"
-  plaintext_value = data.cloudflare_accounts.vyas.accounts[0].id
+  plaintext_value = var.cloudflare_account_id
 }
 
 resource "github_dependabot_secret" "vyas_n_cloudflare_api_token" {

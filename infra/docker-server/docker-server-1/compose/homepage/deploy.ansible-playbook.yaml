@@ -1,0 +1,35 @@
+#!/usr/bin/env -S uv run ansible-playbook
+
+# Ansible Playbook Refs:
+# - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
+# - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
+
+- name: Deploy homepage
+  hosts: docker-server-1
+  vars:
+    service_slug: homepage
+  tasks:
+    - name: Create directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}"
+        - "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/config"
+
+    - name: Template environment variables
+      ansible.builtin.copy:
+        # HOMEPAGE_ALLOWED_HOSTS=docker-server-1:3000,homepage.tail5c72f1.ts.net
+        content: |-
+          TS_AUTHKEY="{{ lookup('community.general.onepassword', 'tailscale-authkey-tsdproxy-truenas', field='credential', vault='HomeLab') }}"
+
+          HOMEPAGE_ALLOWED_HOSTS="*"
+          PROXMOX_TOKEN_ID={{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='username', vault='HomeLab') }}
+          PROXMOX_API_TOKEN={{ lookup('community.general.onepassword', 'Proxmox API Token (HomeLab)', field='credential', vault='HomeLab') }}
+
+          TAILSCALE_API_TOKEN={{ lookup('community.general.onepassword', 'Tailscale API Token (vyas@github)', field='credential', vault='HomeLab') }}
+
+          UNIFI_GATEWAY_USERNAME={{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='username', vault='HomeLab') }}
+          UNIFI_GATEWAY_PASSWORD={{ lookup('community.general.onepassword', 'Unifi Gateway Local User (homepage)', field='password', vault='HomeLab') }}
+        dest: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}/.env"

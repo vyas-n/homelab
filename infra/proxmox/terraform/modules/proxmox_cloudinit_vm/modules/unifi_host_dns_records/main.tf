@@ -1,5 +1,5 @@
 
-resource "unifi_user" "client_device" {
+resource "unifi_client" "client_device" {
   mac  = var.mac_address
   name = var.name
 

@@ -1,0 +1,1 @@
+../ansible-tailscale-inventory/ansible_tailscale_inventory.py

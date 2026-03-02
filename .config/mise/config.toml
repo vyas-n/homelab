@@ -1,3 +1,13 @@
+
+[env]
+ANSIBLE_CONFIG = "{{ config_root }}/ansible/ansible.cfg"
+
+[settings]
+experimental = true
+python.uv_venv_auto = true
+idiomatic_version_file_enable_tools = ["terraform", "python"]
+npm.bun = true
+
 [tools]
 # Core tools
 node = "latest"
@@ -11,14 +21,8 @@ bun = "latest"
 # Packages
 "npm:prettier" = "latest"
 "npm:markdown-table-formatter" = "latest"
-"go:github.com/k0sproject/k0sctl" = "v0.27.1"
+"go:github.com/k0sproject/k0sctl" = "v0.28.0"
 "go:github.com/terraform-linters/tflint" = "v0.60.0"
 "cargo:zizmor" = "latest"
 "cargo:just" = "latest"
 "cargo:fd-find" = "latest"
-
-[settings]
-experimental = true
-python.uv_venv_auto = true
-idiomatic_version_file_enable_tools = ["terraform", "python"]
-npm.bun = true

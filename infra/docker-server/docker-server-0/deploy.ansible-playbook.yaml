@@ -1,0 +1,85 @@
+#!/usr/bin/env -S uv run ansible-playbook
+
+# Ansible Playbook Refs:
+# - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
+# - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
+
+# Provision k8s nodes
+- name: Deploy podman-compose apps
+  hosts: docker-server-0
+  tasks:
+    # - name: Debug
+    #   ansible.builtin.debug:
+    #     msg: "{{ ansible_facts }}"
+
+    - name: Setup podman-compose systemd unit file
+      become: true
+      ansible.builtin.command:
+        creates: /etc/systemd/user/podman-compose@.service
+        cmd: podman-compose systemd --action create-unit
+
+    - name: Enable linger for user
+      become: true
+      ansible.builtin.command:
+        creates: "/var/lib/systemd/linger/{{ ansible_facts.user_id }}"
+        cmd: loginctl enable-linger {{ ansible_facts.user_id }}
+
+    - name: Create required directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ ansible_facts.user_dir }}/apps"
+
+    - name: Deploy Immich
+      block:
+        - name: Create directories
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+          loop:
+            - "{{ ansible_facts.user_dir }}/apps/immich"
+            - "{{ ansible_facts.user_dir }}/apps/immich/data"
+            - "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@immich.service.d"
+
+        - name: Copy podman-compose files
+          ansible.builtin.copy:
+            src: "{{ item.src }}"
+            dest: "{{ item.dest }}"
+          loop:
+            - src: compose/immich/.env
+              dest: "{{ ansible_facts.user_dir }}/apps/immich/.env"
+            - src: compose/immich/compose.yml
+              dest: "{{ ansible_facts.user_dir }}/apps/immich/compose.yml"
+          notify:
+            - restart_service
+
+        - name: Create systemd unit for compose deployment
+          ansible.builtin.command:
+            creates: "{{ ansible_facts.user_dir }}/.config/systemd/user/default.target.wants/podman-compose@immich.service"
+            cmd: podman-compose systemd --action register
+            chdir: "{{ ansible_facts.user_dir }}/apps/immich"
+
+        - name: Override timeout
+          ansible.builtin.copy:
+            content: |-
+              [Service]
+              TimeoutStartSec=900
+            dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@immich.service.d/override.conf"
+          notify:
+            - restart_service
+
+        - name: Make sure the service unit is running
+          ansible.builtin.systemd_service:
+            name: podman-compose@immich.service
+            state: started
+            enabled: true
+            scope: user
+  handlers:
+    - name: restart_service
+      ansible.builtin.systemd_service:
+        name: podman-compose@immich.service
+        scope: user
+        daemon_reload: true
+        state: restarted

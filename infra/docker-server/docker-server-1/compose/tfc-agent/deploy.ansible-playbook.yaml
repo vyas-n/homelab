@@ -1,0 +1,85 @@
+#!/usr/bin/env -S uv run ansible-playbook
+
+# Ansible Playbook Refs:
+# - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
+# - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
+
+- name: Deploy TFC Agent
+  hosts: docker-server-1
+  vars:
+    service_slug: tfc-agent
+  tasks:
+    - name: Create directories
+      become: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /opt/apps/{{ service_slug }}
+
+    - name: Copy docker-compose files
+      become: true
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: compose.yaml
+          dest: /opt/apps/{{ service_slug }}/compose.yaml
+      notify:
+        - pull_service
+        - restart_service
+
+    - name: Template environment variables
+      become: true
+      ansible.builtin.copy:
+        content: |-
+          TFC_AGENT_TOKEN={{ lookup('community.general.onepassword', 'TFC-Vyas-Agent-Token', field='credential', vault='HomeLab') }}
+        dest: /opt/apps/{{ service_slug }}/.env
+      notify:
+        - restart_service
+
+    - name: Setup Docker compose systemd unit
+      become: true
+      ansible.builtin.copy:
+        content: |-
+          [Unit]
+          Description={{ service_slug }} service with docker compose
+          PartOf=docker.service
+          After=docker.service
+
+          [Service]
+          Type=simple
+          WorkingDirectory=/opt/apps/{{ service_slug }}
+          ExecStart=/usr/bin/docker compose up --remove-orphans
+          ExecStop=/usr/bin/docker compose down
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/{{ service_slug }}.docker-compose.service
+      notify:
+        - restart_service
+
+    - name: Make sure the service unit is running
+      become: true
+      ansible.builtin.systemd_service:
+        name: "{{ service_slug }}.docker-compose.service"
+        state: started
+        enabled: true
+    - name: Make sure the service unit is not running
+      ansible.builtin.systemd_service:
+        name: podman-compose@{{ service_slug }}.service
+        state: stopped
+        enabled: false
+        scope: user
+  handlers:
+    - name: pull_service
+      ansible.builtin.command:
+        cmd: docker compose pull
+        chdir: /opt/apps/{{ service_slug }}
+    - name: restart_service
+      become: true
+      ansible.builtin.systemd_service:
+        name: "{{ service_slug }}.docker-compose.service"
+        daemon_reload: true
+        state: restarted

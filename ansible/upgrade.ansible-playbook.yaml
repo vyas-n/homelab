@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i "poetry run ansible-playbook" --packages poetry
+#!/usr/bin/env -S uv run ansible-playbook
 
 # Ansible Playbook Refs:
 # - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
@@ -11,7 +10,7 @@
 #   - Provide output showing if there's any additional manual steps needed
 
 - name: Upgrade systems
-  # TODO: figure out how to safely upgrade truenas
+  # TODO: figure out how to safely automate upgrading truenas
   hosts: all:!truenas
   tasks:
     - name: Upgrade Windows Systems
@@ -27,8 +26,8 @@
             msg: "{{ inventory_hostname }}: Reboot required: {{ win_update.reboot_required }}"
           changed_when: win_update.reboot_required
 
-    - name: Upgrade Debian-based systems
-      when: ansible_facts['os_family'] == "Debian"
+    - name: Upgrade systems that use apt
+      when: ansible_facts['pkg_mgr'] == "apt"
       block:
         - name: Upgrade APT pkgs
           become: true
@@ -53,16 +52,14 @@
             msg: "{{ inventory_hostname }}: Reboot required: {{ reboot_required_check.stat.exists }}"
           changed_when: reboot_required_check.stat.exists
 
-    - name: Upgrade Fedora systems
-      when: ansible_facts['distribution'] == "Fedora"
+    - name: Upgrade systems that use dnf
+      when: ansible_facts['pkg_mgr'] == "dnf5"
       block:
         - name: Upgrade all packages
           become: true
           ansible.builtin.dnf:
             name: "*"
             state: latest
-            # TODO: Explicitly use 'dnf5' if running fedora silverblue (or other derivatives such as bazzite)
-            use_backend: "{{ 'dnf5' if ansible_hostname == 'gaming-vm-bazzite' else 'auto' }}"
         # ref: https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html
         - name: Install tool to check if reboot is required
           become: true

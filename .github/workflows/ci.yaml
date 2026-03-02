@@ -37,7 +37,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: oxsecurity/megalinter/flavors/terraform@55a59b24a441e0e1943080d4a512d827710d4a9d # v9.2.0
+      - uses: oxsecurity/megalinter/flavors/terraform@8fbdead70d1409964ab3d5afa885e18ee85388bb # v9.4.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
@@ -46,11 +46,11 @@ jobs:
           name: MegaLinter reports
           path: |
             megalinter-reports
-      - name: Upload MegaLinter scan results to GitHub Security tab
-        if: always() && !cancelled()
-        uses: github/codeql-action/upload-sarif@1b168cd39490f61582a9beae412bb7057a6b2c4e # v4.31.8
-        with:
-          sarif_file: megalinter-reports/megalinter-report.sarif
+      # - name: Upload MegaLinter scan results to GitHub Security tab
+      #   if: always() && !cancelled()
+      #   uses: github/codeql-action/upload-sarif@89a39a4e59826350b863aa6b6252a07ad50cf83e # v4.32.4
+      #   with:
+      #     sarif_file: megalinter-reports/megalinter-report.sarif
   zizmor:
     name: zizmor
     runs-on: ubuntu-latest

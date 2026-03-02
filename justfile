@@ -1,17 +1,13 @@
 # https://just.systems
 
-setup:
-    #!/usr/bin/env nu
-    mise install
-    tflint --init
-    uv python install
-    uv sync
-    ansible-galaxy collection install -r ./ansible/requirements.yml --force
+ci:
+    just setup
+    just format
+    just validate
+    just lint
 
-    glob infra/**/*/.terraform.lock.hcl | path dirname | uniq
-        | par-each {|tf_directory|
-            terraform -chdir=($tf_directory) init --backend=false
-        }
+setup:
+    mise run setup
 
 deploy:
     # k0s apply
@@ -23,34 +19,42 @@ deploy:
     # cd ../..
 
     # Ansible provisioning
-    ansible-playbook ansible/all.ansible-playbook.yaml
+    ./ansible/all.ansible-playbook.yaml
+
+deploy-proxmox:
+    terraform -chdir=infra/proxmox/terraform apply
 
 lint:
     tflint --recursive --config=$(pwd)/.tflint.hcl
 
 format:
+    mise run format
+
+upgrade-deps:
     #!/usr/bin/env nu
 
-    just --fmt --unstable
+    mise latest terraform | save -f .terraform-version
+    mise latest python | save -f .python-version
 
-    terraform fmt --recursive .
+    mise run upgrade-deps
 
-    for tf_directory in (glob infra/**/*.tf | path dirname | uniq) {
-        terraform-docs markdown $tf_directory
-    }
-
-    prettier --write .
-
-    markdown-table-formatter **/*.md
-
-deps-upgrade:
+reboot-k8s-wkrs:
     #!/usr/bin/env nu
 
-    for tf_directory in (glob infra/**/*/.terraform.lock.hcl | path dirname | uniq) {
-        terraform -chdir=($tf_directory) init --upgrade
-    }
+    for node in (kubectl get nodes -o wide | from ssv | get NAME) {
+        let restart_check = ssh k8s-wkr-0.vms.vyas-n.dev -- dnf needs-restarting -r | complete | tee { print }
 
-    uv lock --upgrade
+        if restart_check.exit_code != 0 {
+            kubectl cordon $node
+            kubectl drain $node --delete-emptydir-data --ignore-daemonsets
+            ssh $node -- sudo systemctl reboot
+            sleep 10sec
+            while (kubectl get nodes | from ssv --aligned-columns | where {|| $in.NAME == $node } | first | get STATUS ) != "Ready,SchedulingDisabled" {
+                sleep 2sec
+            }
+            kubectl uncordon $node
+        }
+    }
 
 server-upgrade:
     ansible-playbook ansible/upgrade.ansible-playbook.yaml

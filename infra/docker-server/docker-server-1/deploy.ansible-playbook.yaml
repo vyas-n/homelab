@@ -1,0 +1,87 @@
+#!/usr/bin/env -S uv run ansible-playbook
+
+# Ansible Playbook Refs:
+# - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
+# - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
+
+# Provision k8s nodes
+
+- name: Deploy podman-compose apps
+  hosts: docker-server-1
+  tasks:
+    # - name: Debug
+    #   ansible.builtin.debug:
+    #     msg: "{{ ansible_facts }}"
+
+    - name: Setup podman-compose systemd unit file
+      become: true
+      ansible.builtin.command:
+        creates: /etc/systemd/user/podman-compose@.service
+        cmd: podman-compose systemd --action create-unit
+
+    - name: Enable linger for user
+      become: true
+      ansible.builtin.command:
+        creates: "/var/lib/systemd/linger/{{ ansible_facts.user_id }}"
+        cmd: loginctl enable-linger {{ ansible_facts.user_id }}
+
+    - name: Create required directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ ansible_facts.user_dir }}/apps"
+
+    - name: Setup Docker
+      block:
+        - name: Ensure group "docker" exists
+          become: true
+          ansible.builtin.group:
+            name: docker
+            state: present
+
+        - name: Appending the docker group to the user
+          become: true
+          ansible.builtin.user:
+            name: "{{ ansible_facts.user_id }}"
+            groups: docker
+            append: true
+
+        - name: Setup repo
+          become: true
+          ansible.builtin.get_url:
+            url: https://download.docker.com/linux/fedora/docker-ce.repo
+            dest: /etc/yum.repos.d/docker-ce.repo
+            mode: "0644"
+            owner: root
+            group: root
+
+        - name: Install the Docker packages
+          become: true
+          ansible.builtin.dnf:
+            name:
+              - docker-ce
+              - docker-ce-cli
+              - containerd.io
+              - docker-buildx-plugin
+              - docker-compose-plugin
+            state: present
+
+        - name: Make sure the service unit is running
+          become: true
+          ansible.builtin.systemd_service:
+            name: "{{ item }}"
+            state: started
+            enabled: true
+          loop:
+            - docker
+            - containerd
+
+- name: Deploy TFC Agent
+  ansible.builtin.import_playbook: ./compose/tfc-agent/deploy.ansible-playbook.yaml
+
+- name: Deploy TSDProxy
+  ansible.builtin.import_playbook: ./compose/tsdproxy/deploy.ansible-playbook.yaml
+# - name: Deploy Homepage
+#   ansible.builtin.import_playbook: ./compose/homepage/deploy.ansible-playbook.yaml

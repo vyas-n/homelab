@@ -31,15 +31,17 @@ module "cluster_operators" {
   ]
 }
 
-# module "rook_ceph" {
-#   source = "./modules/rook_ceph"
+module "rook_ceph" {
+  source = "./modules/rook_ceph"
 
-#   depends_on = [
-#     module.cilium,
-#     module.cluster_operators,
-#     helm_release.prometheus_operator_crds
-#   ]
-# }
+  namespace = kubernetes_namespace.rook_ceph.metadata[0].name
+
+  depends_on = [
+    module.cilium,
+    module.cluster_operators,
+    helm_release.prometheus_operator_crds
+  ]
+}
 
 module "cluster_services" {
   source = "./modules/cluster_services"
@@ -47,17 +49,18 @@ module "cluster_services" {
   depends_on = [
     module.cluster_operators,
     module.cilium,
-    helm_release.prometheus_operator_crds
+    helm_release.prometheus_operator_crds,
+    module.monitoring_stack,
   ]
 }
 
-# module "monitoring_stack" {
-#   source = "./modules/monitoring_stack"
+module "monitoring_stack" {
+  source = "./modules/monitoring_stack"
 
-#   depends_on = [
-#     helm_release.prometheus_operator_crds,
-#     module.rook_ceph,
-#     module.cluster_operators,
-#     module.cilium
-#   ]
-# }
+  depends_on = [
+    helm_release.prometheus_operator_crds,
+    module.rook_ceph,
+    module.cluster_operators,
+    module.cilium
+  ]
+}

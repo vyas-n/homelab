@@ -14,7 +14,7 @@
 
 | Name         | Version |
 |--------------|---------|
-| digitalocean | 2.71.0  |
+| digitalocean | 2.78.0  |
 | kubernetes   | 3.0.1   |
 
 ## Resources

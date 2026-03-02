@@ -1,0 +1,34 @@
+---
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v1.8.0
+    container_name: homepage
+    depends_on:
+      - ts-homepage
+    ports:
+      - 3000:3000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      SAMPLE: try-again-s
+      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS}
+    labels:
+      # Homepage config
+      # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
+      homepage.group: Docker Containers
+      homepage.name: Homepage
+      homepage.icon: sh-homepage
+      homepage.href: https://homepage.tail5c72f1.ts.net
+
+      # Tsdproxy config
+      # ref: https://almeidapaulopt.github.io/tsdproxy/docs/docker
+      tsdproxy.enable: true
+      tsdproxy.name: homepage
+      tsdproxy.container_port: 3000
+
+      # Whats up docker config
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    restart: unless-stopped
+configs:
+  tsdproxy.yaml:
+    file: ./config/tsdproxy.yaml

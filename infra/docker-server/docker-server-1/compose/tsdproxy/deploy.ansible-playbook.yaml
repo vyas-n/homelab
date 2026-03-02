@@ -1,0 +1,111 @@
+#!/usr/bin/env -S uv run ansible-playbook
+
+# Ansible Playbook Refs:
+# - Syntax: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-syntax
+# - Collection Index: https://docs.ansible.com/ansible/latest/collections/index.html
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json#/$defs/playbook
+
+- name: Deploy TSDProxy
+  hosts: docker-server-1
+  vars:
+    service_slug: tsdproxy
+  tasks:
+    - name: Create directories
+      become: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /opt/apps/{{ service_slug }}
+        - /opt/apps/{{ service_slug }}/config
+
+    - name: Copy docker-compose files
+      become: true
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: compose.yaml
+          dest: /opt/apps/{{ service_slug }}/compose.yaml
+        - src: config/tsdproxy.yaml
+          dest: /opt/apps/{{ service_slug }}/config/tsdproxy.yaml
+      notify:
+        - pull_service
+        - restart_service
+
+    - name: Template environment variables
+      become: true
+      ansible.builtin.copy:
+        content: |-
+          TAILSCALE_AUTHKEY="{{ lookup('community.general.onepassword', 'tailscale-authkey-tsdproxy-truenas', field='credential', vault='HomeLab') }}"
+        dest: /opt/apps/{{ service_slug }}/.env
+      notify:
+        - restart_service
+
+    - name: Setup Docker compose systemd unit
+      become: true
+      ansible.builtin.copy:
+        content: |-
+          [Unit]
+          Description={{ service_slug }} service with docker compose
+          PartOf=docker.service
+          After=docker.service
+
+          [Service]
+          Type=simple
+          WorkingDirectory=/opt/apps/{{ service_slug }}
+          ExecStart=/usr/bin/docker compose up --remove-orphans
+          ExecStop=/usr/bin/docker compose down
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/{{ service_slug }}.docker-compose.service
+      notify:
+        - restart_service
+
+    # - name: Create systemd unit for compose deployment
+    #   ansible.builtin.command:
+    #     creates: "{{ ansible_facts.user_dir }}/.config/systemd/user/default.target.wants/podman-compose@{{ service_slug }}.service"
+    #     cmd: podman-compose systemd --action register
+    #     chdir: "{{ ansible_facts.user_dir }}/apps/{{ service_slug }}"
+
+    # - name: Override timeout & require podman user-space socket
+    #   ansible.builtin.copy:
+    #     content: |-
+    #       [Unit]
+    #       Requires=podman.socket
+    #       [Service]
+    #       TimeoutStartSec=900
+    #     dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/podman-compose@{{ service_slug }}.service.d/override.conf"
+    #   notify:
+    #     - restart_service
+
+    - name: Make sure the service unit is running
+      become: true
+      ansible.builtin.systemd_service:
+        name: "{{ service_slug }}.docker-compose.service"
+        state: stopped
+        enabled: false
+    - name: Make sure the service unit is not running
+      ansible.builtin.systemd_service:
+        name: podman-compose@{{ service_slug }}.service
+        state: stopped
+        enabled: false
+        scope: user
+    - name: Make sure the service unit is not running
+      ansible.builtin.systemd_service:
+        name: "{{ service_slug }}.docker-compose.service"
+        state: stopped
+        enabled: false
+        scope: user
+  handlers:
+    - name: pull_service
+      ansible.builtin.command:
+        cmd: docker compose pull
+        chdir: /opt/apps/{{ service_slug }}
+    - name: restart_service
+      become: true
+      ansible.builtin.systemd_service:
+        name: "{{ service_slug }}.docker-compose.service"
+        daemon_reload: true
+        state: restarted

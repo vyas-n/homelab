@@ -1,5 +1,5 @@
 # Networking
-resource "unifi_user" "tplink_managed_switch_1" {
+resource "unifi_client" "tplink_managed_switch_1" {
   mac  = "5c:62:8b:40:36:2c"
   name = "TP-Link Managed Switch 1"
 
@@ -9,7 +9,7 @@ resource "unifi_user" "tplink_managed_switch_1" {
 
 # TrueNAS
 
-resource "unifi_user" "proxmox_1_ipmi" {
+resource "unifi_client" "proxmox_1_ipmi" {
   mac  = "9c:6b:00:13:4a:a7"
   name = "Proxmox 1 (IPMI)"
 
@@ -17,7 +17,7 @@ resource "unifi_user" "proxmox_1_ipmi" {
   local_dns_record = "proxmox-1-ipmi.hosts.vyas-n.dev"
 }
 
-resource "unifi_user" "truenas" {
+resource "unifi_client" "truenas" {
   mac  = "b0:19:21:e3:c5:f0"
   name = "TrueNAS"
 
@@ -26,7 +26,7 @@ resource "unifi_user" "truenas" {
 }
 
 # Proxmox
-resource "unifi_user" "proxmox_1" {
+resource "unifi_client" "proxmox_1" {
   mac  = "9c:6b:00:13:4a:12"
   name = "Proxmox 1"
 
@@ -34,7 +34,7 @@ resource "unifi_user" "proxmox_1" {
   local_dns_record = "proxmox-1.hosts.vyas-n.dev"
 }
 
-resource "unifi_user" "proxmox_0" {
+resource "unifi_client" "proxmox_0" {
   mac  = "a4:ae:11:19:b4:26"
   name = "Proxmox 0"
 

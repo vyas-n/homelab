@@ -10,4 +10,5 @@ DISABLE_ERRORS: true
 DISABLE:
   - COPYPASTE
   - SPELL
+  # - REPOSITORY_TRIVY
 # Tool Specific Config

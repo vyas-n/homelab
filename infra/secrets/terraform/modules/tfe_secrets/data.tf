@@ -54,9 +54,9 @@ data "onepassword_item" "proxmox_api_token" {
   vault = var.onepass_vault.uuid
   title = "Proxmox API Token (HomeLab)"
 }
-data "onepassword_item" "vyas_fast_key_1" {
+data "onepassword_item" "proxmox_root_ssh_key" {
   vault = var.onepass_vault.uuid
-  title = "Vyas-Fast-Key-1"
+  title = "Proxmox Root SSH Key"
 }
 
 # HomeZone k8s cluster

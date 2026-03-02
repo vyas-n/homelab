@@ -11,10 +11,11 @@
 
 ## Providers
 
-| Name    | Version |
-|---------|---------|
-| helm    | 3.1.1   |
-| kubectl | 1.19.0  |
+| Name       | Version |
+|------------|---------|
+| helm       | 3.1.1   |
+| kubectl    | 1.19.0  |
+| kubernetes | 3.0.1   |
 
 ## Modules
 
@@ -23,6 +24,8 @@
 | cilium            | ./modules/cilium            | n/a     |
 | cluster_operators | ./modules/cluster_operators | n/a     |
 | cluster_services  | ./modules/cluster_services  | n/a     |
+| monitoring_stack  | ./modules/monitoring_stack  | n/a     |
+| rook_ceph         | ./modules/rook_ceph         | n/a     |
 
 ## Resources
 
@@ -30,6 +33,7 @@
 |------------------------------------------------------------------------------------------------------------------------------------|----------|
 | [helm_release.prometheus_operator_crds](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)      | resource |
 | [kubectl_manifest.k0s_service_monitor](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubernetes_namespace.rook_ceph](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace)     | resource |
 
 ## Inputs
 

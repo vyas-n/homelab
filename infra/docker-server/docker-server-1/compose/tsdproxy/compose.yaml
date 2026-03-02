@@ -1,0 +1,38 @@
+---
+services:
+  tsdproxy:
+    image: docker.io/almeidapaulopt/tsdproxy:1.4.3
+    configs:
+      - source: tsdproxy.yaml
+        target: /config/tsdproxy.yaml
+        mode: "0440"
+    privileged: true
+    env_file:
+      - path: ./.env
+        required: true
+    ports:
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/tsdproxy:/data:z
+    labels:
+      # Homepage config
+      # ref: https://gethomepage.dev/configs/docker/#automatic-service-discovery
+      homepage.group: Docker Containers
+      homepage.name: TSDProxy
+      homepage.icon: sh-tailscale-light.svg
+      homepage.href: https://tsdproxy.tail5c72f1.ts.net
+
+      # Tsdproxy config
+      # ref: https://almeidapaulopt.github.io/tsdproxy/docs/docker
+      tsdproxy.enable: true
+      tsdproxy.name: tsdproxy
+      tsdproxy.container_port: 8080
+      tsdproxy.dash.icon: sh/tailscale-light
+
+      # Whats up docker config
+      wud.tag.include: ^v?\d+\.\d+\.\d+$
+    restart: unless-stopped
+configs:
+  tsdproxy.yaml:
+    file: config/tsdproxy.yaml

@@ -21,7 +21,6 @@ rule "terraform_standard_module_structure" {
 
 ## Temporarily disabled
 
-#
 rule "terraform_documented_outputs" {
   enabled = false
 }

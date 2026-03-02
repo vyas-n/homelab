@@ -1,0 +1,47 @@
+---
+# Ansible Inventory Ref: https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/schemas/main/f/ansible-inventory.json
+all:
+  children:
+    proxmox:
+      vars:
+        # TODO: add local user to avoid direct root connection
+        ansible_user: root
+      hosts:
+        proxmox-0:
+          has_amd_gpu: true
+        proxmox-1:
+          has_amd_gpu: true
+        proxmox-2:
+          has_amd_gpu: true
+    vms:
+      children:
+        docker_servers:
+          hosts:
+            docker-server-0:
+            docker-server-1:
+        k8s:
+          children:
+            k8s-ctr:
+              hosts:
+                k8s-ctr-0:
+                k8s-ctr-1:
+                k8s-ctr-2:
+            k8s-wkr:
+              hosts:
+                k8s-wkr-0:
+                k8s-wkr-1:
+                k8s-wkr-2:
+                k8s-wkr-3:
+        test-k8s:
+          children:
+            test-k8s-ctr:
+              hosts:
+                test-k8s-ctr-0:
+            test-k8s-wkr:
+              hosts:
+                test-k8s-wkr-0:
+      hosts:
+        gaming-vm-bazzite:
+  hosts:
+    truenas:

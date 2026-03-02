@@ -21,7 +21,7 @@ terraform {
     }
     onepassword = {
       source  = "1Password/onepassword"
-      version = ">= 2.1.2, < 3.0.0"
+      version = ">= 2.1.2"
     }
     time = {
       source  = "hashicorp/time"
@@ -37,7 +37,7 @@ terraform {
     }
     github = {
       source  = "integrations/github"
-      version = "6.9.0"
+      version = ">= 6.9.0"
     }
     zerossl = {
       source  = "toowoxx/zerossl"
@@ -67,10 +67,15 @@ provider "proxmox" {
   api_token = "root@pam!onepass=${data.onepassword_item.proxmox_api_token.credential}"
 }
 
+locals {
+  # TODO: dynamically retrieve this via terraform
+  cloudflare_account_id = "9d555bdc06c117b4b4498c14853cbae6"
+}
+
 provider "cloudflare" {
-  email   = "me@vyas-n.com"
-  api_key = data.onepassword_item.cloudflare_global_api_key.credential
-  # api_token = data.onepassword_item.cloudflare_pat.credential
+  # email   = "me@vyas-n.com"
+  # api_key = data.onepassword_item.cloudflare_global_api_key.credential
+  api_token = data.onepassword_item.cloudflare_api_token.credential
 }
 
 provider "github" {

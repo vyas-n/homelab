@@ -1,0 +1,64 @@
+
+[tasks.setup]
+depends = ['setup-ansible', 'setup-terraform', 'setup-uv']
+
+[tasks.setup-ansible]
+run = "ansible/requirements.yml"
+sources = ['ansible/requirements.yml', 'ansible/collections/**/*']
+outputs = ['{{env.HOME}}/.ansible/collections/ansible_collections']
+
+[tasks.setup-terraform]
+run = '''
+    #!/usr/bin/env nu
+
+    glob infra/**/*/.terraform.lock.hcl | path dirname | uniq | par-each { |tf_directory|
+        terraform -chdir=($tf_directory) init --backend=false
+    }
+'''
+sources = ['**/terraform.tf', '**/.terraform.lock.hcl']
+outputs = ['**/.terraform']
+
+[tasks.setup-uv]
+run = "uv sync"
+sources = ['pyproject.toml', 'uv.lock']
+outputs = ['.venv']
+
+[tasks.upgrade-deps]
+depends = ['upgrade-dep-uv', 'upgrade-dep-mise', 'upgrade-dep-terraform']
+
+[tasks.upgrade-dep-uv]
+run = "uv lock --upgrade"
+wait_for = ["upgrade-dep-mise"]
+
+[tasks.upgrade-dep-terraform]
+run = '''
+    #!/usr/bin/env nu
+
+    glob infra/**/*/.terraform.lock.hcl | path dirname | uniq | par-each { |tf_directory|
+        terraform -chdir=($tf_directory) init --upgrade
+    }
+'''
+wait_for = ["upgrade-dep-mise"]
+
+[tasks.upgrade-dep-mise]
+run = "mise upgrade"
+
+[tasks.docs]
+run = '''
+    #!/usr/bin/env nu
+
+    for tf_directory in (glob infra/**/*.tf | path dirname | uniq) {
+        terraform-docs markdown $tf_directory
+    }
+'''
+sources = ['**/*.tf', '**/.terraform.lock.hcl']
+outputs = ['**/README.md']
+
+[tasks.format]
+depends = ['docs']
+run = '''
+    just --fmt --unstable
+    terraform fmt --recursive .
+    prettier --write .
+    markdown-table-formatter **/*.md
+'''

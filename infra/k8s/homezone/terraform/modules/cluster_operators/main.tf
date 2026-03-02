@@ -1,5 +1,5 @@
 
-resource "kubernetes_namespace" "external_secrets" {
+resource "kubernetes_namespace_v1" "external_secrets" {
   metadata {
     name = "external-secrets"
   }
@@ -11,7 +11,7 @@ resource "helm_release" "external_secrets" { # https://artifacthub.io/packages/h
   repository = "https://charts.external-secrets.io"
   version    = "0.18.2"
 
-  namespace        = kubernetes_namespace.external_secrets.metadata[0].name
+  namespace        = kubernetes_namespace_v1.external_secrets.metadata[0].name
   create_namespace = false
   lint             = true
   timeout          = 300
@@ -27,10 +27,10 @@ resource "helm_release" "external_secrets" { # https://artifacthub.io/packages/h
   ])
 }
 
-resource "kubernetes_secret" "onepassword_homelab_service_account" {
+resource "kubernetes_secret_v1" "onepassword_homelab_service_account" {
   metadata {
     name      = "onepassword-homelab-service-account"
-    namespace = kubernetes_namespace.external_secrets.metadata[0].name
+    namespace = kubernetes_namespace_v1.external_secrets.metadata[0].name
   }
   type = "Opaque"
   data = {
@@ -51,8 +51,8 @@ resource "kubectl_manifest" "onepassword_homelab_cluster_secret_store" {
           vault = "HomeLab"
           auth = {
             serviceAccountSecretRef = {
-              name      = kubernetes_secret.onepassword_homelab_service_account.metadata[0].name
-              namespace = kubernetes_namespace.external_secrets.metadata[0].name
+              name      = kubernetes_secret_v1.onepassword_homelab_service_account.metadata[0].name
+              namespace = kubernetes_namespace_v1.external_secrets.metadata[0].name
               key       = "token"
             }
           }
@@ -65,13 +65,14 @@ resource "kubectl_manifest" "onepassword_homelab_cluster_secret_store" {
   depends_on = [helm_release.external_secrets]
 }
 
-resource "kubernetes_namespace" "cert_manager" {
+resource "kubernetes_namespace_v1" "cert_manager" {
   metadata {
     name = "cert-manager"
     labels = {
+      # This might not be necessary anymore since cert-manager now includes a validation job on each helm apply
       # fix webhook validation issues
       # ref: https://github.com/cert-manager/cert-manager/issues/6864#issuecomment-2027293360
-      "cert-manager.io/disable-validation" : true
+      # "cert-manager.io/disable-validation" : true
     }
   }
 }
@@ -80,9 +81,9 @@ resource "helm_release" "cert_manager" { # https://artifacthub.io/packages/helm/
   name       = "cert-manager"
   chart      = "cert-manager"
   repository = "https://charts.jetstack.io"
-  version    = "1.19.2"
+  version    = "1.19.4"
 
-  namespace        = kubernetes_namespace.cert_manager.metadata[0].name
+  namespace        = kubernetes_namespace_v1.cert_manager.metadata[0].name
   create_namespace = false
   lint             = true
   timeout          = 300
@@ -99,10 +100,10 @@ resource "helm_release" "cert_manager" { # https://artifacthub.io/packages/helm/
 }
 
 # ref: https://cert-manager.io/docs/configuration/acme/dns01/cloudflare/#api-tokens
-resource "kubernetes_secret" "cert_manager_cloudflare_creds" {
+resource "kubernetes_secret_v1" "cert_manager_cloudflare_creds" {
   metadata {
     name      = "cert-manager-cloudflare-creds"
-    namespace = kubernetes_namespace.cert_manager.metadata[0].name
+    namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
   }
   type = "Opaque"
   data = {
@@ -110,10 +111,10 @@ resource "kubernetes_secret" "cert_manager_cloudflare_creds" {
   }
 }
 
-resource "kubernetes_secret" "cert_manager_zerossl_eab_creds" {
+resource "kubernetes_secret_v1" "cert_manager_zerossl_eab_creds" {
   metadata {
     name      = "cert-manager-zerossl-eab-creds"
-    namespace = kubernetes_namespace.cert_manager.metadata[0].name
+    namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
   }
   type = "Opaque"
   data = {
@@ -139,7 +140,7 @@ resource "kubectl_manifest" "zerossl_clusterissuer" {
         externalAccountBinding = {
           keyID = var.cert_manager_zerossl_eab_kid
           keySecretRef = {
-            name = kubernetes_secret.cert_manager_zerossl_eab_creds.metadata[0].name
+            name = kubernetes_secret_v1.cert_manager_zerossl_eab_creds.metadata[0].name
             key  = "eab_hmac_key"
           }
         }
@@ -157,7 +158,7 @@ resource "kubectl_manifest" "zerossl_clusterissuer" {
             dns01 = {
               cloudflare = {
                 apiTokenSecretRef = {
-                  name = kubernetes_secret.cert_manager_cloudflare_creds.metadata[0].name
+                  name = kubernetes_secret_v1.cert_manager_cloudflare_creds.metadata[0].name
                   key  = "api-token"
                 }
               }
@@ -172,16 +173,16 @@ resource "kubectl_manifest" "zerossl_clusterissuer" {
   depends_on = [helm_release.cert_manager]
 }
 
-resource "kubernetes_namespace" "external_dns" {
+resource "kubernetes_namespace_v1" "external_dns" {
   metadata {
     name = "external-dns"
   }
 }
 
-resource "kubernetes_secret" "external_dns_unifi_secret" {
+resource "kubernetes_secret_v1" "external_dns_unifi_secret" {
   metadata {
     name      = "external-dns-unifi-secret"
-    namespace = kubernetes_namespace.external_dns.metadata[0].name
+    namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
   }
   type = "Opaque"
   data = {
@@ -189,10 +190,10 @@ resource "kubernetes_secret" "external_dns_unifi_secret" {
   }
 }
 
-resource "kubernetes_secret" "external_dns_cloudflare_secret" {
+resource "kubernetes_secret_v1" "external_dns_cloudflare_secret" {
   metadata {
     name      = "external-dns-cloudflare-secret"
-    namespace = kubernetes_namespace.external_dns.metadata[0].name
+    namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
   }
   type = "Opaque"
   data = {
@@ -204,9 +205,9 @@ resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/pac
   name       = "external-dns-cloudflare"
   chart      = "external-dns"
   repository = "https://kubernetes-sigs.github.io/external-dns"
-  version    = "1.19.0"
+  version    = "1.20.0"
 
-  namespace        = kubernetes_namespace.external_dns.metadata[0].name
+  namespace        = kubernetes_namespace_v1.external_dns.metadata[0].name
   create_namespace = false
   lint             = true
   timeout          = 300
@@ -221,7 +222,7 @@ resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/pac
         name = "CF_API_TOKEN"
         valueFrom = {
           secretKeyRef = {
-            name = kubernetes_secret.external_dns_cloudflare_secret.metadata[0].name
+            name = kubernetes_secret_v1.external_dns_cloudflare_secret.metadata[0].name
             key  = "apiKey"
           }
         }
@@ -237,7 +238,7 @@ resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/pac
 #   repository = "https://kubernetes-sigs.github.io/external-dns"
 #   version    = "1.19.0"
 
-#   namespace        = kubernetes_namespace.external_dns.metadata[0].name
+#   namespace        = kubernetes_namespace_v1.external_dns.metadata[0].name
 #   create_namespace = false
 #   lint             = true
 #   timeout          = 300
@@ -258,7 +259,7 @@ resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/pac
 #               name = "UNIFI_API_KEY"
 #               valueFrom = {
 #                 secretKeyRef = {
-#                   name = kubernetes_secret.external_dns_unifi_secret.metadata[0].name
+#                   name = kubernetes_secret_v1.external_dns_unifi_secret.metadata[0].name
 #                   key  = "api-key"
 #                 }
 #               }
@@ -271,7 +272,7 @@ resource "helm_release" "external_dns_cloudflare" { # https://artifacthub.io/pac
 # }
 
 
-resource "kubernetes_namespace" "kyverno" {
+resource "kubernetes_namespace_v1" "kyverno" {
   metadata {
     name = "kyverno"
   }
@@ -283,7 +284,7 @@ resource "kubernetes_namespace" "kyverno" {
 #   repository = "https://kyverno.github.io/kyverno"
 #   version    = "3.3.7"
 
-#   namespace        = kubernetes_namespace.kyverno.metadata[0].name
+#   namespace        = kubernetes_namespace_v1.kyverno.metadata[0].name
 #   create_namespace = false
 #   lint             = true
 #   timeout          = 300
@@ -294,7 +295,7 @@ resource "kubernetes_namespace" "kyverno" {
 #   ]
 # }
 
-resource "kubernetes_namespace" "policy_reporter" {
+resource "kubernetes_namespace_v1" "policy_reporter" {
   metadata {
     name = "policy-reporter"
   }
@@ -306,7 +307,7 @@ resource "kubernetes_namespace" "policy_reporter" {
 #   repository = "oci://ghcr.io/kyverno/charts"
 #   version    = "3.0.4"
 
-#   namespace        = kubernetes_namespace.policy_reporter.metadata[0].name
+#   namespace        = kubernetes_namespace_v1.policy_reporter.metadata[0].name
 #   create_namespace = false
 #   lint             = true
 #   timeout          = 300
@@ -319,7 +320,7 @@ resource "kubernetes_namespace" "policy_reporter" {
 #   depends_on = [helm_release.kyverno]
 # }
 
-resource "kubernetes_namespace" "vertical_pod_autoscaler" {
+resource "kubernetes_namespace_v1" "vertical_pod_autoscaler" {
   metadata {
     name = "vertical-pod-autoscaler"
   }
@@ -331,7 +332,7 @@ resource "kubernetes_namespace" "vertical_pod_autoscaler" {
 #   repository = "https://cowboysysop.github.io/charts"
 #   version    = "10.0.0"
 
-#   namespace        = kubernetes_namespace.vertical_pod_autoscaler.metadata[0].name
+#   namespace        = kubernetes_namespace_v1.vertical_pod_autoscaler.metadata[0].name
 #   create_namespace = false
 #   lint             = true
 #   timeout          = 300
