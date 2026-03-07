@@ -40,7 +40,7 @@ jobs:
       - uses: oxsecurity/megalinter/flavors/terraform@8fbdead70d1409964ab3d5afa885e18ee85388bb # v9.4.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         if: always() && !cancelled()
         with:
           name: MegaLinter reports
