@@ -14,6 +14,7 @@ resource "unifi_client" "truenas" {
   name = "TrueNAS"
 
   fixed_ip         = "192.168.2.244"
+  allow_existing   = true
   local_dns_record = "truenas.hosts.vyas-n.dev"
 }
 
