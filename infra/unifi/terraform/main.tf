@@ -17,14 +17,6 @@ resource "unifi_client" "proxmox_1_ipmi" {
   local_dns_record = "proxmox-1-ipmi.hosts.vyas-n.dev"
 }
 
-resource "unifi_client" "truenas" {
-  mac  = "b0:19:21:e3:c5:f0"
-  name = "TrueNAS"
-
-  fixed_ip         = "192.168.2.244"
-  local_dns_record = "truenas.hosts.vyas-n.dev"
-}
-
 # Proxmox
 resource "unifi_client" "proxmox_1" {
   mac  = "9c:6b:00:13:4a:12"
