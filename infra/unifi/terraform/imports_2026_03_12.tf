@@ -1,4 +1,4 @@
 import {
   to = unifi_client.truenas
-  id = "b0:19:21:e3:c5:f0"
+  id = "B0:19:21:E3:C5:F0"
 }
