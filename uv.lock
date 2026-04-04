@@ -161,7 +161,7 @@ wheels = [
 
 [[package]]
 name = "ansible-core"
-version = "2.20.3"
+version = "2.20.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
@@ -170,14 +170,14 @@ dependencies = [
     { name = "pyyaml" },
     { name = "resolvelib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/03/d6/2a1fda59f9bab7519f2e94a7bec8416e080dd2e17af4f4fb5d1e3d0c997d/ansible_core-2.20.3.tar.gz", hash = "sha256:38670ab2d2ffd67ee7e9e562f7c94e0927c8b7b4b0eb69233bc008c29e32d591", size = 3325132, upload-time = "2026-02-23T23:09:01.4Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/11/7c/57263940ef61d7a829baef6e752556b1434f3a66ae05885c80753efbca50/ansible_core-2.20.4.tar.gz", hash = "sha256:2060c06195ada0cca0ac3128025d1167f567479da465897d818982fbe28bed1f", size = 3334074, upload-time = "2026-03-23T17:39:36.24Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/16/e0/2e5602b2a3d71622894e5ba0a6071e896f1fef795cf7acde5d13ff308833/ansible_core-2.20.3-py3-none-any.whl", hash = "sha256:7fe2da953192cac5d5eb37bfc984bf9339daa252e0e3d1deb5526eb1f8be9f7f", size = 2403438, upload-time = "2026-02-23T23:08:59.605Z" },
+    { url = "https://files.pythonhosted.org/packages/71/19/fecf85f0f677405c0d4bec0c9f304b9f906f25599a176f4b16db7fa83571/ansible_core-2.20.4-py3-none-any.whl", hash = "sha256:fb3a8f0301aab863f847f70aea9cbd47d635c6a283b441c56cec881b4aedcb04", size = 2426247, upload-time = "2026-03-23T17:39:34.669Z" },
 ]
 
 [[package]]
 name = "ansible-lint"
-version = "26.2.0"
+version = "26.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ansible-compat" },
@@ -198,9 +198,9 @@ dependencies = [
     { name = "wcmatch" },
     { name = "yamllint" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/58/37/3153ba44fe09b59fdeb8469037b5b2f9e3d5819eb161ed8af233adf02e06/ansible_lint-26.2.0.tar.gz", hash = "sha256:cf3fdadae8bbcbd2f8fc077e3c7ebacbcf19cc6ade7b7db48c963e96601535e8", size = 745331, upload-time = "2026-02-25T17:09:19.182Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1f/b6/d0df64afdf68393e0c2e9a541ecb8124acf94c8511d824d45e75c8718a37/ansible_lint-26.3.0.tar.gz", hash = "sha256:dbcf3796d715ccef742a89dfcb21263649a2c2be8d3479ea98da104efa406717", size = 747216, upload-time = "2026-03-05T13:52:41.8Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/02/04f1be0ecbd887f333b439dddc74084f1defb8c99df7f5546349aecce9a2/ansible_lint-26.2.0-py3-none-any.whl", hash = "sha256:6e06fe9e63c559097199b4c3da18b5f66045af8c0694d81f74f40791006da713", size = 328882, upload-time = "2026-02-25T17:09:17.798Z" },
+    { url = "https://files.pythonhosted.org/packages/b0/35/636b14b636edbf33279b435b389c8068b6be08e1b03dec7f5cf9d552ce13/ansible_lint-26.3.0-py3-none-any.whl", hash = "sha256:1a30c60adf2e2cc70ac0d8396e05207ea31aaa2f7feeb3a876d40fdc6a080dec", size = 330663, upload-time = "2026-03-05T13:52:40.052Z" },
 ]
 
 [[package]]
@@ -232,16 +232,16 @@ wheels = [
 
 [[package]]
 name = "bc-detect-secrets"
-version = "1.5.45"
+version = "1.5.47"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pyyaml" },
     { name = "requests" },
     { name = "unidiff" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/7a/22/389df1a2d5f539593ce22671a401fedbc78d8054b4644dde2c2263f1f343/bc_detect_secrets-1.5.45.tar.gz", hash = "sha256:f05cc539d1865d6f8d65cbd51968e85ec570ee1375447a5a29a5623ca8ea9f2b", size = 91320, upload-time = "2025-09-01T07:51:03.774Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/82/fb/624aa462ea738cd21e56b1a5b7bbe375403e4114f7bc92a7cded7f516da0/bc_detect_secrets-1.5.47.tar.gz", hash = "sha256:a9be28a2e564f2b19731991df39e63ae6372cc84d828ee24e50c094cbb4c154c", size = 91339, upload-time = "2026-03-17T14:05:50.24Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/cc/f3/ec71fd2f962686a6a9767402219ea33137b036f99aafc58a9e4a27851f49/bc_detect_secrets-1.5.45-py3-none-any.whl", hash = "sha256:33119be81d2eca91ccf2eabc496737dcb079c581aa4646a0475f5e0619e382d5", size = 121155, upload-time = "2025-09-01T07:51:02.797Z" },
+    { url = "https://files.pythonhosted.org/packages/e5/54/6039515fe99f712801fe6dc6a67c4565ffd23a5b83fb1813b64c9fdb73a8/bc_detect_secrets-1.5.47-py3-none-any.whl", hash = "sha256:46f88c710b0fd8c5f2e54b361d793b5e1469197884da73cfc6f488b614366fc3", size = 121200, upload-time = "2026-03-17T14:05:49.218Z" },
 ]
 
 [[package]]
@@ -506,7 +506,7 @@ wheels = [
 
 [[package]]
 name = "checkov"
-version = "3.2.506"
+version = "3.2.513"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiodns" },
@@ -552,9 +552,9 @@ dependencies = [
     { name = "urllib3" },
     { name = "yarl" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/bf/d5/f8cc7360fe5aa1db98b3bffd82c998bd0bd2d3ed42c77471581a22bdee70/checkov-3.2.506.tar.gz", hash = "sha256:ccad6c307c161e2dec3ac18cb8a2c9e07c79802bbd14685400afdac48072932c", size = 992856, upload-time = "2026-02-23T12:08:52.751Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/40/49/f90cf0052814bcc24aba0e8b2ad86f7baf2aa8ef33cf1ffaf1bf62a9c35e/checkov-3.2.513.tar.gz", hash = "sha256:2bf2698c2502986adc63f976b8a37756c897f8d6934608cd294842db422adec9", size = 991216, upload-time = "2026-03-27T14:44:47.933Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/43/8e/a0e7fa861a90973ec6c68358e0d159032e07474cab9ed4f67e608af79d0f/checkov-3.2.506-py3-none-any.whl", hash = "sha256:9c861301c5a09473fd416130c3bbbb23343c6b53b9bf5d4d023b727df6624eeb", size = 2299770, upload-time = "2026-02-23T12:08:50.637Z" },
+    { url = "https://files.pythonhosted.org/packages/45/b0/e06354c7546e106fe2969370f5f95a116f1040c929836247d70e37db6c90/checkov-3.2.513-py3-none-any.whl", hash = "sha256:1a55565bf9f7938c60a64e2b565b49eaa9833fd8022b3b2f5cae8742553a4c61", size = 2301148, upload-time = "2026-03-27T14:44:45.772Z" },
 ]
 
 [[package]]
