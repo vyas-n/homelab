@@ -28,10 +28,6 @@ terraform {
       source  = "hashicorp/time"
       version = ">= 0.13.1"
     }
-    argocd = {
-      source  = "argoproj-labs/argocd"
-      version = ">= 7.15.3"
-    }
   }
 }
 
@@ -63,24 +59,3 @@ provider "helm" {
 }
 
 provider "time" {}
-
-data "kubernetes_secret_v1" "argo_admin_secret" {
-  metadata {
-    name      = "argocd-initial-admin-secret"
-    namespace = "argo-cd"
-  }
-
-}
-
-provider "argocd" {
-  # server_addr = "argo-cd.homezone-v1.vyas-n.dev:443"
-  username                    = "admin"
-  password                    = data.kubernetes_secret_v1.argo_admin_secret.data["password"]
-  port_forward_with_namespace = "argo-cd"
-  kubernetes {
-    host                   = var.kube_host
-    cluster_ca_certificate = var.kube_cluster_ca_cert_data
-    client_certificate     = var.kube_client_cert_data
-    client_key             = var.kube_client_key_data
-  }
-}

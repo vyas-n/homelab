@@ -28,22 +28,33 @@ resource "kubernetes_namespace_v1" "argo_apps" {
   }
 }
 
-resource "argocd_project" "argo_apps" {
-  metadata {
-    name      = "argo-apps"
-    namespace = kubernetes_namespace_v1.argo_apps.id
-  }
-  spec {
-    source_repos = ["*"]
-    destination {
-      namespace = "*"
-      server    = "*"
+resource "kubectl_manifest" "name" {
+  yaml_body = yamlencode({
+    apiVersion : "argoproj.io/v1alpha1"
+    kind : "AppProject"
+    metadata : {
+      name : "argo-root"
+      namespace : kubernetes_namespace_v1.argo_apps.id
     }
-    cluster_resource_whitelist {
-      group = "*"
-      kind  = "*"
+    spec : {
+      sourceRepos : ["*"]
+      destinations : [
+        {
+          namespace : "*"
+          server : "*"
+        }
+      ]
+      clusterResourceWhitelist : [
+        {
+          group : "*"
+          kind : "*"
+        }
+      ]
     }
-  }
+  })
+
+  server_side_apply = true
+  depends_on        = [helm_release.argo_cd]
 }
 
 # resource "kubectl_manifest" "repo_creds_externalsecret" {
