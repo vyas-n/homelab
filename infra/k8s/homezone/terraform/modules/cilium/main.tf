@@ -38,7 +38,7 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
 }
 
 resource "kubectl_manifest" "bgp_peer_config" {
-  yaml_body = yamlencore({
+  yaml_body = yamlencode({
     apiVersion : "cilium.io/v2"
     kind : "CiliumBGPPeerConfig"
     metadata : {
@@ -68,7 +68,7 @@ resource "kubectl_manifest" "bgp_peer_config" {
 }
 
 resource "kubectl_manifest" "bgp_cluster_config" {
-  yaml_body = yamlencore({
+  yaml_body = yamlencode({
     apiVersion : "cilium.io/v2"
     kind : "CiliumBGPClusterConfig"
     metadata = {
@@ -104,7 +104,7 @@ resource "kubectl_manifest" "bgp_cluster_config" {
 }
 
 resource "kubectl_manifest" "bgp_advertisement" {
-  yaml_body = yamlencore({
+  yaml_body = yamlencode({
     apiVersion : "cilium.io/v2"
     kind : "CiliumBGPAdvertisement"
     metadata : {
