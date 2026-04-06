@@ -34,7 +34,7 @@ resource "kubectl_manifest" "name" {
     kind : "AppProject"
     metadata : {
       name : "argo-root"
-      namespace : kubernetes_namespace_v1.argo_apps.id
+      namespace : kubernetes_namespace_v1.argo_cd.id
     }
     spec : {
       sourceRepos : ["*"]
