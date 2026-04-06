@@ -64,11 +64,16 @@ provider "helm" {
 
 provider "time" {}
 
-provider "argocd" {
-  kubernetes {
-    host                   = var.kube_host
-    cluster_ca_certificate = var.kube_cluster_ca_cert_data
-    client_certificate     = var.kube_client_cert_data
-    client_key             = var.kube_client_key_data
+data "kubernetes_secret_v1" "argo_admin_secret" {
+  metadata {
+    name      = "argocd-initial-admin-secret"
+    namespace = "argo-cd"
   }
+
+}
+
+provider "argocd" {
+  server_addr = "argo-cd.homezone-v1.vyas-n.dev"
+  username    = "admin"
+  password    = data.kubernetes_secret_v1.argo_admin_secret.data["password"]
 }
