@@ -81,7 +81,7 @@ resource "helm_release" "cert_manager" { # https://artifacthub.io/packages/helm/
   name       = "cert-manager"
   chart      = "cert-manager"
   repository = "https://charts.jetstack.io"
-  version    = "1.19.4"
+  version    = "1.20.1"
 
   namespace        = kubernetes_namespace_v1.cert_manager.metadata[0].name
   create_namespace = false

@@ -9,7 +9,7 @@ resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/
   name       = "argo-cd"
   chart      = "argo-cd"
   repository = "https://argoproj.github.io/argo-helm"
-  version    = "9.4.5"
+  version    = "9.4.17"
 
   namespace        = kubernetes_namespace_v1.argo_cd.metadata[0].name
   create_namespace = false
@@ -20,6 +20,30 @@ resource "helm_release" "argo_cd" { # https://artifacthub.io/packages/helm/argo/
     yamlencode(yamldecode(file("${path.module}/helm/argo-cd/values.yaml"))), # remove yaml comments & formatting from diff calculations
     yamlencode({})
   ]
+}
+
+resource "kubernetes_namespace_v1" "argo_apps" {
+  metadata {
+    name = "argo-apps"
+  }
+}
+
+resource "argocd_project" "argo_apps" {
+  metadata {
+    name      = "argo-apps"
+    namespace = kubernetes_namespace_v1.argo_apps.id
+  }
+  spec {
+    source_repos = ["*"]
+    destination {
+      namespace = "*"
+      server    = "*"
+    }
+    cluster_resource_whitelist {
+      group = "*"
+      kind  = "*"
+    }
+  }
 }
 
 # resource "kubectl_manifest" "repo_creds_externalsecret" {

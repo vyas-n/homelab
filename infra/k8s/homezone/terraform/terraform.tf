@@ -24,6 +24,14 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.19.0"
     }
+    time = {
+      source  = "hashicorp/time"
+      version = ">= 0.13.1"
+    }
+    argocd = {
+      source  = "argoproj-labs/argocd"
+      version = ">= 7.15.3"
+    }
   }
 }
 
@@ -46,6 +54,17 @@ provider "kubectl" {
 }
 
 provider "helm" {
+  kubernetes = {
+    host                   = var.kube_host
+    cluster_ca_certificate = var.kube_cluster_ca_cert_data
+    client_certificate     = var.kube_client_cert_data
+    client_key             = var.kube_client_key_data
+  }
+}
+
+provider "time" {}
+
+provider "argocd" {
   kubernetes = {
     host                   = var.kube_host
     cluster_ca_certificate = var.kube_cluster_ca_cert_data
