@@ -73,7 +73,7 @@ data "kubernetes_secret_v1" "argo_admin_secret" {
 }
 
 provider "argocd" {
-  server_addr = "argo-cd.homezone-v1.vyas-n.dev"
+  server_addr = "argo-cd.homezone-v1.vyas-n.dev:443"
   username    = "admin"
   password    = data.kubernetes_secret_v1.argo_admin_secret.data["password"]
 }
