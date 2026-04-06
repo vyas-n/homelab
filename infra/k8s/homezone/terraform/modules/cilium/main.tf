@@ -37,37 +37,61 @@ resource "helm_release" "cilium" { # https://artifacthub.io/packages/helm/cilium
   ])
 }
 
-resource "kubectl_manifest" "bgp_peering_policy_er7" {
-  yaml_body = yamlencode({
-    apiVersion = "cilium.io/v2alpha1"
-    kind       = "CiliumBGPPeeringPolicy"
-    metadata = {
-      name = "01-bgp-peering-policy-er7"
+resource "kubectl_manifest" "bgp_peer_config" {
+  yaml_body = yamlencore({
+    apiVersion : "cilium.io/v2"
+    kind : "CiliumBGPPeerConfig"
+    metadata : {
+      name : "peer-config"
     }
-    spec = { # CiliumBGPPeeringPolicySpec
-      nodeSelector = {
-        matchLabels = {
+    spec : {
+      # authSecretRef : "bgp-peer-password"
+      gracefulRestart : {
+        enabled : true
+      }
+      families : [
+        {
+          afi : "ipv4"
+          safi : "unicast"
+          advertisements : {
+            matchLabels : {
+              "bgp.cilium.io/advertise" : "loadbalancer-services"
+            }
+          }
+        }
+      ]
+    }
+  })
+  server_side_apply = true
+
+  depends_on = [helm_release.cilium, time_sleep.wait_for_cilium]
+}
+
+resource "kubectl_manifest" "bgp_cluster_config" {
+  yaml_body = yamlencore({
+    apiVersion : "cilium.io/v2"
+    kind : "CiliumBGPClusterConfig"
+    metadata = {
+      name = "cilium-unifi"
+    }
+    spec : {
+      nodeSelector : {
+        matchLabels : {
           "topology.kubernetes.io/region" = "homelab"
         }
       }
-      virtualRouters = [ # []CiliumBGPVirtualRouter
+      bgpInstances : [
         {
-          localASN      = 65512
-          exportPodCIDR = false
-          serviceSelector = {
-            matchExpressions = [
-              {
-                key      = "somekey"
-                operator = "NotIn"
-                values   = ["never-used-value"]
-              }
-            ]
-          }
-          neighbors : [ # []CiliumBGPNeighbor
+          name : "unifi-gateway-max"
+          localASN : 65512
+          peers : [
             {
-              peerAddress     = "192.168.2.1/32"
-              peerASN         = 65510
-              eBGPMultihopTTL = 5
+              name : "unifi-gateway-max"
+              peerASN     = 65510
+              peerAddress = "192.168.2.1"
+              peerConfigRef : {
+                name : kubectl_manifest.bgp_peer_config.name
+              }
             }
           ]
         }
@@ -78,6 +102,85 @@ resource "kubectl_manifest" "bgp_peering_policy_er7" {
 
   depends_on = [helm_release.cilium, time_sleep.wait_for_cilium]
 }
+
+resource "kubectl_manifest" "bgp_advertisement" {
+  yaml_body = yamlencore({
+    apiVersion : "cilium.io/v2"
+    kind : "CiliumBGPAdvertisement"
+    metadata : {
+      name : "loadbalancer-services"
+      labels : {
+        "bgp.cilium.io/advertise" : "loadbalancer-services"
+      }
+    }
+    spec : {
+      advertisements : [
+        {
+          advertisementType : "Service"
+          service : {
+            addresses : [
+              "LoadBalancerIP"
+            ]
+          }
+          selector : {
+            matchExpressions = [
+              {
+                key      = "somekey"
+                operator = "NotIn"
+                values   = ["never-used-value"]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  })
+  server_side_apply = true
+
+  depends_on = [helm_release.cilium, time_sleep.wait_for_cilium]
+}
+
+# resource "kubectl_manifest" "bgp_peering_policy_er7" {
+#   yaml_body = yamlencode({
+#     apiVersion = "cilium.io/v2alpha1"
+#     kind       = "CiliumBGPPeeringPolicy"
+#     metadata = {
+#       name = "01-bgp-peering-policy-er7"
+#     }
+#     spec = { # CiliumBGPPeeringPolicySpec
+#       nodeSelector = {
+#         matchLabels = {
+#           "topology.kubernetes.io/region" = "homelab"
+#         }
+#       }
+#       virtualRouters = [ # []CiliumBGPVirtualRouter
+#         {
+#           localASN      = 65512
+#           exportPodCIDR = false
+#           serviceSelector = {
+#             matchExpressions = [
+#               {
+#                 key      = "somekey"
+#                 operator = "NotIn"
+#                 values   = ["never-used-value"]
+#               }
+#             ]
+#           }
+#           neighbors : [ # []CiliumBGPNeighbor
+#             {
+#               peerAddress     = "192.168.2.1/32"
+#               peerASN         = 65510
+#               eBGPMultihopTTL = 5
+#             }
+#           ]
+#         }
+#       ]
+#     }
+#   })
+#   server_side_apply = true
+
+#   depends_on = [helm_release.cilium, time_sleep.wait_for_cilium]
+# }
 
 resource "time_sleep" "wait_for_cilium" {
   create_duration = "60s"
