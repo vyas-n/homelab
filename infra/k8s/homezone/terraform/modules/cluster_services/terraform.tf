@@ -12,9 +12,9 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = ">= 2.12"
     }
-    # kubectl = {
-    #   source  = "gavinbunney/kubectl"
-    #   version = ">= 1.14"
-    # }
+    argocd = {
+      source  = "argoproj-labs/argocd"
+      version = ">= 7.15.3"
+    }
   }
 }
