@@ -22,6 +22,7 @@ resource "proxmox_virtual_environment_download_file" "fedora_43_1_6" {
 resource "cloudflare_dns_record" "pet_0" {
   for_each = {
     "homepage.svc" : {}
+    "netbox.svc" : {}
   }
   name = each.key
   type = "A"
