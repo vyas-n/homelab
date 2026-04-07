@@ -18,3 +18,16 @@ resource "proxmox_virtual_environment_download_file" "fedora_43_1_6" {
   checksum           = "846574c8a97cd2d8dc1f231062d73107cc85cbbbda56335e264a46e3a6c8ab2f"
   checksum_algorithm = "sha256"
 }
+
+resource "cloudflare_dns_record" "pet_0" {
+  for_each = {
+    "homepage.svc" : {}
+  }
+  name = each.key
+  type = "A"
+  ttl  = 300
+
+  # TODO: dynamic lookup of this value
+  zone_id = "a78dfca2a263cf049cd9f5af4d6affd7"
+  content = "192.168.2.6"
+}

@@ -28,6 +28,10 @@ terraform {
       source  = "ubiquiti-community/unifi"
       version = ">= 0.41.2"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = ">= 5.0.0"
+    }
   }
 }
 
@@ -42,3 +46,6 @@ provider "proxmox" {
 }
 
 provider "unifi" {}
+
+provider "cloudflare" {
+}
