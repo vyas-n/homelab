@@ -16,5 +16,9 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.19.0"
     }
+    argocd = {
+      source  = "argoproj-labs/argocd"
+      version = ">= 7.15.3"
+    }
   }
 }

@@ -28,6 +28,10 @@ terraform {
       source  = "hashicorp/time"
       version = ">= 0.13.1"
     }
+    argocd = {
+      source  = "argoproj-labs/argocd"
+      version = ">= 7.15.3"
+    }
   }
 }
 
@@ -59,3 +63,7 @@ provider "helm" {
 }
 
 provider "time" {}
+
+provider "argocd" {
+  server_addr = "argo-cd.homezone-v1.vyas-n.dev"
+}
