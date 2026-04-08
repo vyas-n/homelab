@@ -24,6 +24,7 @@ resource "cloudflare_dns_record" "pet_0" {
     "homepage.svc" : {}
     "netbox.svc" : {}
     "wud.svc" : {}
+    "dockhand.svc" : {}
   }
   name = each.key
   type = "A"
