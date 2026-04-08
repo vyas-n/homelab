@@ -23,6 +23,7 @@ resource "cloudflare_dns_record" "pet_0" {
   for_each = {
     "homepage.svc" : {}
     "netbox.svc" : {}
+    "wud.svc" : {}
   }
   name = each.key
   type = "A"
