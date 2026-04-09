@@ -34,3 +34,13 @@ resource "cloudflare_dns_record" "pet_0" {
   zone_id = "a78dfca2a263cf049cd9f5af4d6affd7"
   content = "192.168.2.6"
 }
+
+resource "cloudflare_dns_record" "homezone_vrrp" {
+  name = "homezone-v1.svc"
+  type = "A"
+  ttl  = 300
+
+  # TODO: dynamic lookup of this value
+  zone_id = "a78dfca2a263cf049cd9f5af4d6affd7"
+  content = "192.168.5.7"
+}
