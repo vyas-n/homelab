@@ -2,21 +2,21 @@
 output "ipv4" {
   sensitive = false
 
-  value = module.dns.ipv4
+  value = local.ipv4
 }
 
 output "mac_address" {
   sensitive = false
 
-  value = module.dns.mac_address
+  value = local.mac_address
 }
 
 output "hostname" {
   sensitive = false
-  value     = module.dns.hostname
+  value     = var.hostname
 }
 
 output "fqdn" {
   sensitive = false
-  value     = module.dns.fqdn
+  value     = "${var.hostname}.${var.domain}"
 }
