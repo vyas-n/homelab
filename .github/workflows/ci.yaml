@@ -37,10 +37,10 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: oxsecurity/megalinter/flavors/terraform@8fbdead70d1409964ab3d5afa885e18ee85388bb # v9.4.0
+      - uses: oxsecurity/megalinter/flavors/terraform@0e3ce9b9c8c10effb9b269509cc47ca17cae31c7 # v9.5.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always() && !cancelled()
         with:
           name: MegaLinter reports
@@ -60,7 +60,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
+      - uses: zizmorcore/zizmor-action@5f14fd08f7cf1cb1609c1e344975f152c7ee938d # v0.5.6
         with:
           persona: pedantic
   CodeQL:
@@ -81,7 +81,7 @@ jobs:
         with:
           persist-credentials: false
       # Initializes the CodeQL tools for scanning.
-      - uses: github/codeql-action/init@1b168cd39490f61582a9beae412bb7057a6b2c4e # v4.31.8
+      - uses: github/codeql-action/init@9e0d7b8d25671d64c341c19c0152d693099fb5ba # v4.35.5
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -94,6 +94,6 @@ jobs:
           echo '  make bootstrap'
           echo '  make release'
           exit 1
-      - uses: github/codeql-action/analyze@1b168cd39490f61582a9beae412bb7057a6b2c4e # v4.31.8
+      - uses: github/codeql-action/analyze@9e0d7b8d25671d64c341c19c0152d693099fb5ba # v4.35.5
         with:
           category: "/language:${{matrix.language}}"
