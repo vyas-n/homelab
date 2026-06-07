@@ -30,6 +30,12 @@ resource "tailscale_dns_split_nameservers" "homezone_hosts" {
   nameservers = ["192.168.2.1"]
 }
 
+resource "tailscale_dns_split_nameservers" "homezone_mgmt" {
+  domain = "mgmt.vyas-n.dev"
+
+  nameservers = ["192.168.2.1"]
+}
+
 resource "tailscale_dns_split_nameservers" "homezone_svcs" {
   domain = "svcs.vyas-n.dev"
 
