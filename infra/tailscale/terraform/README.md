@@ -21,5 +21,6 @@
 | [tailscale_dns_preferences.global](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/dns_preferences)                     | resource |
 | [tailscale_dns_search_paths.global](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/dns_search_paths)                   | resource |
 | [tailscale_dns_split_nameservers.homezone_hosts](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/dns_split_nameservers) | resource |
+| [tailscale_dns_split_nameservers.homezone_mgmt](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/dns_split_nameservers)  | resource |
 | [tailscale_dns_split_nameservers.homezone_svcs](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/dns_split_nameservers)  | resource |
 | [tailscale_dns_split_nameservers.homezone_vms](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/dns_split_nameservers)   | resource |

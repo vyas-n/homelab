@@ -3,7 +3,7 @@ resource "helm_release" "rook_ceph_cluster" { # https://artifacthub.io/packages/
   name       = "rook-ceph-cluster"
   chart      = "rook-ceph-cluster"
   repository = "https://charts.rook.io/release"
-  version    = "1.19.2"
+  version    = "1.19.3"
 
   namespace        = var.namespace
   create_namespace = false
@@ -24,7 +24,7 @@ resource "helm_release" "rook_ceph_operator" { # https://artifacthub.io/packages
   name       = "rook-ceph-operator"
   chart      = "rook-ceph"
   repository = "https://charts.rook.io/release"
-  version    = "1.19.2"
+  version    = "1.19.3"
 
   namespace        = var.namespace
   create_namespace = false

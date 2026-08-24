@@ -5,15 +5,18 @@
 | Name       | Version   |
 |------------|-----------|
 | terraform  | >= 1.14.2 |
+| argocd     | >= 7.15.3 |
 | helm       | >= 3.0    |
+| kubectl    | >= 1.19.0 |
 | kubernetes | >= 2.12   |
 
 ## Providers
 
-| Name       | Version |
-|------------|---------|
-| helm       | >= 3.0  |
-| kubernetes | >= 2.12 |
+| Name       | Version   |
+|------------|-----------|
+| helm       | >= 3.0    |
+| kubectl    | >= 1.19.0 |
+| kubernetes | >= 2.12   |
 
 ## Resources
 
@@ -21,6 +24,8 @@
 |-----------------------------------------------------------------------------------------------------------------------------------------------|----------|
 | [helm_release.argo_cd](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                                  | resource |
 | [helm_release.stackgres_operator](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                       | resource |
+| [kubectl_manifest.name](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)                           | resource |
 | [kubernetes_ingress_v1.stackgres_operator](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/ingress_v1)     | resource |
+| [kubernetes_namespace_v1.argo_apps](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)          | resource |
 | [kubernetes_namespace_v1.argo_cd](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)            | resource |
 | [kubernetes_namespace_v1.stackgres_operator](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1) | resource |

@@ -14,6 +14,8 @@ all:
           has_amd_gpu: true
         proxmox-2:
           has_amd_gpu: true
+        proxmox-3:
+          has_amd_gpu: true
     vms:
       children:
         docker_servers:

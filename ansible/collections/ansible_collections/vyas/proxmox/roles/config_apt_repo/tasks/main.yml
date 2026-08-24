@@ -12,3 +12,4 @@
     - name: etc/apt/sources.list.d/ceph.list
     - name: etc/apt/sources.list.d/pve-enterprise.list
     - name: etc/apt/sources.list.d/pve-no-subscription.list
+    - name: etc/apt/sources.list

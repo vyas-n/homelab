@@ -24,6 +24,14 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.19.0"
     }
+    time = {
+      source  = "hashicorp/time"
+      version = ">= 0.13.1"
+    }
+    argocd = {
+      source  = "argoproj-labs/argocd"
+      version = ">= 7.15.3"
+    }
   }
 }
 
@@ -52,4 +60,17 @@ provider "helm" {
     client_certificate     = var.kube_client_cert_data
     client_key             = var.kube_client_key_data
   }
+}
+
+provider "time" {}
+
+data "kubernetes_secret_v1" "argo_creds" {
+  metadata {
+    name = "value"
+  }
+
+}
+
+provider "argocd" {
+  server_addr = "argo-cd.homezone-v1.vyas-n.dev"
 }
