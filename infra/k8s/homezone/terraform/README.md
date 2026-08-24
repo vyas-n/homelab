@@ -5,9 +5,11 @@
 | Name       | Version   |
 |------------|-----------|
 | terraform  | >= 1.11.0 |
+| argocd     | >= 7.15.3 |
 | helm       | >= 2.17.0 |
 | kubectl    | >= 1.19.0 |
 | kubernetes | >= 2.37.1 |
+| time       | >= 0.13.1 |
 
 ## Providers
 
@@ -29,11 +31,12 @@
 
 ## Resources
 
-| Name                                                                                                                               | Type     |
-|------------------------------------------------------------------------------------------------------------------------------------|----------|
-| [helm_release.prometheus_operator_crds](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)      | resource |
-| [kubectl_manifest.k0s_service_monitor](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
-| [kubernetes_namespace.rook_ceph](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace)     | resource |
+| Name                                                                                                                               | Type        |
+|------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [helm_release.prometheus_operator_crds](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)      | resource    |
+| [kubectl_manifest.k0s_service_monitor](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource    |
+| [kubernetes_namespace.rook_ceph](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace)     | resource    |
+| [kubernetes_secret_v1.argo_creds](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/data-sources/secret_v1) | data source |
 
 ## Inputs
 

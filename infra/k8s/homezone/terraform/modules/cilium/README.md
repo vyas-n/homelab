@@ -19,13 +19,15 @@
 
 ## Resources
 
-| Name                                                                                                                                  | Type     |
-|---------------------------------------------------------------------------------------------------------------------------------------|----------|
-| [helm_release.cilium](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                           | resource |
-| [kubectl_manifest.bgp_peering_policy_er7](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
-| [kubectl_manifest.policy1](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)                | resource |
-| [kubectl_manifest.pool1](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)                  | resource |
-| [time_sleep.wait_for_cilium](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep)                      | resource |
+| Name                                                                                                                              | Type     |
+|-----------------------------------------------------------------------------------------------------------------------------------|----------|
+| [helm_release.cilium](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                       | resource |
+| [kubectl_manifest.bgp_advertisement](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)  | resource |
+| [kubectl_manifest.bgp_cluster_config](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.bgp_peer_config](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)    | resource |
+| [kubectl_manifest.policy1](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)            | resource |
+| [kubectl_manifest.pool1](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)              | resource |
+| [time_sleep.wait_for_cilium](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep)                  | resource |
 
 ## Inputs
 

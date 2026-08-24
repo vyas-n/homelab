@@ -15,12 +15,6 @@
 | cloudinit | >= 2.3.7  |
 | proxmox   | >= 0.84.0 |
 
-## Modules
-
-| Name | Source                           | Version |
-|------|----------------------------------|---------|
-| dns  | ./modules/unifi_host_dns_records | n/a     |
-
 ## Resources
 
 | Name                                                                                                                                                          | Type        |
