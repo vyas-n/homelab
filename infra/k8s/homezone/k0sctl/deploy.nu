@@ -2,24 +2,24 @@
 
 def main [--init=false] {
     # Refresh SSH for these hosts
-    let ctr_hosts: list<record> = terraform -chdir=($env.FILE_PWD | path join ../../../proxmox/terraform) output --json k8s_ctr_nodes
-        | from json
-        | transpose hostname object
-    let wkr_hosts: list<record> = terraform -chdir=($env.FILE_PWD | path join ../../../proxmox/terraform) output --json k8s_wkr_nodes
-        | from json
-        | transpose hostname object
+    # let ctr_hosts: list<record> = terraform -chdir=($env.FILE_PWD | path join ../../../proxmox/terraform) output --json k8s_ctr_nodes
+    #     | from json
+    #     | transpose hostname object
+    # let wkr_hosts: list<record> = terraform -chdir=($env.FILE_PWD | path join ../../../proxmox/terraform) output --json k8s_wkr_nodes
+    #     | from json
+    #     | transpose hostname object
 
-    for host in ($ctr_hosts ++ $wkr_hosts) {
-        print $host
-        # Remove the old key(s) from known_hosts
-        ssh-keygen -R $host.object.fqdn
+    # for host in ($ctr_hosts ++ $wkr_hosts) {
+    #     print $host
+    #     # Remove the old key(s) from known_hosts
+    #     ssh-keygen -R $host.object.fqdn
 
-        # Add the new key(s) to known_hosts (and also hash the hostname/address)
-        ssh-keyscan -H $host.object.fqdn
-            | save --append ~/.ssh/known_hosts
-    }
+    #     # Add the new key(s) to known_hosts (and also hash the hostname/address)
+    #     ssh-keyscan -H $host.object.fqdn
+    #         | save --append ~/.ssh/known_hosts
+    # }
 
-    rm ~/.ssh/known_hosts.old
+    # rm ~/.ssh/known_hosts.old
 
     # Clear logs from last execution
     rm -f ~/.cache/k0sctl/k0sctl.log
@@ -34,7 +34,7 @@ def main [--init=false] {
     # Save kubeconfig into local ~/kube/config.d/
     mkdir ~/.kube/config.d
     touch ~/.kube/config.d/homezone-v1.yaml
-    let kubeconfig: record = k0sctl kubeconfig --config=($env.FILE_PWD | path join k0sctl.yaml) | from yaml
+    let kubeconfig: record = k0sctl kubeconfig --config=($env.FILE_PWD | path join k0sctl.yaml) | from yaml # --address=homezone-v1.svc.vyas-n.dev
     let kubeconfig_filepath: path = "~/.kube/config.d/homezone-v1.yaml" | path expand
     $kubeconfig | to yaml | save -f $kubeconfig_filepath
 

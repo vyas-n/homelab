@@ -64,6 +64,13 @@ provider "helm" {
 
 provider "time" {}
 
+data "kubernetes_secret_v1" "argo_creds" {
+  metadata {
+    name = "value"
+  }
+
+}
+
 provider "argocd" {
   server_addr = "argo-cd.homezone-v1.vyas-n.dev"
 }

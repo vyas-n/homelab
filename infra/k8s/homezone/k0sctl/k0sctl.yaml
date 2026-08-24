@@ -17,18 +17,18 @@ spec:
         # Monitoring k8s Control Plane: https://docs.k0sproject.io/stable/system-monitoring/#system-components-monitoring
         - --enable-metrics-scraper
       openSSH:
-        address: k8s-ctr-0.vms.vyas-n.dev
-        user: vyas
+        address: k8s-ctr-0
+        # user: vyas
     - role: controller
       installFlags: *controllerinstallflags
       openSSH:
-        address: k8s-ctr-1.vms.vyas-n.dev
-        user: vyas
+        address: k8s-ctr-1
+        # user: vyas
     - role: controller
       installFlags: *controllerinstallflags
       openSSH:
-        address: k8s-ctr-2.vms.vyas-n.dev
-        user: vyas
+        address: k8s-ctr-2
+        # user: vyas
     - role: worker
       installFlags: &workerinstallflags
         - --labels
@@ -36,23 +36,23 @@ spec:
         - --labels
         - topology.kubernetes.io/zone=vlan1
       openSSH:
-        address: k8s-wkr-0.vms.vyas-n.dev
-        user: vyas
+        address: k8s-wkr-0
+        # user: vyas
     - role: worker
       installFlags: *workerinstallflags
       openSSH:
-        address: k8s-wkr-1.vms.vyas-n.dev
-        user: vyas
+        address: k8s-wkr-1
+        # user: vyas
     - role: worker
       installFlags: *workerinstallflags
       openSSH:
-        address: k8s-wkr-2.vms.vyas-n.dev
-        user: vyas
-    - role: worker
-      installFlags: *workerinstallflags
-      openSSH:
-        address: k8s-wkr-3.vms.vyas-n.dev
-        user: vyas
+        address: k8s-wkr-2
+        # user: vyas
+    # - role: worker
+    #   installFlags: *workerinstallflags
+    #   openSSH:
+    #     address: k8s-wkr-3
+    #     user: vyas
   k0s:
     # releases: https://github.com/k0sproject/k0s/releases/latest
     version: v1.34.3+k0s.0
@@ -65,6 +65,7 @@ spec:
         name: homezone-v1
       spec:
         api:
+          address: 192.168.2.8
           k0sApiPort: 9443
           port: 6443
         installConfig:
@@ -83,6 +84,13 @@ spec:
           nodeLocalLoadBalancing:
             enabled: true
             type: EnvoyProxy
+          controlPlaneLoadBalancing:
+            enabled: false
+            type: Keepalived
+            keepalived:
+              vrrpInstances:
+                - virtualIPs: ["192.168.2.8/32"]
+                  authPass: fd3sahds
           provider: custom
           podCIDR: 10.244.0.0/16
           serviceCIDR: 10.96.0.0/12
