@@ -55,11 +55,12 @@ resource "tfe_workspace" "remote_exec_workspace" {
   terraform_version      = local.terraform_version
   queue_all_runs         = false
   file_triggers_enabled  = false
-  auto_apply_run_trigger = true
+  auto_apply_run_trigger = false
 
   vcs_repo {
     identifier                 = "vyas-n/homelab"
     github_app_installation_id = local.tfc_github_app_install_id
+    trigger_patterns           = ["${each.value["working_directory"]}/**/*"]
   }
 }
 resource "tfe_workspace_settings" "remote_exec_workspace" {
@@ -70,7 +71,7 @@ resource "tfe_workspace_settings" "remote_exec_workspace" {
   }
   workspace_id   = tfe_workspace.remote_exec_workspace[each.key].id
   execution_mode = "agent"
-  auto_apply     = true
+  auto_apply     = false
   agent_pool_id  = each.value.agent_pool_id
 }
 
