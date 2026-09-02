@@ -56,11 +56,11 @@ resource "tfe_workspace" "remote_exec_workspace" {
   queue_all_runs         = false
   file_triggers_enabled  = false
   auto_apply_run_trigger = false
+  trigger_patterns           = ["${each.value["working_directory"]}/**/*"]
 
   vcs_repo {
     identifier                 = "vyas-n/homelab"
     github_app_installation_id = local.tfc_github_app_install_id
-    trigger_patterns           = ["${each.value["working_directory"]}/**/*"]
   }
 }
 resource "tfe_workspace_settings" "remote_exec_workspace" {
