@@ -3,6 +3,8 @@
 ANSIBLE_CONFIG = "{{ config_root }}/ansible/ansible.cfg"
 
 [settings]
+lockfile = true
+lockfile_platforms = ["linux-x64"]
 experimental = true
 python.uv_venv_auto = true
 idiomatic_version_file_enable_tools = ["terraform", "python"]
