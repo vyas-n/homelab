@@ -54,9 +54,9 @@ resource "tfe_workspace" "remote_exec_workspace" {
 
   terraform_version      = local.terraform_version
   queue_all_runs         = false
-  file_triggers_enabled  = false
+  file_triggers_enabled  = true
   auto_apply_run_trigger = false
-  trigger_patterns           = ["${each.value["working_directory"]}/**/*"]
+  trigger_patterns       = ["${each.value["working_directory"]}/**/*"]
 
   vcs_repo {
     identifier                 = "vyas-n/homelab"
