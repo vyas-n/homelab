@@ -11,7 +11,7 @@
 
 | Name         | Version |
 |--------------|---------|
-| digitalocean | 2.78.0  |
+| digitalocean | 2.100.0 |
 
 ## Resources
 
@@ -25,8 +25,8 @@
 
 ## Outputs
 
-| Name                          | Description                                                              |
-|-------------------------------|--------------------------------------------------------------------------|
-| do_k8s_cluster_ca_certificate | The public certificate for the cluster's certificate authority.          |
-| do_k8s_host                   | The URL of the API server on the Kubernetes control plane.               |
-| do_k8s_token                  | The DigitalOcean API access token used by clients to access the cluster. |
+| Name                              | Description                                                              |
+|-----------------------------------|--------------------------------------------------------------------------|
+| do\_k8s\_cluster\_ca\_certificate | The public certificate for the cluster's certificate authority.          |
+| do\_k8s\_host                     | The URL of the API server on the Kubernetes control plane.               |
+| do\_k8s\_token                    | The DigitalOcean API access token used by clients to access the cluster. |

@@ -24,7 +24,17 @@ sources = ['pyproject.toml', 'uv.lock']
 outputs = ['.venv']
 
 [tasks.upgrade-deps]
-depends = ['upgrade-dep-uv', 'upgrade-dep-mise', 'upgrade-dep-terraform']
+alias = ["bump"]
+depends = [
+    'upgrade-dep-uv',
+    'upgrade-dep-mise',
+    'upgrade-dep-terraform',
+    'upgrade-dep-pinact',
+]
+
+[tasks.upgrade-dep-pinact]
+run = "pinact run --update"
+wait_for = ["upgrade-dep-mise"]
 
 [tasks.upgrade-dep-uv]
 run = "uv lock --upgrade"
@@ -55,6 +65,7 @@ sources = ['**/*.tf', '**/.terraform.lock.hcl']
 outputs = ['**/README.md']
 
 [tasks.format]
+alias = ["fmt"]
 depends = ['docs']
 run = '''
     just --fmt --unstable
