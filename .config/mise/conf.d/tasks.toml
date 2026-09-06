@@ -1,11 +1,21 @@
 
 [tasks.setup]
-depends = ['setup-ansible', 'setup-terraform', 'setup-uv']
+depends = [
+    'setup-ansible',
+    'setup-prek',
+    'setup-terraform',
+    'setup-uv',
+]
 
 [tasks.setup-ansible]
 run = "ansible/requirements.yml"
 sources = ['ansible/requirements.yml', 'ansible/collections/**/*']
 outputs = ['{{env.HOME}}/.ansible/collections/ansible_collections']
+
+[tasks.setup-prek]
+run = "prek install"
+sources = ['prek.toml']
+outputs = ['.git/hooks/pre-commit']
 
 [tasks.setup-terraform]
 run = '''
