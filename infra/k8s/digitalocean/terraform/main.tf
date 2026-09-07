@@ -12,5 +12,5 @@ resource "tailscale_oauth_client" "k8s_tailscale_operator" {
     "devices:core",
     "auth_keys",
   ]
-  tags        = []
+  tags        = ["tag:k8s-operator"]
 }
