@@ -1,0 +1,20 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+[update]
+cooldown_days = 7
+
+[[repos]]
+repo = "builtin"
+hooks = [
+    { id = "trailing-whitespace" },
+    { id = "end-of-file-fixer" },
+    { id = "check-added-large-files" },
+    { id = "check-json", exclude = "devcontainer.json", },
+    { id = "check-json5" },
+    { id = "check-yaml", args = ["--allow-multiple-documents"] },
+    { id = "check-toml" },
+    { id = "check-shebang-scripts-are-executable" },
+    { id = "check-executables-have-shebangs" },
+]

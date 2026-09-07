@@ -1,34 +1,16 @@
 
-resource "kubernetes_namespace" "traefik" {
+resource "kubernetes_namespace" "tailscale" {
   metadata {
-    name = "traefik"
+    name = "tailscale"
   }
 }
 
-resource "kubernetes_namespace" "authentik" {
-  metadata {
-    name = "authentik"
-  }
+resource "tailscale_oauth_client" "k8s_tailscale_operator" {
+  description = "digitalocean-k8s-tailscale-operator"
+  scopes      = [
+    "services",
+    "devices:core",
+    "auth_keys",
+  ]
+  tags        = ["tag:k8s-operator"]
 }
-
-# ref: https://artifacthub.io/packages/helm/goauthentik/authentik
-# resource "helm_release" "authentik" {
-#   name       = "authentik"
-#   chart      = "authentik"
-#   repository = "oci://ghcr.io/goauthentik/helm-charts"
-#   version    = "2024.8.2"
-
-#   max_history      = 5
-#   namespace        = kubernetes_namespace.authentik.metadata[0].name
-#   create_namespace = false
-#   lint             = true
-#   timeout          = 600
-#   wait             = true
-#   wait_for_jobs    = true
-
-#   values = [
-#     # remove yaml comments & formatting from diff calculations
-#     yamlencode(yamldecode(file("${path.module}/helm/authentik/values.yaml"))),
-#     yamlencode({})
-#   ]
-# }

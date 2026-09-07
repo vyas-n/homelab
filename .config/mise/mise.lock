@@ -2,39 +2,61 @@
 
 lockfile_version = 1
 
+[[tools."aqua:j178/prek"]]
+version = "0.5.2"
+backend = "aqua:j178/prek"
+specifiers = ["latest"]
+
+[tools."aqua:j178/prek"."platforms.linux-x64"]
+checksum = "sha256:a4d51a463cb15ee2929368cc4884eec4ef33dce3ff5101b40e8ad7e1205b8f40"
+url = "https://github.com/j178/prek/releases/download/v0.5.2/prek-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/541547346"
+provenance = "github-attestations"
+
+[[tools."aqua:suzuki-shunsuke/pinact"]]
+version = "4.1.1"
+backend = "aqua:suzuki-shunsuke/pinact"
+specifiers = ["latest"]
+
+[tools."aqua:suzuki-shunsuke/pinact"."platforms.linux-x64"]
+checksum = "sha256:d1cffebe5704b74e2e5f8a864efb9f7e54768972dc686188c008033fb1797841"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.1/pinact_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/494702259"
+provenance = "github-attestations"
+
 [[tools.bun]]
-version = "1.4.0"
+version = "1.4.2"
 backend = "core:bun"
 specifiers = ["latest"]
 
 [tools.bun."platforms.linux-x64"]
-checksum = "sha256:2d03fb5fb83ac8b567aca0a281b2ce1a1a19d488f56c2968d88c3f25e92fe452"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.0/bun-linux-x64.zip"
+checksum = "sha256:36368faef7527875d5ffa52e53cd48021741f2a83eb6208a8dd64068d422a913"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64.zip"
 
 [tools.bun."platforms.linux-x64-baseline"]
-checksum = "sha256:184fb4595f0d401a217cf7c78c1bc430ba83314dab7a8b94805babbf7fa7097f"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.0/bun-linux-x64-baseline.zip"
+checksum = "sha256:c678040f14fe0440eb839d37cbd0ce4c051a32da72806ac97de6a6aab6bf728f"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64-baseline.zip"
 
 [tools.bun."platforms.linux-x64-musl"]
-checksum = "sha256:83b5f12fd258dd8d4fdcaea65ede954366aa717dab399e20093ecab280d54e7a"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.0/bun-linux-x64-musl.zip"
+checksum = "sha256:4835eca59d6da70f4674f5642f6e459dcadab773695b2ed9922d131057989742"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64-musl.zip"
 
 [tools.bun."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:618c4bc1f94b02337ee210003c0b7c066f11548a8cdc5109df10db043dc47ca2"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.0/bun-linux-x64-musl-baseline.zip"
+checksum = "sha256:76e1db84e98f22f78de0a87e309bfbbf297732847f9720db36750646c85c8c18"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64-musl-baseline.zip"
 
 [[tools."cargo:fd-find"]]
-version = "10.4.2"
+version = "10.5.0"
 backend = "cargo:fd-find"
 specifiers = ["latest"]
 
 [[tools."cargo:just"]]
-version = "1.49.0"
+version = "1.58.0"
 backend = "cargo:just"
 specifiers = ["latest"]
 
 [[tools."cargo:zizmor"]]
-version = "1.23.1"
+version = "1.30.0"
 backend = "cargo:zizmor"
 specifiers = ["latest"]
 
@@ -49,13 +71,13 @@ url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.linux-a
 url_api = "https://api.github.com/repos/direnv/direnv/releases/assets/274610548"
 
 [[tools.go]]
-version = "1.27.0"
+version = "1.27.1"
 backend = "core:go"
 specifiers = ["latest"]
 
 [tools.go."platforms.linux-x64"]
-checksum = "sha256:675c26c449cbb18fc24b74650de1eabbae6e16f64326fd85a283fb3b58280685"
-url = "https://dl.google.com/go/go1.27.0.linux-amd64.tar.gz"
+checksum = "sha256:63d339f0da5ab53635a56f2490a7984dfe12dfcff22ad749f63edaf590168445"
+url = "https://dl.google.com/go/go1.27.1.linux-amd64.tar.gz"
 
 [[tools."go:github.com/k0sproject/k0sctl"]]
 version = "0.28.0"
@@ -106,22 +128,22 @@ checksum = "sha256:41d05b927aa174f15d1228c4eba832a323b716c68b415ef5a00179f46cc60
 url = "https://releases.hashicorp.com/terraform/1.16.0/terraform_1.16.0_linux_amd64.zip"
 
 [[tools.usage]]
-version = "3.2.0"
+version = "6.6.1"
 backend = "aqua:jdx/usage"
 specifiers = ["latest"]
 
 [tools.usage."platforms.linux-x64"]
-checksum = "sha256:3e76c0b207c3cb8a5e140fd8171518deabd4377f66ca072f92a9e0b175babd3d"
-url = "https://github.com/jdx/usage/releases/download/v3.2.0/usage-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/379908644"
+checksum = "sha256:f159816540a3b813d51458ff25344a888e772d9e03d13006140ec5b42023a06e"
+url = "https://github.com/jdx/usage/releases/download/v6.6.1/usage-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/539822350"
 
 [[tools.uv]]
-version = "0.11.6"
+version = "0.12.10"
 backend = "aqua:astral-sh/uv"
 specifiers = ["latest"]
 
 [tools.uv."platforms.linux-x64"]
-checksum = "sha256:0c6bab77a67a445dc849ed5e8ee8d3cb333b6e2eba863643ce1e228075f27943"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.6/uv-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/392367534"
+checksum = "sha256:173d95a0c32d18c896c46ba6fafbf3cf9c14ab74b033f81b76c883ef492a976b"
+url = "https://github.com/astral-sh/uv/releases/download/0.12.10/uv-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/545034465"
 provenance = "github-attestations"

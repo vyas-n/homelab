@@ -28,6 +28,10 @@ terraform {
       source  = "digitalocean/digitalocean"
       version = ">= 2.67.0"
     }
+    tailscale = {
+      source  = "tailscale/tailscale"
+      version = ">= 0.22.0"
+    }
   }
 }
 
@@ -62,3 +66,5 @@ provider "helm" {
     )
   }
 }
+
+provider "tailscale" {}

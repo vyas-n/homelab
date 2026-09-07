@@ -1,6 +1,6 @@
 /*
  * # Terraform Cloud Root
- * 
+ *
 */
 
 terraform {

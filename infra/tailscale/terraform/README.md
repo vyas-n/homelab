@@ -11,12 +11,13 @@
 
 | Name      | Version |
 |-----------|---------|
-| tailscale | 0.28.0  |
+| tailscale | 0.29.2  |
 
 ## Resources
 
 | Name                                                                                                                                                      | Type     |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| [tailscale_acl.kubernetes_operator_grants](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/acl)                         | resource |
 | [tailscale_contacts.global](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/contacts)                                   | resource |
 | [tailscale_dns_preferences.global](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/dns_preferences)                     | resource |
 | [tailscale_dns_search_paths.global](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/dns_search_paths)                   | resource |
