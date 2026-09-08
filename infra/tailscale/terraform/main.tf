@@ -42,6 +42,7 @@ resource "tailscale_dns_split_nameservers" "homezone_vms" {
   nameservers = ["192.168.2.1"]
 }
 
+# https://tailscale.com/docs/kubernetes-operator/quickstart#prerequisites
 resource "tailscale_acl" "kubernetes_operator_grants" {
   acl = jsonencode({
     tagOwners : {
