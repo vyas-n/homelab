@@ -28,8 +28,8 @@ resource "kubernetes_secret_v1" "operator_oauth" {
 }
 
 resource "helm_release" "tailscale_operator" {
-  chart      = "tailscale/tailscale-operator"
-  repository = "https://pkgs.tailscale.com/helmcharts"
+  chart      = "tailscale-operator"
+  repository = "https://pkgs.tailscale.com/helmcharts/tailscale"
   name       = "tailscale-operator"
   namespace  = kubernetes_namespace_v1.tailscale.id
   wait       = true
