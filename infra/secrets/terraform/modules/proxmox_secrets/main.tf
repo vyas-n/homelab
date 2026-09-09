@@ -21,11 +21,11 @@ resource "cloudflare_api_token" "proxmox_acme" {
   }
 }
 
-resource "proxmox_virtual_environment_acme_dns_plugin" "cloudflare" {
-  plugin = "cloudflare"
-  api    = "cf"
-  data = {
-    CF_Account_ID = var.cloudflare_account_id
-    CF_Token      = cloudflare_api_token.proxmox_acme.value
-  }
-}
+# resource "proxmox_virtual_environment_acme_dns_plugin" "cloudflare" {
+#   plugin = "cloudflare"
+#   api    = "cf"
+#   data = {
+#     CF_Account_ID = var.cloudflare_account_id
+#     CF_Token      = cloudflare_api_token.proxmox_acme.value
+#   }
+# }
