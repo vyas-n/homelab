@@ -11,7 +11,7 @@
 
 | Name  | Version |
 |-------|---------|
-| unifi | 0.41.17 |
+| unifi | 0.55.0  |
 
 ## Resources
 

@@ -18,16 +18,16 @@
 
 ## Modules
 
-| Name             | Source                         | Version |
-|------------------|--------------------------------|---------|
-| docker_server_0  | ./modules/proxmox_cloudinit_vm | n/a     |
-| docker_server_1  | ./modules/proxmox_cloudinit_vm | n/a     |
-| k8s_ctr          | ./modules/proxmox_cloudinit_vm | n/a     |
-| k8s_wkr          | ./modules/proxmox_cloudinit_vm | n/a     |
-| k8s_wkr_proxmox0 | ./modules/proxmox_cloudinit_vm | n/a     |
-| k8s_wkr_proxmox2 | ./modules/proxmox_cloudinit_vm | n/a     |
-| test_k8s_ctr     | ./modules/proxmox_cloudinit_vm | n/a     |
-| test_k8s_wkr     | ./modules/proxmox_cloudinit_vm | n/a     |
+| Name               | Source                         | Version |
+|--------------------|--------------------------------|---------|
+| docker\_server\_0  | ./modules/proxmox_cloudinit_vm | n/a     |
+| docker\_server\_1  | ./modules/proxmox_cloudinit_vm | n/a     |
+| k8s\_ctr           | ./modules/proxmox_cloudinit_vm | n/a     |
+| k8s\_wkr           | ./modules/proxmox_cloudinit_vm | n/a     |
+| k8s\_wkr\_proxmox0 | ./modules/proxmox_cloudinit_vm | n/a     |
+| k8s\_wkr\_proxmox2 | ./modules/proxmox_cloudinit_vm | n/a     |
+| test\_k8s\_ctr     | ./modules/proxmox_cloudinit_vm | n/a     |
+| test\_k8s\_wkr     | ./modules/proxmox_cloudinit_vm | n/a     |
 
 ## Resources
 
@@ -42,13 +42,13 @@
 
 ## Inputs
 
-| Name                       | Description | Type     | Default | Required |
-|----------------------------|-------------|----------|---------|:--------:|
-| proxmox_ve_ssh_private_key | n/a         | `string` | n/a     |   yes    |
+| Name                           | Description | Type     | Default | Required |
+|--------------------------------|-------------|----------|---------|:--------:|
+| proxmox\_ve\_ssh\_private\_key | n/a         | `string` | n/a     |   yes    |
 
 ## Outputs
 
-| Name          | Description |
-|---------------|-------------|
-| k8s_ctr_nodes | n/a         |
-| k8s_wkr_nodes | n/a         |
+| Name            | Description |
+|-----------------|-------------|
+| k8s\_ctr\_nodes | n/a         |
+| k8s\_wkr\_nodes | n/a         |

@@ -40,12 +40,12 @@
 
 ## Inputs
 
-| Name                                               | Description | Type     | Default | Required |
-|----------------------------------------------------|-------------|----------|---------|:--------:|
-| cert_manager_cloudflare_api_token                  | n/a         | `string` | n/a     |   yes    |
-| cert_manager_zerossl_eab_hmac_key                  | n/a         | `string` | n/a     |   yes    |
-| cert_manager_zerossl_eab_id                        | n/a         | `string` | n/a     |   yes    |
-| cert_manager_zerossl_eab_kid                       | n/a         | `string` | n/a     |   yes    |
-| external_dns_cloudflare_api_token                  | n/a         | `string` | n/a     |   yes    |
-| external_dns_unifi_secret_api_key                  | n/a         | `string` | n/a     |   yes    |
-| external_secrets_onepassword_service_account_token | n/a         | `string` | n/a     |   yes    |
+| Name                                                    | Description | Type     | Default | Required |
+|---------------------------------------------------------|-------------|----------|---------|:--------:|
+| cert\_manager\_cloudflare\_api\_token                   | n/a         | `string` | n/a     |   yes    |
+| cert\_manager\_zerossl\_eab\_hmac\_key                  | n/a         | `string` | n/a     |   yes    |
+| cert\_manager\_zerossl\_eab\_id                         | n/a         | `string` | n/a     |   yes    |
+| cert\_manager\_zerossl\_eab\_kid                        | n/a         | `string` | n/a     |   yes    |
+| external\_dns\_cloudflare\_api\_token                   | n/a         | `string` | n/a     |   yes    |
+| external\_dns\_unifi\_secret\_api\_key                  | n/a         | `string` | n/a     |   yes    |
+| external\_secrets\_onepassword\_service\_account\_token | n/a         | `string` | n/a     |   yes    |

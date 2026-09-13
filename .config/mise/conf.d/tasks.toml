@@ -1,15 +1,10 @@
 
 [tasks.setup]
-depends = [
-    'setup-ansible',
-    'setup-prek',
-    'setup-terraform',
-    'setup-uv',
-]
+depends = ['setup-ansible', 'setup-prek', 'setup-terraform', 'setup-uv']
 
 [tasks.setup-ansible]
 run = "ansible/requirements.yml"
-sources = ['ansible/requirements.yml', 'ansible/collections/**/*']
+sources = ['ansible/collections/**/*', 'ansible/requirements.yml']
 outputs = ['{{env.HOME}}/.ansible/collections/ansible_collections']
 
 [tasks.setup-prek]
@@ -25,7 +20,7 @@ run = '''
         terraform -chdir=($tf_directory) init --backend=false
     }
 '''
-sources = ['**/terraform.tf', '**/.terraform.lock.hcl']
+sources = ['**/.terraform.lock.hcl', '**/terraform.tf']
 outputs = ['**/.terraform']
 
 [tasks.setup-uv]
@@ -36,10 +31,10 @@ outputs = ['.venv']
 [tasks.upgrade-deps]
 alias = ["bump"]
 depends = [
-    'upgrade-dep-uv',
-    'upgrade-dep-mise',
-    'upgrade-dep-terraform',
-    'upgrade-dep-pinact',
+  'upgrade-dep-uv',
+  'upgrade-dep-mise',
+  'upgrade-dep-terraform',
+  'upgrade-dep-pinact',
 ]
 
 [tasks.upgrade-dep-pinact]

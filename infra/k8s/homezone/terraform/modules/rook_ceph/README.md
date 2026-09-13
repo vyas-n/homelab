@@ -34,6 +34,6 @@ This module has a few manual steps involved. In particular you need to:
 
 ## Outputs
 
-| Name              | Description |
-|-------------------|-------------|
-| storage_class_rwo | n/a         |
+| Name                | Description |
+|---------------------|-------------|
+| storage\_class\_rwo | n/a         |

@@ -21,18 +21,18 @@
 
 ## Inputs
 
-| Name        | Description | Type     | Default | Required |
-|-------------|-------------|----------|---------|:--------:|
-| fqdn        | n/a         | `string` | n/a     |   yes    |
-| ipv4        | n/a         | `string` | n/a     |   yes    |
-| mac_address | n/a         | `string` | n/a     |   yes    |
-| name        | n/a         | `string` | n/a     |   yes    |
+| Name         | Description | Type     | Default | Required |
+|--------------|-------------|----------|---------|:--------:|
+| fqdn         | n/a         | `string` | n/a     |   yes    |
+| ipv4         | n/a         | `string` | n/a     |   yes    |
+| mac\_address | n/a         | `string` | n/a     |   yes    |
+| name         | n/a         | `string` | n/a     |   yes    |
 
 ## Outputs
 
-| Name        | Description |
-|-------------|-------------|
-| fqdn        | n/a         |
-| hostname    | n/a         |
-| ipv4        | n/a         |
-| mac_address | n/a         |
+| Name         | Description |
+|--------------|-------------|
+| fqdn         | n/a         |
+| hostname     | n/a         |
+| ipv4         | n/a         |
+| mac\_address | n/a         |
