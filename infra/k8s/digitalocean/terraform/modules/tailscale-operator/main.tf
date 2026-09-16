@@ -102,6 +102,14 @@ resource "kubernetes_manifest" "tailscale_dns_nameserver" {
   depends_on = [helm_release.tailscale_operator, kubectl_manifest.tailscale_egress_proxy_group]
 }
 
+data "kubernetes_resource" "tailscale_dns_nameserver" {
+  api_version = kubernetes_manifest.tailscale_dns_nameserver.object.apiVersion
+  kind        = kubernetes_manifest.tailscale_dns_nameserver.object.kind
+  metadata {
+    name      = kubernetes_manifest.tailscale_dns_nameserver.object.metadata[0].name
+  }
+}
+
 # Setup coredns in-cluster to use this DNS server
 # ref:
 # - https://tailscale.com/docs/kubernetes-operator/egress/enable-magicdns-resolution#configure-coredns
@@ -116,7 +124,7 @@ resource "kubernetes_config_map_v1" "coredns_custom" {
       ts.net:53 {
           errors
           cache 30
-          forward . ${kubernetes_manifest.tailscale_dns_nameserver.object.status.nameserver.ip}
+          forward . ${data.kubernetes_manifest.tailscale_dns_nameserver.object.status.nameserver.ip}
       }
     EOT
   }
