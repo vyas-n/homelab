@@ -23,6 +23,7 @@
 | Name                | Source                       | Version |
 |---------------------|------------------------------|---------|
 | argo\_cd            | ./modules/argo-cd            | n/a     |
+| argo\_rollouts      | ./modules/argo-rollouts      | n/a     |
 | cert\_manager       | ./modules/cert-manager       | n/a     |
 | tailscale\_operator | ./modules/tailscale-operator | n/a     |
 

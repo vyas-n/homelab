@@ -9,6 +9,16 @@ module "argo_cd" {
   ingress_domain       = "argocd-do.tail5c72f1.ts.net"
 }
 
+module "argo_rollouts" {
+  source = "./modules/argo-rollouts"
+
+  kubernetes_namespace = kubernetes_namespace_v1.argo_rollouts.id
+  ingress_annotations  = module.tailscale_operator.ingress_annotations
+  ingress_class        = module.tailscale_operator.ingress_class
+  ingress_host         = "argo-rollouts-do"
+  ingress_domain       = "argo-rollouts-do.tail5c72f1.ts.net"
+}
+
 module "tailscale_operator" {
   source = "./modules/tailscale-operator"
 
@@ -25,5 +35,5 @@ module "cert_manager" {
 
 
 #   # https://docs.kargo.io/operator-guide/basic-installation#prerequisites
-#   depends_on = [  ]
+#   depends_on = [ module.cert_manager, module.argo_cd, module.argo_rollouts ]
 # }
