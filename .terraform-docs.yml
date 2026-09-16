@@ -3,7 +3,7 @@
 
 formatter: markdown
 
-header-from: terraform.tf
+header-from: versions.tf
 
 output:
   file: README.md

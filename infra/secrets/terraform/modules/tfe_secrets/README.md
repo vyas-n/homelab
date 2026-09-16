@@ -79,7 +79,7 @@
 
 ## Inputs
 
-| Name            | Description                                                   | Type                        | Default | Required |
-|-----------------|---------------------------------------------------------------|-----------------------------|---------|:--------:|
-| onepass_vault   | The 1Password Vault id to grab from and store credentials in. | `object({ uuid : string })` | n/a     |   yes    |
-| zerossl_api_key | ZeroSSL API Key to generate ACME Credentials                  | `string`                    | n/a     |   yes    |
+| Name              | Description                                                   | Type                        | Default | Required |
+|-------------------|---------------------------------------------------------------|-----------------------------|---------|:--------:|
+| onepass\_vault    | The 1Password Vault id to grab from and store credentials in. | `object({ uuid : string })` | n/a     |   yes    |
+| zerossl\_api\_key | ZeroSSL API Key to generate ACME Credentials                  | `string`                    | n/a     |   yes    |

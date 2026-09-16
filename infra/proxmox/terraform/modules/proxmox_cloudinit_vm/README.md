@@ -31,25 +31,25 @@
 
 ## Inputs
 
-| Name                 | Description                                          | Type     | Default       | Required |
-|----------------------|------------------------------------------------------|----------|---------------|:--------:|
-| cloud_init_filepath  | n/a                                                  | `string` | n/a           |   yes    |
-| cloud_os_image       | n/a                                                  | `string` | n/a           |   yes    |
-| domain               | n/a                                                  | `string` | n/a           |   yes    |
-| hostname             | n/a                                                  | `string` | n/a           |   yes    |
-| proxmox_node_name    | n/a                                                  | `string` | n/a           |   yes    |
-| snippet_datastore_id | ID of the datastore to host VM's cloud-init snippet. | `string` | n/a           |   yes    |
-| vm_datastore_id      | ID of the datastore to host VM's OS & EFI Disks.     | `string` | n/a           |   yes    |
-| cpu_type             | n/a                                                  | `string` | `"x86-64-v3"` |    no    |
-| disk_space           | In gigabytes (gb)                                    | `number` | `20`          |    no    |
-| memory               | In megabytes (mb)                                    | `number` | `2048`        |    no    |
-| num_cpu_cores        | n/a                                                  | `number` | `1`           |    no    |
+| Name                   | Description                                          | Type     | Default       | Required |
+|------------------------|------------------------------------------------------|----------|---------------|:--------:|
+| cloud\_init\_filepath  | n/a                                                  | `string` | n/a           |   yes    |
+| cloud\_os\_image       | n/a                                                  | `string` | n/a           |   yes    |
+| domain                 | n/a                                                  | `string` | n/a           |   yes    |
+| hostname               | n/a                                                  | `string` | n/a           |   yes    |
+| proxmox\_node\_name    | n/a                                                  | `string` | n/a           |   yes    |
+| snippet\_datastore\_id | ID of the datastore to host VM's cloud-init snippet. | `string` | n/a           |   yes    |
+| vm\_datastore\_id      | ID of the datastore to host VM's OS & EFI Disks.     | `string` | n/a           |   yes    |
+| cpu\_type              | n/a                                                  | `string` | `"x86-64-v3"` |    no    |
+| disk\_space            | In gigabytes (gb)                                    | `number` | `20`          |    no    |
+| memory                 | In megabytes (mb)                                    | `number` | `2048`        |    no    |
+| num\_cpu\_cores        | n/a                                                  | `number` | `1`           |    no    |
 
 ## Outputs
 
-| Name        | Description |
-|-------------|-------------|
-| fqdn        | n/a         |
-| hostname    | n/a         |
-| ipv4        | n/a         |
-| mac_address | n/a         |
+| Name         | Description |
+|--------------|-------------|
+| fqdn         | n/a         |
+| hostname     | n/a         |
+| ipv4         | n/a         |
+| mac\_address | n/a         |

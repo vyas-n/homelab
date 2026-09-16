@@ -21,15 +21,15 @@ The files are named after the location that the secrets are synchronized to (not
 
 | Name        | Version |
 |-------------|---------|
-| onepassword | 3.2.1   |
+| onepassword | 3.3.1   |
 
 ## Modules
 
-| Name            | Source                    | Version |
-|-----------------|---------------------------|---------|
-| gh_secrets      | ./modules/gh_secrets      | n/a     |
-| proxmox_secrets | ./modules/proxmox_secrets | n/a     |
-| tfe_secrets     | ./modules/tfe_secrets     | n/a     |
+| Name             | Source                    | Version |
+|------------------|---------------------------|---------|
+| gh\_secrets      | ./modules/gh_secrets      | n/a     |
+| proxmox\_secrets | ./modules/proxmox_secrets | n/a     |
+| tfe\_secrets     | ./modules/tfe_secrets     | n/a     |
 
 ## Resources
 
@@ -45,8 +45,8 @@ The files are named after the location that the secrets are synchronized to (not
 
 ## Outputs
 
-| Name            | Description |
-|-----------------|-------------|
-| gh_secrets      | n/a         |
-| proxmox_secrets | n/a         |
-| tfe_secrets     | n/a         |
+| Name             | Description |
+|------------------|-------------|
+| gh\_secrets      | n/a         |
+| proxmox\_secrets | n/a         |
+| tfe\_secrets     | n/a         |

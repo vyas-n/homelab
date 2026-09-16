@@ -29,9 +29,9 @@
 
 ## Inputs
 
-| Name                       | Description | Type     | Default | Required |
-|----------------------------|-------------|----------|---------|:--------:|
-| k8s_endpoint               | n/a         | `string` | n/a     |   yes    |
-| k8s_loadbalancer_cidr_ipv4 | n/a         | `string` | n/a     |   yes    |
-| k8s_pod_cidr               | n/a         | `string` | n/a     |   yes    |
-| k8s_service_port           | n/a         | `number` | n/a     |   yes    |
+| Name                          | Description | Type     | Default | Required |
+|-------------------------------|-------------|----------|---------|:--------:|
+| k8s\_endpoint                 | n/a         | `string` | n/a     |   yes    |
+| k8s\_loadbalancer\_cidr\_ipv4 | n/a         | `string` | n/a     |   yes    |
+| k8s\_pod\_cidr                | n/a         | `string` | n/a     |   yes    |
+| k8s\_service\_port            | n/a         | `number` | n/a     |   yes    |

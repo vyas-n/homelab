@@ -1,0 +1,4 @@
+---
+# yaml-language-server: $schema=https://github.com/cert-manager/cert-manager/raw/refs/heads/master/deploy/charts/cert-manager/values.schema.json
+crds:
+  enabled: true

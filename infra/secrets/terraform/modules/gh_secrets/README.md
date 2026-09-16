@@ -32,6 +32,6 @@
 
 ## Inputs
 
-| Name                  | Description | Type     | Default | Required |
-|-----------------------|-------------|----------|---------|:--------:|
-| cloudflare_account_id | n/a         | `string` | n/a     |   yes    |
+| Name                    | Description | Type     | Default | Required |
+|-------------------------|-------------|----------|---------|:--------:|
+| cloudflare\_account\_id | n/a         | `string` | n/a     |   yes    |
