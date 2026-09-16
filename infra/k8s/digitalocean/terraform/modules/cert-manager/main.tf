@@ -8,6 +8,7 @@ resource "helm_release" "cert_manager" {
   lint       = true
   wait       = true
 
+
   values = concat([
     # Sort the fileset to preserve the ordering of the values files
     for file in sort(fileset(path.module, "values/*.{yaml,yml}")) :
