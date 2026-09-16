@@ -7,7 +7,12 @@ variable "ingress_class" {
   default = "tailscale"
 }
 
-variable "tailscale_proxy_group" {
+variable "tailscale_ingress_proxy_group" {
   type    = string
   default = "ingress-proxies"
+}
+
+variable "tailscale_egress_proxy_group" {
+  type    = string
+  default = "egress-proxies"
 }
