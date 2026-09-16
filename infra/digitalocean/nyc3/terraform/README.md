@@ -11,7 +11,7 @@
 
 | Name         | Version |
 |--------------|---------|
-| digitalocean | 2.100.0 |
+| digitalocean | 2.100.1 |
 
 ## Resources
 

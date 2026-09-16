@@ -9,13 +9,14 @@
 | helm         | >= 3.0.2  |
 | kubectl      | >= 1.19.0 |
 | kubernetes   | >= 2.38.0 |
+| random       | >= 3.9.1  |
 | tailscale    | >= 0.22.0 |
 
 ## Providers
 
 | Name         | Version |
 |--------------|---------|
-| digitalocean | 2.100.0 |
+| digitalocean | 2.100.1 |
 | kubernetes   | 3.2.1   |
 
 ## Modules
@@ -38,3 +39,9 @@
 | [kubernetes_namespace_v1.kargo](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                        | resource    |
 | [kubernetes_namespace_v1.tailscale](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                    | resource    |
 | [digitalocean_kubernetes_cluster.do_k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/kubernetes_cluster) | data source |
+
+## Outputs
+
+| Name  | Description |
+|-------|-------------|
+| kargo | n/a         |
