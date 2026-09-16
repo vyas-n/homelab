@@ -2,7 +2,7 @@
 module "argo_cd" {
   source = "./modules/argo-cd"
 
-  kubernetes_namespace = kubernetes_namespace_v1.argocd.id
+  kubernetes_namespace = kubernetes_namespace_v1.argo_cd.id
   ingress_annotations  = module.tailscale_operator.ingress_annotations
   ingress_class        = module.tailscale_operator.ingress_class
   ingress_host         = "argocd-do"
