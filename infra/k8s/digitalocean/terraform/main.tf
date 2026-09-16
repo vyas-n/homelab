@@ -11,6 +11,12 @@ resource "kubernetes_namespace_v1" "argo_rollouts" {
   }
 }
 
+resource "kubernetes_namespace_v1" "kargo" {
+  metadata {
+    name = "kargo"
+  }
+}
+
 resource "kubernetes_namespace_v1" "cert_manager" {
   metadata {
     name = "cert-manager"

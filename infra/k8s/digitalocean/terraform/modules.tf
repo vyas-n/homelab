@@ -31,9 +31,19 @@ module "cert_manager" {
   kubernetes_namespace = kubernetes_namespace_v1.cert_manager.id
 }
 
-# module "kargo" {
+module "kargo" {
+  source = "./modules/kargo"
 
+  kubernetes_namespace = kubernetes_namespace_v1.kargo.id
+  ingress_annotations  = module.tailscale_operator.ingress_annotations
+  ingress_class        = module.tailscale_operator.ingress_class
+  ingress_host         = "kargo-do"
+  ingress_domain       = "kargo-do.tail5c72f1.ts.net"
 
-#   # https://docs.kargo.io/operator-guide/basic-installation#prerequisites
-#   depends_on = [ module.cert_manager, module.argo_cd, module.argo_rollouts ]
-# }
+  # https://docs.kargo.io/operator-guide/basic-installation#prerequisites
+  depends_on = [
+    module.cert_manager,
+    module.argo_cd,
+    module.argo_rollouts
+  ]
+}
