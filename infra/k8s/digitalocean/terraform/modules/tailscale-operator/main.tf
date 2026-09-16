@@ -124,7 +124,7 @@ resource "kubernetes_config_map_v1" "coredns_custom" {
       ts.net:53 {
           errors
           cache 30
-          forward . ${data.kubernetes_manifest.tailscale_dns_nameserver.object.status.nameserver.ip}
+          forward . ${data.kubernetes_resource.tailscale_dns_nameserver.object.status.nameserver.ip}
       }
     EOT
   }
