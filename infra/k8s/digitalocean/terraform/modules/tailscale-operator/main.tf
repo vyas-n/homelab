@@ -87,8 +87,7 @@ resource "kubernetes_manifest" "tailscale_dns_nameserver" {
     apiVersion = "tailscale.com/v1alpha1"
     kind       = "DNSConfig"
     metadata = {
-      name      = "ts-dns"
-      namespace = var.kubernetes_namespace
+      name = "ts-dns"
     }
     spec = {
       nameserver = {
