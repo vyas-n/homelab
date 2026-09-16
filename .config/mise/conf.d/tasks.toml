@@ -73,6 +73,7 @@ outputs = ['**/README.md']
 alias = ["fmt"]
 depends = ['docs']
 run = '''
+    mise fmt
     just --fmt --unstable
     terraform fmt --recursive .
     prettier --write .

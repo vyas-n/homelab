@@ -1,5 +1,5 @@
 
-# https://tailscale.com/docs/kubernetes-operator/quickstart#prerequisites
+# ref: https://tailscale.com/docs/kubernetes-operator/quickstart#prerequisites
 resource "tailscale_oauth_client" "k8s_tailscale_operator" {
   description = "digitalocean-k8s-tailscale-operator"
   scopes = [
@@ -22,7 +22,7 @@ resource "kubernetes_secret_v1" "operator_oauth" {
   }
 }
 
-# https://artifacthub.io/packages/helm/tailscale/tailscale-operator
+# ref: https://artifacthub.io/packages/helm/tailscale/tailscale-operator
 resource "helm_release" "tailscale_operator" {
   chart      = "tailscale-operator"
   repository = "https://pkgs.tailscale.com/helmcharts"

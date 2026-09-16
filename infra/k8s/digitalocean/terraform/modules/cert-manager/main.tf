@@ -1,4 +1,4 @@
-# https://artifacthub.io/packages/helm/cert-manager/cert-manager
+# ref: https://artifacthub.io/packages/helm/cert-manager/cert-manager
 resource "helm_release" "cert_manager" {
   chart      = "cert-manager"
   repository = "oci://quay.io/jetstack/charts"

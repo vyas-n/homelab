@@ -1,4 +1,4 @@
-
+# ref: https://artifacthub.io/packages/helm/argo/argo-cd
 resource "helm_release" "argo_cd" {
   chart      = "argo-cd"
   repository = "oci://ghcr.io/argoproj/argo-helm"
