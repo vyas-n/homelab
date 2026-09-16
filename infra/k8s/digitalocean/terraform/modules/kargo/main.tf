@@ -38,7 +38,7 @@ resource "helm_release" "kargo" {
       ], [yamlencode({
         api = {
           secret = {
-            name = kubernetes_namespace_v1.admin_account_creds.metadata[0].name
+            name = kubernetes_secret_v1.admin_account_creds.metadata[0].name
           }
           adminAccount = {
             enabled = true
