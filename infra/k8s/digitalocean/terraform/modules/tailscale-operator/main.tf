@@ -22,10 +22,12 @@ resource "kubernetes_secret_v1" "operator_oauth" {
   }
 }
 
+# https://artifacthub.io/packages/helm/tailscale/tailscale-operator
 resource "helm_release" "tailscale_operator" {
   chart      = "tailscale-operator"
   repository = "https://pkgs.tailscale.com/helmcharts"
   name       = "tailscale-operator"
+  version    = "1.102.3"
   namespace  = var.kubernetes_namespace
   lint       = true
   wait       = true

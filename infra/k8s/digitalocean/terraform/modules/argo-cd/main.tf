@@ -1,9 +1,10 @@
 
 resource "helm_release" "argo_cd" {
   chart      = "argo-cd"
-  repository = "https://argoproj.github.io/argo-helm"
+  repository = "oci://ghcr.io/argoproj/argo-helm"
   name       = "argo-cd"
   namespace  = var.kubernetes_namespace
+  version    = "10.9.1"
   lint       = true
   wait       = true
 

@@ -20,3 +20,10 @@ module "cert_manager" {
 
   kubernetes_namespace = kubernetes_namespace_v1.cert_manager.id
 }
+
+# module "kargo" {
+
+
+#   # https://docs.kargo.io/operator-guide/basic-installation#prerequisites
+#   depends_on = [  ]
+# }
