@@ -106,7 +106,7 @@ data "kubernetes_resource" "tailscale_dns_nameserver" {
   api_version = kubernetes_manifest.tailscale_dns_nameserver.object.apiVersion
   kind        = kubernetes_manifest.tailscale_dns_nameserver.object.kind
   metadata {
-    name = kubernetes_manifest.tailscale_dns_nameserver.object.metadata[0].name
+    name = kubernetes_manifest.tailscale_dns_nameserver.object.metadata.name
   }
 }
 
