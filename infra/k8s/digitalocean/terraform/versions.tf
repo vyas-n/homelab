@@ -12,6 +12,10 @@ terraform {
     }
   }
   required_providers {
+    digitalocean = {
+      source  = "digitalocean/digitalocean"
+      version = ">= 2.67.0"
+    }
     helm = {
       source  = "hashicorp/helm"
       version = ">= 3.0.2"
@@ -24,9 +28,9 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.19.0"
     }
-    digitalocean = {
-      source  = "digitalocean/digitalocean"
-      version = ">= 2.67.0"
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.9.1"
     }
     tailscale = {
       source  = "tailscale/tailscale"
@@ -39,6 +43,16 @@ provider "digitalocean" {}
 
 # K8s Cluster Creds:
 # - https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_cluster#kubernetes-terraform-provider-example
+
+provider "helm" {
+  kubernetes = {
+    host  = data.digitalocean_kubernetes_cluster.do_k8s.endpoint
+    token = data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].token
+    cluster_ca_certificate = base64decode(
+      data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].cluster_ca_certificate
+    )
+  }
+}
 
 provider "kubernetes" {
   host  = data.digitalocean_kubernetes_cluster.do_k8s.endpoint
@@ -57,14 +71,6 @@ provider "kubectl" {
   load_config_file = false
 }
 
-provider "helm" {
-  kubernetes = {
-    host  = data.digitalocean_kubernetes_cluster.do_k8s.endpoint
-    token = data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].token
-    cluster_ca_certificate = base64decode(
-      data.digitalocean_kubernetes_cluster.do_k8s.kube_config[0].cluster_ca_certificate
-    )
-  }
-}
+provider "random" {}
 
 provider "tailscale" {}
