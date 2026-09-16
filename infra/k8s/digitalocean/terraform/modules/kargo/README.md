@@ -2,18 +2,19 @@
 
 ## Requirements
 
-| Name      | Version   |
-|-----------|-----------|
-| terraform | >= 1.11.0 |
-| helm      | >= 3.0.2  |
-| random    | >= 3.9.1  |
+| Name       | Version   |
+|------------|-----------|
+| terraform  | >= 1.11.0 |
+| helm       | >= 3.0.2  |
+| kubernetes | >= 3.2.1  |
+| random     | >= 3.9.1  |
 
 ## Providers
 
 | Name       | Version  |
 |------------|----------|
 | helm       | >= 3.0.2 |
-| kubernetes | n/a      |
+| kubernetes | >= 3.2.1 |
 | random     | >= 3.9.1 |
 
 ## Resources

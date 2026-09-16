@@ -43,7 +43,7 @@ resource "helm_release" "kargo" {
           adminAccount = {
             enabled = true
           }
-          host = var.ingress_host
+          host = var.ingress_domain
           ingress = {
             enabled : true
             annotations      = var.ingress_annotations
