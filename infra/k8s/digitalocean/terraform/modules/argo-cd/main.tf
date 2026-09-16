@@ -13,21 +13,21 @@ resource "helm_release" "argo_cd" {
       for file in sort(fileset(path.module, "values/*.{yaml,yml}")) :
       # Decode & encode to remove yaml comments & formatting from diff calculations
       yamlencode(yamldecode(file("${path.module}/${file}")))
-    ], [yamlencode({
-    global = {
-      domain = var.ingress_domain
-    }
-    server = {
-      ingress = {
-        enabled: true
-        ingressClassName: var.ingress_class
-        annotations = var.ingress_annotations
-        extraTls = [{
-          hosts = [
-            var.ingress_host
-          ]
-        }]
-      }
-    }
+      ], [yamlencode({
+        global = {
+          domain = var.ingress_domain
+        }
+        server = {
+          ingress = {
+            enabled : true
+            ingressClassName : var.ingress_class
+            annotations = var.ingress_annotations
+            extraTls = [{
+              hosts = [
+                var.ingress_host
+              ]
+            }]
+          }
+        }
   })])
 }

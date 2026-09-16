@@ -13,9 +13,9 @@
 
 | Name       | Version |
 |------------|---------|
-| helm       | 3.1.1   |
+| helm       | 3.3.0   |
 | kubectl    | 1.19.0  |
-| kubernetes | 3.0.1   |
+| kubernetes | 3.2.1   |
 
 ## Modules
 

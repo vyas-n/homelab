@@ -22,11 +22,13 @@
 
 | Name                | Source                       | Version |
 |---------------------|------------------------------|---------|
+| argo\_cd            | ./modules/argo-cd            | n/a     |
 | tailscale\_operator | ./modules/tailscale-operator | n/a     |
 
 ## Resources
 
 | Name                                                                                                                                                    | Type        |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [kubernetes_namespace_v1.argocd](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                       | resource    |
 | [kubernetes_namespace_v1.tailscale](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                    | resource    |
 | [digitalocean_kubernetes_cluster.do_k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/kubernetes_cluster) | data source |
