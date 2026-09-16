@@ -1,7 +1,7 @@
 
-resource "kubernetes_namespace_v1" "argocd" {
+resource "kubernetes_namespace_v1" "argo_cd" {
   metadata {
-    name = "argocd"
+    name = "argo-cd"
   }
 }
 
