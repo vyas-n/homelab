@@ -5,12 +5,12 @@ output "ingress_class" {
 
 output "tailscale_proxy_group" {
   type  = string
-  value = var.tailscale_proxy_group
+  value = var.tailscale_ingress_proxy_group
 }
 
 output "ingress_annotations" {
   type = map(string)
   value = {
-    "tailscale.com/proxy-group" : var.tailscale_proxy_group
+    "tailscale.com/proxy-group" : var.tailscale_ingress_proxy_group
   }
 }

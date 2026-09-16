@@ -47,7 +47,7 @@ resource "kubectl_manifest" "tailscale_ingress_proxy_group" {
     apiVersion = "tailscale.com/v1alpha1"
     kind       = "ProxyGroup"
     metadata = {
-      name      = var.tailscale_proxy_group
+      name      = var.tailscale_ingress_proxy_group
       namespace = var.kubernetes_namespace
     }
     spec = {
@@ -56,5 +56,76 @@ resource "kubectl_manifest" "tailscale_ingress_proxy_group" {
     }
   })
 
+  wait              = true
+  server_side_apply = true
+
   depends_on = [helm_release.tailscale_operator]
+}
+
+resource "kubectl_manifest" "tailscale_egress_proxy_group" {
+  yaml_body = yamlencode({
+    apiVersion = "tailscale.com/v1alpha1"
+    kind       = "ProxyGroup"
+    metadata = {
+      name      = var.tailscale_egress_proxy_group
+      namespace = var.kubernetes_namespace
+    }
+    spec = {
+      type     = "egress"
+      replicas = 2
+    }
+  })
+
+  wait              = true
+  server_side_apply = true
+
+  depends_on = [helm_release.tailscale_operator]
+}
+
+resource "kubernetes_manifest" "tailscale_dns_nameserver" {
+  manifest = {
+    apiVersion = "tailscale.com/v1alpha1"
+    kind       = "DNSConfig"
+    metadata = {
+      name = "ts-dns"
+    }
+    spec = {
+      nameserver = {
+        image = {
+          repo : "tailscale/k8s-nameserver"
+          tag : "unstable"
+        }
+      }
+    }
+  }
+
+  depends_on = [helm_release.tailscale_operator, kubectl_manifest.tailscale_egress_proxy_group]
+}
+
+data "kubernetes_resource" "tailscale_dns_nameserver" {
+  api_version = kubernetes_manifest.tailscale_dns_nameserver.object.apiVersion
+  kind        = kubernetes_manifest.tailscale_dns_nameserver.object.kind
+  metadata {
+    name = kubernetes_manifest.tailscale_dns_nameserver.object.metadata.name
+  }
+}
+
+# Setup coredns in-cluster to use this DNS server
+# ref:
+# - https://tailscale.com/docs/kubernetes-operator/egress/enable-magicdns-resolution#configure-coredns
+# - https://techdocs.akamai.com/cloud-computing/docs/coredns-custom-config#custom-coredns-configuration
+resource "kubernetes_config_map_v1" "coredns_custom" {
+  metadata {
+    name      = "coredns-custom"
+    namespace = "kube-system"
+  }
+  data = {
+    "tailscale.server" = <<-EOT
+      ts.net:53 {
+          errors
+          cache 30
+          forward . ${data.kubernetes_resource.tailscale_dns_nameserver.object.status.nameserver.ip}
+      }
+    EOT
+  }
 }

@@ -21,20 +21,25 @@
 
 ## Resources
 
-| Name                                                                                                                                            | Type     |
-|-------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| [helm_release.tailscale_operator](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                         | resource |
-| [kubectl_manifest.tailscale_ingress_proxy_group](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)    | resource |
-| [kubernetes_secret_v1.operator_oauth](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret_v1)             | resource |
-| [tailscale_oauth_client.k8s_tailscale_operator](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/oauth_client) | resource |
+| Name                                                                                                                                            | Type        |
+|-------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [helm_release.tailscale_operator](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                         | resource    |
+| [kubectl_manifest.tailscale_egress_proxy_group](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)     | resource    |
+| [kubectl_manifest.tailscale_ingress_proxy_group](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest)    | resource    |
+| [kubernetes_config_map_v1.coredns_custom](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/config_map_v1)     | resource    |
+| [kubernetes_manifest.tailscale_dns_nameserver](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest)     | resource    |
+| [kubernetes_secret_v1.operator_oauth](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret_v1)             | resource    |
+| [tailscale_oauth_client.k8s_tailscale_operator](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/oauth_client) | resource    |
+| [kubernetes_resource.tailscale_dns_nameserver](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/data-sources/resource)  | data source |
 
 ## Inputs
 
-| Name                    | Description | Type     | Default             | Required |
-|-------------------------|-------------|----------|---------------------|:--------:|
-| kubernetes\_namespace   | n/a         | `string` | n/a                 |   yes    |
-| ingress\_class          | n/a         | `string` | `"tailscale"`       |    no    |
-| tailscale\_proxy\_group | n/a         | `string` | `"ingress-proxies"` |    no    |
+| Name                             | Description | Type     | Default             | Required |
+|----------------------------------|-------------|----------|---------------------|:--------:|
+| kubernetes\_namespace            | n/a         | `string` | n/a                 |   yes    |
+| ingress\_class                   | n/a         | `string` | `"tailscale"`       |    no    |
+| tailscale\_egress\_proxy\_group  | n/a         | `string` | `"egress-proxies"`  |    no    |
+| tailscale\_ingress\_proxy\_group | n/a         | `string` | `"ingress-proxies"` |    no    |
 
 ## Outputs
 
