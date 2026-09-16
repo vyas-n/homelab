@@ -25,6 +25,7 @@
 | argo\_cd            | ./modules/argo-cd            | n/a     |
 | argo\_rollouts      | ./modules/argo-rollouts      | n/a     |
 | cert\_manager       | ./modules/cert-manager       | n/a     |
+| kargo               | ./modules/kargo              | n/a     |
 | tailscale\_operator | ./modules/tailscale-operator | n/a     |
 
 ## Resources
@@ -34,5 +35,6 @@
 | [kubernetes_namespace_v1.argo_cd](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                      | resource    |
 | [kubernetes_namespace_v1.argo_rollouts](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                | resource    |
 | [kubernetes_namespace_v1.cert_manager](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                 | resource    |
+| [kubernetes_namespace_v1.kargo](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                        | resource    |
 | [kubernetes_namespace_v1.tailscale](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                    | resource    |
 | [digitalocean_kubernetes_cluster.do_k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/kubernetes_cluster) | data source |
