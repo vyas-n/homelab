@@ -1,0 +1,10 @@
+default_provider = "onepass"
+
+[providers.onepass]
+type = "1password"
+vault = "Seeding"
+
+[secrets.PINACT_GITHUB_TOKEN]
+value = "GitHub-PAT-vyas-n/token"
+[secrets.MISE_GITHUB_TOKEN]
+value = "GitHub-PAT-vyas-n/token"

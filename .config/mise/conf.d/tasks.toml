@@ -1,4 +1,7 @@
 
+[tasks.check]
+run = ['prek run --all-files']
+
 [tasks.setup]
 depends = ['setup-ansible', 'setup-prek', 'setup-terraform', 'setup-uv']
 
@@ -16,7 +19,10 @@ outputs = ['.git/hooks/pre-commit']
 run = '''
     #!/usr/bin/env nu
 
-    glob infra/**/*/.terraform.lock.hcl | path dirname | uniq | par-each { |tf_directory|
+    glob infra/**/*/.terraform.lock.hcl
+    | path dirname
+    | uniq
+    | par-each { |tf_directory|
         terraform -chdir=($tf_directory) init --backend=false
     }
 '''
@@ -35,9 +41,18 @@ depends = [
   'upgrade-dep-mise',
   'upgrade-dep-terraform',
   'upgrade-dep-pinact',
+  'upgrade-dep-submodule',
 ]
+run = '''
+    #!/usr/bin/env nu
+
+    mise latest terraform | save -f .terraform-version
+    mise latest python | save -f .python-version
+    mise install
+'''
 
 [tasks.upgrade-dep-pinact]
+env.PINACT_GITHUB_TOKEN = { required = true }
 run = "pinact run --update"
 wait_for = ["upgrade-dep-mise"]
 
@@ -45,24 +60,36 @@ wait_for = ["upgrade-dep-mise"]
 run = "uv lock --upgrade"
 wait_for = ["upgrade-dep-mise"]
 
+[tasks.upgrade-dep-submodule]
+run = "git submodule update --recursive --remote"
+
 [tasks.upgrade-dep-terraform]
+depends_post = ['docs']
 run = '''
     #!/usr/bin/env nu
 
-    glob infra/**/*/.terraform.lock.hcl | path dirname | uniq | par-each { |tf_directory|
+    glob infra/**/*/.terraform.lock.hcl
+    | path dirname
+    | uniq
+    | par-each { |tf_directory|
         terraform -chdir=($tf_directory) init --upgrade
     }
 '''
 wait_for = ["upgrade-dep-mise"]
 
 [tasks.upgrade-dep-mise]
+env.MISE_GITHUB_TOKEN = { required = true }
 run = "mise upgrade"
 
 [tasks.docs]
+depends_post = ['format']
 run = '''
     #!/usr/bin/env nu
 
-    for tf_directory in (glob infra/**/*.tf | path dirname | uniq) {
+    glob infra/**/*.tf
+    | path dirname
+    | uniq
+    | par-each {|tf_directory|
         terraform-docs markdown $tf_directory
     }
 '''
@@ -72,10 +99,32 @@ outputs = ['**/README.md']
 [tasks.format]
 alias = ["fmt"]
 depends = ['docs']
+run = [
+  "mise fmt",
+  "just --fmt --unstable",
+  "terraform fmt --recursive .",
+  "prettier --write .",
+  "markdown-table-formatter **/*.md",
+]
+
+[tasks.validate]
 run = '''
-    mise fmt
-    just --fmt --unstable
-    terraform fmt --recursive .
-    prettier --write .
-    markdown-table-formatter **/*.md
+    #!/usr/bin/env nu
+
+    glob infra/**/*/.terraform.lock.hcl
+    | path dirname
+    | uniq
+    | par-each {|tf_directory|
+        terraform -chdir=($tf_directory) validate
+    }
 '''
+
+[tasks.lint]
+run = '''
+    #!/usr/bin/env nu
+
+    tflint --recursive --config=($env.PWD)/.tflint.hcl
+'''
+
+[tasks.ci]
+depends = ['format', 'check', 'validate', 'lint']

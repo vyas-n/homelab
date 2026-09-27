@@ -53,7 +53,7 @@ provider "onepassword" {
 
 provider "tfe" {
   organization = "vyas-n"
-  token        = data.onepassword_item.tfcloud_pat.credential
+  token        = ephemeral.onepassword_item.tfcloud_pat.credential
 }
 
 provider "time" {}
@@ -64,7 +64,7 @@ provider "proxmox" {
   endpoint = "https://proxmox-1.hosts.vyas-n.dev/"
   # If self-signed TLS certificate is in use
   # insecure  = true
-  api_token = "root@pam!onepass=${data.onepassword_item.proxmox_api_token.credential}"
+  api_token = "root@pam!onepass=${ephemeral.onepassword_item.proxmox_api_token.credential}"
 }
 
 locals {
@@ -73,13 +73,11 @@ locals {
 }
 
 provider "cloudflare" {
-  # email   = "me@vyas-n.com"
-  # api_key = data.onepassword_item.cloudflare_global_api_key.credential
-  api_token = data.onepassword_item.cloudflare_api_token.credential
+  api_token = ephemeral.onepassword_item.cloudflare_api_token.credential
 }
 
 provider "github" {
   owner = "vyas-n"
   # TODO: for some reason the github provider doesn't seem to use this credential when provided.
-  # token = data.onepassword_item.gh_pat.credential
+  token = ephemeral.onepassword_item.gh_pat.credential
 }
