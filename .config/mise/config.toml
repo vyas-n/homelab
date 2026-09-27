@@ -12,22 +12,27 @@ npm.bun = true
 
 [tools]
 # Core tools
-node = "latest"
-usage = "latest"
-# Keeping rust installed via rustup b/c mise doesn't have all the options that I want for changing rust versions between user-level & project-level
-uv = "latest"
-direnv = "latest"
-go = "latest"
-bun = "latest"
+"core:node" = "latest"
+"core:bun" = "latest"
 
 # Packages
+## Preferred
+"packslip:github.com/jdx/fnox" = "latest"
+"packslip:github.com/jdx/usage" = "latest"
+## 2nd Preferred
+"aqua:argoproj/argo-cd" = "latest"
+"aqua:astral-sh/uv" = "latest"
+"aqua:casey/just" = "latest"
+"aqua:cert-manager/cmctl" = "latest"
+"aqua:j178/prek" = "latest"
+"aqua:k0sproject/k0sctl" = "latest"
+"aqua:sharkdp/fd" = "latest"
+"aqua:suzuki-shunsuke/pinact" = "latest"
+"aqua:terraform-docs/terraform-docs" = "latest"
+"aqua:terraform-linters/tflint" = "latest"
+"aqua:zizmorcore/zizmor" = "latest"
+
+"github:akuity/kargo" = "latest"
+## Language Specific Packages
 "npm:prettier" = "latest"
 "npm:markdown-table-formatter" = "latest"
-"go:github.com/k0sproject/k0sctl" = "v0.28.0"
-"go:github.com/terraform-linters/tflint" = "v0.60.0"
-"cargo:zizmor" = "latest"
-"cargo:just" = "latest"
-"cargo:fd-find" = "latest"
-"aqua:suzuki-shunsuke/pinact" = "latest"
-"aqua:j178/prek" = "latest"
-"aqua:terraform-docs/terraform-docs" = "latest"

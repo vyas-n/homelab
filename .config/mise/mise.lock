@@ -2,6 +2,51 @@
 
 lockfile_version = 1
 
+[[tools."aqua:argoproj/argo-cd"]]
+version = "3.5.3"
+backend = "aqua:argoproj/argo-cd"
+specifiers = ["latest"]
+
+[tools."aqua:argoproj/argo-cd"."platforms.linux-x64"]
+checksum = "sha256:b860f73f57cbddd993cd446f5236d797c1b1ac8554857b2683d2669f17e765b4"
+url = "https://github.com/argoproj/argo-cd/releases/download/v3.5.3/argocd-linux-amd64"
+url_api = "https://api.github.com/repos/argoproj/argo-cd/releases/assets/562896826"
+
+[tools."aqua:argoproj/argo-cd"."platforms.linux-x64".provenance.slsa]
+url = "https://github.com/argoproj/argo-cd/releases/download/v3.5.3/argocd-cli.intoto.jsonl"
+
+[[tools."aqua:astral-sh/uv"]]
+version = "0.12.19"
+backend = "aqua:astral-sh/uv"
+specifiers = ["latest"]
+
+[tools."aqua:astral-sh/uv"."platforms.linux-x64"]
+checksum = "sha256:23bf5552d220e0842b65c862097b2ebaeba0064b74eda5e565e77fd25969d8c8"
+url = "https://github.com/astral-sh/uv/releases/download/0.12.19/uv-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/587159011"
+provenance = "github-attestations"
+
+[[tools."aqua:casey/just"]]
+version = "1.58.0"
+backend = "aqua:casey/just"
+specifiers = ["latest"]
+
+[tools."aqua:casey/just"."platforms.linux-x64"]
+checksum = "sha256:4a5cc2f53e6f0f8c59092a6cc38291eb729d46a7dd95d3ae582008881b84931d"
+url = "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/casey/just/releases/assets/500509978"
+
+[[tools."aqua:cert-manager/cmctl"]]
+version = "2.6.1"
+backend = "aqua:cert-manager/cmctl"
+specifiers = ["latest"]
+
+[tools."aqua:cert-manager/cmctl"."platforms.linux-x64"]
+checksum = "sha256:0af054c26a2b64ce286fa868d029164867695a93c3eb893662ce16f35e708db0"
+url = "https://github.com/cert-manager/cmctl/releases/download/v2.6.1/cmctl_linux_amd64"
+url_api = "https://api.github.com/repos/cert-manager/cmctl/releases/assets/571931643"
+provenance = "cosign"
+
 [[tools."aqua:j178/prek"]]
 version = "0.5.3"
 backend = "aqua:j178/prek"
@@ -12,6 +57,26 @@ checksum = "sha256:c1475ddc56df0003c780557d9b52273d9eb19c9ef8d91143f3ce03511182a
 url = "https://github.com/j178/prek/releases/download/v0.5.3/prek-x86_64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/j178/prek/releases/assets/560889224"
 provenance = "github-attestations"
+
+[[tools."aqua:k0sproject/k0sctl"]]
+version = "0.33.1"
+backend = "aqua:k0sproject/k0sctl"
+specifiers = ["latest"]
+
+[tools."aqua:k0sproject/k0sctl"."platforms.linux-x64"]
+checksum = "sha256:bd5cd9125c93d8d30c33f7b2f3693fed0d74140a248d433dad74f2b7015295b5"
+url = "https://github.com/k0sproject/k0sctl/releases/download/v0.33.1/k0sctl-linux-amd64"
+url_api = "https://api.github.com/repos/k0sproject/k0sctl/releases/assets/578938984"
+
+[[tools."aqua:sharkdp/fd"]]
+version = "10.5.0"
+backend = "aqua:sharkdp/fd"
+specifiers = ["latest"]
+
+[tools."aqua:sharkdp/fd"."platforms.linux-x64"]
+checksum = "sha256:a1259cd129636efbc3fef123525c1b49e88fe5088c012630983c310e52fdfa95"
+url = "https://github.com/sharkdp/fd/releases/download/v10.5.0/fd-v10.5.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/sharkdp/fd/releases/assets/530481615"
 
 [[tools."aqua:suzuki-shunsuke/pinact"]]
 version = "5.0.0"
@@ -33,6 +98,28 @@ specifiers = ["latest"]
 checksum = "sha256:9005daf969de0b50134493a2c00078b49f5f5b39d021cda7c89bf4d4f3d776d3"
 url = "https://github.com/terraform-docs/terraform-docs/releases/download/v0.24.0/terraform-docs-v0.24.0-linux-amd64.tar.gz"
 url_api = "https://api.github.com/repos/terraform-docs/terraform-docs/releases/assets/416956208"
+
+[[tools."aqua:terraform-linters/tflint"]]
+version = "0.64.0"
+backend = "aqua:terraform-linters/tflint"
+specifiers = ["latest"]
+
+[tools."aqua:terraform-linters/tflint"."platforms.linux-x64"]
+checksum = "sha256:cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537"
+url = "https://github.com/terraform-linters/tflint/releases/download/v0.64.0/tflint_linux_amd64.zip"
+url_api = "https://api.github.com/repos/terraform-linters/tflint/releases/assets/480528344"
+provenance = "github-attestations"
+
+[[tools."aqua:zizmorcore/zizmor"]]
+version = "1.30.1"
+backend = "aqua:zizmorcore/zizmor"
+specifiers = ["latest"]
+
+[tools."aqua:zizmorcore/zizmor"."platforms.linux-x64"]
+checksum = "sha256:e65324f4430c2717591937edcec90ccbefaf14c174f8ec9415e03ca875b46e1a"
+url = "https://github.com/zizmorcore/zizmor/releases/download/v1.30.1/zizmor-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/zizmorcore/zizmor/releases/assets/552067642"
+provenance = "github-attestations"
 
 [[tools.bun]]
 version = "1.4.2"
@@ -80,6 +167,19 @@ checksum = "sha256:1f1b93dd6f38523fde26dfac96151ef9d31a374e3005cd3345fb93555ae0c
 url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.linux-amd64"
 url_api = "https://api.github.com/repos/direnv/direnv/releases/assets/274610548"
 
+[[tools."github:akuity/kargo"]]
+version = "1.11.4"
+backend = "github:akuity/kargo"
+specifiers = ["latest"]
+
+[tools."github:akuity/kargo"."platforms.linux-x64"]
+checksum = "sha256:41fb24232e963672ec8033be5c122400f04f0b2c6f3bd4eeb85aedbdf821dcd6"
+url = "https://github.com/akuity/kargo/releases/download/v1.11.4/kargo-linux-amd64"
+url_api = "https://api.github.com/repos/akuity/kargo/releases/assets/543487737"
+
+[tools."github:akuity/kargo"."platforms.linux-x64".provenance.slsa]
+url = "https://github.com/akuity/kargo/releases/download/v1.11.4/kargo-cli.intoto.jsonl"
+
 [[tools.go]]
 version = "1.27.1"
 backend = "core:go"
@@ -100,13 +200,13 @@ backend = "go:github.com/terraform-linters/tflint"
 specifiers = ["v0.60.0"]
 
 [[tools.node]]
-version = "26.8.2"
+version = "26.10.0"
 backend = "core:node"
 specifiers = ["latest"]
 
 [tools.node."platforms.linux-x64"]
-checksum = "sha256:badb3fe6a61b85e1352ca6564dc56b8b7bd5ecd5c474c52acc21dd0cdd586f35"
-url = "https://nodejs.org/dist/v26.8.2/node-v26.8.2-linux-x64.tar.gz"
+checksum = "sha256:cb5c9ce9c80d7b8821e3a258543c71b939138cf17c74d5cc44bbe85d6dbc5ad8"
+url = "https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-x64.tar.gz"
 
 [[tools."npm:markdown-table-formatter"]]
 version = "1.7.0"
@@ -114,28 +214,48 @@ backend = "npm:markdown-table-formatter"
 specifiers = ["latest"]
 
 [[tools."npm:prettier"]]
-version = "3.9.6"
+version = "3.9.9"
 backend = "npm:prettier"
 specifiers = ["latest"]
 
+[[tools."packslip:github.com/jdx/fnox"]]
+version = "1.35.3"
+backend = "packslip:github.com/jdx/fnox"
+specifiers = ["latest"]
+
+[tools."packslip:github.com/jdx/fnox"."platforms.linux-x64"]
+checksum = "sha256:69066f81f624d355c83bcb394ba80f6add80c06b7be92c7b178d38af14a25c52"
+url = "https://github.com/jdx/fnox/releases/download/v1.35.3/fnox-x86_64-unknown-linux-gnu.tar.gz"
+signer = "sigstore-oidc:https://github.com/jdx/fnox/.github/workflows/release.yml"
+
+[[tools."packslip:github.com/jdx/usage"]]
+version = "6.11.1"
+backend = "packslip:github.com/jdx/usage"
+specifiers = ["latest"]
+
+[tools."packslip:github.com/jdx/usage"."platforms.linux-x64"]
+checksum = "sha256:afa6cb0e76f88cc6392aeecf21bbcd869747d4eeb60ab84c98d6e6178edc359a"
+url = "https://github.com/jdx/usage/releases/download/v6.11.1/usage-x86_64-unknown-linux-gnu.tar.gz"
+signer = "sigstore-oidc:https://github.com/jdx/usage/.github/workflows/publish-cli.yml"
+
 [[tools.python]]
-version = "3.14.3"
+version = "3.14.7"
 backend = "core:python"
-specifiers = ["3.14.3"]
+specifiers = ["3.14.7"]
 
 [tools.python."platforms.linux-x64"]
-checksum = "sha256:d7a9f970914bb4c88756fe3bdcc186d4feb90e9500e54f1db47dae4dc9687e39"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260324/cpython-3.14.3+20260324-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:bd0d0568ccded07bbf1c87727230dc5dd0187e706a87da23c4de78388a229b78"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.14.7+20260924-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [[tools.terraform]]
-version = "1.16.0"
+version = "1.16.4"
 backend = "aqua:hashicorp/terraform"
-specifiers = ["1.16.0"]
+specifiers = ["1.16.4"]
 
 [tools.terraform."platforms.linux-x64"]
-checksum = "sha256:41d05b927aa174f15d1228c4eba832a323b716c68b415ef5a00179f46cc602d3"
-url = "https://releases.hashicorp.com/terraform/1.16.0/terraform_1.16.0_linux_amd64.zip"
+checksum = "sha256:dc94af0eef1147718ad7c8daea792ed199e3e0492eec180d0adafa2a65a879df"
+url = "https://releases.hashicorp.com/terraform/1.16.4/terraform_1.16.4_linux_amd64.zip"
 
 [[tools.usage]]
 version = "6.9.1"

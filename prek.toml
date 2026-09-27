@@ -8,13 +8,17 @@ cooldown_days = 7
 [[repos]]
 repo = "builtin"
 hooks = [
-    { id = "trailing-whitespace" },
-    { id = "end-of-file-fixer" },
     { id = "check-added-large-files" },
+    { id = "check-executables-have-shebangs" },
     { id = "check-json", exclude = "devcontainer.json", },
     { id = "check-json5" },
-    { id = "check-yaml", args = ["--allow-multiple-documents"] },
-    { id = "check-toml" },
+    { id = "check-merge-conflict" },
+    { id = "check-symlinks" },
     { id = "check-shebang-scripts-are-executable" },
-    { id = "check-executables-have-shebangs" },
+    { id = "check-toml" },
+    { id = "check-yaml", args = ["--allow-multiple-documents"] },
+    { id = "destroyed-symlinks" },
+    { id = "end-of-file-fixer" },
+    { id = "trailing-whitespace" },
+    { id = "mixed-line-ending" },
 ]

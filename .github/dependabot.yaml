@@ -68,10 +68,6 @@ updates:
       - dependency-name: cloudflare/cloudflare
         update-types:
           - version-update:semver-major
-      # 1Password provider version 3 doesn't support using the op cli for authentication into Private Vault.
-      - dependency-name: 1Password/onepassword
-        update-types:
-          - version-update:semver-major
   - package-ecosystem: devcontainers
     directory: /
     schedule:
