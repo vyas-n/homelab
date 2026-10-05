@@ -3,7 +3,7 @@
 ## Requirements
 
 | Name       | Version   |
-|------------|-----------|
+| ---------- | --------- |
 | terraform  | >= 1.14.2 |
 | helm       | >= 3.0    |
 | kubectl    | >= 1.14   |
@@ -12,7 +12,7 @@
 ## Providers
 
 | Name       | Version |
-|------------|---------|
+| ---------- | ------- |
 | helm       | >= 3.0  |
 | kubectl    | >= 1.14 |
 | kubernetes | >= 2.12 |
@@ -20,7 +20,7 @@
 ## Resources
 
 | Name                                                                                                                                                     | Type     |
-|----------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | [helm_release.cert_manager](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                                        | resource |
 | [helm_release.external_dns_cloudflare](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                             | resource |
 | [helm_release.external_secrets](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)                                    | resource |
@@ -41,7 +41,7 @@
 ## Inputs
 
 | Name                                                    | Description | Type     | Default | Required |
-|---------------------------------------------------------|-------------|----------|---------|:--------:|
+| ------------------------------------------------------- | ----------- | -------- | ------- | :------: |
 | cert\_manager\_cloudflare\_api\_token                   | n/a         | `string` | n/a     |   yes    |
 | cert\_manager\_zerossl\_eab\_hmac\_key                  | n/a         | `string` | n/a     |   yes    |
 | cert\_manager\_zerossl\_eab\_id                         | n/a         | `string` | n/a     |   yes    |

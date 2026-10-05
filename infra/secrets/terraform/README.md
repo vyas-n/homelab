@@ -7,7 +7,7 @@ The files are named after the location that the secrets are synchronized to (not
 ## Requirements
 
 | Name        | Version   |
-|-------------|-----------|
+| ----------- | --------- |
 | terraform   | >= 1.11.0 |
 | cloudflare  | < 5.0.0   |
 | github      | >= 6.9.0  |
@@ -20,13 +20,13 @@ The files are named after the location that the secrets are synchronized to (not
 ## Providers
 
 | Name        | Version |
-|-------------|---------|
+| ----------- | ------- |
 | onepassword | 3.3.1   |
 
 ## Modules
 
 | Name             | Source                    | Version |
-|------------------|---------------------------|---------|
+| ---------------- | ------------------------- | ------- |
 | gh\_secrets      | ./modules/gh_secrets      | n/a     |
 | proxmox\_secrets | ./modules/proxmox_secrets | n/a     |
 | tfe\_secrets     | ./modules/tfe_secrets     | n/a     |
@@ -34,7 +34,7 @@ The files are named after the location that the secrets are synchronized to (not
 ## Resources
 
 | Name                                                                                                                            | Type        |
-|---------------------------------------------------------------------------------------------------------------------------------|-------------|
+| ------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | [onepassword_item.zerossl_api_key](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/item) | data source |
 | [onepassword_vault.homelab](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/vault)       | data source |
 | [onepassword_vault.seeding](https://registry.terraform.io/providers/1Password/onepassword/latest/docs/data-sources/vault)       | data source |
@@ -42,7 +42,7 @@ The files are named after the location that the secrets are synchronized to (not
 ## Outputs
 
 | Name             | Description |
-|------------------|-------------|
+| ---------------- | ----------- |
 | gh\_secrets      | n/a         |
 | proxmox\_secrets | n/a         |
 | tfe\_secrets     | n/a         |

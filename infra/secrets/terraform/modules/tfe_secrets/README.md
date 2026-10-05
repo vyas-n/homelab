@@ -3,7 +3,7 @@
 ## Requirements
 
 | Name        | Version            |
-|-------------|--------------------|
+| ----------- | ------------------ |
 | terraform   | >= 1.11.0          |
 | cloudflare  | >= 4.52.0, < 5.0.0 |
 | onepassword | >= 2.1.2           |
@@ -14,7 +14,7 @@
 ## Providers
 
 | Name        | Version            |
-|-------------|--------------------|
+| ----------- | ------------------ |
 | cloudflare  | >= 4.52.0, < 5.0.0 |
 | onepassword | >= 2.1.2           |
 | tfe         | >= 0.69.0          |
@@ -24,7 +24,7 @@
 ## Resources
 
 | Name                                                                                                                                                                   | Type        |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | [cloudflare_api_token.homezone_cert_manager_cloudflare_api_token](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token)       | resource    |
 | [cloudflare_api_token.tfe_cloudflare_api_token](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token)                         | resource    |
 | [cloudflare_api_token.tfe_external_dns_cloudflare_api_token](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token)            | resource    |
@@ -80,6 +80,6 @@
 ## Inputs
 
 | Name              | Description                                                   | Type                        | Default | Required |
-|-------------------|---------------------------------------------------------------|-----------------------------|---------|:--------:|
+| ----------------- | ------------------------------------------------------------- | --------------------------- | ------- | :------: |
 | onepass\_vault    | The 1Password Vault id to grab from and store credentials in. | `object({ uuid : string })` | n/a     |   yes    |
 | zerossl\_api\_key | ZeroSSL API Key to generate ACME Credentials                  | `string`                    | n/a     |   yes    |

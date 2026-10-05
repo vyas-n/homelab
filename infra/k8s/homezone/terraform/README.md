@@ -3,7 +3,7 @@
 ## Requirements
 
 | Name       | Version   |
-|------------|-----------|
+| ---------- | --------- |
 | terraform  | >= 1.11.0 |
 | helm       | >= 2.17.0 |
 | kubectl    | >= 1.19.0 |
@@ -12,7 +12,7 @@
 ## Providers
 
 | Name       | Version |
-|------------|---------|
+| ---------- | ------- |
 | helm       | 3.3.0   |
 | kubectl    | 1.19.0  |
 | kubernetes | 3.2.1   |
@@ -20,7 +20,7 @@
 ## Modules
 
 | Name               | Source                      | Version |
-|--------------------|-----------------------------|---------|
+| ------------------ | --------------------------- | ------- |
 | cilium             | ./modules/cilium            | n/a     |
 | cluster\_operators | ./modules/cluster_operators | n/a     |
 | cluster\_services  | ./modules/cluster_services  | n/a     |
@@ -30,7 +30,7 @@
 ## Resources
 
 | Name                                                                                                                               | Type     |
-|------------------------------------------------------------------------------------------------------------------------------------|----------|
+| ---------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | [helm_release.prometheus_operator_crds](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)      | resource |
 | [kubectl_manifest.k0s_service_monitor](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubernetes_namespace.rook_ceph](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace)     | resource |
@@ -38,7 +38,7 @@
 ## Inputs
 
 | Name                                                    | Description | Type     | Default                      | Required |
-|---------------------------------------------------------|-------------|----------|------------------------------|:--------:|
+| ------------------------------------------------------- | ----------- | -------- | ---------------------------- | :------: |
 | cert\_manager\_cloudflare\_api\_token                   | n/a         | `string` | n/a                          |   yes    |
 | cert\_manager\_zerossl\_eab\_hmac\_key                  | n/a         | `string` | n/a                          |   yes    |
 | cert\_manager\_zerossl\_eab\_id                         | n/a         | `string` | n/a                          |   yes    |
