@@ -3,7 +3,7 @@
 ## Requirements
 
 | Name      | Version   |
-|-----------|-----------|
+| --------- | --------- |
 | terraform | >= 1.11.0 |
 | cloudinit | >= 2.3.6  |
 | proxmox   | >= 0.73.0 |
@@ -13,13 +13,13 @@
 ## Providers
 
 | Name    | Version |
-|---------|---------|
+| ------- | ------- |
 | proxmox | 0.114.0 |
 
 ## Modules
 
 | Name               | Source                         | Version |
-|--------------------|--------------------------------|---------|
+| ------------------ | ------------------------------ | ------- |
 | docker\_server\_0  | ./modules/proxmox_cloudinit_vm | n/a     |
 | docker\_server\_1  | ./modules/proxmox_cloudinit_vm | n/a     |
 | k8s\_ctr           | ./modules/proxmox_cloudinit_vm | n/a     |
@@ -32,7 +32,7 @@
 ## Resources
 
 | Name                                                                                                                                                                   | Type        |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | [proxmox_virtual_environment_download_file.fedora_41](https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_download_file)     | resource    |
 | [proxmox_virtual_environment_download_file.fedora_43_1_6](https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_download_file) | resource    |
 | [proxmox_virtual_environment_file.ubuntu_2404_iso](https://registry.terraform.io/providers/bpg/proxmox/latest/docs/data-sources/virtual_environment_file)              | data source |
@@ -43,12 +43,12 @@
 ## Inputs
 
 | Name                           | Description | Type     | Default | Required |
-|--------------------------------|-------------|----------|---------|:--------:|
+| ------------------------------ | ----------- | -------- | ------- | :------: |
 | proxmox\_ve\_ssh\_private\_key | n/a         | `string` | n/a     |   yes    |
 
 ## Outputs
 
 | Name            | Description |
-|-----------------|-------------|
+| --------------- | ----------- |
 | k8s\_ctr\_nodes | n/a         |
 | k8s\_wkr\_nodes | n/a         |
