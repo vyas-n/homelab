@@ -3,20 +3,20 @@
 ## Requirements
 
 | Name      | Version   |
-|-----------|-----------|
+| --------- | --------- |
 | terraform | >= 1.11.0 |
 | tfe       | >= 0.70.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | tfe  | 0.81.0  |
 
 ## Resources
 
 | Name                                                                                                                                                  | Type        |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | [tfe_agent_pool.homelab](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/agent_pool)                                      | resource    |
 | [tfe_organization_default_settings.vyas_n](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization_default_settings) | resource    |
 | [tfe_run_trigger.remote_exec_workspace_secrets](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/run_trigger)              | resource    |

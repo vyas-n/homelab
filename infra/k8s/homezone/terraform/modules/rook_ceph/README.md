@@ -9,31 +9,31 @@ This module has a few manual steps involved. In particular you need to:
 ## Requirements
 
 | Name      | Version   |
-|-----------|-----------|
+| --------- | --------- |
 | terraform | >= 1.14.2 |
 | helm      | >= 3.0    |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | helm | >= 3.0  |
 
 ## Resources
 
 | Name                                                                                                                    | Type     |
-|-------------------------------------------------------------------------------------------------------------------------|----------|
+| ----------------------------------------------------------------------------------------------------------------------- | -------- |
 | [helm_release.rook_ceph_cluster](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release)  | resource |
 | [helm_release.rook_ceph_operator](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 
 ## Inputs
 
 | Name      | Description                                                                               | Type     | Default | Required |
-|-----------|-------------------------------------------------------------------------------------------|----------|---------|:--------:|
+| --------- | ----------------------------------------------------------------------------------------- | -------- | ------- | :------: |
 | namespace | Name of the pre-existing namespace to deploy rook-ceph operator & rook-ceph cluster into. | `string` | n/a     |   yes    |
 
 ## Outputs
 
 | Name                | Description |
-|---------------------|-------------|
+| ------------------- | ----------- |
 | storage\_class\_rwo | n/a         |

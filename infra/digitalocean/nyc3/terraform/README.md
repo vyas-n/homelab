@@ -3,20 +3,20 @@
 ## Requirements
 
 | Name         | Version   |
-|--------------|-----------|
+| ------------ | --------- |
 | terraform    | >= 1.11.0 |
 | digitalocean | >= 2.67.0 |
 
 ## Providers
 
 | Name         | Version |
-|--------------|---------|
+| ------------ | ------- |
 | digitalocean | 2.102.0 |
 
 ## Resources
 
 | Name                                                                                                                                                      | Type        |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | [digitalocean_kubernetes_cluster.do_k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_cluster)      | resource    |
 | [digitalocean_kubernetes_node_pool.pool1](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_node_pool)   | resource    |
 | [digitalocean_project.bedrock](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project)                           | resource    |
@@ -26,7 +26,7 @@
 ## Outputs
 
 | Name                              | Description                                                              |
-|-----------------------------------|--------------------------------------------------------------------------|
+| --------------------------------- | ------------------------------------------------------------------------ |
 | do\_k8s\_cluster\_ca\_certificate | The public certificate for the cluster's certificate authority.          |
 | do\_k8s\_host                     | The URL of the API server on the Kubernetes control plane.               |
 | do\_k8s\_token                    | The DigitalOcean API access token used by clients to access the cluster. |

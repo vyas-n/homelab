@@ -127,4 +127,4 @@ run = '''
 '''
 
 [tasks.ci]
-depends = ['format', 'check', 'validate', 'lint']
+depends = ['setup', 'format', 'check', 'validate', 'lint']
