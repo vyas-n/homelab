@@ -8,9 +8,9 @@ readme = "README.md"
 
 [dependency-groups]
 dev = [
-    "ansible-core",
-    "ansible-lint ; platform_system != 'Windows'",
-    "checkov"
+  "ansible-core",
+  "ansible-lint ; platform_system != 'Windows'",
+  "checkov",
 ]
 
 [tool.uv]

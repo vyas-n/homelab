@@ -44,6 +44,17 @@ url = "https://github.com/cert-manager/cmctl/releases/download/v2.6.2/cmctl_linu
 url_api = "https://api.github.com/repos/cert-manager/cmctl/releases/assets/681852310"
 provenance = "cosign"
 
+[[tools."aqua:dprint/dprint"]]
+version = "0.64.3"
+backend = "aqua:dprint/dprint"
+specifiers = ["latest"]
+
+[tools."aqua:dprint/dprint"."platforms.linux-x64"]
+checksum = "sha256:f71cb7e22d6776439eba168d5cb296092d6413fea7148fe4d70684a2702a4fee"
+url = "https://github.com/dprint/dprint/releases/download/0.64.3/dprint-x86_64-unknown-linux-gnu.zip"
+url_api = "https://api.github.com/repos/dprint/dprint/releases/assets/667629165"
+provenance = "github-attestations"
+
 [[tools."aqua:j178/prek"]]
 version = "0.5.7"
 backend = "aqua:j178/prek"
@@ -124,7 +135,20 @@ backend = "core:bun"
 specifiers = ["latest"]
 
 [tools.bun."platforms.linux-x64"]
-checksum = "blake3:0f0f1793431284a96bf50258f79f4c51f7f8c5f352ee796b024171b37b289ba8"
+checksum = "sha256:bf8ccbfb2b0b80159e0f9a6d15c55317add8077534dbc6130a3edb52fccb395c"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.4/bun-linux-x64.zip"
+
+[tools.bun."platforms.linux-x64-baseline"]
+checksum = "sha256:e0446eb55995772eb9894bebae9a6be368d985a8b9271ee124486f9946eedd76"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.4/bun-linux-x64-baseline.zip"
+
+[tools.bun."platforms.linux-x64-musl"]
+checksum = "sha256:a5a8ccc5e74dcb883fe974f125a7bdb3b41e5195ed1b870e73f17effd3eb2b2d"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.4/bun-linux-x64-musl.zip"
+
+[tools.bun."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:6e9c37098b293920aed28bfb51ab240e26d23bfdd9bbfecb3ad428ac166549bc"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.4/bun-linux-x64-musl-baseline.zip"
 
 [[tools."cargo:fd-find"]]
 version = "10.5.0"

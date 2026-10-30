@@ -100,7 +100,6 @@ spec:
   # Uncomment to test Loadbalencers
   # type: LoadBalancer
 
-
 # Uncomment to test ingress
 ---
 apiVersion: networking.k8s.io/v1

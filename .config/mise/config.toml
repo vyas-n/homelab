@@ -1,4 +1,3 @@
-
 [env]
 ANSIBLE_CONFIG = "{{ config_root }}/ansible/ansible.cfg"
 
@@ -36,3 +35,4 @@ npm.bun = true
 ## Language Specific Packages
 "npm:prettier" = "latest"
 "npm:markdown-table-formatter" = "latest"
+"aqua:dprint/dprint" = "latest"
