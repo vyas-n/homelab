@@ -32,7 +32,7 @@ npm.bun = true
 "aqua:terraform-linters/tflint" = "latest"
 "aqua:zizmorcore/zizmor" = "latest"
 
-"github:akuity/kargo" = "latest"
+"github:akuity/kargo" = "1.11.4"
 ## Language Specific Packages
 "npm:prettier" = "latest"
 "npm:markdown-table-formatter" = "latest"

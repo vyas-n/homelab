@@ -16,8 +16,8 @@
 
 | Name         | Version |
 |--------------|---------|
-| digitalocean | 2.102.0 |
-| kubernetes   | 3.2.1   |
+| digitalocean | 2.106.0 |
+| kubernetes   | 3.4.0   |
 
 ## Modules
 
