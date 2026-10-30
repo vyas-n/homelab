@@ -3,7 +3,7 @@
 ## Requirements
 
 | Name         | Version   |
-| ------------ | --------- |
+|--------------|-----------|
 | terraform    | >= 1.11.0 |
 | digitalocean | >= 2.67.0 |
 | helm         | >= 3.0.2  |
@@ -15,14 +15,14 @@
 ## Providers
 
 | Name         | Version |
-| ------------ | ------- |
+|--------------|---------|
 | digitalocean | 2.102.0 |
 | kubernetes   | 3.2.1   |
 
 ## Modules
 
 | Name                | Source                       | Version |
-| ------------------- | ---------------------------- | ------- |
+|---------------------|------------------------------|---------|
 | argo\_cd            | ./modules/argo-cd            | n/a     |
 | argo\_rollouts      | ./modules/argo-rollouts      | n/a     |
 | cert\_manager       | ./modules/cert-manager       | n/a     |
@@ -32,10 +32,12 @@
 ## Resources
 
 | Name                                                                                                                                                    | Type        |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [kubernetes_manifest.homepage_kargo_project](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest)               | resource    |
 | [kubernetes_namespace_v1.argo_cd](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                      | resource    |
 | [kubernetes_namespace_v1.argo_rollouts](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                | resource    |
 | [kubernetes_namespace_v1.cert_manager](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                 | resource    |
+| [kubernetes_namespace_v1.homepage](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                     | resource    |
 | [kubernetes_namespace_v1.kargo](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                        | resource    |
 | [kubernetes_namespace_v1.tailscale](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                    | resource    |
 | [digitalocean_kubernetes_cluster.do_k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/kubernetes_cluster) | data source |
@@ -43,5 +45,5 @@
 ## Outputs
 
 | Name  | Description |
-| ----- | ----------- |
+|-------|-------------|
 | kargo | n/a         |
