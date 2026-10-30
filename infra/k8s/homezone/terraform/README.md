@@ -15,7 +15,7 @@
 |------------|---------|
 | helm       | 3.3.0   |
 | kubectl    | 1.19.0  |
-| kubernetes | 3.2.1   |
+| kubernetes | 3.4.0   |
 
 ## Modules
 

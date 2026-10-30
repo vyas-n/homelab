@@ -1,19 +1,18 @@
-
 [tasks.check]
-run = ['prek run --all-files']
+run = ["prek run --all-files"]
 
 [tasks.setup]
-depends = ['setup-ansible', 'setup-prek', 'setup-terraform', 'setup-uv']
+depends = ["setup-ansible", "setup-prek", "setup-terraform", "setup-uv"]
 
 [tasks.setup-ansible]
 run = "ansible/requirements.yml"
-sources = ['ansible/collections/**/*', 'ansible/requirements.yml']
-outputs = ['{{env.HOME}}/.ansible/collections/ansible_collections']
+sources = ["ansible/collections/**/*", "ansible/requirements.yml"]
+outputs = ["{{env.HOME}}/.ansible/collections/ansible_collections"]
 
 [tasks.setup-prek]
 run = "prek install"
-sources = ['prek.toml']
-outputs = ['.git/hooks/pre-commit']
+sources = ["prek.toml"]
+outputs = [".git/hooks/pre-commit"]
 
 [tasks.setup-terraform]
 run = '''
@@ -26,22 +25,22 @@ run = '''
         terraform -chdir=($tf_directory) init --backend=false
     }
 '''
-sources = ['**/.terraform.lock.hcl', '**/terraform.tf']
-outputs = ['**/.terraform']
+sources = ["**/.terraform.lock.hcl", "**/terraform.tf"]
+outputs = ["**/.terraform"]
 
 [tasks.setup-uv]
 run = "uv sync"
-sources = ['pyproject.toml', 'uv.lock']
-outputs = ['.venv']
+sources = ["pyproject.toml", "uv.lock"]
+outputs = [".venv"]
 
 [tasks.upgrade-deps]
 alias = ["bump"]
 depends = [
-  'upgrade-dep-uv',
-  'upgrade-dep-mise',
-  'upgrade-dep-terraform',
-  'upgrade-dep-pinact',
-  'upgrade-dep-submodule',
+  "upgrade-dep-uv",
+  "upgrade-dep-mise",
+  "upgrade-dep-terraform",
+  "upgrade-dep-pinact",
+  "upgrade-dep-submodule",
 ]
 run = '''
     #!/usr/bin/env nu
@@ -64,7 +63,7 @@ wait_for = ["upgrade-dep-mise"]
 run = "git submodule update --recursive --remote"
 
 [tasks.upgrade-dep-terraform]
-depends_post = ['docs']
+depends_post = ["docs"]
 run = '''
     #!/usr/bin/env nu
 
@@ -82,7 +81,7 @@ env.MISE_GITHUB_TOKEN = { required = true }
 run = "mise upgrade"
 
 [tasks.docs]
-depends_post = ['format']
+depends_post = ["format"]
 run = '''
     #!/usr/bin/env nu
 
@@ -93,17 +92,18 @@ run = '''
         terraform-docs markdown $tf_directory
     }
 '''
-sources = ['**/*.tf', '**/.terraform.lock.hcl']
-outputs = ['**/README.md']
+sources = ["**/*.tf", "**/.terraform.lock.hcl"]
+outputs = ["**/README.md"]
 
 [tasks.format]
 alias = ["fmt"]
-depends = ['docs']
+depends = ["docs"]
 run = [
   "mise fmt",
   "just --fmt --unstable",
   "terraform fmt --recursive .",
   "prettier --write .",
+  "dprint fmt",
   "markdown-table-formatter **/*.md",
 ]
 
@@ -127,4 +127,4 @@ run = '''
 '''
 
 [tasks.ci]
-depends = ['format', 'check', 'validate', 'lint']
+depends = ["setup", "format", "check", "validate", "lint"]

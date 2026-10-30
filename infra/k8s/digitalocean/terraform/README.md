@@ -16,8 +16,8 @@
 
 | Name         | Version |
 |--------------|---------|
-| digitalocean | 2.102.0 |
-| kubernetes   | 3.2.1   |
+| digitalocean | 2.106.0 |
+| kubernetes   | 3.4.0   |
 
 ## Modules
 
@@ -33,6 +33,7 @@
 
 | Name                                                                                                                                                    | Type        |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [kubernetes_manifest.homepage_kargo_project](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest)               | resource    |
 | [kubernetes_namespace_v1.argo_cd](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                      | resource    |
 | [kubernetes_namespace_v1.argo_rollouts](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                | resource    |
 | [kubernetes_namespace_v1.cert_manager](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace_v1)                 | resource    |

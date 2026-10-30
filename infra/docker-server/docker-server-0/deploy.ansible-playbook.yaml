@@ -12,7 +12,6 @@
     # - name: Debug
     #   ansible.builtin.debug:
     #     msg: "{{ ansible_facts }}"
-
     - name: Setup podman-compose systemd unit file
       become: true
       ansible.builtin.command:
