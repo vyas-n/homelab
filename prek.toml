@@ -32,5 +32,5 @@ id = "fmt"
 name = "format"
 language = "system"
 entry = "mise run format"
-types = ["terraform", "markdown", "yaml"]
+types = ["terraform", "markdown", "yaml", "json", "toml"]
 pass_filenames = false
